@@ -1,0 +1,159 @@
+DOCKER:
+
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+apt-cache policy docker-ce
+sudo apt-get install containerd.io docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic
+sudo usermod -aG docker ${USER}
+id -nG
+cd //
+sudo chmod -R 777 /etc/docker
+Create daemon.json in /etc/docker and following in it.
+{ "insecure-registries":["172.31.27.186:5000"] }
+Note : 172.31.27.186 is a IP address of 'CCI-REPO' VM
+sudo systemctl stop docker 
+sudo systemctl start docker
+sudo chmod 777 /var/run/docker.sock
+
+
+KUBECTL:
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.9/bin/linux/amd64/kubectl
+sudo chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+grep -E --color 'vmx|svm' /proc/cpuinfo
+
+
+MINIKUBE:
+
+sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo chmod +x minikube
+sudo mv ./minikube /usr/local/bin/minikube
+sudo apt-get install conntrack
+sudo minikube start --driver=none --kubernetes-version 1.19.9
+sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
+sudo chown -R $USER $HOME/.kube $HOME/.minikube
+kubectl get pods -n onap -o=wide
+
+
+Clone Repo:
+git clone https://github.com/onap/oom.git -b honolulu --recurse-submodules
+
+
+Install Helm:
+
+wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
+tar xvfz helm-v3.5.2-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+
+
+Setup Helm:
+
+sudo mkdir ~/.local
+sudo mkdir ~/.local/share
+sudo mkdir ~/.local/share/helm
+sudo cp -R ~/oom/kubernetes/helm/plugins/ ~/.local/share/helm/plugins
+sudo chmod -R 777 /home/ubuntu/.local
+helm plugin install https://github.com/chartmuseum/helm-push.git
+helm plugin install ./onap-oom-integ/kubernetes/helm/plugins/undeploy/
+helm plugin install ./onap-oom-integ/kubernetes/helm/plugins/deploy/
+
+
+Setup chartmuseum:
+
+curl -LO https://s3.amazonaws.com/chartmuseum/release/latest/bin/linux/amd64/chartmuseum
+chmod +x ./chartmuseum
+sudo mv ./chartmuseum /usr/local/bin
+
+chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &
+helm repo add local http://127.0.0.1:8879
+helm repo list
+sudo apt install make
+sudo chmod 777 /var/run/docker.sock
+
+
+Add IP of OOM VM in application.cfg:
+
+sudo vi ~/oom/cci/application.cfg
+
+Build Charts:
+cd ~/oom/kubernetes
+make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
+helm repo update
+helm search repo onap
+
+
+Deploy ONAP:
+helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
+
+
+  In some caase if ONAP fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
+
+
+Setup ARGO:
+
+kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
+curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
+gunzip argo-linux-amd64.gz
+chmod +x argo-linux-amd64
+sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+argo version
+
+
+
+
+
+rajeshvkothari/tosca-gawp:latest_1308_0423
+++++++++++++++++++++++++++++++++++++++++++++++
+docker tag cci/tosca-gawp:latest rajeshvkothari/tosca-gawp:latest_1308_0423
+docker push rajeshvkothari/tosca-gawp:latest_1308_0423
+
+docker tag cci/tosca-so:latest rajeshvkothari/tosca-so:latest_1308_0323
+docker push rajeshvkothari/tosca-so:latest_1308_0323
+
+docker tag cci/tosca-compiler:latest rajeshvkothari/tosca-compiler:latest_1308_0323
+docker push rajeshvkothari/tosca-compiler:latest_1308_0323
+
+docker tag cci/tosca-workflow:latest rajeshvkothari/tosca-workflow:latest_1308_0323
+docker push rajeshvkothari/tosca-workflow:latest_1308_0323
+
+
+Redeploy tosca:
+
+Build helm charts:
+
+cd ~/oom/kubernetes
+make SKIP_LINT=TRUE tosca; make SKIP_LINT=TRUE onap
+
+Delete deployment:
+kubectl delete services -n onap tosca tosca-compiler tosca-dgraph tosca-workflow tosca-gawp tosca-policy 
+kubectl delete deploy -n onap onap-tosca onap-tosca-compiler onap-tosca-dgraph onap-tosca-workflow onap-tosca-gawp onap-tosca-policy
+kubectl delete configmaps -n onap onap-tosca-compiler-configmap onap-tosca-models-configmap onap-tosca-configmap onap-tosca-so-filebeat-configmap onap-tosca-log onap-tosca-tosca-models-configmap onap-tosca-dgraph-configmap  onap-tosca-workflow-configmap onap-tosca-workflow-models-configmap onap-tosca-gawp-configmap onap-tosca-policy-configmap onap-tosca-gawp-models-configmap onap-tosca-policy-models-configmap 
+kubectl delete persistentvolumeclaim -n onap onap-tosca-cci-config
+kubectl delete persistentvolume -n onap onap-tosca-cci-config
+
+Run deploy command.
+
+
+
+
++++++++++++++++++++++++++++
+logs:
+
+kubectl logs -n onap onap-tosca-gawp-64f9cd4d89-hrg2k -c tosca-gawp &> ~/gawp.log
+
+kubectl cp onap-tosca-gawp-c4bf99466-dx2rx:/opt/app/status.json /home/ubuntu/status.json -n onap
+kubectl cp onap-tosca-gawp-c4bf99466-dx2rx:/opt/app/updated_clout.json /home/ubuntu/updated_clout.json -n onap
+
+
+docker cp 34887814dc42:/opt/app/status.json /home/ubuntu/status.json
+
+
+latest_2705_1215
+docker commit 34887814dc42 debug/ubuntu
+docker run -it --rm --entrypoint sh debug/ubuntu
+
+sudo docker build -f Dockerfile.gawp.multistage -t rajeshvkothari/tosca-gawp:latest_1308_0423 .
