@@ -1,9 +1,9 @@
-# Title
+# Puccini Testing
 
 ## Pre-deployment steps
 1.DCAE&DMAP server:
 	
-1] Create AWS VM(DCAE&DMAP) with following specifications and SSH it using Putty:
+1] Create AWS VM(DCAE&DMAP) in Ohio region with following specifications and SSH it using Putty:
 Image: ubuntu-18.04
 InstanceType: t2.large
 Storage: 80GB
@@ -25,6 +25,28 @@ Make sure docker is insatll properly by running below command :
 ```sh
 docker info
 ```	
+
+3]Clone the the 
+```sh
+mkdir ~/local-dmaap
+git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
+```
+
+4]Made changes in docker-compose.yaml file:
+
+/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml
+	
+	Before:
+		image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
+		 
+	After:
+		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
+
+ 5]TO the Start dmaap Server:
+```sh
+cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
+docker-compose up -d
+```
 2.Demo server:
 	
 1] Create AWS VM(demo_server) with following specifications and SSH it using Putty:
@@ -67,7 +89,7 @@ docker info
 
 1]clone puccini:
 ```sh
-	git clone https://github.com/customercaresolutions/puccini
+git clone https://github.com/customercaresolutions/puccini
 ```
 		
 2]Made following changes in puccini:
@@ -182,6 +204,7 @@ Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and D
 		remotePubKey=/opt/app/config/ohio-key-pair.pem
 		msgBusURL=mwssage-router:3904
 		schemaFilePath=../config/TOSCA-Dgraph-schema.txt
+		
 		
 	After:
 		[remote]
@@ -300,7 +323,8 @@ Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
 ```
 
 ## Deploying puccini components
-- Steps
+- Steps:
+
 1]Clone the latest puccini and tosca-model from below links and copy those folder in C:/ drive :
 
 	git clone https://github.com/customercaresolutions/puccini
@@ -447,6 +471,7 @@ Qp-driver:
 			"coerce":true
 		}
 Ts:
+
 	Persist model:
 	cd C:/
 	puccini-tosca compile tosca-models/cci/ts.csar --output tosca-models/cci/tsCsarClout.json --format json --persist
@@ -494,14 +519,14 @@ To access the above wiki page credentials are
 		}
 			 
 e.g:
-{
-	"url":"/opt/app/models/firewall.csar",
-	"output": "./firewall-dgraph-clout.json",
-}			 
-{
-	"url":"/opt/app/models/sdwan.csar",
-	"output": "./sdwan-dgraph-clout.json",
-}
+	{
+		"url":"/opt/app/models/firewall.csar",
+		"output": "./firewall-dgraph-clout.json",
+	}			 
+	{
+		"url":"/opt/app/models/sdwan.csar",
+		"output": "./sdwan-dgraph-clout.json",
+	}
 			
 Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
@@ -524,6 +549,7 @@ For Sdwan,Firewall:
 		}
 		
 Use Following InputUrl And Service In Api Body For:
+
 	--Firewall:
 			"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
 			"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
