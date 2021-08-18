@@ -3,13 +3,13 @@
 ## Pre-deployment steps
 - DCAE&DMAP server:
    Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
-
-	Image: ubuntu-18.04
-	InstanceType: t2.large
-	Storage: 80GB
-	KeyPair : cciPublicKey
+   
+		Image: ubuntu-18.04
+		InstanceType: t2.large
+		Storage: 80GB
+		KeyPair : cciPublicKey
 	
-2]Setup Docker on DMAAP&DCAE
+   Setup Docker on DMAAP&DCAE
 ```sh
 sudo apt update
 sudo apt install docker.io
@@ -26,15 +26,15 @@ Make sure docker is insatll properly by running below command :
 docker info
 ```	
 
-3]Clone the the 
+   Clone the the 
 ```sh
 mkdir ~/local-dmaap
 git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
 ```
 
-4]Made changes in docker-compose.yaml file:
+   Made changes in docker-compose.yaml file:
 
-/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml
+	/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml
 	
 	Before:
 		image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
@@ -42,7 +42,7 @@ git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch 
 	After:
 		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
 
- 5]TO the Start dmaap Server:
+   TO the Start dmaap Server:
 ```sh
 cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
 docker-compose up -d
