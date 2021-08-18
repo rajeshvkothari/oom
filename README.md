@@ -8,7 +8,6 @@
 		InstanceType: t2.large
 		Storage: 80GB
 		KeyPair : cciPublicKey
-	
    Setup Docker on DMAAP&DCAE
 ```sh
 sudo apt update
@@ -25,38 +24,29 @@ Make sure docker is insatll properly by running below command :
 ```sh
 docker info
 ```	
-
    Clone the the 
 ```sh
 mkdir ~/local-dmaap
 git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
 ```
 
-   Made changes in docker-compose.yaml file:
-
-	/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml
-	
-	Before:
-		image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
-		 
-	After:
+Made changes in docker-compose.yaml file:
+	/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	 
+	After Chnages:
 		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
-
    TO the Start dmaap Server:
 ```sh
 cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
 docker-compose up -d
 ```
-2.Demo server:
-	
-1] Create AWS VM(demo_server) with following specifications and SSH it using Putty:
-
-	Image: ubuntu-18.04
-	InstanceType: t2.large
-	Storage: 80GB
-	KeyPair : cciPublicKey
-	  
-2] Setup Docker on demo_server
+- Demo server:
+   Create AWS VM(demo_server) with following specifications and SSH it using Putty:
+		
+		Image: ubuntu-18.04
+		InstanceType: t2.large
+		Storage: 80GB
+		KeyPair : cciPublicKey
+   Setup Docker on demo_server
 ```sh
 sudo apt update
 sudo apt install docker.io
