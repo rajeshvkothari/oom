@@ -496,9 +496,9 @@ Ts:
 1.Docker Images:
 
 There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them.
-To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
+To test the oran model we have to first create a oran setup on AWS. So to setup oran cluster follow the below wiki page:
 
-	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
+	[](http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models)
 
 To access the above wiki page credentials are
 	
