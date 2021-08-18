@@ -7,28 +7,29 @@ Start/create any ubuntu-18.04 machine Virtually or on AWS with any Name eg. Demo
 ## Setup Docker on ubuntu
 
 ```sh
-	sudo apt update
-	sudo apt install docker.io
-	sudo apt  install docker-compose
-	sudo systemctl stop docker 
-	sudo systemctl start docker
-	sudo chmod 777 /var/run/docker.sock
+sudo apt update
+sudo apt install docker.io
+sudo apt  install docker-compose
+sudo systemctl stop docker 
+sudo systemctl start docker
+sudo chmod 777 /var/run/docker.sock
 ```
 
 Make sure docker is insatll properly by running below command :
 
 ```sh
-	docker info
+docker info
 ```
 	
 ## Steps for creating tosca images
 
-	1.clone puccini:
+1.clone puccini:
+
 ```bash
 git clone https://github.com/customercaresolutions/puccini
 ```
 		
-	2.Made following changes in puccini:
+2.Made following changes in puccini:
 
 		 2.1)puccini\docker-compose.yml:
 			 Uncomment following part:
@@ -155,20 +156,20 @@ git clone https://github.com/customercaresolutions/puccini
 				- Copy cciPrivateKey  to ~/puccini/dvol/config/
 				- Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
 
-	3.Build Docker images:
+3.Build Docker images:
 ```sh
-	cd ~/puccini
-	docker-compose up -d
+cd ~/puccini
+docker-compose up -d
 ```
 
-	4.Check wither the images are created:
+4.Check wither the images are created:
 ```sh
-	docker images -a
+docker images -a
 ```
 	
-	5.verify all docker container should be in running state:
+5.verify all docker container should be in running state:
 ```sh
-	docker ps -a
+docker ps -a
 ```
 	
 	Here we check that status of each container should be UP not Exited.
@@ -186,9 +187,9 @@ git clone https://github.com/customercaresolutions/puccini
 
 ## Test the Tosca Models(firewall, sdwan and oran)
 
-	To Test the firewall model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API too.
+To Test the firewall model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API too.
 
-	1)Store Model In Dgraph:
+1)Store Model In Dgraph:
 	
 		POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
 			{
@@ -216,7 +217,7 @@ git clone https://github.com/customercaresolutions/puccini
 	 
 Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
-	2)Create Instances With Deploy:
+2)Create Instances With Deploy:
 	
 		POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
 			{
@@ -258,7 +259,7 @@ Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-pol
 
 Note : ExecuteWorkfow Deploy model 
 
-	3)ExecuteWorkfow API With Deploy("list-steps-only": false):
+3)ExecuteWorkfow API With Deploy("list-steps-only": false):
 	
 		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 			{
@@ -266,14 +267,14 @@ Note : ExecuteWorkfow Deploy model
 			  "execute-policy": true
 			}
 			
-	4)Execute Policy: 
+4)Execute Policy: 
 	
 		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	 
-	5)Stop Policy:
+5)Stop Policy:
 	
 		DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    
-	6)Get Policies:
+6)Get Policies:
 	
 		GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies
