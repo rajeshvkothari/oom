@@ -1,10 +1,10 @@
-#Testing Puccini Through Docker Containers
+# Testing Puccini Through Docker Containers
 
-##Setup the ubuntu
+## Setup the ubuntu
 
 	Start/create any ubuntu-18.04 machine Virtually or on AWS with any Name eg. Demo_server
 
-##Setup Docker on ubuntu
+## Setup Docker on ubuntu
 
 ```sh
 		sudo apt update
@@ -21,7 +21,7 @@
 ```
 	
 
-##Steps for creating tosca images
+## Steps for creating tosca images
 
 	1.clone puccini:
 ```sh
@@ -184,7 +184,7 @@
 	289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 
 
-##Test the Tosca Models(firewall, sdwan and oran)
+## Test the Tosca Models(firewall, sdwan and oran)
 
 	To Test the firewall model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API too.
 
