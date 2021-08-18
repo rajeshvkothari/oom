@@ -2,30 +2,30 @@
 
 ## Setup the ubuntu
 
-	Start/create any ubuntu-18.04 machine Virtually or on AWS with any Name eg. Demo_server
+Start/create any ubuntu-18.04 machine Virtually or on AWS with any Name eg. Demo_server
 
 ## Setup Docker on ubuntu
 
 ```sh
-		sudo apt update
-		sudo apt install docker.io
-		sudo apt  install docker-compose
-		sudo systemctl stop docker 
-		sudo systemctl start docker
-		sudo chmod 777 /var/run/docker.sock
+	sudo apt update
+	sudo apt install docker.io
+	sudo apt  install docker-compose
+	sudo systemctl stop docker 
+	sudo systemctl start docker
+	sudo chmod 777 /var/run/docker.sock
 ```
 
-	Make sure docker is insatll properly by running below command :
+Make sure docker is insatll properly by running below command :
+
 ```sh
 	docker info
 ```
 	
-
 ## Steps for creating tosca images
 
 	1.clone puccini:
-```sh
-	git clone https://github.com/customercaresolutions/puccini
+```bash
+git clone https://github.com/customercaresolutions/puccini
 ```
 		
 	2.Made following changes in puccini:
