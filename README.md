@@ -1,4 +1,4 @@
-# Puccini Testing
+# Title
 
 ## Pre-deployment steps
 1.DCAE&DMAP server:
@@ -600,4 +600,58 @@ In application.cfg file we menation all the puccini tosca components.
 
 - Steps to deploy and verify
 
-  
+Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
+
+1.Verify Sdwan Model:  
+ 
+	1]Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
+	2]SSH SDWAN_Site_A VM and fire 'ifconfig -a'
+	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
+	3]SSH SDWAN_Site_B VM and fire 'ifconfig -a'
+	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
+	4]Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
+	
+2.Verify Firewall Model:
+
+	1]Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
+	  Validate that number of captured packets by sink will gets increase in 'Graphs' section
+	2]Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
+
+3.Verify Nonrtric Model:
+	
+	1]Comaands to verify all pods are running using following commands on bonap-server: 
+```sh	
+kubectl get pods -n nonrtric
+```
+	2]Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
+	
+4.Verify Ric Model:
+
+	1]Comaands to verify all pods are running using following commands :
+```sh		
+kubectl get pods -n ricplt
+kubectl get pods -n ricinfra
+kubectl get pods -n ricxapp   	   
+```		
+	2]Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
+
+5.Verify Qp Model:
+
+	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+       To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
+	   {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
+	2]Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
+
+6.Verify Qp-driver Model:
+
+	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+       To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
+       {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
+	2]Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
+
+7.Verify Ts Model:
+
+	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+       To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
+       {"instances":null,"name":"trafficxapp","status":"deployed","version":"1.0"}	  		   
+	2]Compare tosca-models/cci/tsCsarClout.json with puccini/so/ts-dgraph-clout.json using compare tool.
