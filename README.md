@@ -1,4 +1,4 @@
-# Puccini Testing 
+# Puccini Testing
 
 ## Pre-deployment steps
 1.DCAE&DMAP server:
@@ -74,6 +74,7 @@ docker info
 
 2.1)puccini\docker-compose.yml:
 			 Uncomment following part:
+			 
 			   Before:
 				 orchestrator:
 				   #    build:
@@ -171,7 +172,8 @@ docker info
 				 
 Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
 
-2.2)Modify ~/puccini/dvol/config/application.cfg:					
+2.2)Modify ~/puccini/dvol/config/application.cfg:
+					
 	Before:
 		[remote]
 		remoteHost=bonap-server.com
@@ -193,6 +195,7 @@ Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and D
 Note:IP_OF_demo_server is VM which we created at start
 
 2.3) Copy files as given below:
+
 	- Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
 	- Copy cciPrivateKey  to ~/puccini/dvol/config/
 	- Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
@@ -215,15 +218,15 @@ docker ps -a
 	
 Here we check that status of each container should be UP not Exited.
 	
-e.g:
-ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a
-CONTAINER ID   IMAGE                       COMMAND              CREATED         STATUS                     PORTS                                                                                                                             NAMES
-315aa3b27684   cci/tosca-policy:latest     "./tosca-policy"     9 minutes ago   Exited (2) 9 minutes ago                                                                                                                                     puccini_policy_1
-bd4cc551e0fc   cci/tosca-workflow:latest   "./tosca-workflow"   9 minutes ago   Up 9 minutes               0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-05b53b9d8fb5   cci/tosca-so:latest         "./tosca-so"         9 minutes ago   Up 9 minutes               0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-b532f72f21d1   cci/tosca-gawp:latest       "./tosca-gawp"       9 minutes ago   Up 9 minutes               0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
+	e.g:
+	ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a
+	CONTAINER ID   IMAGE                       COMMAND              CREATED         STATUS                     PORTS                                                                                                                             NAMES
+	315aa3b27684   cci/tosca-policy:latest     "./tosca-policy"     9 minutes ago   Exited (2) 9 minutes ago                                                                                                                                     puccini_policy_1
+	bd4cc551e0fc   cci/tosca-workflow:latest   "./tosca-workflow"   9 minutes ago   Up 9 minutes               0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
+	05b53b9d8fb5   cci/tosca-so:latest         "./tosca-so"         9 minutes ago   Up 9 minutes               0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
+	b532f72f21d1   cci/tosca-gawp:latest       "./tosca-gawp"       9 minutes ago   Up 9 minutes               0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
+	2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
+	289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 
 ## Building model csars
 
@@ -231,21 +234,21 @@ b532f72f21d1   cci/tosca-gawp:latest       "./tosca-gawp"       9 minutes ago   
 
 1.SDWAN: 
   
- Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
+Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
 2.FW:
   
- Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
+Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
 3.NONRTRIC:
   
- Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
+Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
