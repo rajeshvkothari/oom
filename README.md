@@ -1,15 +1,15 @@
-# Title
+# GIM
 
 ## Pre-deployment steps
-1.DCAE&DMAP server:
+- DCAE&DMAP server:
+   Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
+
+	Image: ubuntu-18.04
+	InstanceType: t2.large
+	Storage: 80GB
+	KeyPair : cciPublicKey
 	
-1] Create AWS VM(DCAE&DMAP) in Ohio region with following specifications and SSH it using Putty:
-Image: ubuntu-18.04
-InstanceType: t2.large
-Storage: 80GB
-KeyPair : cciPublicKey
-	
-2] Setup Docker on DCAE&DMAP
+2]Setup Docker on DMAAP&DCAE
 ```sh
 sudo apt update
 sudo apt install docker.io
@@ -50,10 +50,11 @@ docker-compose up -d
 2.Demo server:
 	
 1] Create AWS VM(demo_server) with following specifications and SSH it using Putty:
-Image: ubuntu-18.04
-InstanceType: t2.large
-Storage: 80GB
-KeyPair : cciPublicKey
+
+	Image: ubuntu-18.04
+	InstanceType: t2.large
+	Storage: 80GB
+	KeyPair : cciPublicKey
 	  
 2] Setup Docker on demo_server
 ```sh
@@ -212,7 +213,7 @@ Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and D
 		remotePort=22
 		remoteUser=ubuntu
 		remotePubKey=/opt/app/config/cciPrivateKey
-		msgBusURL=54.196.51.118:3904
+		msgBusURL={IP_OF_DMAAP&DCAE}:3904
 		schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
 Note:IP_OF_demo_server is VM which we created at start
@@ -496,7 +497,7 @@ Ts:
 1.Docker Images:
 
 There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them.
-To test the oran model we have to first create a oran setup on AWS. So to setup oran cluster follow the below wiki page:
+To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
 
 	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
 
