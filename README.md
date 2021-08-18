@@ -3,7 +3,7 @@
 ## Pre-deployment steps
 - DCAE&DMAP server:
 
-   _ Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
+   - Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
    
 		Image: ubuntu-18.04
 		InstanceType: t2.large
