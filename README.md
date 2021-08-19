@@ -333,7 +333,7 @@ Table of contents
   
 - **Steps to verify:**
  
-  Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
+  Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
   - Verify Sdwan Model:  
  
