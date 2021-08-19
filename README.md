@@ -4,8 +4,8 @@ Table of contents
 
 <!--ts-->
    * [Pre deployment steps](#Pre-deployment-steps)
-   * [Building images for puccini tosca components](#Building-images-for-puccini-tosca-components)
    * [Building model csars](#Building-model-csars)
+   * [Building images for puccini tosca components](#Building-images-for-puccini-tosca-components)
    * [Steps to Deploying puccini components](#Steps-to-Deploying-puccini-components)
    * [Summary of options avaiable](#Summary-of-options-avaiable)
    * [Deploying models using docker images](#Deploying-models-using-docker-images)
@@ -16,12 +16,13 @@ Table of contents
 - **DMAP server:**
 
   - Create AWS VM(DMAP server) in Ohio region with following specifications and SSH it using Putty:
-     
+    
+    ```sh
     Image: ubuntu-18.04
     InstanceType: t2.large
     Storage: 80GB
     KeyPair : cciPublicKey
-     
+    ``` 
   - Setup Docker on DMAP server:
     ```sh
     sudo apt update
@@ -57,11 +58,13 @@ Table of contents
 - **Demo server:**
 
   - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
-		
+    
+    ```sh		
     Image: ubuntu-18.04
     InstanceType: t2.large
     Storage: 80GB
     KeyPair : cciPublicKey
+    ```
     
   - Setup Docker on demo_server
     ```sh
