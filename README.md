@@ -9,37 +9,34 @@
 		InstanceType: t2.large
 		Storage: 80GB
 		KeyPair : cciPublicKey
-    - Setup Docker on DMAAP&DCAE
-```sh
-sudo apt update
-sudo apt install docker.io
-sudo apt  install docker-compose
-sudo systemctl stop docker 
-sudo systemctl start docker
-sudo systemctl status docker
-sudo chmod 777 /var/run/docker.sock
-```
-
-Make sure docker is insatll properly by running below command :
-		
-```sh
-docker info
-```	
-   - Clone the the 
-```sh
-mkdir ~/local-dmaap
-git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
-```
-
-Made changes in docker-compose.yaml file:
-	/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	 
-	After Chnages:
+    - Setup Docker on DMAAP&DCAE:
+      ```sh
+      sudo apt update
+      sudo apt install docker.io
+      sudo apt  install docker-compose
+      sudo systemctl stop docker 
+      sudo systemctl start docker
+      sudo systemctl status docker
+      sudo chmod 777 /var/run/docker.sock
+      ```
+      Make sure docker is insatll properly by running below command :		
+      ```sh
+      docker info
+      ```	
+   - Clone the messageservice folder
+     ```sh
+     mkdir ~/local-dmaap
+     git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
+    ``
+    Made changes in docker-compose.yaml file:
+    /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	 
+    After Chnages:
 		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
    - TO the Start dmaap Server:
-```sh
-cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
-docker-compose up -d
-```
+     ```sh
+     cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
+     docker-compose up -d
+     ```
 - Demo server:
    - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
 		
