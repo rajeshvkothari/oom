@@ -430,45 +430,52 @@ In application.cfg file we menation all the puccini tosca components.
 ## Deploying models using docker images
 - Steps to deplpoy:
   - Docker images: 
-    There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we 	         have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
+   
+    There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we 	       have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup       on AWS. So to step up the oran cluster follow the below wiki page:
 
-	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
+    ```sh	
+    http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
+    ```
 
-	To access the above wiki page credentials are
+    To access the above wiki page credentials are
 	
-	Username: Divan
-	Passowrd: wikiaccess
+    Username: Divan
+    Passowrd: wikiaccess
 
-	- Store Model In Dgraph:
-	
-	  	POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
-			{
-				"url":"/opt/app/models/<ModelName>.csar",
-				"resolve":true,
-				"coerce":false,
-				"quirks": ["data_types.string.permissive"],
-				"output": "./<ModelName>-dgraph-clout.json",
-				"inputs":"",
-				"inputsUrl": ""
-			}
+        - Store Model In Dgraph:
+	  
+	  ```sh
+	  POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
+	  	{
+		  "url":"/opt/app/models/<ModelName>.csar",
+		  "resolve":true,
+		  "coerce":false,
+		  "quirks": ["data_types.string.permissive"],
+		  "output": "./<ModelName>-dgraph-clout.json",
+		  "inputs":"",
+		  "inputsUrl": ""
+		}
+	  ```  	
 			 
-	  	e.g:
-			{
-				"url":"/opt/app/models/firewall.csar",
-				"output": "./firewall-dgraph-clout.json",
-			}			 
-			{
-				"url":"/opt/app/models/sdwan.csar",
-				"output": "./sdwan-dgraph-clout.json",
-			}
+	  e.g:
+	  ```sh
+		{
+		  "url":"/opt/app/models/firewall.csar",
+		  "output": "./firewall-dgraph-clout.json",
+		}			 
+		{
+		  "url":"/opt/app/models/sdwan.csar",
+		  "output": "./sdwan-dgraph-clout.json",
+		}
+	  ```	
 			
           Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
         - Create Instances With Deploy:
 	
-	  	For Sdwan,Firewall:
+	  For Sdwan,Firewall:
 				
-	  	POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
 				{
 					"name" : "<Instance_Name>",
 					"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
