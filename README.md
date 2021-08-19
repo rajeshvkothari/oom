@@ -472,8 +472,7 @@ In application.cfg file we menation all the puccini tosca components.
 		  "inputs":"",
 		  "inputsUrl": ""
 		}
-	  ```  	
-			 
+	  ```  		 
 	  e.g:
 	  ```sh
 		{
@@ -484,9 +483,8 @@ In application.cfg file we menation all the puccini tosca components.
 		  "url":"/opt/app/models/sdwan.csar",
 		  "output": "./sdwan-dgraph-clout.json",
 		}
-	  ```	
-			
-       Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+	  ```			
+          Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
 	- Create Instances With Deploy:
 	
@@ -505,9 +503,8 @@ In application.cfg file we menation all the puccini tosca components.
 		"service":"<service_url_for_model>",
 		"coerce":false
 	  }
-	  ```
-				
-	Use Following InputUrl And Service In Api Body For:
+	  ```			
+          Use Following InputUrl And Service In Api Body For:
 	  ```sh
 	  --Firewall:
 		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
@@ -516,11 +513,9 @@ In application.cfg file we menation all the puccini tosca components.
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	  ```
-	  
-	Note : ExecuteWorkfow Deploy model 
+          Note : ExecuteWorkfow Deploy model 
 
 	- ExecuteWorkfow API With Deploy("list-steps-only": false):
-	  
 	  ```sh
           POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
