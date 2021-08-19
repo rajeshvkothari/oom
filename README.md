@@ -441,7 +441,7 @@ In application.cfg file we menation all the puccini tosca components.
 
 	- Store Model In Dgraph:
 	
-	    POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
+	  	POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
 			{
 				"url":"/opt/app/models/<ModelName>.csar",
 				"resolve":true,
@@ -452,7 +452,7 @@ In application.cfg file we menation all the puccini tosca components.
 				"inputsUrl": ""
 			}
 			 
-	    e.g:
+	  	e.g:
 			{
 				"url":"/opt/app/models/firewall.csar",
 				"output": "./firewall-dgraph-clout.json",
@@ -462,13 +462,13 @@ In application.cfg file we menation all the puccini tosca components.
 				"output": "./sdwan-dgraph-clout.json",
 			}
 			
-            Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+          Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
         - Create Instances With Deploy:
 	
-		For Sdwan,Firewall:
+	  	For Sdwan,Firewall:
 				
-			POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+	  	POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
 				{
 					"name" : "<Instance_Name>",
 					"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -482,7 +482,7 @@ In application.cfg file we menation all the puccini tosca components.
 					"coerce":false
 				}
 				
-		Use Following InputUrl And Service In Api Body For:
+	  Use Following InputUrl And Service In Api Body For:
 
 			--Firewall:
 					"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
@@ -493,11 +493,11 @@ In application.cfg file we menation all the puccini tosca components.
 				  
 			
 
-	Note : ExecuteWorkfow Deploy model 
+	  Note : ExecuteWorkfow Deploy model 
 
         - ExecuteWorkfow API With Deploy("list-steps-only": false):
 	
-          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+          	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 			{
 				"list-steps-only": false,
 				"execute-policy": true
@@ -505,15 +505,15 @@ In application.cfg file we menation all the puccini tosca components.
 			
         - Execute Policy: 
 	
-	  POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	 
         - Stop Policy:
 	
-	  DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  	DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    
         - Get Policies:
 	
-	  GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
+	  	GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
   - ONAP OOM:
   
 - Steps to verify: Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
