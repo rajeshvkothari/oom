@@ -3,66 +3,70 @@
 ## Pre-deployment steps
 - DCAE&DMAP server:
 
-   - Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
-   
-		Image: ubuntu-18.04
-		InstanceType: t2.large
-		Storage: 80GB
-		KeyPair : cciPublicKey
-    - Setup Docker on DMAAP&DCAE:
-      ```sh
-      sudo apt update
-      sudo apt install docker.io
-      sudo apt  install docker-compose
-      sudo systemctl stop docker 
-      sudo systemctl start docker
-      sudo systemctl status docker
-      sudo chmod 777 /var/run/docker.sock
-      ```
-      Make sure docker is insatll properly by running below command :		
-      ```sh
-      docker info
-      ```	
-   - Clone the messageservice folder:
-     ```sh
-     mkdir ~/local-dmaap
-     git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
-     ```
+  - Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
+     
+    Image: ubuntu-18.04
+    InstanceType: t2.large
+    Storage: 80GB
+    KeyPair : cciPublicKey
+     
+  - Setup Docker on DMAAP&DCAE:
+    ```sh
+    sudo apt update
+    sudo apt install docker.io
+    sudo apt  install docker-compose
+    sudo systemctl stop docker 
+    sudo systemctl start docker
+    sudo systemctl status docker
+    sudo chmod 777 /var/run/docker.sock
+    ```
+    Make sure docker is insatll properly by running below command :		
+    ```sh
+    docker info
+    ```	
+  - Clone the messageservice folder:
+    ```sh
+    mkdir ~/local-dmaap
+    git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
+    ```
     
     Made changes in docker-compose.yaml file:
     
     /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	
     
     After Chnages:
-		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
-   - To Start dmaap Server:
-     ```sh
-     cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
-     docker-compose up -d
-     ```
+		image: 172.31.27.186:5000/dmaap:localadapt_0.1
+		
+  - To Start dmaap Server:
+    ```sh
+    cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
+    docker-compose up -d
+    ```
 - Demo server:
-   - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
-		
-		Image: ubuntu-18.04
-		InstanceType: t2.large
-		Storage: 80GB
-		KeyPair : cciPublicKey
-   - Setup Docker on demo_server
-     ```sh
-     sudo apt update
-     sudo apt install docker.io
-     sudo apt  install docker-compose
-     sudo systemctl stop docker 
-     sudo systemctl start docker
-     sudo systemctl status docker
-     sudo chmod 777 /var/run/docker.sock
-     ```
 
-     Make sure docker is insatll properly by running below command :
+  - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
 		
-     ```sh
-     docker info
-     ```
+    Image: ubuntu-18.04
+    InstanceType: t2.large
+    Storage: 80GB
+    KeyPair : cciPublicKey
+    
+  - Setup Docker on demo_server
+    ```sh
+    sudo apt update
+    sudo apt install docker.io
+    sudo apt  install docker-compose
+    sudo systemctl stop docker 
+    sudo systemctl start docker
+    sudo systemctl status docker
+    sudo chmod 777 /var/run/docker.sock
+    ```
+
+    Make sure docker is insatll properly by running below command :
+		
+    ```sh
+    docker info
+    ```
 
 ## Building images for puccini tosca components
 - List of components and their summary:
@@ -70,7 +74,7 @@
   - TOSCA_COMPILER:
   - TOSCA_WORKFLOW:
   - TOSCA_POLICY:
-  -TOSCA_GAWP:
+  - TOSCA_GAWP:
 
 - Steps to build each component:
   - clone puccini:
@@ -78,8 +82,9 @@
     git clone https://github.com/customercaresolutions/puccini
     ```
   - Made following changes in puccini:
-   - puccini\docker-compose.yml:
-				 orchestrator:
+    
+    - puccini docker-compose.yml:
+      				orchestrator:
 					 build:
 					   context: .
 					   dockerfile: Dockerfile.so.multistage
@@ -126,6 +131,7 @@
 					   -  ./dvol/log:/opt/app/log
 				 
   Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
+    
     - Modify ~/puccini/dvol/config/application.cfg:
 		[remote]
 		remoteHost={IP_OF_demo_server}
@@ -135,7 +141,7 @@
 		msgBusURL={IP_OF_DMAAP&DCAE}:3904
 		schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-Note:IP_OF_demo_server is VM which we created at start
+  Note:IP_OF_demo_server is VM which we created at start
     - Copy files as given below:
 	- Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
 	- Copy cciPrivateKey  to ~/puccini/dvol/config/
@@ -171,21 +177,31 @@ Here we check that status of each container should be UP not Exited.
 
   - Push images to repository:
 
-      tosca-so:
-         docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
-         docker push <repository_name>/tosca-so:<version>
-      tosca-compiler:
-         docker tag cci/tosca-compiler:latest <repository_name>/tosca-compiler:<version>
-         docker push <repository_name>/tosca-compiler:<version>
-      tosca-workflow:	
-         docker tag cci/tosca-workflow:latest <repository_name>/tosca-workflow:<version>
-         docker push <repository_name>/tosca-workflow:<version>
-      tosca-policy:	
-         docker tag cci/tosca-policy:latest <repository_name>/tosca-policy:<version>
-         docker push <repository_name>/tosca-policy:<version>
-	  tosca-gawp:	 
-         docker tag cci/tosca-gawp:latest <repository_name>/tosca-gawp:<version>
-         docker push <repository_name>/tosca-gawp:<version>
+    - tosca-so:
+      ```sh   
+      docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
+      docker push <repository_name>/tosca-so:<version>
+      ```
+    - tosca-compiler:
+      ```sh
+      docker tag cci/tosca-compiler:latest <repository_name>/tosca-compiler:<version>
+      docker push <repository_name>/tosca-compiler:<version>
+      ```
+    - tosca-workflow:	
+      ```sh
+      docker tag cci/tosca-workflow:latest <repository_name>/tosca-workflow:<version>
+      docker push <repository_name>/tosca-workflow:<version>
+      ```
+    - tosca-policy:	
+      ```sh
+      docker tag cci/tosca-policy:latest <repository_name>/tosca-policy:<version>
+      docker push <repository_name>/tosca-policy:<version>
+      ```
+    - tosca-gawp:	 
+      ```sh
+      docker tag cci/tosca-gawp:latest <repository_name>/tosca-gawp:<version>
+      docker push <repository_name>/tosca-gawp:<version>
+      ```
 
 ## Building model csars
 
