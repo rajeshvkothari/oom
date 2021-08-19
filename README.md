@@ -84,64 +84,66 @@
   - Made following changes in puccini:
 
 	- puccini\docker-compose.yml:
-          ```sh		
-          orchestrator:
-                  build:
-		    context: .
-		    dockerfile: Dockerfile.so.multistage
-                  volumes:
-		    -  ./dvol/config:/opt/app/config
-		    -  ./dvol/models:/opt/app/models
-		    -  ./dvol/data:/opt/app/data
-		    -  ./dvol/log:/opt/app/log		   
-          compiler:
-		  build:
-		    context: .
-		    dockerfile: Dockerfile.compiler.multistage
-		  volumes:
-		    -  ./dvol/config:/opt/app/config
-		    -  ./dvol/models:/opt/app/models
-		    -  ./dvol/data:/opt/app/data
-		    -  ./dvol/log:/opt/app/log
-          workflow:
-		  build:
-		    context: .
-                    dockerfile: Dockerfile.workflow.multistage
-		  volumes:
-		    -  ./dvol/config:/opt/app/config
-		    -  ./dvol/models:/opt/app/models
-		    -  ./dvol/data:/opt/app/data
-		    -  ./dvol/log:/opt/app/log
-          policy:
-		  build:
-	            context: .
-                    dockerfile: Dockerfile.policy.multistage
-		  volumes:
-		    -  ./dvol/config:/opt/app/config
-		    -  ./dvol/models:/opt/app/models
-		    -  ./dvol/data:/opt/app/data
-		    -  ./dvol/log:/opt/app/log
-          gawp:
-		  build:
-		    context: .
-		    dockerfile: Dockerfile.gawp.multistage
-		  volumes:
-		     -  ./dvol/config:/opt/app/config
-		     -  ./dvol/models:/opt/app/models
-		     -  ./dvol/data:/opt/app/data
-		     -  ./dvol/log:/opt/app/log
-	  ```			
+	
+		  ```sh		
+		  orchestrator:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.so.multistage
+			  volumes:
+			    -  ./dvol/config:/opt/app/config
+			    -  ./dvol/models:/opt/app/models
+			    -  ./dvol/data:/opt/app/data
+			    -  ./dvol/log:/opt/app/log		   
+		  compiler:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.compiler.multistage
+			  volumes:
+			    -  ./dvol/config:/opt/app/config
+			    -  ./dvol/models:/opt/app/models
+			    -  ./dvol/data:/opt/app/data
+			    -  ./dvol/log:/opt/app/log
+		  workflow:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.workflow.multistage
+			  volumes:
+			    -  ./dvol/config:/opt/app/config
+			    -  ./dvol/models:/opt/app/models
+			    -  ./dvol/data:/opt/app/data
+			    -  ./dvol/log:/opt/app/log
+		  policy:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.policy.multistage
+			  volumes:
+			    -  ./dvol/config:/opt/app/config
+			    -  ./dvol/models:/opt/app/models
+			    -  ./dvol/data:/opt/app/data
+			    -  ./dvol/log:/opt/app/log
+		  gawp:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.gawp.multistage
+			  volumes:
+			     -  ./dvol/config:/opt/app/config
+			     -  ./dvol/models:/opt/app/models
+			     -  ./dvol/data:/opt/app/data
+			     -  ./dvol/log:/opt/app/log
+		  ```	
+	  
 	  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
 
 	- Modify ~/puccini/dvol/config/application.cfg as below:					
 			
-	  [remote]
-	  remoteHost={IP_OF_demo_server}
-	  remotePort=22
-	  remoteUser=ubuntu
-	  remotePubKey=/opt/app/config/cciPrivateKey
-	  msgBusURL=54.196.51.118:3904
-	  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+		  [remote]
+		  remoteHost={IP_OF_demo_server}
+		  remotePort=22
+		  remoteUser=ubuntu
+		  remotePubKey=/opt/app/config/cciPrivateKey
+		  msgBusURL=54.196.51.118:3904
+		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
 	  Note:IP_OF_demo_server is VM which we created at start
 
@@ -428,7 +430,7 @@ In application.cfg file we menation all the puccini tosca components.
 ## Deploying models using docker images
 - Steps to deplpoy:
   - Docker images: 
-	There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
+    There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we 	         have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
 
 	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
 
@@ -437,9 +439,9 @@ In application.cfg file we menation all the puccini tosca components.
 	Username: Divan
 	Passowrd: wikiaccess
 
-	  - Store Model In Dgraph:
+	- Store Model In Dgraph:
 	
-		POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
+	    POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
 			{
 				"url":"/opt/app/models/<ModelName>.csar",
 				"resolve":true,
@@ -450,7 +452,7 @@ In application.cfg file we menation all the puccini tosca components.
 				"inputsUrl": ""
 			}
 			 
-		e.g:
+	    e.g:
 			{
 				"url":"/opt/app/models/firewall.csar",
 				"output": "./firewall-dgraph-clout.json",
@@ -460,9 +462,9 @@ In application.cfg file we menation all the puccini tosca components.
 				"output": "./sdwan-dgraph-clout.json",
 			}
 			
-		Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+            Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
-      - Create Instances With Deploy:
+        - Create Instances With Deploy:
 	
 		For Sdwan,Firewall:
 				
@@ -491,27 +493,27 @@ In application.cfg file we menation all the puccini tosca components.
 				  
 			
 
-		Note : ExecuteWorkfow Deploy model 
+	Note : ExecuteWorkfow Deploy model 
 
-      - ExecuteWorkfow API With Deploy("list-steps-only": false):
+        - ExecuteWorkfow API With Deploy("list-steps-only": false):
 	
-		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 			{
 				"list-steps-only": false,
 				"execute-policy": true
 			}
 			
-      - Execute Policy: 
+        - Execute Policy: 
 	
-		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	 
-      - Stop Policy:
+        - Stop Policy:
 	
-		DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    
-      - Get Policies:
+        - Get Policies:
 	
-		GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
+	  GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
   - ONAP OOM:
   
 - Steps to verify: Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
