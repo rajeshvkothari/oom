@@ -458,99 +458,6 @@ Ts:
 		"coerce":true
 		}
 
-## Various methods of deployment/testing
-
-1.Docker Images:
-
-There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them.
-To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
-
-	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-
-To access the above wiki page credentials are
-	
-	Username: Divan
-	Passowrd: wikiaccess
-
-1]Store Model In Dgraph:
-	
-	POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
-		{
-			"url":"/opt/app/models/<ModelName>.csar",
-			"resolve":true,
-			"coerce":false,
-			"quirks": ["data_types.string.permissive"],
-			"output": "./<ModelName>-dgraph-clout.json",
-			"inputs":"",
-			"inputsUrl": ""
-		}
-			 
-e.g:
-	{
-		"url":"/opt/app/models/firewall.csar",
-		"output": "./firewall-dgraph-clout.json",
-	}			 
-	{
-		"url":"/opt/app/models/sdwan.csar",
-		"output": "./sdwan-dgraph-clout.json",
-	}
-			
-Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
-
-2]Create Instances With Deploy:
-	
-For Sdwan,Firewall:
-		
-	POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
-		{
-			"name" : "<Instance_Name>",
-			"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-			"inputs": "",
-			"inputsUrl":"<input_url_for_model>",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": true,
-			"service":"<service_url_for_model>",
-			"coerce":false
-		}
-		
-Use Following InputUrl And Service In Api Body For:
-
-	--Firewall:
-			"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-			"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	--Sdwan:
-			"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-			"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-		  
-	
-
-Note : ExecuteWorkfow Deploy model 
-
-3]ExecuteWorkfow API With Deploy("list-steps-only": false):
-	
-	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
-		{
-			"list-steps-only": false,
-			"execute-policy": true
-		}
-			
-4]Execute Policy: 
-	
-	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-	 
-5]Stop Policy:
-	
-	DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-   
-6]Get Policies:
-	
-	GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies
-
-
-2.ONAP OOM
-
 ## Summary of options avaiable
 
 - list-steps, execute-workflow:
@@ -564,10 +471,96 @@ There is option called "list-steps-only" key-pair present in API body If the "li
 In application.cfg file we menation all the puccini tosca components.
  
 ## Deploying models using docker images
+-Steps to deplpoy:
+  - Docker images: 
+	There are total seven model puccini tosca Sdwan,Firewall, Oran(Nonrtric,Ric,Qp,Qp-driver,ts). To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below createInstance,ExecuteWorkfow API to test them.
+	To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
 
-- Steps to verify:
+	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
+
+	To access the above wiki page credentials are
 	
-Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
+	Username: Divan
+	Passowrd: wikiaccess
+
+	  - Store Model In Dgraph:
+	
+		POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
+			{
+				"url":"/opt/app/models/<ModelName>.csar",
+				"resolve":true,
+				"coerce":false,
+				"quirks": ["data_types.string.permissive"],
+				"output": "./<ModelName>-dgraph-clout.json",
+				"inputs":"",
+				"inputsUrl": ""
+			}
+			 
+		e.g:
+			{
+				"url":"/opt/app/models/firewall.csar",
+				"output": "./firewall-dgraph-clout.json",
+			}			 
+			{
+				"url":"/opt/app/models/sdwan.csar",
+				"output": "./sdwan-dgraph-clout.json",
+			}
+			
+		Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+
+      - Create Instances With Deploy:
+	
+		For Sdwan,Firewall:
+				
+			POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+				{
+					"name" : "<Instance_Name>",
+					"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
+					"inputs": "",
+					"inputsUrl":"<input_url_for_model>",
+					"generate-workflow":true,
+					"execute-workflow":true,
+					"list-steps-only":false,
+					"execute-policy": true,
+					"service":"<service_url_for_model>",
+					"coerce":false
+				}
+				
+		Use Following InputUrl And Service In Api Body For:
+
+			--Firewall:
+					"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+					"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+			--Sdwan:
+					"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+					"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+				  
+			
+
+		Note : ExecuteWorkfow Deploy model 
+
+      - ExecuteWorkfow API With Deploy("list-steps-only": false):
+	
+		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+			{
+				"list-steps-only": false,
+				"execute-policy": true
+			}
+			
+      - Execute Policy: 
+	
+		POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	 
+      - Stop Policy:
+	
+		DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+   
+      - Get Policies:
+	
+		GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
+  - ONAP OOM:
+  
+- Steps to verify: Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   - Verify Sdwan Model:  
  
 	- Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
