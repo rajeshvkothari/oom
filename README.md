@@ -23,16 +23,19 @@
       ```sh
       docker info
       ```	
-   - Clone the messageservice folder
+   - Clone the messageservice folder:
      ```sh
      mkdir ~/local-dmaap
      git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
-    ``
+     ```
+    
     Made changes in docker-compose.yaml file:
-    /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	 
+    
+    /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	
+    
     After Chnages:
 		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
-   - TO the Start dmaap Server:
+   - To Start dmaap Server:
      ```sh
      cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
      docker-compose up -d
@@ -45,21 +48,21 @@
 		Storage: 80GB
 		KeyPair : cciPublicKey
    - Setup Docker on demo_server
-```sh
-sudo apt update
-sudo apt install docker.io
-sudo apt  install docker-compose
-sudo systemctl stop docker 
-sudo systemctl start docker
-sudo systemctl status docker
-sudo chmod 777 /var/run/docker.sock
-```
+     ```sh
+     sudo apt update
+     sudo apt install docker.io
+     sudo apt  install docker-compose
+     sudo systemctl stop docker 
+     sudo systemctl start docker
+     sudo systemctl status docker
+     sudo chmod 777 /var/run/docker.sock
+     ```
 
-Make sure docker is insatll properly by running below command :
+     Make sure docker is insatll properly by running below command :
 		
-```sh
-docker info
-```
+     ```sh
+     docker info
+     ```
 
 ## Building images for puccini tosca components
 - List of components and their summary:
@@ -71,61 +74,11 @@ docker info
 
 - Steps to build each component:
   - clone puccini:
-```sh
-git clone https://github.com/customercaresolutions/puccini
-```
+    ```sh
+    git clone https://github.com/customercaresolutions/puccini
+    ```
   - Made following changes in puccini:
-    - puccini\docker-compose.yml:
-			 Uncomment following part:
-			 
-			   Before:
-				 orchestrator:
-				   #    build:
-				   #      context: .
-				   #      dockerfile: Dockerfile.so.multistage
-						volumes:
-						  -  ../workdir/dvol/config:/opt/app/config
-						  -  ../workdir/dvol/models:/opt/app/models
-						  -  ../wrokdir/dvol/data:/opt/app/data
-						  -  ../workdir/dvol/log:/opt/app/log	
-				 compiler:
-				   #     build:
-				   #       context: .
-				   #       dockerfile: Dockerfile.compiler.multistage
-						 volumes:
-						   -  ../workdir/dvol/config:/opt/app/config
-						   -  ../workdir/dvol/models:/opt/app/models
-						   -  ../wrokdir/dvol/data:/opt/app/data
-						   -  ../workdir/dvol/log:/opt/app/log	 
-				 workflow:
-				   #    build:
-				   #      context: .
-				   #      dockerfile: Dockerfile.workflow.multistage
-						volumes:
-						  -  ../workdir/dvol/config:/opt/app/config
-						  -  ../workdir/dvol/models:/opt/app/models
-						  -  ../workdir/dvol/data:/opt/app/data
-						  -  ../workdir/dvol/log:/opt/app/log
-				 policy:
-				   #    build:
-				   #      context: .
-				   #      dockerfile: Dockerfile.policy.multistage
-						volumes:
-						  -  ../workdir/dvol/config:/opt/app/config
-						  -  ../workdir/dvol/models:/opt/app/models
-						  -  ../workdir/dvol/data:/opt/app/data
-						  -  ../workdir/dvol/log:/opt/app/log
-				 gawp:
-				   #    build:
-				   #      context: .
-				   #      dockerfile: Dockerfile.gawp.multistage
-						volumes:
-						  -  ../workdir/dvol/config:/opt/app/config
-						  -  ../workdir/dvol/models:/opt/app/models
-						  -  ../workdir/dvol/data:/opt/app/data
-						  -  ../workdir/dvol/log:/opt/app/log
-				
-			   After:
+   - puccini\docker-compose.yml:
 				 orchestrator:
 					 build:
 					   context: .
@@ -172,20 +125,8 @@ git clone https://github.com/customercaresolutions/puccini
 					   -  ./dvol/data:/opt/app/data
 					   -  ./dvol/log:/opt/app/log
 				 
-Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
+  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
     - Modify ~/puccini/dvol/config/application.cfg:
-					
-	Before:
-		[remote]
-		remoteHost=bonap-server.com
-		remotePort=22
-		remoteUser=ubuntu
-		remotePubKey=/opt/app/config/ohio-key-pair.pem
-		msgBusURL=mwssage-router:3904
-		schemaFilePath=../config/TOSCA-Dgraph-schema.txt
-		
-		
-	After:
 		[remote]
 		remoteHost={IP_OF_demo_server}
 		remotePort=22
@@ -196,26 +137,25 @@ Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and D
 				  
 Note:IP_OF_demo_server is VM which we created at start
     - Copy files as given below:
-  
 	- Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
 	- Copy cciPrivateKey  to ~/puccini/dvol/config/
 	- Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
 
   - Build Docker images:
-```sh
-cd ~/puccini
-docker-compose up -d
-```
+    ```sh
+    cd ~/puccini
+    docker-compose up -d
+    ```
 
   - Check wither the images are created:
-```sh
-docker images -a
-```
+    ```sh
+    docker images -a
+    ```
 	
   - verify all docker container should be in running state:
-```sh
-docker ps -a
-```
+    ```sh
+    docker ps -a
+    ```
 	
 Here we check that status of each container should be UP not Exited.
 	
@@ -249,43 +189,43 @@ Here we check that status of each container should be UP not Exited.
 
 ## Building model csars
 
-- List of models and their summary
-
+- List of models and their summary:
+	
   - SDWAN:
-Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
-```sh
-./build.sh
-```  
+    Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```  
   - FW:
-Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
   - NONRTRIC:
-Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
   - RIC:
-Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
   - QP:
-Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
   - QP-DRIVER:
-Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
   - TS:
-Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
-```sh
-./build.sh
-```
+    Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
 
 ## Steps to Deploying puccini components:
 	
@@ -294,14 +234,14 @@ Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
 	git clone https://github.com/customercaresolutions/puccini
 	git clone https://github.com/customercaresolutions/tosca-models
 	
-Create a Workspace in Visual Stdio and and both above folder into workspace.
+ Create a Workspace in Visual Stdio and and both above folder into workspace.
 
 - Start dgraph => clean all data from dgraph
 
 - Open new terminal with Git Bash with puccini/scripts folder to build our .exe: 
-```bash
-sh build
-```
+  ```bash
+  sh build
+  ```
 
 - Open new seprate terminal for puccini components and run those as below:
 
