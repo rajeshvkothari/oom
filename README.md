@@ -1,4 +1,4 @@
-# GIM
+# GIN
 
 ## Pre-deployment steps
 - DCAE&DMAP server:
