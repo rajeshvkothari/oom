@@ -9,7 +9,7 @@
 		InstanceType: t2.large
 		Storage: 80GB
 		KeyPair : cciPublicKey
-   _ Setup Docker on DMAAP&DCAE
+    - Setup Docker on DMAAP&DCAE
 ```sh
 sudo apt update
 sudo apt install docker.io
@@ -25,7 +25,7 @@ Make sure docker is insatll properly by running below command :
 ```sh
 docker info
 ```	
-   _ Clone the the 
+   - Clone the the 
 ```sh
 mkdir ~/local-dmaap
 git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
@@ -35,19 +35,19 @@ Made changes in docker-compose.yaml file:
 	/home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	 
 	After Chnages:
 		image: 172.31.27.186:5000/dmaap:localadapt_0.1	
-   _ TO the Start dmaap Server:
+   - TO the Start dmaap Server:
 ```sh
 cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
 docker-compose up -d
 ```
 - Demo server:
-   Create AWS VM(demo_server) with following specifications and SSH it using Putty:
+   - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
 		
 		Image: ubuntu-18.04
 		InstanceType: t2.large
 		Storage: 80GB
 		KeyPair : cciPublicKey
-   Setup Docker on demo_server
+   - Setup Docker on demo_server
 ```sh
 sudo apt update
 sudo apt install docker.io
@@ -65,28 +65,20 @@ docker info
 ```
 
 ## Building images for puccini tosca components
-1.List of components and their summary:
-	
-1]TOSCA_SO:
-		
-2]TOSCA_COMPILER:
-	
-3]TOSCA_WORKFLOW:
-	
-4]TOSCA_POLICY:
-	
-5]TOSCA_GAWP:
+- List of components and their summary:
+  - TOSCA_SO:
+  - TOSCA_COMPILER:
+  - TOSCA_WORKFLOW:
+  - TOSCA_POLICY:
+  -TOSCA_GAWP:
 
-2.Steps to build each component:
-
-1]clone puccini:
+- Steps to build each component:
+  - clone puccini:
 ```sh
 git clone https://github.com/customercaresolutions/puccini
 ```
-		
-2]Made following changes in puccini:
-
-2.1)puccini\docker-compose.yml:
+  - Made following changes in puccini:
+    - puccini\docker-compose.yml:
 			 Uncomment following part:
 			 
 			   Before:
@@ -186,7 +178,7 @@ git clone https://github.com/customercaresolutions/puccini
 				 
 Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
 
-2.2)Modify ~/puccini/dvol/config/application.cfg:
+    - Modify ~/puccini/dvol/config/application.cfg:
 					
 	Before:
 		[remote]
@@ -208,25 +200,24 @@ Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and D
 		schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
 Note:IP_OF_demo_server is VM which we created at start
-
-2.3) Copy files as given below:
-
+    - Copy files as given below:
+  
 	- Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
 	- Copy cciPrivateKey  to ~/puccini/dvol/config/
 	- Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
 
-3]Build Docker images:
+  - Build Docker images:
 ```sh
 cd ~/puccini
 docker-compose up -d
 ```
 
-4]Check wither the images are created:
+  - Check wither the images are created:
 ```sh
 docker images -a
 ```
 	
-5]verify all docker container should be in running state:
+  - verify all docker container should be in running state:
 ```sh
 docker ps -a
 ```
@@ -243,7 +234,7 @@ Here we check that status of each container should be UP not Exited.
 	2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
 	289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 
-6]Push images to repository:
+  - Push images to repository:
 
       tosca-so:
          docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
@@ -265,49 +256,49 @@ Here we check that status of each container should be UP not Exited.
 
 - List of models and their summary
 
-1.SDWAN: 
+  - SDWAN: 
   
 Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-2.FW:
+  - FW:
   
 Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-3.NONRTRIC:
+  - NONRTRIC:
   
 Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-4.RIC:
+  - RIC:
   
 Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-5.QP:
+  - QP:
   
 Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-6.QP-DRIVER:
+  - QP-DRIVER:
   
 Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   
-7.TS:
+  - TS:
   
 Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
 ```sh
