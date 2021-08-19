@@ -1,4 +1,7 @@
-# GIN
+# GIN 
+[Pre deployment steps](#Pre-deployment steps)  
+[Building images for puccini tosca components](#Building images for puccini tosca components)  
+
 
 ## Pre-deployment steps
 - DCAE&DMAP server:
