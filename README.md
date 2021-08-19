@@ -565,7 +565,8 @@ In application.cfg file we menation all the puccini tosca components.
  
 ## Deploying models using docker images
 
-- Steps to verify
+- Steps to verify:
+	
 Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   - Verify Sdwan Model:  
  
