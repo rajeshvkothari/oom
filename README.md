@@ -281,20 +281,22 @@
     Persist model:
     cd C:/
     puccini-tosca compile tosca-models/cci/firewall.csar --output tosca-models/cci/firewallCsarClout.json --format json --persit
-	
+    
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-		{
-			"name" : "<instance_name>",
-			"output": "../../workdir/firewall-dgraph-clout.yaml",
-			"inputs": "",
-			"inputsUrl":"zip:/tosca-models/cci/firewall.csar!/firewall/inputs/aws.yaml",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": true,
-			"service":"zip:/tosca-models/cci/firewall.csar!/firewall/firewall_service.yaml",
-			"coerce":false
-		}
+    {
+	"name" : "<instance_name>",
+	"output": "../../workdir/firewall-dgraph-clout.yaml",
+	"inputs": "",
+	"inputsUrl":"zip:/tosca-models/cci/firewall.csar!/firewall/inputs/aws.yaml",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": true,
+	"service":"zip:/tosca-models/cci/firewall.csar!/firewall/firewall_service.yaml",
+	"coerce":false
+    }
+    ```
 		
   - Sdwan:
 
@@ -442,7 +444,7 @@ In application.cfg file we menation all the puccini tosca components.
     Username: Divan
     Passowrd: wikiaccess
 
-        - Store Model In Dgraph:
+   - Store Model In Dgraph:
 	  
 	  ```sh
 	  POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
