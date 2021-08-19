@@ -81,65 +81,18 @@
     ```sh
     git clone https://github.com/customercaresolutions/puccini
     ```
-  - Made following changes in puccini:
+  - Made following changes in puccini:			 
     
-    - puccini docker-compose.yml:
-      				orchestrator:
-					 build:
-					   context: .
-					   dockerfile: Dockerfile.so.multistage
-					 volumes:
-					   -  ./dvol/config:/opt/app/config
-					   -  ./dvol/models:/opt/app/models
-					   -  ./dvol/data:/opt/app/data
-					   -  ./dvol/log:/opt/app/log
-				 compiler:
-					 build:
-					   context: .
-					   dockerfile: Dockerfile.compiler.multistage
-					 volumes:
-					   -  ./dvol/config:/opt/app/config
-					   -  ./dvol/models:/opt/app/models
-					   -  ./dvol/data:/opt/app/data
-					   -  ./dvol/log:/opt/app/log
-				 workflow:
-					 build:
-					   context: .
-					   dockerfile: Dockerfile.workflow.multistage
-					 volumes:
-					   -  ./dvol/config:/opt/app/config
-					   -  ./dvol/models:/opt/app/models
-					   -  ./dvol/data:/opt/app/data
-					   -  ./dvol/log:/opt/app/log
-				 policy:
-					 build:
-					   context: .
-					   dockerfile: Dockerfile.policy.multistage
-					 volumes:
-					   -  ./dvol/config:/opt/app/config
-					   -  ./dvol/models:/opt/app/models
-					   -  ./dvol/data:/opt/app/data
-					   -  ./dvol/log:/opt/app/log
-				 gawp:
-					 build:
-					   context: .
-					   dockerfile: Dockerfile.gawp.multistage
-					 volumes:
-					   -  ./dvol/config:/opt/app/config
-					   -  ./dvol/models:/opt/app/models
-					   -  ./dvol/data:/opt/app/data
-					   -  ./dvol/log:/opt/app/log
-				 
-  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
-    
-    - Modify ~/puccini/dvol/config/application.cfg:
-		[remote]
-		remoteHost={IP_OF_demo_server}
-		remotePort=22
-		remoteUser=ubuntu
-		remotePubKey=/opt/app/config/cciPrivateKey
-		msgBusURL={IP_OF_DMAAP&DCAE}:3904
-		schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+    Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
+   
+   - Modify ~/puccini/dvol/config/application.cfg:
+	[remote]
+	remoteHost={IP_OF_demo_server}
+	remotePort=22
+	remoteUser=ubuntu
+	remotePubKey=/opt/app/config/cciPrivateKey
+	msgBusURL={IP_OF_DMAAP&DCAE}:3904
+	schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
   Note:IP_OF_demo_server is VM which we created at start
     - Copy files as given below:
