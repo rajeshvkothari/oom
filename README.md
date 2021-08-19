@@ -174,10 +174,8 @@ git clone https://github.com/customercaresolutions/puccini
 					   -  ./dvol/models:/opt/app/models
 					   -  ./dvol/data:/opt/app/data
 					   -  ./dvol/log:/opt/app/log
-	 
 				 
-Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
-
+Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
     - Modify ~/puccini/dvol/config/application.cfg:
 					
 	Before:
@@ -256,67 +254,59 @@ Here we check that status of each container should be UP not Exited.
 
 - List of models and their summary
 
-  - SDWAN: 
-
+  - SDWAN:
 Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```  
   - FW:
-  
 Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   - NONRTRIC:
-  
 Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   - RIC:
-  
 Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   - QP:
-  
 Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   - QP-DRIVER:
-  
 Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
   - TS:
-  
 Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
 
-## Deploying puccini components
-- Steps:
-
-1]Clone the latest puccini and tosca-model from below links and copy those folder in C:/ drive :
+## Steps to Deploying puccini components:
+	
+- Clone the latest puccini and tosca-model from below links and copy those folder in C:/ drive :
 
 	git clone https://github.com/customercaresolutions/puccini
 	git clone https://github.com/customercaresolutions/tosca-models
 	
 Create a Workspace in Visual Stdio and and both above folder into workspace.
 
-2]Start dgraph => clean all data from dgraph
+- Start dgraph => clean all data from dgraph
 
-3]Open new terminal with Git Bash with puccini/scripts folder to build our .exe: 
+- Open new terminal with Git Bash with puccini/scripts folder to build our .exe: 
 ```bash
 sh build
 ```
 
-4]Open new seprate terminal for puccini components and run those as below:
+- Open new seprate terminal for puccini components and run those as below:
 
 	for tosca-so:
 	so
@@ -327,7 +317,7 @@ sh build
 	for tosca-gawp:
 	gawp 
 
-5]Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model:
+- Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model:
 
 Firewall:
 
@@ -563,23 +553,23 @@ Note : ExecuteWorkfow Deploy model
 
 ## Summary of options avaiable
 
-1.list-steps, execute-workflow:
+- list-steps, execute-workflow:
 
 There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it is "false" it means we deploy model on AWS.
 
-2.workflow engine selection (built-in/argo/argo-container-set):
+- workflow engine selection (built-in/argo/argo-container-set):
 
-3.application.cfg:
+- application.cfg:
 
 In application.cfg file we menation all the puccini tosca components.
  
 ## Deploying models using docker images
 
-- Steps to deploy and verify
+- Steps to verify
 
 Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
 
-1.Verify Sdwan Model:  
+  - Verify Sdwan Model:  
  
 	1]Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
 	2]SSH SDWAN_Site_A VM and fire 'ifconfig -a'
@@ -588,13 +578,13 @@ Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-dri
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
 	4]Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
 	
-2.Verify Firewall Model:
+  - Verify Firewall Model:
 
 	1]Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
 	  Validate that number of captured packets by sink will gets increase in 'Graphs' section
 	2]Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
 
-3.Verify Nonrtric Model:
+  - Verify Nonrtric Model:
 	
 	1]Comaands to verify all pods are running using following commands on bonap-server: 
 ```sh	
@@ -602,7 +592,7 @@ kubectl get pods -n nonrtric
 ```
 	2]Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
 	
-4.Verify Ric Model:
+  - Verify Ric Model:
 
 	1]Comaands to verify all pods are running using following commands :
 ```sh		
@@ -612,21 +602,21 @@ kubectl get pods -n ricxapp
 ```		
 	2]Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
 
-5.Verify Qp Model:
+  - Verify Qp Model:
 
 	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
        To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
 	   {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
 	2]Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
 
-6.Verify Qp-driver Model:
+  - Verify Qp-driver Model:
 
 	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
        To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
        {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
 	2]Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
 
-7.Verify Ts Model:
+  - Verify Ts Model:
 
 	1]Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
        To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
