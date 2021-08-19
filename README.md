@@ -84,8 +84,7 @@
   - Made following changes in puccini:
 
 	- puccini\docker-compose.yml:
-	
-		  ```sh		
+		
 		  orchestrator:
 			  build:
 			    context: .
@@ -130,8 +129,7 @@
 			     -  ./dvol/config:/opt/app/config
 			     -  ./dvol/models:/opt/app/models
 			     -  ./dvol/data:/opt/app/data
-			     -  ./dvol/log:/opt/app/log
-		  ```	
+			     -  ./dvol/log:/opt/app/log 
 	  
 	  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
 
@@ -455,9 +453,10 @@ In application.cfg file we menation all the puccini tosca components.
     ```
 
     To access the above wiki page credentials are
-	
-    Username: Divan
-    Passowrd: wikiaccess
+    
+    | Username  | Passowrd |
+    | ------------- | ------------- |
+    | Divan  | wikiaccess |
 
 	- Store Model In Dgraph:
 	  
