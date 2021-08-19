@@ -257,47 +257,41 @@ Here we check that status of each container should be UP not Exited.
 - List of models and their summary
 
   - SDWAN: 
-  
+
 Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
 ```sh
 ./build.sh
-```
-  
+```  
   - FW:
   
 Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
-  
   - NONRTRIC:
   
 Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
-  
   - RIC:
   
 Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
-  
   - QP:
   
 Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
-  
   - QP-DRIVER:
   
 Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
 ```sh
 ./build.sh
 ```
-  
   - TS:
   
 Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
