@@ -1,9 +1,20 @@
 # GIN 
-[Pre deployment steps](#Pre-deployment steps)  
-[Building images for puccini tosca components](#Building images for puccini tosca components)  
+Table of contents
+=================
+
+<!--ts-->
+   * [Pre deployment steps](#Pre-deployment-steps)
+      * [DCAE&DMAP server](#DCAE&DMAP-server)
+      * [Demo server](#Demo-server)
+   * [Tests](#tests)
+   * [Dependency](#dependency)
+   * [Docker](#docker)
+     * [Local](#local)
+     * [Public](#public)
+<!--te-->  
 
 
-## Pre-deployment steps
+## Pre deployment steps
 - DCAE&DMAP server:
 
   - Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
