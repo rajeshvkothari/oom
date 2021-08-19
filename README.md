@@ -81,24 +81,74 @@
     ```sh
     git clone https://github.com/customercaresolutions/puccini
     ```
-  - Made following changes in puccini:			 
-    
-    Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM
-   
-   - Modify ~/puccini/dvol/config/application.cfg:
-	[remote]
-	remoteHost={IP_OF_demo_server}
-	remotePort=22
-	remoteUser=ubuntu
-	remotePubKey=/opt/app/config/cciPrivateKey
-	msgBusURL={IP_OF_DMAAP&DCAE}:3904
-	schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+  - Made following changes in puccini:
+
+	- puccini\docker-compose.yml:
+          ```sh		
+          orchestrator:
+                  build:
+		    context: .
+		    dockerfile: Dockerfile.so.multistage
+                  volumes:
+		    -  ./dvol/config:/opt/app/config
+		    -  ./dvol/models:/opt/app/models
+		    -  ./dvol/data:/opt/app/data
+		    -  ./dvol/log:/opt/app/log		   
+          compiler:
+		  build:
+		    context: .
+		    dockerfile: Dockerfile.compiler.multistage
+		  volumes:
+		    -  ./dvol/config:/opt/app/config
+		    -  ./dvol/models:/opt/app/models
+		    -  ./dvol/data:/opt/app/data
+		    -  ./dvol/log:/opt/app/log
+          workflow:
+		  build:
+		    context: .
+                    dockerfile: Dockerfile.workflow.multistage
+		  volumes:
+		    -  ./dvol/config:/opt/app/config
+		    -  ./dvol/models:/opt/app/models
+		    -  ./dvol/data:/opt/app/data
+		    -  ./dvol/log:/opt/app/log
+          policy:
+		  build:
+	            context: .
+                    dockerfile: Dockerfile.policy.multistage
+		  volumes:
+		    -  ./dvol/config:/opt/app/config
+		    -  ./dvol/models:/opt/app/models
+		    -  ./dvol/data:/opt/app/data
+		    -  ./dvol/log:/opt/app/log
+          gawp:
+		  build:
+		    context: .
+		    dockerfile: Dockerfile.gawp.multistage
+		  volumes:
+		     -  ./dvol/config:/opt/app/config
+		     -  ./dvol/models:/opt/app/models
+		     -  ./dvol/data:/opt/app/data
+		     -  ./dvol/log:/opt/app/log
+	  ```			
+	  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
+
+	- Modify ~/puccini/dvol/config/application.cfg as below:					
+			
+	  [remote]
+	  remoteHost={IP_OF_demo_server}
+	  remotePort=22
+	  remoteUser=ubuntu
+	  remotePubKey=/opt/app/config/cciPrivateKey
+	  msgBusURL=54.196.51.118:3904
+	  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-  Note:IP_OF_demo_server is VM which we created at start
-    - Copy files as given below:
-	- Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
-	- Copy cciPrivateKey  to ~/puccini/dvol/config/
-	- Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
+	  Note:IP_OF_demo_server is VM which we created at start
+
+	- Copy files as given below:
+	  - Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
+	  - Copy cciPrivateKey  to ~/puccini/dvol/config/
+	  - Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
 
   - Build Docker images:
     ```sh
@@ -116,7 +166,7 @@
     docker ps -a
     ```
 	
-Here we check that status of each container should be UP not Exited.
+  - Here we check that status of each container should be UP not Exited.
 	
 	e.g:
 	ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a
@@ -129,32 +179,32 @@ Here we check that status of each container should be UP not Exited.
 	289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 
   - Push images to repository:
-
-    - tosca-so:
-      ```sh   
-      docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
-      docker push <repository_name>/tosca-so:<version>
-      ```
-    - tosca-compiler:
-      ```sh
-      docker tag cci/tosca-compiler:latest <repository_name>/tosca-compiler:<version>
-      docker push <repository_name>/tosca-compiler:<version>
-      ```
-    - tosca-workflow:	
-      ```sh
-      docker tag cci/tosca-workflow:latest <repository_name>/tosca-workflow:<version>
-      docker push <repository_name>/tosca-workflow:<version>
-      ```
-    - tosca-policy:	
-      ```sh
-      docker tag cci/tosca-policy:latest <repository_name>/tosca-policy:<version>
-      docker push <repository_name>/tosca-policy:<version>
-      ```
-    - tosca-gawp:	 
-      ```sh
-      docker tag cci/tosca-gawp:latest <repository_name>/tosca-gawp:<version>
-      docker push <repository_name>/tosca-gawp:<version>
-      ```
+  
+   - tosca-so:
+     ```sh   
+     docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
+     docker push <repository_name>/tosca-so:<version>
+     ```
+   - tosca-compiler:
+     ```sh
+     docker tag cci/tosca-compiler:latest <repository_name>/tosca-compiler:<version>
+     docker push <repository_name>/tosca-compiler:<version>
+     ```
+   - tosca-workflow:	
+     ```sh
+     docker tag cci/tosca-workflow:latest <repository_name>/tosca-workflow:<version>
+     docker push <repository_name>/tosca-workflow:<version>
+     ```
+   - tosca-policy:	
+     ```sh
+     docker tag cci/tosca-policy:latest <repository_name>/tosca-policy:<version>
+     docker push <repository_name>/tosca-policy:<version>
+     ```
+   - tosca-gawp:	 
+     ```sh
+     docker tag cci/tosca-gawp:latest <repository_name>/tosca-gawp:<version>
+     docker push <repository_name>/tosca-gawp:<version>
+     ```
 
 ## Building model csars
 
