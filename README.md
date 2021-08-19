@@ -13,16 +13,16 @@ Table of contents
 
 
 ## Pre deployment steps
-- DCAE&DMAP server:
+- **DMAP server:**
 
-  - Create AWS VM(DMAAP&DCAE) in Ohio region with following specifications and SSH it using Putty:
+  - Create AWS VM(DMAP server) in Ohio region with following specifications and SSH it using Putty:
      
     Image: ubuntu-18.04
     InstanceType: t2.large
     Storage: 80GB
     KeyPair : cciPublicKey
      
-  - Setup Docker on DMAAP&DCAE:
+  - Setup Docker on DMAP server:
     ```sh
     sudo apt update
     sudo apt install docker.io
@@ -54,7 +54,7 @@ Table of contents
     cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
     docker-compose up -d
     ```
-- Demo server:
+- **Demo server:**
 
   - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
 		
@@ -78,6 +78,46 @@ Table of contents
 		
     ```sh
     docker info
+    ```
+
+## Building model csars
+
+- List of models and their summary:
+	
+  - SDWAN:
+    Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```  
+  - FW:
+    Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
+  - NONRTRIC:
+    Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
+  - RIC:
+    Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
+  - QP:
+    Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
+  - QP-DRIVER:
+    Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
+    ```sh
+    ./build.sh
+    ```
+  - TS:
+    Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
+    ```sh
+    ./build.sh
     ```
 
 ## Building images for puccini tosca components
@@ -179,83 +219,17 @@ Table of contents
     ```
 	
   - Here we check that status of each container should be UP not Exited.
-	
-	e.g:
-	ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a
-	CONTAINER ID   IMAGE                       COMMAND              CREATED         STATUS                     PORTS                                                                                                                             NAMES
-	315aa3b27684   cci/tosca-policy:latest     "./tosca-policy"     9 minutes ago   Exited (2) 9 minutes ago                                                                                                                                     puccini_policy_1
-	bd4cc551e0fc   cci/tosca-workflow:latest   "./tosca-workflow"   9 minutes ago   Up 9 minutes               0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-	05b53b9d8fb5   cci/tosca-so:latest         "./tosca-so"         9 minutes ago   Up 9 minutes               0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-	b532f72f21d1   cci/tosca-gawp:latest       "./tosca-gawp"       9 minutes ago   Up 9 minutes               0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-	2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-	289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
-
-  - Push images to repository:
-  
-   - tosca-so:
-     ```sh   
-     docker tag cci/tosca-so:latest <repository_name>/tosca-so:<version>
-     docker push <repository_name>/tosca-so:<version>
-     ```
-   - tosca-compiler:
-     ```sh
-     docker tag cci/tosca-compiler:latest <repository_name>/tosca-compiler:<version>
-     docker push <repository_name>/tosca-compiler:<version>
-     ```
-   - tosca-workflow:	
-     ```sh
-     docker tag cci/tosca-workflow:latest <repository_name>/tosca-workflow:<version>
-     docker push <repository_name>/tosca-workflow:<version>
-     ```
-   - tosca-policy:	
-     ```sh
-     docker tag cci/tosca-policy:latest <repository_name>/tosca-policy:<version>
-     docker push <repository_name>/tosca-policy:<version>
-     ```
-   - tosca-gawp:	 
-     ```sh
-     docker tag cci/tosca-gawp:latest <repository_name>/tosca-gawp:<version>
-     docker push <repository_name>/tosca-gawp:<version>
-     ```
-
-## Building model csars
-
-- List of models and their summary:
-	
-  - SDWAN:
-    Go to the C:/tosca-models/cci/sdwan and then run the build.sh file as below:
+    
     ```sh
-    ./build.sh
-    ```  
-  - FW:
-    Go to the C:/tosca-models/cci/firewall and then run the build.sh file as below:
-    ```sh
-    ./build.sh
-    ```
-  - NONRTRIC:
-    Go to the C:/tosca-models/cci/nonrtric and then run the build.sh file as below:
-    ```sh
-    ./build.sh
-    ```
-  - RIC:
-    Go to the C:/tosca-models/cci/ric and then run the build.sh file as below:
-    ```sh
-    ./build.sh
-    ```
-  - QP:
-    Go to the C:/tosca-models/cci/qp and then run the build.sh file as below:
-    ```sh
-    ./build.sh
-    ```
-  - QP-DRIVER:
-    Go to the C:/tosca-models/cci/qp-driver and then run the build.sh file as below:
-    ```sh
-    ./build.sh
-    ```
-  - TS:
-    Go to the C:/tosca-models/cci/ts and then run the build.sh file as below:
-    ```sh
-    ./build.sh
+    e.g:
+    ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a  
+    CONTAINER ID   IMAGE                       COMMAND              CREATED         STATUS                     PORTS                                                                                                                             NAMES
+    315aa3b27684   cci/tosca-policy:latest     "./tosca-policy"     9 minutes ago   Exited (2) 9 minutes ago                                                                                                                                     puccini_policy_1
+    bd4cc551e0fc   cci/tosca-workflow:latest   "./tosca-workflow"   9 minutes ago   Up 9 minutes               0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
+    05b53b9d8fb5   cci/tosca-so:latest         "./tosca-so"         9 minutes ago   Up 9 minutes               0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
+    b532f72f21d1   cci/tosca-gawp:latest       "./tosca-gawp"       9 minutes ago   Up 9 minutes               0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
+    2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
+    289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
     ```
 
 ## Steps to Deploying puccini components:
@@ -273,17 +247,6 @@ Table of contents
   ```bash
   sh build
   ```
-
-- Open new seprate terminal for puccini components and run those as below:
-
-	for tosca-so:
-	so
-	for tosca-workflow:
-	workflow
-	for tosca-policy:
-	policy
-	for tosca-gawp:
-	gawp 
 
 - Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model
   - Firewall:
