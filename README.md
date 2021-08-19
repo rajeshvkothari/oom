@@ -4,13 +4,11 @@ Table of contents
 
 <!--ts-->
    * [Pre deployment steps](#Pre-deployment-steps)
-      * [DCAE&DMAP server](#DCAE&DMAP-server)
-      * [Demo server](#Demo-server)
-   * [Tests](#tests)
-   * [Dependency](#dependency)
-   * [Docker](#docker)
-     * [Local](#local)
-     * [Public](#public)
+   * [Building images for puccini tosca components](#Building-images-for-puccini-tosca-components)
+   * [Building model csars](#Building-model-csars)
+   * [Steps to Deploying puccini components](#Steps-to-Deploying-puccini-components)
+   * [Summary of options avaiable](#Summary-of-options-avaiable)
+   * [Deploying models using docker images](#Deploying-models-using-docker-images)
 <!--te-->  
 
 
