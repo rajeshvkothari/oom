@@ -6,16 +6,15 @@ Table of contents
    * [Pre deployment steps](#Pre-deployment-steps)
    * [Building model csars](#Building-model-csars)
    * [Building images for puccini tosca components](#Building-images-for-puccini-tosca-components)
-   * [Steps to Deploying puccini components](#Steps-to-Deploying-puccini-components)
    * [Summary of options avaiable](#Summary-of-options-avaiable)
    * [Deploying models using docker images](#Deploying-models-using-docker-images)
 <!--te-->  
 
 
 ## Pre deployment steps
-- **DMAP server:**
+- **DMaaP server:**
 
-  - Create AWS VM(DMAP server) in Ohio region with following specifications and SSH it using Putty:
+  - Create AWS VM(DMaaP server) in Ohio region with following specifications and SSH it using Putty:
     
     ```sh
     Image: ubuntu-18.04
@@ -23,7 +22,7 @@ Table of contents
     Storage: 80GB
     KeyPair : cciPublicKey
     ``` 
-  - Setup Docker on DMAP server:
+  - Setup Docker on DMaaP server:
     ```sh
     sudo apt update
     sudo apt install docker.io
@@ -48,9 +47,10 @@ Table of contents
     /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	
     
     After Chnages:
-		image: 172.31.27.186:5000/dmaap:localadapt_0.1
-		
-  - To Start dmaap Server:
+    ```sh          
+    image: 172.31.27.186:5000/dmaap:localadapt_0.1
+    ```		
+  - To Start DMaaP Server:
     ```sh
     cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
     docker-compose up -d
@@ -235,191 +235,6 @@ Table of contents
     289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
     ```
 
-## Steps to Deploying puccini components:
-	
-- Clone the latest puccini and tosca-model from below links and copy those folder in C:/ drive :
-  ```sh
-  git clone https://github.com/customercaresolutions/puccini
-  git clone https://github.com/customercaresolutions/tosca-models
-  ```	
-  Create a Workspace in Visual Stdio and and both above folder into workspace.
-
-- Start dgraph => clean all data from dgraph
-
-- Open new terminal with Git Bash with puccini/scripts folder to build our .exe: 
-  ```bash
-  sh build
-  ```
-
-- Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model
-  - Firewall:
-
-    Persist model:
-    cd C:/
-    puccini-tosca compile tosca-models/cci/firewall.csar --output tosca-models/cci/firewallCsarClout.json --format json --persit
-    
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-	"name" : "<instance_name>",
-	"output": "../../workdir/firewall-dgraph-clout.yaml",
-	"inputs": "",
-	"inputsUrl":"zip:/tosca-models/cci/firewall.csar!/firewall/inputs/aws.yaml",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": true,
-	"service":"zip:/tosca-models/cci/firewall.csar!/firewall/firewall_service.yaml",
-	"coerce":false
-    }
-    ```
-		
-  - Sdwan:
-
-    Persist model:
-    cd c:/
-    puccini-tosca compile tosca-models/cci/sdwan.csar --output tosca-models/cci/sdwanCsarClout.json --format json --persist
-    
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-        "name" : "<instance_name>",
-	"output": "./sdwan-dgraph-clout.json",
-	"inputs": "",
-	"inputsUrl":"zip:/tosca-models/cci/sdwan.csar!/sdwan/inputs/aws.yaml",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": true,
-	"service":"zip:/tosca-models/cci/sdwan.csar!/sdwan/sdwan_service.yaml"
-    }
-    ```
-    
-  - Nonrtric:
-	
-    Persist model:
-    cd C:/
-    puccini-tosca compile tosca-models/cci/nonrtric.csar --output tosca-models/cci/nonrtricCsarClout.json --format json --persist
-    
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-        "name" : "nonrtric_inst101",
-	"output": "./nonrtric-dgraph-clout.json",
-	"inputs": "",
-	"inputsUrl":"",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": false,
-	"service":"zip:/tosca-models/cci/nonrtric.csar!/nonrtric.yaml",
-	"csarUrl":"file:/tosca-models/cci/nonrtric.csar",
-	"coerce":true
-    }
-    ```
-    
-  - Ric:
-
-    Persist model:
-    cd C:/
-    puccini-tosca compile tosca-models/cci/ric.csar --output tosca-models/cci/ricCsarClout.json --format json --persist -i helm_version="2.17.0"
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance\
-    {
-	"name" : "<instance_name>",
-	"output": "./ric-dgraph-clout.json",
-	"inputs":  {
-		"helm_version":"2.17.0"
-		},
-	"inputsUrl":"",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": false,
-	"service":"zip:/tosca-models/cci/ric.csar!/ric.yaml"
-    }
-    ```
-  - Qp:
-
-    Persist model:
-    cd C:/
-    puccini-tosca compile tosca-models/cci/qp.csar --output tosca-models/cci/qpCsarClout.json --format json --persist
-
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-	"name" : "<instance_name>",
-	"output": "./qp-dgraph-clout.json",
-	"inputs": "",
-	"inputsUrl":"",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": false,
-	"service":"zip:/tosca-models/cci/qp.csar!/qp.yaml",
-	"csarUrl":"file:/tosca-models/cci/qp.csar",
-	"coerce":true
-    }
-    ```
-    
-  - Qp-driver:
-	
-    Persist model:
-    cd C:/   
-    puccini-tosca compile tosca-models/cci/qp-driver.csar --output tosca-models/cci/qpDriverCsarClout.json --format json --persist	 
-    
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-	"name" : "<instance_name>",
-	"output": "./qp-driver-dgraph-clout.json",
-	"inputs": "",
-	"inputsUrl":"",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-        "execute-policy": false,
-	"service":"zip:/tosca-models/cci/qp-driver.csar!/qp-driver.yaml",
-	"csarUrl":"file:/tosca-models/cci/qp-driver.csar",
-	"coerce":true
-    }
-    ```
-    
-  - Ts:
-
-    Persist model:
-    cd C:/
-    puccini-tosca compile tosca-models/cci/ts.csar --output tosca-models/cci/tsCsarClout.json --format json --persist
-    
-    ```sh
-    POST http://localhost:10000/bonap/templates/createInstance
-    {
-	"name" : "<instance_name>",
-	"output": "./ts-dgraph-clout.json",
-	"inputs": "",
-	"inputsUrl":"",
-	"generate-workflow":true,
-	"execute-workflow":true,
-	"list-steps-only":false,
-	"execute-policy": false,
-	"service":"zip:/tosca-models/cci/ts.csar!/ts.yaml",
-	"csarUrl":"file:/tosca-models/cci/ts.csar",
-	"coerce":true
-    }
-    ```
-
-## Summary of options avaiable
-
-- list-steps, execute-workflow:
-
-There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it is "false" it means we deploy model on AWS.
-
-- workflow engine selection (built-in/argo/argo-container-set):
-
-- application.cfg:
-
-In application.cfg file we menation all the puccini tosca components.
- 
 ## Deploying models using docker images
 - Steps to deplpoy:
   - Docker images: 
