@@ -230,11 +230,11 @@ Here we check that status of each container should be UP not Exited.
 ## Steps to Deploying puccini components:
 	
 - Clone the latest puccini and tosca-model from below links and copy those folder in C:/ drive :
-
-	git clone https://github.com/customercaresolutions/puccini
-	git clone https://github.com/customercaresolutions/tosca-models
-	
- Create a Workspace in Visual Stdio and and both above folder into workspace.
+  ```sh
+  git clone https://github.com/customercaresolutions/puccini
+  git clone https://github.com/customercaresolutions/tosca-models
+  ```	
+  Create a Workspace in Visual Stdio and and both above folder into workspace.
 
 - Start dgraph => clean all data from dgraph
 
@@ -254,15 +254,14 @@ Here we check that status of each container should be UP not Exited.
 	for tosca-gawp:
 	gawp 
 
-- Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model:
+- Store the model in Dgraph using persist and then send the below API through POSTMAN to deploy firewall,sdwan and oran model
+  - Firewall:
 
-Firewall:
-
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/firewall.csar --output tosca-models/cci/firewallCsarClout.json --format json --persit
+    Persist model:
+    cd C:/
+    puccini-tosca compile tosca-models/cci/firewall.csar --output tosca-models/cci/firewallCsarClout.json --format json --persit
 	
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 		{
 			"name" : "<instance_name>",
 			"output": "../../workdir/firewall-dgraph-clout.yaml",
@@ -276,13 +275,13 @@ Firewall:
 			"coerce":false
 		}
 		
-Sdwan:
+  - Sdwan:
 
-	Persist model:
-	cd c:/
-	puccini-tosca compile tosca-models/cci/sdwan.csar --output tosca-models/cci/sdwanCsarClout.json --format json --persist
+    Persist model:
+    cd c:/
+    puccini-tosca compile tosca-models/cci/sdwan.csar --output tosca-models/cci/sdwanCsarClout.json --format json --persist
 	
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 		{
 			"name" : "<instance_name>",
 			"output": "./sdwan-dgraph-clout.json",
@@ -294,13 +293,13 @@ Sdwan:
 			"execute-policy": true,
 			"service":"zip:/tosca-models/cci/sdwan.csar!/sdwan/sdwan_service.yaml"
 		}
-Nonrtric:
+  - Nonrtric:
 	
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/nonrtric.csar --output tosca-models/cci/nonrtricCsarClout.json --format json --persist
+    Persist model:
+    cd C:/
+    puccini-tosca compile tosca-models/cci/nonrtric.csar --output tosca-models/cci/nonrtricCsarClout.json --format json --persist
 
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 	   {
 		"name" : "nonrtric_inst101",
 		"output": "./nonrtric-dgraph-clout.json",
@@ -314,13 +313,13 @@ Nonrtric:
 		"csarUrl":"file:/tosca-models/cci/nonrtric.csar",
 		"coerce":true
 		}
-Ric:
+  - Ric:
 
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/ric.csar --output tosca-models/cci/ricCsarClout.json --format json --persist -i helm_version="2.17.0"
+    Persist model:
+    cd C:/
+    puccini-tosca compile tosca-models/cci/ric.csar --output tosca-models/cci/ricCsarClout.json --format json --persist -i helm_version="2.17.0"
 	
-	POST http://localhost:10000/bonap/templates/createInstance\
+    POST http://localhost:10000/bonap/templates/createInstance\
 		 {
 			"name" : "<instance_name>",
 			"output": "./ric-dgraph-clout.json",
@@ -334,13 +333,13 @@ Ric:
 			"execute-policy": false,
 			"service":"zip:/tosca-models/cci/ric.csar!/ric.yaml"
 		}
-Qp:
+  - Qp:
 
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/qp.csar --output tosca-models/cci/qpCsarClout.json --format json --persist
+    Persist model:
+    cd C:/
+    puccini-tosca compile tosca-models/cci/qp.csar --output tosca-models/cci/qpCsarClout.json --format json --persist
 
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 	   {
 			"name" : "<instance_name>",
 			"output": "./qp-dgraph-clout.json",
@@ -354,13 +353,13 @@ Qp:
 			"csarUrl":"file:/tosca-models/cci/qp.csar",
 			"coerce":true
 		}
-Qp-driver:
+  - Qp-driver:
 	
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/qp-driver.csar --output tosca-models/cci/qpDriverCsarClout.json --format json --persist	 
+    Persist model:
+    cd C:/   
+    puccini-tosca compile tosca-models/cci/qp-driver.csar --output tosca-models/cci/qpDriverCsarClout.json --format json --persist	 
 
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 	   {
 			"name" : "<instance_name>",
 			"output": "./qp-driver-dgraph-clout.json",
@@ -374,13 +373,13 @@ Qp-driver:
 			"csarUrl":"file:/tosca-models/cci/qp-driver.csar",
 			"coerce":true
 		}
-Ts:
+  - Ts:
 
-	Persist model:
-	cd C:/
-	puccini-tosca compile tosca-models/cci/ts.csar --output tosca-models/cci/tsCsarClout.json --format json --persist
+    Persist model:
+    cd C:/
+    puccini-tosca compile tosca-models/cci/ts.csar --output tosca-models/cci/tsCsarClout.json --format json --persist
 	
-	POST http://localhost:10000/bonap/templates/createInstance
+    POST http://localhost:10000/bonap/templates/createInstance
 	   {
 		"name" : "<instance_name>",
 		"output": "./ts-dgraph-clout.json",
