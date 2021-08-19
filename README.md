@@ -303,119 +303,134 @@
     Persist model:
     cd c:/
     puccini-tosca compile tosca-models/cci/sdwan.csar --output tosca-models/cci/sdwanCsarClout.json --format json --persist
-	
+    
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-		{
-			"name" : "<instance_name>",
-			"output": "./sdwan-dgraph-clout.json",
-			"inputs": "",
-			"inputsUrl":"zip:/tosca-models/cci/sdwan.csar!/sdwan/inputs/aws.yaml",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": true,
-			"service":"zip:/tosca-models/cci/sdwan.csar!/sdwan/sdwan_service.yaml"
-		}
+    {
+        "name" : "<instance_name>",
+	"output": "./sdwan-dgraph-clout.json",
+	"inputs": "",
+	"inputsUrl":"zip:/tosca-models/cci/sdwan.csar!/sdwan/inputs/aws.yaml",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": true,
+	"service":"zip:/tosca-models/cci/sdwan.csar!/sdwan/sdwan_service.yaml"
+    }
+    ```
+    
   - Nonrtric:
 	
     Persist model:
     cd C:/
     puccini-tosca compile tosca-models/cci/nonrtric.csar --output tosca-models/cci/nonrtricCsarClout.json --format json --persist
-
+    
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-	   {
-		"name" : "nonrtric_inst101",
-		"output": "./nonrtric-dgraph-clout.json",
-		"inputs": "",
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":false,
-		"execute-policy": false,
-		"service":"zip:/tosca-models/cci/nonrtric.csar!/nonrtric.yaml",
-		"csarUrl":"file:/tosca-models/cci/nonrtric.csar",
-		"coerce":true
-		}
+    {
+        "name" : "nonrtric_inst101",
+	"output": "./nonrtric-dgraph-clout.json",
+	"inputs": "",
+	"inputsUrl":"",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": false,
+	"service":"zip:/tosca-models/cci/nonrtric.csar!/nonrtric.yaml",
+	"csarUrl":"file:/tosca-models/cci/nonrtric.csar",
+	"coerce":true
+    }
+    ```
+    
   - Ric:
 
     Persist model:
     cd C:/
     puccini-tosca compile tosca-models/cci/ric.csar --output tosca-models/cci/ricCsarClout.json --format json --persist -i helm_version="2.17.0"
-	
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance\
-		 {
-			"name" : "<instance_name>",
-			"output": "./ric-dgraph-clout.json",
-			"inputs":  {
-				"helm_version":"2.17.0"
-				},
-			"inputsUrl":"",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": false,
-			"service":"zip:/tosca-models/cci/ric.csar!/ric.yaml"
-		}
+    {
+	"name" : "<instance_name>",
+	"output": "./ric-dgraph-clout.json",
+	"inputs":  {
+		"helm_version":"2.17.0"
+		},
+	"inputsUrl":"",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": false,
+	"service":"zip:/tosca-models/cci/ric.csar!/ric.yaml"
+    }
+    ```
   - Qp:
 
     Persist model:
     cd C:/
     puccini-tosca compile tosca-models/cci/qp.csar --output tosca-models/cci/qpCsarClout.json --format json --persist
 
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-	   {
-			"name" : "<instance_name>",
-			"output": "./qp-dgraph-clout.json",
-			"inputs": "",
-			"inputsUrl":"",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": false,
-			"service":"zip:/tosca-models/cci/qp.csar!/qp.yaml",
-			"csarUrl":"file:/tosca-models/cci/qp.csar",
-			"coerce":true
-		}
+    {
+	"name" : "<instance_name>",
+	"output": "./qp-dgraph-clout.json",
+	"inputs": "",
+	"inputsUrl":"",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": false,
+	"service":"zip:/tosca-models/cci/qp.csar!/qp.yaml",
+	"csarUrl":"file:/tosca-models/cci/qp.csar",
+	"coerce":true
+    }
+    ```
+    
   - Qp-driver:
 	
     Persist model:
     cd C:/   
     puccini-tosca compile tosca-models/cci/qp-driver.csar --output tosca-models/cci/qpDriverCsarClout.json --format json --persist	 
-
+    
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-	   {
-			"name" : "<instance_name>",
-			"output": "./qp-driver-dgraph-clout.json",
-			"inputs": "",
-			"inputsUrl":"",
-			"generate-workflow":true,
-			"execute-workflow":true,
-			"list-steps-only":false,
-			"execute-policy": false,
-			"service":"zip:/tosca-models/cci/qp-driver.csar!/qp-driver.yaml",
-			"csarUrl":"file:/tosca-models/cci/qp-driver.csar",
-			"coerce":true
-		}
+    {
+	"name" : "<instance_name>",
+	"output": "./qp-driver-dgraph-clout.json",
+	"inputs": "",
+	"inputsUrl":"",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+        "execute-policy": false,
+	"service":"zip:/tosca-models/cci/qp-driver.csar!/qp-driver.yaml",
+	"csarUrl":"file:/tosca-models/cci/qp-driver.csar",
+	"coerce":true
+    }
+    ```
+    
   - Ts:
 
     Persist model:
     cd C:/
     puccini-tosca compile tosca-models/cci/ts.csar --output tosca-models/cci/tsCsarClout.json --format json --persist
-	
+    
+    ```sh
     POST http://localhost:10000/bonap/templates/createInstance
-	   {
-		"name" : "<instance_name>",
-		"output": "./ts-dgraph-clout.json",
-		"inputs": "",
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":false,
-		"execute-policy": false,
-		"service":"zip:/tosca-models/cci/ts.csar!/ts.yaml",
-		"csarUrl":"file:/tosca-models/cci/ts.csar",
-		"coerce":true
-		}
+    {
+	"name" : "<instance_name>",
+	"output": "./ts-dgraph-clout.json",
+	"inputs": "",
+	"inputsUrl":"",
+	"generate-workflow":true,
+	"execute-workflow":true,
+	"list-steps-only":false,
+	"execute-policy": false,
+	"service":"zip:/tosca-models/cci/ts.csar!/ts.yaml",
+	"csarUrl":"file:/tosca-models/cci/ts.csar",
+	"coerce":true
+    }
+    ```
 
 ## Summary of options avaiable
 
@@ -444,7 +459,7 @@ In application.cfg file we menation all the puccini tosca components.
     Username: Divan
     Passowrd: wikiaccess
 
-   - Store Model In Dgraph:
+	- Store Model In Dgraph:
 	  
 	  ```sh
 	  POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
@@ -471,58 +486,62 @@ In application.cfg file we menation all the puccini tosca components.
 		}
 	  ```	
 			
-          Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+       Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
 
-        - Create Instances With Deploy:
+	- Create Instances With Deploy:
 	
 	  For Sdwan,Firewall:
-				
+	  ```sh			
 	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
-				{
-					"name" : "<Instance_Name>",
-					"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-					"inputs": "",
-					"inputsUrl":"<input_url_for_model>",
-					"generate-workflow":true,
-					"execute-workflow":true,
-					"list-steps-only":false,
-					"execute-policy": true,
-					"service":"<service_url_for_model>",
-					"coerce":false
-				}
+	  {
+		"name" : "<Instance_Name>",
+		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
+		"inputs": "",
+		"inputsUrl":"<input_url_for_model>",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":false,
+		"execute-policy": true,
+		"service":"<service_url_for_model>",
+		"coerce":false
+	  }
+	  ```
 				
-	  Use Following InputUrl And Service In Api Body For:
+	Use Following InputUrl And Service In Api Body For:
+	  ```sh
+	  --Firewall:
+		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	  --Sdwan:
+		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  ```
+	  
+	Note : ExecuteWorkfow Deploy model 
 
-			--Firewall:
-					"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-					"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-			--Sdwan:
-					"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-					"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-				  
-			
-
-	  Note : ExecuteWorkfow Deploy model 
-
-        - ExecuteWorkfow API With Deploy("list-steps-only": false):
-	
-          	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
-			{
-				"list-steps-only": false,
-				"execute-policy": true
-			}
-			
-        - Execute Policy: 
-	
-	  	POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-	 
+	- ExecuteWorkfow API With Deploy("list-steps-only": false):
+	  
+	  ```sh
+          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+	  {
+		"list-steps-only": false,
+		"execute-policy": true
+	  }
+	  ```		
+	- Execute Policy: 
+	  
+	  ```sh
+	  POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  ```
         - Stop Policy:
-	
-	  	DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-   
+	  ```sh
+	  DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+   	  ```
         - Get Policies:
-	
-	  	GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies  
+	  ```sh
+	  GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies
+	  ```
+	  
   - ONAP OOM:
   
 - Steps to verify: Through below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
