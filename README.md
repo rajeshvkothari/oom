@@ -7,7 +7,7 @@ Table of contents
    * [Building images and started docker containers of puccini tosca components](#Building-images-and-started-docker-containers-of-puccini-tosca-components)
    * [Deploying Tosca Models](#Deploying-Tosca-Models)
    * [Summary of options avaiable](#Summary-of-options-avaiable)
-   * [Steps To Verify Tosca Models](#Steps-To-Verify-Tosca-Models)
+   * [Steps To Verify Deloyed Tosca Models](#Steps-To-Verify-Deloyed-Tosca-Models)
 <!--te-->  
 
 
@@ -160,7 +160,7 @@ Table of contents
   - TOSCA_POLICY:
   - TOSCA_GAWP:
 
-- **Steps to Building Images:**
+- **Steps to Building Images and started docker containers:**
 
 	Login into the demo_server and Perform the belew steps:
 	
@@ -218,12 +218,12 @@ Table of contents
 			     -  ./dvol/data:/opt/app/data
 			     -  ./dvol/log:/opt/app/log 
 	  
-	  Verify 'DMAAP&DCAE' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
+	  Verify 'DMaaP' VM on AWS N.Virginia Region should be in running state and DMAAP running on this VM.
 
 	- Modify ~/puccini/dvol/config/application.cfg as below:					
 			
 		  [remote]
-		  remoteHost={IP_OF_demo_server}
+		  remoteHost={IP_OF_bonap_server}
 		  remotePort=22
 		  remoteUser=ubuntu
 		  remotePubKey=/opt/app/config/cciPrivateKey
@@ -268,22 +268,19 @@ Table of contents
     ```
 ## Summary of options avaiable
 
-- list-steps, execute-workflow:
-
+- list-steps:
+ 
   There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it   is "false" it means we deploy model on AWS.
+  
+- execute-workflow:
 
-- workflow engine selection (built-in/argo/argo-container-set):
-
-- application.cfg:
-
-  In application.cfg file we menation all the puccini tosca components.
 
 ## Deploying Tosca Models
 - **Steps To Deploy:**
  
-    There are two way to deploy tosca models *1.Docker images* *2.ONAP OOM* and following is the detail explication
+    There are two way to deploy tosca models *1.Docker Containers* *2.ONAP OOM* and following is the detail explication
     
-  - Docker Images: 
+  - Docker Containers: 
    
     There are several models in puccini tosca as follows:
 	
@@ -315,88 +312,89 @@ Table of contents
 		  "url":"/opt/app/models/sdwan.csar",
 		  "output": "./sdwan-dgraph-clout.json",
 		}
+		{
+		  "url":"/opt/app/models/nonrtric.csar",
+		  "output": "./nonrtric-dgraph-clout.json",
+		}
+		{
+		  "url":"/opt/app/models/ric.csar",
+		  "output": "./ric-dgraph-clout.json",
+		}
+		{
+		  "url":"/opt/app/models/qp.csar",
+		  "output": "./qp-dgraph-clout.json",
+		}
+		{
+		  "url":"/opt/app/models/qp-driver.csar",
+		  "output": "./qp-driver-dgraph-clout.json",
+		}
+		{
+		  "url":"/opt/app/models/ts.csar",
+		  "output": "./ts-dgraph-clout.json",
+		}
+		
 	  ```	
 	  
 	- Create Instances Service Without Deployment:
 	
 	  Note: To Deploy models While CreateInstance("list-steps-only":true and "execute-policy":false)
 	
-	  For Sdwan,Firewall:
+	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
 	  ```sh			
 	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
 	  {
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-		"inputs": "",
+		"inputs": "<input_for_model>",
 		"inputsUrl":"<input_url_for_model>",
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":true,
 		"execute-policy":false,
-		"service":"<service_url_for_model>",
+		"service":"<service_url_for_model>"
 	  }
-	  ```
-	  
-	  For Ric:
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	   {
-		"name" : "<Instance_Name>",
-		"output": "./ric-dgraph-clout.json",
-		"inputs":  {
-			"helm_version":"2.17.0"
-			},
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":true,
-		"execute-policy":false,
-		"service":"<service_url_for_model>",
-		}
-	  ```
-	  
-	  For Nonrtric,qp,qp-driver,ts:
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	   {
-		"name" : "<Instance_Name>",
-		"output": "./<ModelName>-dgraph-clout.json",
-		"inputs": "",
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":true,
-		"execute-policy":false,
-		"service":"<service_url_for_model>",
-		}
 	  ```
 	  
       Use Following InputUrl and Service in Api Body For:
 		  
 	  ```sh
 	  --Firewall:
+	  	"inputs":"",
 		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
 	  --Sdwan:
+	  	"inputs":"",
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
 	  --Ric:
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  	"inputs":  {
+			"helm_version":"2.17.0"
+			},
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  --Nonrtric:
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  --Qp:
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  --Qp-driver:
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	    	"service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  --Ts:
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	    	"service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
 	- Create Instances Service With Deployment:
 	  
 	  Note: To Deploy models While CreateInstance("list-steps-only":false and "execute-policy":true)
 	
-	  For Sdwan,Firewall:
+	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
 	  ```sh			
 	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
 	  {
@@ -408,64 +406,44 @@ Table of contents
 		"execute-workflow":true,
 		"list-steps-only":false,
 		"execute-policy":true,
-		"service":"<service_url_for_model>",
+		"service":"<service_url_for_model>"
 	  }
 	  ```	
 	  
-	  For Ric:
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	   {
-		"name" : "<Instance_Name>",
-		"output": "./ric-dgraph-clout.json",
-		"inputs":  {
-			"helm_version":"2.17.0"
-			},
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":false,
-		"execute-policy":true,
-		"service":"<service_url_for_model>",
-		}
-	  ```
-	  
-	  For Nonrtric,qp,qp-driver,ts:
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	   {
-		"name" : "<Instance_Name>",
-		"output": "./<ModelName>-dgraph-clout.json",
-		"inputs": "",
-		"inputsUrl":"",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":false,
-		"execute-policy":true,
-		"service":"<service_url_for_model>",
-		}
-	  ```
-	  
       Use Following InputUrl and Service in Api Body For:
 
-	  ```sh
+	   ```sh
 	  --Firewall:
+	  	"inputs":"",
 		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
 	  --Sdwan:
+	  	"inputs":"",
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
 	  --Ric:
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  	"inputs":  {
+			"helm_version":"2.17.0"
+			},
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  --Nonrtric:
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  --Qp:
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  --Qp-driver:
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	    	"service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  --Ts:
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
-	  ``` 
+	  	"inputs":"",
+	  	"inputsUrl":"",
+	    	"service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	  ```
 
 	- ExecuteWorkfow Service without Deployment:
 	  
@@ -506,7 +484,7 @@ Table of contents
 	  
   - ONAP OOM:
   
-## Steps To Verify Tosca Models
+## Steps To Verify Deloyed Tosca Models 
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
