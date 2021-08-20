@@ -151,7 +151,7 @@ Table of contents
   - TOSCA_POLICY:
   - TOSCA_GAWP:
 
-- **Steps to build each component:**
+- **Steps to Building Images and Starting Container:**
   - clone puccini:
     ```sh
     git clone https://github.com/customercaresolutions/puccini
@@ -257,11 +257,13 @@ Table of contents
 
 ## Deploying models using docker images
 - **Steps To Deploy:**
-  - Building Images and Starting Container: 
+  - Docker Images: 
    
     There are several models in puccini tosca as follows:
-	*Sdwan*,*Firewall*, *Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
-	To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below create Instance, ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to step up the oran cluster follow the below wiki page:
+	
+	*Sdwan*, *Firewall*, *Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
+	
+	To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below create Instance, ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to set up the oran cluster follow the below wiki page:
 
     ```sh	
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
