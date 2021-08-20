@@ -372,7 +372,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-        "execute-policy":false
+            "execute-policy":false
 	  ```
 	  
 	  **Qp:**
@@ -449,7 +449,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-        "execute-policy":false
+            "execute-policy":false
 	  ```
 	  
 	  **Qp:**
