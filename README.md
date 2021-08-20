@@ -70,7 +70,7 @@ Table of contents
 	There is another way to Verify DMaap is Deploy or Not. 
 	
     ```sh
-	curl -X POST -H "Content-Type: application" -d '{"topicName":"cci_topic_1048","partitionCount":"1","replicationCount":"1","transactionEnabled":"false","description":"This is a test Topic"}' "http://{IP_OF_DMaap_server}:3904/topics/create" -o createtopic406.json
+	curl -X GET -H "Content-Type: application"  "http://{IP_OF_DMaap_Server}:3904/topics" 
 	```
 	
 - **Demo server:**
