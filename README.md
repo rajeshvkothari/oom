@@ -295,9 +295,11 @@ Table of contents
    
     There are several models in puccini tosca as follows:
 	
-	*Sdwan* 
-	*Firewall*
-	*Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
+	**#Sdwan** 
+	
+	**#Firewall**
+	
+	**#Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)** 
 
 	- Store model in Dgraph:
 	  
@@ -314,7 +316,6 @@ Table of contents
 	  ```  		 
 	  For sdwan use following:
 	  ```sh
-	  **Sdwan:**
 		{
 		  "url":"/opt/app/models/firewall.csar",
 		  "output": "./firewall-dgraph-clout.json",
@@ -349,6 +350,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
 	    "execute-policy":false
 	  ```
+	  
 	  **Sdwan:**
 	  ```sh
 	    "inputs":"",
@@ -356,6 +358,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	    "execute-policy":false
 	  ```
+	  
 	  **Ric:**
 	  ```sh
 	    "inputs":{"helm_version":"2.17.0"},
@@ -363,6 +366,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
 	    "execute-policy":false
 	  ```	
+	  
 	  **Nonrtric:**
 	  ```sh
 	    "inputs":"",
@@ -370,6 +374,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
         "execute-policy":false
 	  ```
+	  
 	  **Qp:**
 	  ```sh
 	    "inputs":"",
@@ -377,13 +382,15 @@ Table of contents
 	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
 	    "execute-policy":false
 	 ```
+	 
 	 **Qp-driver:**
 	 ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-        "execute-policy":false
+            "execute-policy":false
 	 ```
+	 
 	 **Ts:**
 	 ```sh
 	    "inputs":"",
@@ -420,6 +427,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
 	    "execute-policy":false
 	  ```
+	  
 	  **Sdwan:**
 	  ```sh
 	    "inputs":"",
@@ -427,6 +435,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	    "execute-policy":false
 	  ```
+	  
 	  **Ric:**
 	  ```sh
 	    "inputs":{"helm_version":"2.17.0"},
@@ -434,6 +443,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
 	    "execute-policy":false
 	  ```	
+	  
 	  **Nonrtric:**
 	  ```sh
 	    "inputs":"",
@@ -441,6 +451,7 @@ Table of contents
 	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
         "execute-policy":false
 	  ```
+	  
 	  **Qp:**
 	  ```sh
 	    "inputs":"",
@@ -448,13 +459,15 @@ Table of contents
 	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
 	    "execute-policy":false
 	 ```
+	 
 	 **Qp-driver:**
 	 ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-        "execute-policy":false
+            "execute-policy":false
 	 ```
+	 
 	 **Ts:**
 	 ```sh
 	    "inputs":"",
