@@ -2,11 +2,12 @@
 Table of contents
 =================
 <!--ts-->
-   * [Pre deployment steps](#Pre-deployment-steps)
-   * [Building model csars](#Building-model-csars)
-   * [Building images for puccini tosca components](#Building-images-for-puccini-tosca-components)
-   * [Summary of options available](#Summary-of-options-available)
-   * [Deploying models using docker images](#Deploying-models-using-docker-images)
+   * [Pre Deployment Steps](#Pre-Deployment-Steps)
+   * [Building Tosca Model Csars](#Building Tosca-Model-Csars)
+   * [Building images and started docker containers of puccini tosca components](#Building-images-and-started-docker-containers-of-puccini-tosca-components)
+   * [Deploying Tosca Models](#Deploying-Tosca-Models)
+   * [Summary of options avaiable](#Summary-of-options-avaiable)
+   * [Steps To Verify Tosca Models](#Steps-To-Verify-Tosca Models)
 <!--te-->  
 
 
@@ -265,9 +266,23 @@ Table of contents
     2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
     289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
     ```
+## Summary of options avaiable
 
-## Deploying models using docker images
+- list-steps, execute-workflow:
+
+  There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it   is "false" it means we deploy model on AWS.
+
+- workflow engine selection (built-in/argo/argo-container-set):
+
+- application.cfg:
+
+  In application.cfg file we menation all the puccini tosca components.
+
+## Deploying Tosca Models
 - **Steps To Deploy:**
+ 
+    There are two way to deploy tosca models *1.Docker images* *2.ONAP OOM* and following is the detail explication
+    
   - Docker Images: 
    
     There are several models in puccini tosca as follows:
@@ -491,7 +506,7 @@ Table of contents
 	  
   - ONAP OOM:
   
-## Steps to verify
+## Steps To Verify Tosca Models
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
