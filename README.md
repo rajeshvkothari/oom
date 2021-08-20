@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
-   * [Building images and starting docker containers of puccini tosca components](#Building-images-nd-starting-docker-containers-of-puccini tosca-components)
+   * [Building images and starting docker containers of puccini tosca components](#Building-images-nd-starting-docker-containers-of-puccini-tosca-components)
    * [Deploying Tosca Models](#Deploying-Tosca-Models)
    * [Summary Of Options Available](#Summary-Of-Options-Available)
    * [Steps To Verify Deloyed Tosca Models](#Steps-To-Verify-Deloyed-Tosca-Models)
@@ -13,7 +13,7 @@ Table of contents
 
 ## Introduction(TBD)
 
-  This page Describe step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
+  This page is describe step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
 
 
 ## Pre Deployment Steps
