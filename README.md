@@ -482,8 +482,8 @@ Table of contents
 	  ```sh
           POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
-		"list-steps-only": true,
-		"execute-policy": false
+	      "list-steps-only": true,
+	      "execute-policy": false
 	  }
 	  ```		 
 
@@ -494,8 +494,8 @@ Table of contents
 	  ```sh
           POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
-		"list-steps-only": false,
-		"execute-policy": true
+              "list-steps-only": false,
+	      "execute-policy": true
 	  }
 	  ```		
 	- Execute Policy: 
