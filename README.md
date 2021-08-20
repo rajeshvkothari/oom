@@ -291,7 +291,7 @@ Table of contents
  
     There are two way to deploy tosca models 
     
-    *1.Docker Containers* *2.ONAP OOM* 
+    *-Docker Containers* *-ONAP OOM* 
     
     and following is the detail explanation
     
@@ -299,7 +299,7 @@ Table of contents
    
     There are several models in puccini tosca as follows:
 	
-	*Sdwan*, *Firewall*, *Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
+	*-Sdwan*, *-Firewall*, *-Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
 	
 	To Test the models we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN.
 
