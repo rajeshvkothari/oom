@@ -302,9 +302,9 @@ Table of contents
 		}
 	  ```	
 	  
-	  Note: To Deploy models While CreateInstance("list-steps-only":true and "execute-policy":false)
-	  
 	- Create Instances Service Without Deployment:
+	
+	  Note: To Deploy models While CreateInstance("list-steps-only":true and "execute-policy":false)
 	
 	  For Sdwan,Firewall:
 	  ```sh			
@@ -320,8 +320,10 @@ Table of contents
 		"execute-policy":false,
 		"service":"<service_url_for_model>",
 	  }
-	  ```			
-          Use Following InputUrl and Service in Api Body For:
+	  ```	
+	  
+      Use Following InputUrl and Service in Api Body For:
+		  
 	  ```sh
 	  --Firewall:
 		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
@@ -330,10 +332,10 @@ Table of contents
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	  ```
-	  
-      Note: To Deploy models While CreateInstance("list-steps-only":false and "execute-policy":true)
 
 	- Create Instances Service With Deployment:
+	  
+	  Note: To Deploy models While CreateInstance("list-steps-only":false and "execute-policy":true)
 	
 	  For Sdwan,Firewall:
 	  ```sh			
@@ -349,8 +351,10 @@ Table of contents
 		"execute-policy": true,
 		"service":"<service_url_for_model>",
 	  }
-	  ```			
-          Use Following InputUrl and Service in Api Body For:
+	  ```	
+	  
+      Use Following InputUrl and Service in Api Body For:
+
 	  ```sh
 	  --Firewall:
 		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
@@ -358,22 +362,24 @@ Table of contents
 	  --Sdwan:
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	  ```
-      
-	  Note : ExecuteWorkfow Service without Deployment 
+	  ``` 
 
 	- ExecuteWorkfow API With Deploy("list-steps-only": true):
+	  
+	  Note : ExecuteWorkfow Service without Deployment
+	  
 	  ```sh
           POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
 		"list-steps-only": true,
 		"execute-policy": false
 	  }
-	  ```		
-	  
-	  Note : ExecuteWorkfow Service with Deployment 
+	  ```		 
 
 	- ExecuteWorkfow API With Deploy("list-steps-only": false):
+	  
+	  Note : ExecuteWorkfow Service with Deployment
+	   
 	  ```sh
           POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
