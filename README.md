@@ -3,11 +3,11 @@ Table of contents
 =================
 <!--ts-->
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-   * [Building Tosca Model Csars](#Building Tosca-Model-Csars)
+   * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Building images and started docker containers of puccini tosca components](#Building-images-and-started-docker-containers-of-puccini-tosca-components)
    * [Deploying Tosca Models](#Deploying-Tosca-Models)
    * [Summary of options avaiable](#Summary-of-options-avaiable)
-   * [Steps To Verify Tosca Models](#Steps-To-Verify-Tosca Models)
+   * [Steps To Verify Tosca Models](#Steps-To-Verify-Tosca-Models)
 <!--te-->  
 
 
