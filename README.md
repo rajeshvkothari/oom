@@ -11,7 +11,7 @@ Table of contents
 
 
 ## Pre Deployment Steps
-- **DMaaP Server: **
+- **DMaaP Server:**
 
   - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using Putty:
     
@@ -56,6 +56,23 @@ Table of contents
     ```
   - Verify DMaap Server is Deploy:
   
+	To verfiy DMaap Server is Deploy or not run the command as follows and check wither all the conatiner should  
+    be UP.
+	
+	```sh
+	ubuntu@message_router:~/local-dmaap/messageservice/target/classes/docker-compose$ docker ps -a
+	CONTAINER ID   IMAGE                                              COMMAND                  CREATED         STATUS         PORTS                                                           NAMES
+	a234f9f984dd   dmaap:localadapt                                   "sh startup.sh"          6 seconds ago   Up 5 seconds   0.0.0.0:3904-3906->3904-3906/tcp, :::3904-3906->3904-3906/tcp   dockercompose_dmaap_1
+	8058f11e9f57   nexus3.onap.org:10001/onap/dmaap/kafka111:1.0.4    "/etc/confluent/dock…"   7 seconds ago   Up 6 seconds   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp, 9093/tcp             dockercompose_kafka_1
+	a93fcf78bcb9   nexus3.onap.org:10001/onap/dmaap/zookeeper:6.0.3   "/etc/confluent/dock…"   9 seconds ago   Up 6 seconds   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp   dockercompose_zookeeper_1
+	```
+	
+	There is another way to Verify DMaap is Deploy or Not. 
+	
+    ```sh
+	curl -X POST -H "Content-Type: application" -d '{"topicName":"cci_topic_1048","partitionCount":"1","replicationCount":"1","transactionEnabled":"false","description":"This is a test Topic"}' "http://18.224.16.195:30226/topics/create" -o createtopic406.json
+	```
+	
 - **Demo server:**
 
   - Create AWS VM(demo_server) with following specifications and SSH it using Putty:
@@ -86,7 +103,7 @@ Table of contents
 
 ## Building Model Csars
 
-- **List Of Models And Their Summary: **
+- **List Of Models And Their Summary:**
 	
 	To Build the csar of each model we have to first clone the tosca-models from git clone https://github.com/customercaresolutions/tosca-models this link to the C: drive and perform the step as follows. 
 	
@@ -239,7 +256,7 @@ Table of contents
     ```
 
 ## Deploying models using docker images
-- **Steps To Deploy: **
+- **Steps To Deploy:**
   - Building Images and Starting Container: 
    
     There are several models in puccini tosca as follows:
@@ -329,7 +346,7 @@ Table of contents
 	  
   - ONAP OOM:
   
-- **Steps to verify: **
+- **Steps to verify:**
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
