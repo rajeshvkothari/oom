@@ -120,7 +120,7 @@ Table of contents
 	
 	To Build the csar of each model we have to first clone the tosca-models from github for that use the below link and store it on /home/ubuntu.
 	```sh
-	gitclone https://github.com/customercaresolutions/tosca-models . 
+	gitclone https://github.com/customercaresolutions/tosca-models 
 	```
 	After cloning  perform the step as follows.
 	
