@@ -100,7 +100,15 @@ Table of contents
     ```sh
     docker info
     ```
+	
+- **Oran Servers**
 
+  - To Set up the oran Servers on AWS follow the wiki page as sollows:
+
+    ```sh	
+    http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
+    ```
+	
 ## Building Model Csars
 
 - **List Of Models And Their Summary:**
@@ -152,6 +160,9 @@ Table of contents
   - TOSCA_GAWP:
 
 - **Steps to Building Images and Starting Container:**
+
+	Login into the demo_server and Perform the belew steps:
+	
   - clone puccini:
     ```sh
     git clone https://github.com/customercaresolutions/puccini
@@ -215,7 +226,7 @@ Table of contents
 		  remotePort=22
 		  remoteUser=ubuntu
 		  remotePubKey=/opt/app/config/cciPrivateKey
-		  msgBusURL=54.196.51.118:3904
+		  msgBusURL={IP_OF_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
 	  Note: IP_OF_demo_server is VM which we created at start. 
@@ -263,11 +274,7 @@ Table of contents
 	
 	*Sdwan*, *Firewall*, *Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)* 
 	
-	To Test the model we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN and also run below create Instance, ExecuteWorkfow API to test them. To test the oran model we have to first create a oran setup on AWS. So to set up the oran cluster follow the below wiki page:
-
-    ```sh	
-    http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-    ```
+	To Test the models we have to first store the model in Dgraph for that we have to run the below API through the POASTMAN.
 
 	- Store Model In Dgraph:
 	  
@@ -293,10 +300,40 @@ Table of contents
 		  "url":"/opt/app/models/sdwan.csar",
 		  "output": "./sdwan-dgraph-clout.json",
 		}
+	  ```	
+	  
+	  Note: To Deploy models While CreateInstance("list-steps-only":true and "execute-policy":false)
+	  
+	- Create Instances Service Without Deployment:
+	
+	  For Sdwan,Firewall:
+	  ```sh			
+	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+	  {
+		"name" : "<Instance_Name>",
+		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
+		"inputs": "",
+		"inputsUrl":"<input_url_for_model>",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":true,
+		"execute-policy":false,
+		"service":"<service_url_for_model>",
+	  }
 	  ```			
-          Note: Deploy Model While CreateInstance("list-steps-only":false and "execute-policy": true)
+          Use Following InputUrl and Service in Api Body For:
+	  ```sh
+	  --Firewall:
+		"inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+		"service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	  --Sdwan:
+		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  ```
+	  
+      Note: To Deploy models While CreateInstance("list-steps-only":false and "execute-policy":true)
 
-	- Create Instances With Deploy:
+	- Create Instances Service With Deployment:
 	
 	  For Sdwan,Firewall:
 	  ```sh			
@@ -322,7 +359,19 @@ Table of contents
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	  ```
-          Note : ExecuteWorkfow Deploy model 
+      
+	  Note : ExecuteWorkfow Service without Deployment 
+
+	- ExecuteWorkfow API With Deploy("list-steps-only": true):
+	  ```sh
+          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+	  {
+		"list-steps-only": true,
+		"execute-policy": false
+	  }
+	  ```		
+	  
+	  Note : ExecuteWorkfow Service with Deployment 
 
 	- ExecuteWorkfow API With Deploy("list-steps-only": false):
 	  ```sh
