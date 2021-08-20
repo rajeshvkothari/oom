@@ -70,7 +70,7 @@ Table of contents
 	There is another way to Verify DMaap is Deploy or Not. 
 	
     ```sh
-	curl -X GET -H "Content-Type: application"  "http://{IP_OF_DMaap_Server}:3904/topics" 
+	curl -X GET "http://{IP_OF_DMaap_Server}:3904/topics" 
 	```
 	
 - **Demo server:**
@@ -279,7 +279,7 @@ Table of contents
 	- Store Model In Dgraph:
 	  
 	  ```sh
-	  POST http://{IP_OF_demo_server}:10010/compiler/model/db/save
+	  POST http://{IP_OF_bonap_server}:10010/compiler/model/db/save
 	  	{
 		  "url":"/opt/app/models/<ModelName>.csar",
 		  "resolve":true,
@@ -308,7 +308,7 @@ Table of contents
 	
 	  For Sdwan,Firewall:
 	  ```sh			
-	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
 	  {
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -320,7 +320,41 @@ Table of contents
 		"execute-policy":false,
 		"service":"<service_url_for_model>",
 	  }
-	  ```	
+	  ```
+	  
+	  For Ric:
+	  ```sh
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	   {
+		"name" : "<Instance_Name>",
+		"output": "./ric-dgraph-clout.json",
+		"inputs":  {
+			"helm_version":"2.17.0"
+			},
+		"inputsUrl":"",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":true,
+		"execute-policy":false,
+		"service":"<service_url_for_model>",
+		}
+	  ```
+	  
+	  For Nonrtric,qp,qp-driver,ts:
+	  ```sh
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	   {
+		"name" : "<Instance_Name>",
+		"output": "./<ModelName>-dgraph-clout.json",
+		"inputs": "",
+		"inputsUrl":"",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":true,
+		"execute-policy":false,
+		"service":"<service_url_for_model>",
+		}
+	  ```
 	  
       Use Following InputUrl and Service in Api Body For:
 		  
@@ -331,6 +365,16 @@ Table of contents
 	  --Sdwan:
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  --Ric:
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  --Nonrtric:
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  --Qp:
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  --Qp-driver:
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  --Ts:
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
 	- Create Instances Service With Deployment:
@@ -348,10 +392,44 @@ Table of contents
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":false,
-		"execute-policy": true,
+		"execute-policy":true,
 		"service":"<service_url_for_model>",
 	  }
 	  ```	
+	  
+	  For Ric:
+	  ```sh
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	   {
+		"name" : "<Instance_Name>",
+		"output": "./ric-dgraph-clout.json",
+		"inputs":  {
+			"helm_version":"2.17.0"
+			},
+		"inputsUrl":"",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":false,
+		"execute-policy":true,
+		"service":"<service_url_for_model>",
+		}
+	  ```
+	  
+	  For Nonrtric,qp,qp-driver,ts:
+	  ```sh
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	   {
+		"name" : "<Instance_Name>",
+		"output": "./<ModelName>-dgraph-clout.json",
+		"inputs": "",
+		"inputsUrl":"",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":false,
+		"execute-policy":true,
+		"service":"<service_url_for_model>",
+		}
+	  ```
 	  
       Use Following InputUrl and Service in Api Body For:
 
@@ -362,9 +440,19 @@ Table of contents
 	  --Sdwan:
 		"inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	  	"service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  --Ric:
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  --Nonrtric:
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  --Qp:
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  --Qp-driver:
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  --Ts:
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ``` 
 
-	- ExecuteWorkfow API With Deploy("list-steps-only": true):
+	- ExecuteWorkfow API With Deploy("list-steps-only":true):
 	  
 	  Note : ExecuteWorkfow Service without Deployment
 	  
@@ -376,7 +464,7 @@ Table of contents
 	  }
 	  ```		 
 
-	- ExecuteWorkfow API With Deploy("list-steps-only": false):
+	- ExecuteWorkfow API With Deploy("list-steps-only":false):
 	  
 	  Note : ExecuteWorkfow Service with Deployment
 	   
