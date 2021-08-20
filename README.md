@@ -452,9 +452,9 @@ Table of contents
 	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ``` 
 
-	- ExecuteWorkfow API With Deploy("list-steps-only":true):
+	- ExecuteWorkfow Service without Deployment:
 	  
-	  Note : ExecuteWorkfow Service without Deployment
+	  Note : ExecuteWorkfow API Without Deploy("list-steps-only":true)
 	  
 	  ```sh
           POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
@@ -464,9 +464,9 @@ Table of contents
 	  }
 	  ```		 
 
-	- ExecuteWorkfow API With Deploy("list-steps-only":false):
+	- ExecuteWorkfow Service with Deployment:
 	  
-	  Note : ExecuteWorkfow Service with Deployment
+	  Note : ExecuteWorkfow API With Deploy("list-steps-only":false)
 	   
 	  ```sh
           POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
