@@ -165,7 +165,9 @@ Table of contents
     
 ## Building images and starting docker containers of puccini tosca components
 - **List of components and their summary:**(TBD)
-	GIN consists of following components which need to be build puccini repository
+   
+    GIN consists of following components which need to be build puccini repository
+    
   - TOSCA_SO
   - TOSCA_COMPILER
   - TOSCA_WORKFLOW
