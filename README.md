@@ -118,11 +118,11 @@ Table of contents
 
 - **List Of Models And Their Summary:**
 	
-	To Build the csar of each model we have to first clone the tosca-models from github for that use the below link and store it on /home/ubuntu.
+	To Build the csar of each model we have to first clone the tosca-models on Demo Server from github for that use the below link and store it on /home/ubuntu.
 	```sh
 	git clone https://github.com/customercaresolutions/tosca-models 
 	```
-	After cloning  perform the step as follows.
+	After cloning  perform the steps as follows.
 	
   - SDWAN:
     Go to the home/ubuntu/tosca-models/cci/sdwan and then run the build.sh file as follows:
