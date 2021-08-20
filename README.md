@@ -7,7 +7,7 @@ Table of contents
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Building images and started docker containers of puccini tosca components](#Building-images-and-started-docker-containers-of-puccini-tosca-components)
    * [Deploying Tosca Models](#Deploying-Tosca-Models)
-   * [Summary Of Options Avaiable](#Summary-Of-Options-Avaiable)
+   * [Summary Of Options Available](#Summary-Of-Options-Available)
    * [Steps To Verify Deloyed Tosca Models](#Steps-To-Verify-Deloyed-Tosca-Models)
 <!--te-->  
 
@@ -159,7 +159,9 @@ Table of contents
     ```sh
     ./build.sh
     ```
-
+    
+    Check wither all csar are created at home/ubuntu/tosca-models/cci.
+    
 ## Building images and started docker containers of puccini tosca components
 - **List of components and their summary:**(TBD)
   - TOSCA_SO:
@@ -238,9 +240,10 @@ Table of contents
 		  msgBusURL={IP_OF_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-	  Note: IP_OF_demo_server is VM which we created at start. 
-		About cciPrivateKey:- cciPrivateKey is the Key or we can say Password to login/ssh into AWS VM and this Key is avaiable locally.  
-		About application.cfg:- As we see the {IP_OF_bonap_server} in application.cfg this is come from the Oran Server which we setup as a Pre Deployment Steps.
+	  Note: IP_OF_demo_server is VM which we created at start.
+	  About cciPrivateKey:- cciPrivateKey is the Key or we can say Password to login/ssh into AWS VM and this Key is avaiable locally.  
+	  About application.cfg:- As we see the {IP_OF_bonap_server} in application.cfg this is come from the Oran Server which we setup as a Pre Deployment Steps.
+	  
 	- Copy files as given below:
 	  - Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
 	  - Copy cciPrivateKey  to ~/puccini/dvol/config/
@@ -257,13 +260,10 @@ Table of contents
     docker images -a
     ```
 	
-  - verify all docker container should be in running state:
-    ```sh
-    docker ps -a
-    ```
-	
-  - Here we check the *STATUS* of each Container should be UP.
-    
+  - Verify docker container are Deploy:
+
+    To verfiy docker container are Deploy run the command as follows and check wither all the conatiner should be UP.
+   
     ```sh
     e.g:
     ubuntu@ip-10-0-0-220:~/puccini$ docker ps -a  
@@ -275,7 +275,7 @@ Table of contents
     2813f70abcc3   cci/tosca-compiler:latest   "./tosca-compiler"   9 minutes ago   Up 9 minutes               0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
     289da3c4bafc   dgraph/standalone:latest    "/run.sh"            9 minutes ago   Up 9 minutes               0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
     ```
-## Summary Of Options Avaiable
+## Summary Of Options Available
 
   Following are the short description of various options in request body while creating service instance.(TBD)
 
@@ -291,7 +291,7 @@ Table of contents
  
     There are two way to deploy tosca models 
     
-    *-Docker Containers* *-ONAP OOM* 
+    *-Docker Containers*, *-ONAP OOM* 
     
     and following is the detail explanation
     
@@ -307,7 +307,7 @@ Table of contents
 	  
 	  ```sh
 	  POST http://{IP_OF_bonap_server}:10010/compiler/model/db/save
-	  	{
+	  {
 		  "url":"/opt/app/models/<ModelName>.csar",
 		  "resolve":true,
 		  "coerce":false,
@@ -315,7 +315,7 @@ Table of contents
 		  "output": "./<ModelName>-dgraph-clout.json",
 		  "inputs":"",
 		  "inputsUrl": ""
-		}
+	  }
 	  ```  		 
 	  e.g:
 	  ```sh
@@ -390,32 +390,30 @@ Table of contents
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	    "execute-policy":false
 	  --Ric:
-	  	"inputs":  {
-			"helm_version":"2.17.0"
-			},
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-		"execute-policy":false
+	    "inputs":{"helm_version":"2.17.0"},
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+	    "execute-policy":false
 	  --Nonrtric:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-		"execute-policy":false
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+            "execute-policy":false
 	  --Qp:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-		"execute-policy":false
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+	    "execute-policy":false
 	  --Qp-driver:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-		"execute-policy":false
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+            "execute-policy":false
 	  --Ts:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-		"execute-policy":false
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+	    "execute-policy":false
 	  ```
 
 	- Create Service Instances With Deployment:
