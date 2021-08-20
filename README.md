@@ -304,30 +304,37 @@ Table of contents
 	  ```  		 
 	  e.g:
 	  ```sh
+	  -- Sdwan:
 		{
 		  "url":"/opt/app/models/firewall.csar",
 		  "output": "./firewall-dgraph-clout.json",
-		}			 
+		}
+	  --Firewall:
 		{
 		  "url":"/opt/app/models/sdwan.csar",
 		  "output": "./sdwan-dgraph-clout.json",
 		}
+	  --Nonrtric:	
 		{
 		  "url":"/opt/app/models/nonrtric.csar",
 		  "output": "./nonrtric-dgraph-clout.json",
 		}
+	  --Ric:	
 		{
 		  "url":"/opt/app/models/ric.csar",
 		  "output": "./ric-dgraph-clout.json",
 		}
+	  --Qp:
 		{
 		  "url":"/opt/app/models/qp.csar",
 		  "output": "./qp-dgraph-clout.json",
 		}
+	  --Qp-driver:
 		{
 		  "url":"/opt/app/models/qp-driver.csar",
 		  "output": "./qp-driver-dgraph-clout.json",
 		}
+	  --Ts:	
 		{
 		  "url":"/opt/app/models/ts.csar",
 		  "output": "./ts-dgraph-clout.json",
@@ -350,7 +357,6 @@ Table of contents
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":true,
-		"execute-policy":false,
 		"service":"<service_url_for_model>"
 	  }
 	  ```
@@ -361,33 +367,40 @@ Table of contents
 	  --Firewall:
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	    "execute-policy":false
 	  --Sdwan:
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	    "execute-policy":false
 	  --Ric:
 	  	"inputs":  {
 			"helm_version":"2.17.0"
 			},
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+		"execute-policy":false
 	  --Nonrtric:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+		"execute-policy":false
 	  --Qp:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+		"execute-policy":false
 	  --Qp-driver:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+		"execute-policy":false
 	  --Ts:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+		"execute-policy":false
 	  ```
 
 	- Create Instances Service With Deployment:
@@ -405,7 +418,6 @@ Table of contents
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":false,
-		"execute-policy":true,
 		"service":"<service_url_for_model>"
 	  }
 	  ```	
@@ -416,33 +428,40 @@ Table of contents
 	  --Firewall:
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	    "execute-policy":true
 	  --Sdwan:
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	    "execute-policy":true
 	  --Ric:
 	  	"inputs":  {
 			"helm_version":"2.17.0"
 			},
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+		"execute-policy":true,
 	  --Nonrtric:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+		"execute-policy":true
 	  --Qp:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+		"execute-policy":true
 	  --Qp-driver:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+		"execute-policy":true
 	  --Ts:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+		"execute-policy":true
 	  ```
 
 	- ExecuteWorkfow Service without Deployment:
