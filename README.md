@@ -102,7 +102,7 @@ Table of contents
     docker info
     ```
 	
-- **Oran Servers**
+- **Oran Servers:**
 
   - To Set up the oran Servers on AWS follow the wiki page as sollows:
 
@@ -371,23 +371,23 @@ Table of contents
 			"helm_version":"2.17.0"
 			},
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  --Nonrtric:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  --Qp:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  --Qp-driver:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  --Ts:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
 	- Create Instances Service With Deployment:
@@ -396,11 +396,11 @@ Table of contents
 	
 	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
 	  ```sh			
-	  POST http://{IP_OF_demo_server}:10000/bonap/templates/createInstance
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
 	  {
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-		"inputs": "",
+		"inputs": "<input_for_model>",
 		"inputsUrl":"<input_url_for_model>",
 		"generate-workflow":true,
 		"execute-workflow":true,
@@ -426,23 +426,23 @@ Table of contents
 			"helm_version":"2.17.0"
 			},
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  --Nonrtric:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  --Qp:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  --Qp-driver:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  --Ts:
 	  	"inputs":"",
 	  	"inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
 	- ExecuteWorkfow Service without Deployment:
@@ -450,7 +450,7 @@ Table of contents
 	  Note : ExecuteWorkfow API Without Deploy("list-steps-only":true)
 	  
 	  ```sh
-          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+          POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
 		"list-steps-only": true,
 		"execute-policy": false
@@ -462,7 +462,7 @@ Table of contents
 	  Note : ExecuteWorkfow API With Deploy("list-steps-only":false)
 	   
 	  ```sh
-          POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+          POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	  {
 		"list-steps-only": false,
 		"execute-policy": true
@@ -471,15 +471,15 @@ Table of contents
 	- Execute Policy: 
 	  
 	  ```sh
-	  POST http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	  ```
         - Stop Policy:
 	  ```sh
-	  DELETE http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	  DELETE http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	  ```
         - Get Policies:
 	  ```sh
-	  GET http://{IP_OF_demo_server}:10000/bonap/templates/<InstanceName>/policies
+	  GET http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policies
 	  ```
 	  
   - ONAP OOM:
