@@ -161,7 +161,7 @@ Table of contents
     ```
 
 ## Building images and started docker containers of puccini tosca components
-- **List of components and their summary:**
+- **List of components and their summary:**(TBD)
   - TOSCA_SO:
   - TOSCA_COMPILER:
   - TOSCA_WORKFLOW:
@@ -170,7 +170,7 @@ Table of contents
 
 - **Steps to Building Images and started docker containers:**
 
-	Login into the demo_server and Perform the belew steps:
+	Login into the demo_server and Perform the steps as follows:
 	
   - clone puccini:
     ```sh
@@ -277,9 +277,9 @@ Table of contents
     ```
 ## Summary Of Options Avaiable
 
-  Following are the short description of various options in request body while creating service instance.
+  Following are the short description of various options in request body while creating service instance.(TBD)
 
-- list-steps:
+- list-steps-only:
  
   There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it   is "false" it means we deploy model on AWS.
   
