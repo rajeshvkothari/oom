@@ -109,7 +109,7 @@ Table of contents
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
     ```
 	
-## Building Model Csars
+## Building Tosca Model Csars
 
 - **List Of Models And Their Summary:**
 	
@@ -151,7 +151,7 @@ Table of contents
     ./build.sh
     ```
 
-## Building images for puccini tosca components
+## Building images and started docker containers of puccini tosca components
 - **List of components and their summary:**
   - TOSCA_SO:
   - TOSCA_COMPILER:
@@ -159,7 +159,7 @@ Table of contents
   - TOSCA_POLICY:
   - TOSCA_GAWP:
 
-- **Steps to Building Images and Starting Container:**
+- **Steps to Building Images:**
 
 	Login into the demo_server and Perform the belew steps:
 	
@@ -491,60 +491,60 @@ Table of contents
 	  
   - ONAP OOM:
   
-- **Steps to verify:**
+## Steps to verify
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
-  - Verify Sdwan Model:  
+- Verify Sdwan Model:  
  
-	- Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
-	- SSH SDWAN_Site_A VM and fire 'ifconfig -a'
+  - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
+  - SSH SDWAN_Site_A VM and fire 'ifconfig -a'
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
-	- SSH SDWAN_Site_B VM and fire 'ifconfig -a'
+  - SSH SDWAN_Site_B VM and fire 'ifconfig -a'
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
-	- Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
 	
-  - Verify Firewall Model:
+- Verify Firewall Model:
 
-	- Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
+  - Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
 	  Validate that number of captured packets by sink will gets increase in 'Graphs' section
-	- Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
 
-  - Verify Nonrtric Model:
+- Verify Nonrtric Model:
 	
-	- Comaands to verify all pods are running using following commands on bonap-server: 
-	```sh
+  - Comaands to verify all pods are running using following commands on bonap-server: 
+    ```sh
 	kubectl get pods -n nonrtric
 	```     
-	- Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
 	
-  - Verify Ric Model:
+- Verify Ric Model:
 
-	- Comaands to verify all pods are running using following commands :
+  - Comaands to verify all pods are running using following commands :
 	```sh		
 	kubectl get pods -n ricplt
 	kubectl get pods -n ricinfra
 	kubectl get pods -n ricxapp   	   
 	```		
-	- Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
 
-  - Verify Qp Model:
+- Verify Qp Model:
 
-	- Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
 	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
-	- Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
 
-  - Verify Qp-driver Model:
+- Verify Qp-driver Model:
 
-	- Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
-	- Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
 
-  - Verify Ts Model:
+- Verify Ts Model:
 
-	- Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}	  		   
-	- Compare tosca-models/cci/tsCsarClout.json with puccini/so/ts-dgraph-clout.json using compare tool.
+  - Compare tosca-models/cci/tsCsarClout.json with puccini/so/ts-dgraph-clout.json using compare tool.
