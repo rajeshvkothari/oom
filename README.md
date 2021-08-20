@@ -13,7 +13,7 @@ Table of contents
 
 ## Introduction(TBD)
 
-  This page help us to deploy all tosca models using tosca docker conatiners(micro-services) and through ONAP OOM setup. This also help to verfiy tosca models are properly deploy   or not.
+  This page helps us to deploy all tosca models using tosca docker conatiners(micro-services) and through ONAP OOM setup. This also help to verfiy tosca models are properly deploy   or not.
 
 ## Pre Deployment Steps
 - **DMaaP Server:**
