@@ -13,7 +13,7 @@ Table of contents
 
 ## Introduction(TBD)
 
-  This page is help us to deploy all tosca models using Docker Conatiner, ONAP OOM and also help to Verfiy models are properly deploy or not.
+  This page help us to deploy all tosca models using tosca docker conatiners(micro-services) and through ONAP OOM setup. This also help to verfiy tosca models are properly deploy   or not.
 
 ## Pre Deployment Steps
 - **DMaaP Server:**
@@ -120,7 +120,7 @@ Table of contents
 	
 	To Build the csar of each model we have to first clone the tosca-models from github for that use the below link and store it on /home/ubuntu.
 	```sh
-	gitclone https://github.com/customercaresolutions/tosca-models 
+	git clone https://github.com/customercaresolutions/tosca-models 
 	```
 	After cloning  perform the step as follows.
 	
@@ -449,32 +449,30 @@ Table of contents
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
 	    "execute-policy":true
 	  --Ric:
-	  	"inputs":  {
-			"helm_version":"2.17.0"
-			},
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-		"execute-policy":true,
+	    "inputs":{"helm_version":"2.17.0"},
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+	    "execute-policy":true,
 	  --Nonrtric:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-		"execute-policy":true
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+	    "execute-policy":true
 	  --Qp:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-		"execute-policy":true
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+	    "execute-policy":true
 	  --Qp-driver:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-		"execute-policy":true
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+	    "execute-policy":true
 	  --Ts:
-	  	"inputs":"",
-	  	"inputsUrl":"",
-	        "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-		"execute-policy":true
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+            "execute-policy":true
 	  ```
 
 	- ExecuteWorkfow Service without Deployment:
