@@ -340,13 +340,21 @@ Table of contents
 		  "inputsUrl": ""
 	  }
 	  ```  		 
-	  For sdwan use following:
+	  For sdwan,firewall,nonrtric,qp,qp-driver,ts use following:
 	  ```sh
 		{
-		  "url":"/opt/app/models/sdwan.csar",
-		  "output": "./sdwan-dgraph-clout.json",
+		  "inputs":"",
+		  "url":"/opt/app/models/<model_name>.csar",
+		  "output": "./<model_name>-dgraph-clout.json",
 		}
-	  ```	
+	  ```
+      For ric use following:
+	  ```sh
+,		  "inputs":{"helm_version":"2.17.0"},
+		  "url":"/opt/app/models/ric.csar",
+		  "output": "./ric-dgraph-clout.json",
+		}
+      ```	  
 	  
 	- Create Service Instances Without Deployment:
 	
