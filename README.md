@@ -256,7 +256,12 @@ Table of contents
 		  msgBusURL={IP_OF_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-	  Note1: IP_of_server if we want to deploy sdwan, firewall then use IP_of_demo_server and if we want to deploy firewall, sdwan & oran models then use IP_of_bonap_server.   
+	  Note1: IP_of_server if we want to deploy sdwan, firewall then use IP_of_demo_server(which we created in Pre Deployment). 
+	         
+			if we want to deploy firewall, sdwan & oran models then use IP_of_bonap_server(which we created in Pre Deployment).
+
+			IP_OF_DMaap_Server is a server which we created in Pre Deployment.
+			 
 	  Note2: cciPrivateKey is the Key to login/ssh into AWS.   
 	  
 	- Copy files as given follows:
@@ -446,7 +451,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
 	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	    "execute-policy":false
+	    "execute-policy":true
 	  ```
 	  
 	  **Sdwan:**
@@ -454,7 +459,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	    "execute-policy":false
+	    "execute-policy":true
 	  ```
 	  
 	  **Ric:**
@@ -462,7 +467,7 @@ Table of contents
 	    "inputs":{"helm_version":"2.17.0"},
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-	    "execute-policy":false
+	    "execute-policy":true
 	  ```	
 	  
 	  **Nonrtric:**
@@ -470,7 +475,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-            "execute-policy":false
+        "execute-policy":true
 	  ```
 	  
 	  **Qp:**
@@ -478,7 +483,7 @@ Table of contents
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-	    "execute-policy":false
+	    "execute-policy":true
 	  ```
 	 
 	  **Qp-driver:**
@@ -486,7 +491,7 @@ Table of contents
 	     "inputs":"",
 	     "inputsUrl":"",
 	     "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-             "execute-policy":false
+         "execute-policy":true
 	  ```
 	 
 	  **Ts:**
@@ -494,7 +499,7 @@ Table of contents
 	     "inputs":"",
 	     "inputsUrl":"",
 	     "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-	     "execute-policy":false
+	     "execute-policy":true
 	  ```
 
 	- ExecuteWorkfow Service without Deployment:
@@ -520,6 +525,8 @@ Table of contents
 	      "execute-policy": true
 	  }
 	  ```
+	  
+	  Note: Following API's are only applicable for the firewall model.
 	  
 	- Execute Policy: 
 	  
