@@ -130,176 +130,6 @@ Table of contents
 	
 	Note: Setup this oran servers when we want to deploy oran models.
 	
-- **ONAP_OOM_DEMO:**(TBD)
-  
-  Note: Setup this server when we want to test through ONAP OOM environment.
-  
-  - Create AWS VM(ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
-  
-	```sh
-	Image: ubuntu-18.04
-    Instance Type: m5a.4xlarge
-    Storage: 400GB
-    KeyPair: cciPublicKey
-    ```
-  
-  - Setup docker:
-  
-    ```sh
-	sudo apt update
-    sudo apt install apt-transport-https ca-certificates curl software-properties-common
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-    sudo apt update
-    apt-cache policy docker-ce
-    sudo apt-get install containerd.io docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic
-    sudo usermod -aG docker ${USER}
-    id -nG
-    cd //
-    sudo chmod -R 777 /etc/docker
-    Create daemon.json in /etc/docker and following in it.
-     { "insecure-registries":["172.31.27.186:5000"] }
-    sudo systemctl stop docker 
-    sudo systemctl start docker
-    sudo chmod 777 /var/run/docker.sock
-	```
-	
-	Note : 172.31.27.186 is a IP address of 'CCI-REPO' VM
-	
-  - Setup kubernetes:
-  
-    ```sh'
-	cd home/ubuntu
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
-    sudo chmod +x ./kubectl
-    sudo mv ./kubectl /usr/local/bin/kubectl
-    grep -E --color 'vmx|svm' /proc/cpuinfo
-	```
-	
-  - Setup minikube:
-    
-	```sh
-    sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-    sudo chmod +x minikube
-    sudo mv ./minikube /usr/local/bin/minikube
-    sudo apt-get install conntrack
-    sudo minikube start --driver=none --kubernetes-version 1.15.9
-    sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
-    sudo chown -R $USER $HOME/.kube $HOME/.minikube
-    kubectl get pods -n onap -o=wide
-	```
-	
-  - Download/Clone the CCI ONAP OOM:
-    
-	```sh
-	cd ~/
-    git clone https://github.com/customercaresolutions/onap-oom-integ.git -b frankfurt --recurse-submodules
-    cd ~/onap-oom-integ/kubernetes
-    git clone https://github.com/onap/testsuite-oom -b frankfurt robot
-	```
-	
-  - Install Helm:
-  
-    ```sh
-	cd ~/
-    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-    sudo chmod 700 get_helm.sh
-    ./get_helm.sh -v v2.16.6
-    sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
-	```
-	
-  - Run following commands for setting up helm:
-  
-    ```sh
-	sudo helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
-    helm --tiller-namespace tiller version
-    kubectl -n kube-system create serviceaccount tiller
-    kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-    helm init --service-account tiller
-    sudo helm serve &
-    sudo helm repo add local http://127.0.0.1:8879
-    sudo helm repo list
-    sudo apt install make
-    sudo chmod -R 777 .helm
-	```
-	
-  - Run following commands to install python, jq and AWS CLI:
-  
-	```sh
-    sudo apt-get update
-    sudo apt install python
-    sudo apt-get -y install python-dev python-pip
-    sudo pip install --upgrade pip
-    sudo apt-get install jq
-    sudo apt install awscli
-	```
-	
-  - To deploy oran models create bonap server with clustering enable (ric and nonrtric clusters) using following link:
-  
-    ```sh
-	http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-	```
-  
-  - Add Public IP of bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
-
-    ```sh
-    [remote]
-    remoteHost={bonap_server}
-    remotePort=22
-    remoteUser=ubuntu
-    remotePubKey=/opt/app/config/cciPrivateKey
-	```	
-	
-	Note1: IP_of_server if we want to deploy sdwan, firewall then use IP_of_demo_server(which we created in Pre Deployment). 
-	         
-			if we want to deploy firewall, sdwan & oran models then use IP_of_bonap_server(which we created in Pre Deployment).
-
-			IP_OF_DMaap_Server is a server which we created in Pre Deployment.
-			 
-	Note2: cciPrivateKey is the Key to login/ssh into AWS.
-	
-  - Build helm charts:
-  
-    ```sh
-	cd /home/ubuntu/onap-oom-integ/kubernetes
-    make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
-    helm search onap -l
-    sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
-    cd ../..
-    sudo chmod -R 777 .helm
-    sudo apt-get install socat
-	```
-	
-	Note: Verify 'CCI-REPO' VM on AWS Ohio Region should be in running state.
-	
-  - Deploy ONAP:
-    
-	```sh
-	cd ~/onap-oom-integ/kubernetes
-    helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
-	kubectl get pods -n onap
-	```
-	
-	Note: Wait till all pods go into 'Running' state.
-	
-  -	To access portal using browser from your local machine, add 'ip_of_ONAP_OOM_DEMO' in /etc/hosts file:
-  
-	```sh
-	{ip_of_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
-    {ip_of_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
-    {ip_of_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
-    {ip_of_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
-    {ip_of_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
-    {ip_of_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
-    {ip_of_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
-	```
-	
-  -	Access ONAP portal from browser:
-    
-	```sh
-	https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	```
-	
 ## Building Tosca Model Csars
 
 - **List Of Models And Their Summary:**
@@ -372,6 +202,56 @@ Table of contents
   - Make following changes in puccini as follows:
 
 	- puccini/docker-compose.yml:
+	
+      - To use existing tosca images:
+	  
+          orchestrator:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.so.multistage
+			  volumes:
+			    -  ../dvol/config:/opt/app/config
+			    -  ../dvol/models:/opt/app/models
+			    -  ../dvol/data:/opt/app/data
+			    -  ../dvol/log:/opt/app/log		   
+		  compiler:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.compiler.multistage
+			  volumes:
+			    -  ../dvol/config:/opt/app/config
+			    -  ../dvol/models:/opt/app/models
+			    -  ../dvol/data:/opt/app/data
+			    -  ../dvol/log:/opt/app/log
+		  workflow:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.workflow.multistage
+			  volumes:
+			    -  ../dvol/config:/opt/app/config
+			    -  ../dvol/models:/opt/app/models
+			    -  ../dvol/data:/opt/app/data
+			    -  ../dvol/log:/opt/app/log
+		  policy:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.policy.multistage
+			  volumes:
+			    -  ../dvol/config:/opt/app/config
+			    -  ../dvol/models:/opt/app/models
+			    -  ../dvol/data:/opt/app/data
+			    -  ../dvol/log:/opt/app/log
+		  gawp:
+			  build:
+			    context: .
+			    dockerfile: Dockerfile.gawp.multistage
+			  volumes:
+			     -  ../dvol/config:/opt/app/config
+			     -  ../dvol/models:/opt/app/models
+			     -  ../dvol/data:/opt/app/data
+			     -  ../dvol/log:/opt/app/log
+				 
+      - To build new tosca images:
 		
 		  orchestrator:
 			  build:
@@ -734,313 +614,7 @@ Table of contents
 	  ```
 	  
   - **ONAP OOM:**(TBD)
-  
-    As we see the all CCI model in docker container method same deployemnt we are going to do with OOM based ONAP environment.
-	for that we have to follow the below step.
-	
-    - One time Steps for intialization/configuration the envinorment:
-	  
-	  Login ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
-	  
-	  ```sh
-	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	  ```
-	  
-	  ```sh
-	  Virtual Licence Model creation
-      Open SDC application, click on the 'ONBOARD' tab.
-      Click 'CREATE NEW VLM' (Licence Model)
-      Use 'cci' as Vendor Name, and enter a description
-      Click 'CREATE'
-      Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
-      Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
-      Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-      Pools tab, drag the created entitlement pool to the left. Same for the License Key Groups
-      Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
-      Features Groups, drag the feature group created previously.
-      Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
-	  ```
-	  
-      Update AAI with following REST requests using POSTMAN
-	  
-	  Note : Use following headers in a POSTMAN request
-	  
-        ```sh
-		headers :
-        Content-Type:application/json
-        X-FromAppId:AAI
-        Accept:application/json
-        X-TransactionId:get_aai_subscr
-        Cache-Control:no-cache
-        Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-		```
-		
-		- Create 'NCalifornia' Region: 
-		
-		  ```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
-		  {
-			"cloud-owner": "aws",
-			"cloud-region-id": "NCalifornia",
-			"tenants": {
-			  "tenant": [
-			   {
-				 "tenant-id": "1",
-				 "tenant-name": "admin"
-			   }
-			  ]
-			}
-		  }
-		  ```
-		  
-		- Create customer:   
-		  
-	      ```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
-		  {
-		   "global-customer-id": "CCIDemonstration",
-		   "subscriber-name": "CCIDemonstration",
-		   "subscriber-type": "INFRA",
-		   "service-subscriptions": {
-			 "service-subscription": [
-			  {
-				"service-type": "vSDWAN",
-				"relationship-list": {
-				   "relationship": [{
-						"related-to": "tenant",
-						"relationship-data": [
-						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						 ]
-					}]
-				 }
-			  },
-			  {
-				"service-type": "vFirewall",
-				"relationship-list": {
-				   "relationship": [{
-						"related-to": "tenant",
-						"relationship-data": [
-						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						 ]
-					}]
-				 }
-			   },
-			  {
-				"service-type": "vNonrtric",
-				"relationship-list": {
-				   "relationship": [{
-						"related-to": "tenant",
-						"relationship-data": [
-						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						 ]
-					}]
-				 }
-			 },
-			{
-				"service-type": "vRIC",
-				"relationship-list": {
-				   "relationship": [{
-						"related-to": "tenant",
-						"relationship-data": [
-						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						 ]
-					}]
-				 }
-			 },
-			 {
-			   "service-type": "vQp",
-			   "relationship-list": {
-				  "relationship": [{
-					   "related-to": "tenant",
-					   "relationship-data": [
-						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						]
-				   }]
-				}
-			},
-			 {
-			   "service-type": "vQp-driver",
-			   "relationship-list": {
-				  "relationship": [{
-					   "related-to": "tenant",
-					   "relationship-data": [
-						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						]
-				   }]
-				}
-			},
-			 {
-			   "service-type": "vTs",
-			   "relationship-list": {
-				  "relationship": [{
-					   "related-to": "tenant",
-					   "relationship-data": [
-						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
-						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
-						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
-						]
-				   }]
-				}
-			}				
-		   ]}
-		  }
-		  ```
-		
-		NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
-		
-		- Create a Dummy Service:
-		
-		  ```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
-			 {
-				"service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
-				"service-description": "CCI"
-			 }
-		  ```
-		  
-		- Create Zone:
-		  
-		  ```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
-			 {
-			   "zone-name": "cci",
-			   "design-type":"abcd",
-			   "zone-context":"abcd"
-			 }
-		  ```
-		
-      Update VID with following REST requests using POSTMAN
-	  
-	  Note : Use following headers in a request
-	  
-	    ```sh
-		Content-Type:application/json
-        X-FromAppId:VID
-        Accept:application/json
-        X-TransactionId:get_vid_subscr
-        Cache-Control:no-cache
-        Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-		```
-		
-		- Declare Owning Entity:
-		
-		  ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
-		  {
-			"options": ["cciowningentity1"]
-		  }
-		  ```
-		
-		- Create Platform:
-		
-		  ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
-		  {
-		    "options": ["Test_Platform"]
-		  }
-		  ```
-		
-		- Create Line Of Business:
-		
-		  ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
-		  { 
-			"options": ["Test_LOB"]
-		  }
-		  ```
-		
-		- Create Project:
-		
-		  ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
-		  {
-		    "options": ["Test_project"]
-		  }
-		  ```
-		
-	- Create and Distribute CCI models in SDC:
-	  
-	  - Vendor Software Product(VSP) onboarding/creation:
-	    
-		Login Portal using designer(cs0008/demo123456!)
-		```sh
-		 https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-		 Open SDC application, click on the OnBoard tab.
-         Click 'CREATE NEW VSP'
-         Give the name to VSP, i.e.  cci_ric_vsp. 
-         Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'
-         In 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version', 
-         'License Agreement' and 'Feature Groups'.
-         Goto 'Overview'. In 'Software Product Attachements' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
-         based on your requirement.
-         Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
-		```
-	  
-	  - Virtual Function(VF) Creation:
-	  
-	    ```sh
-		Go to SDC home. Click on the top right icon with the orange arrow.
-		Select your VSP and click on 'IMPORT VSP'.
-		Click on 'Create' 
-		Click on 'Check-in' and enter comment then Press OK.
-		Click on 'Certify' and enter comment then Press OK.
-		```
-	  
-	  - Service Creation/Distribution:
-	    
-		```sh
-		Go to SDC home. From 'Add' box click on 'ADD SERVICE'
-		Enter Name and then select 'Category' as 'Network Service'. Enter description and click on Create.
-		Click on the 'Composition' left tab
-		In the search bar, Search your VSP and Drag it
-		Click on 'Check-in' and enter comment then Press OK.
-		Click on Certify and enter comment then Press OK.
-		Click on Distribute.
-		Wait for two minutes and go to 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
-		```
-	  
-	- Create service instance and VNF from VID:
-	
-	  - Access to VID portal
-	    
-		Login portal using demo/demo123456! credentials.
-		```sh
-		https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-		```
-		
-		Select the VID icon from 
-		
-	  - Instantiate Service
-	    
-		```sh
-		Click 'Browse SDC Service Models'
-        Select a service and click Deploy.
-        Complete the fields indicated by the red star and click Confirm.
-        Wait for few minutes and it will return success message.
-        service object is created in Puccini-SO.
-        Click Close 
-		```
-	  
-	  - Instantiate a VNF
-		
-		```sh
-	    Click on “Add node instance” and select the VNF available.
-        Complete the fields indicated by the red star and click Confirm.
-        Wait for 7-8 minutes and success message will display.
-		```
-		
+  	
 ## Steps to Verify Deloyed Tosca Models 
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
