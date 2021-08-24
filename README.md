@@ -190,7 +190,7 @@ Table of contents
 	    
 		```sh
 	    orchestrator:
-		    image: cci/tosca-so:latest
+		    image: 172.31.27.186:5000/tosca-so:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -198,7 +198,7 @@ Table of contents
 		      -  ../dvol/log:/opt/app/log
 
 	    compiler:
-		    image: cci/tosca-compiler:latest
+		    image: 172.31.27.186:5000/tosca-compiler:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -206,7 +206,7 @@ Table of contents
 		      -  ../dvol/log:/opt/app/log
 
 	    workflow:
-		    image: cci/tosca-workflow:latest
+		    image: 172.31.27.186:5000/tosca-workflow:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -214,7 +214,7 @@ Table of contents
 		      -  ../dvol/log:/opt/app/log
 
 	    policy:
-		    image: cci/tosca-policy:latest
+		    image: 172.31.27.186:5000/tosca-policy:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -222,7 +222,7 @@ Table of contents
 		      -  ../dvol/log:/opt/app/log
 
 	    gawp:
-		    image: cci/tosca-gawp:latest
+		    image: 172.31.27.186:5000/tosca-gawp:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
