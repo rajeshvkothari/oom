@@ -190,50 +190,44 @@ Table of contents
 	      
 		  ```sh
           orchestrator:
-			  build:
-			    context: .
-			    dockerfile: Dockerfile.so.multistage
-			  volumes:
-			    -  ../dvol/config:/opt/app/config
-			    -  ../dvol/models:/opt/app/models
-			    -  ../dvol/data:/opt/app/data
-			    -  ../dvol/log:/opt/app/log		   
-		  compiler:
-			  build:
-			    context: .
-			    dockerfile: Dockerfile.compiler.multistage
-			  volumes:
-			    -  ../dvol/config:/opt/app/config
-			    -  ../dvol/models:/opt/app/models
-			    -  ../dvol/data:/opt/app/data
-			    -  ../dvol/log:/opt/app/log
-		  workflow:
-			  build:
-			    context: .
-			    dockerfile: Dockerfile.workflow.multistage
-			  volumes:
-			    -  ../dvol/config:/opt/app/config
-			    -  ../dvol/models:/opt/app/models
-			    -  ../dvol/data:/opt/app/data
-			    -  ../dvol/log:/opt/app/log
-		  policy:
-			  build:
-			    context: .
-			    dockerfile: Dockerfile.policy.multistage
-			  volumes:
-			    -  ../dvol/config:/opt/app/config
-			    -  ../dvol/models:/opt/app/models
-			    -  ../dvol/data:/opt/app/data
-			    -  ../dvol/log:/opt/app/log
-		  gawp:
-			  build:
-			    context: .
-			    dockerfile: Dockerfile.gawp.multistage
-			  volumes:
-			     -  ../dvol/config:/opt/app/config
-			     -  ../dvol/models:/opt/app/models
-			     -  ../dvol/data:/opt/app/data
-			     -  ../dvol/log:/opt/app/log
+    image: cci/tosca-so:latest
+    volumes:
+      -  ../dvol/config:/opt/app/config
+      -  ../dvol/models:/opt/app/models
+      -  ../dvol/data:/opt/app/data
+      -  ../dvol/log:/opt/app/log
+
+  compiler:
+    image: cci/tosca-compiler:latest
+    volumes:
+        -  ../dvol/config:/opt/app/config
+        -  ../dvol/models:/opt/app/models
+        -  ../dvol/data:/opt/app/data
+        -  ../dvol/log:/opt/app/log
+
+  workflow:
+        image: cci/tosca-workflow:latest
+        volumes:
+            -  ../dvol/config:/opt/app/config
+            -  ../dvol/models:/opt/app/models
+            -  ../dvol/data:/opt/app/data
+            -  ../dvol/log:/opt/app/log
+
+  policy:
+        image: cci/tosca-policy:latest
+        volumes:
+            -  ../dvol/config:/opt/app/config
+            -  ../dvol/models:/opt/app/models
+            -  ../dvol/data:/opt/app/data
+            -  ../dvol/log:/opt/app/log
+
+  gawp:
+        image: cci/tosca-gawp:latest
+        volumes:
+            -  ../dvol/config:/opt/app/config
+            -  ../dvol/models:/opt/app/models
+            -  ../dvol/data:/opt/app/data
+            -  ../dvol/log:/opt/app/log
 	      ```		
     			
       - To build new tosca images:
