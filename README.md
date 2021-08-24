@@ -306,7 +306,8 @@ Table of contents
 	
 	To Build the csar of each model we have to first clone the tosca-models on Demo Server from github for that use the below link and store it on /home/ubuntu.
 	```sh
-	git clone https://github.com/customercaresolutions/tosca-models 
+	git clone https://github.com/customercaresolutions/tosca-models
+    sudo chmod 777 -R tosca-models	
 	```
 	Run following commands to build model csar.
 	
@@ -346,7 +347,7 @@ Table of contents
     ./build.sh
     ```
     
-    Check wither all csar are created at home/ubuntu/tosca-models/cci.
+    Check wither all csar are created at cd /home/ubuntu/tosca-models/cci.
     
 ## Building images and starting docker containers of puccini tosca components
 - **List of components and their summary:**(TBD)
@@ -442,7 +443,9 @@ Table of contents
 	  cd puccini/dvol/
 	  mkdir models
 	  cd ~/
-	  cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar puccini/dvol/models
+	  cd tosca-models/cci
+	  cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar home/ubuntu/puccini/dvol/models
+	  cd ~/
 	  cp cciPrivateKey puccini/dvol/config
 	  ```
 	  - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
@@ -511,8 +514,10 @@ Table of contents
 		  "inputs":"",
 		  "inputsUrl": ""
 	  }
-	  ```  		 
+	  ``` 
+	  
 	  For sdwan,firewall,nonrtric,qp,qp-driver,ts use following:
+	  
 	  ```sh
 		{
 		  "inputs":"",
@@ -520,9 +525,11 @@ Table of contents
 		  "output": "./<model_name>-dgraph-clout.json",
 		}
 	  ```
+	  
       For ric use following:
+	  
 	  ```sh
-,		  "inputs":{"helm_version":"2.17.0"},
+		  "inputs":{"helm_version":"2.17.0"},
 		  "url":"/opt/app/models/ric.csar",
 		  "output": "./ric-dgraph-clout.json",
 		}
@@ -737,6 +744,9 @@ Table of contents
 	  
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  ```
+	  
+	  ```sh
 	  Virtual Licence Model creation
       Open SDC application, click on the 'ONBOARD' tab.
       Click 'CREATE NEW VLM' (Licence Model)
