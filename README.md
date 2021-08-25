@@ -11,9 +11,9 @@ Table of contents
    * [Steps To Verify Deployed Tosca Models](#Steps-To-Verify-Deployed-Tosca-Models)
 <!--te-->  
 
-## Introduction(TBD)
+## Introduction (TBD)
 
-  This page is describe step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
+  This page is describing step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
 
 
 ## Pre Deployment Steps
@@ -38,7 +38,7 @@ Table of contents
     sudo systemctl start docker
     sudo chmod 777 /var/run/docker.sock
     ```
-    Make sure docker is installed properly by running following command :		
+    Make sure docker is installed properly by running following command:		
     ```sh
     docker info
     ```	
@@ -50,19 +50,19 @@ Table of contents
     git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
     ```
 	
-	Note: Verfiy that CCI_REPO VM on Ohio Region is in running state
+	Note: Verify that CCI_REPO VM on Ohio Region is in running state
 	
 	Replace the docker image in docker-compose.yml as follows:
 	
     Go to this location cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yml	
 	
-    Image to be replace:
+    Image to be replaced:
 	```sh
-	image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
+	image:  nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
 	```
 	New image:
     ```sh          
-    image: 172.31.27.186:5000/dmaap:localadapt_0.1
+    image:  172.31.27.186:5000/dmaap:localadapt_0.1
     ```	
 	
 	Note: 172.31.27.186 is the IP address of CCI_REPO  VM.
@@ -134,7 +134,7 @@ Table of contents
   
   Note: Setup this server when we want to test through ONAP OOM environment.
   
-  - Create AWS VM(ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
+  - Create AWS VM (ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
   
 	```sh
 	Image: ubuntu-18.04
@@ -164,7 +164,7 @@ Table of contents
     sudo chmod 777 /var/run/docker.sock
 	```
 	
-	Note : 172.31.27.186 is a IP address of 'CCI-REPO' VM
+	Note :  172.31.27.186 is a IP address of 'CCI-REPO' VM
 	
   - Setup kubernetes:
   
@@ -525,7 +525,7 @@ Table of contents
 	0557555424a6   dgraph/standalone:latest    "/run.sh"            16 minutes ago   Up 16 minutes   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 
     ```
-## Summary Of Options Available
+## Summary of Options Available
 
   Following are the short description of various options in request body while creating service instance.(TBD)
 
@@ -585,7 +585,7 @@ Table of contents
 	  
 	- Create Service Instances Without Deployment:
 	
-	  Note: To  Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
+	  Note:  To Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
 	
 	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
 	  ```sh			
@@ -803,7 +803,7 @@ Table of contents
       Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
       Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
       Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-      Pools tab, drag the created entitlement pool to the left. Same for the License Key Groups
+      Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups
       Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
       Features Groups, drag the feature group created previously.
       Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
@@ -811,7 +811,7 @@ Table of contents
 	  
       Update AAI with following REST requests using POSTMAN
 	  
-	  Note : Use following headers in a POSTMAN request
+	  Note :  Use following headers in a POSTMAN request
 	  
         ```sh
 		headers :
@@ -1036,7 +1036,7 @@ Table of contents
          Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
 		```
 	  
-	  - Virtual Function(VF) Creation:
+	  - Virtual Function (VF) Creation:
 	  
 	    ```sh
 		Go to SDC home. Click on the top right icon with the orange arrow.
@@ -1077,7 +1077,7 @@ Table of contents
         Select a service and click Deploy.
         Complete the fields indicated by the red star and click Confirm.
         Wait for few minutes and it will return success message.
-        service object is created in Puccini-SO.
+        Service object is created in Puccini-SO.
         Click Close 
 		```
 	  
@@ -1099,7 +1099,7 @@ Table of contents
   - SSH SDWAN_Site_A VM and fire 'ifconfig -a'
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
   - SSH SDWAN_Site_B VM and fire 'ifconfig -a'
-	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
+	Ping WAN Public IP, LAN Private IP (vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
   - Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
 	
 - Verify Firewall Model:
