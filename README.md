@@ -7,7 +7,7 @@ Table of contents
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Building images and starting docker containers of puccini tosca components](#Building-images-nd-starting-docker-containers-of-puccini-tosca-components)
    * [Deploying Tosca Models](#Deploying-Tosca-Models)
-   * [Summary Of Options Available](#Summary-Of-Options-Available)
+   * [Summary of Options Available](#Summary-of-Options-Available)
    * [Steps To Verify Deployed Tosca Models](#Steps-To-Verify-Deployed-Tosca-Models)
 <!--te-->  
 
