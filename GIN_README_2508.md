@@ -15,29 +15,16 @@ Table of contents
 
 ## Pre Deployment Steps
 
-  - For Docker container:
- 
-    - For Firewall & Sdwan:
-      - DMaap_Server
-      - Demo_Server
- 
-    - For All CCI models:
-      - DMaap_Server
-      - Demo_Server
-      - Oran_Server(optional)
+  - For Docker container testing: 
+    - DMaap_Server
+    - Demo_Server
+	  	  
+  - For ONAP OOM testing: 
+    - ONAP_OOM_DEMO_server
    
-    Note: If you want to deploy oran models through docker containers then create oran servers
- 
-  - For ONAP OOM:
- 
-    - For Firewall & Sdwan:
-      - ONAP_OOM_DEMO_server
- 
-    - For All CCI models:
-      - ONAP_OOM_DEMO_server
-      - Oran_Server(optional)
- 
-    Note: If you want to deploy oran models through OOM then create oran servers
+  - Oran_Server(optional)
+    
+	Note :If you want to deploy oran models through docker containers or OOM then create oran servers
 
 ## Building Tosca Model Csars
 
@@ -48,4 +35,3 @@ Table of contents
 ## Summary Of Options Available
 
 ## Steps To Verify Deployed Tosca Models
-
