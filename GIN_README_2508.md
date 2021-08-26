@@ -25,8 +25,10 @@ Table of contents
 ## Pre Deployment Steps
 - **For Tosca Docker containers testing:**
     -----------------------------------
+    
   - **DMaaP Server:**
       ------------
+      
     - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using putty:
     
       ```sh
@@ -89,6 +91,7 @@ Table of contents
 
   - **Demo server:**
       -----------
+      
     - Create AWS VM (demo_server) with following specifications and SSH it using putty:
     
       ```sh		
@@ -117,8 +120,10 @@ Table of contents
 
 - **For ONAP OOM testing:**
     --------------------
+    
   - **ONAP_OOM_DEMO_server**
       --------------------
+      
     Note: Setup this server when we want to test through ONAP OOM environment.
   
     - Create AWS VM (ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
@@ -289,6 +294,7 @@ Table of contents
   
 - **Oran_Servers(optional -> create only when need to deploy oran models):**
     ---------------------------------------------------------------------
+    
   - Set up the oran Servers on AWS, follow the wiki page:
 
     ```sh	
