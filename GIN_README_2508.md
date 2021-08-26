@@ -115,7 +115,7 @@ Table of contents
       docker info
       ```
 
--**For ONAP OOM testing:**
+- **For ONAP OOM testing:**
 
   - **ONAP_OOM_DEMO_server**
   
