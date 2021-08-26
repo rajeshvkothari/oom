@@ -573,6 +573,7 @@ Table of contents
 	   "url":"/opt/app/models/<ModelName>.csar",
 	   "output": "./<ModelName>-dgraph-clout.json",
 	   "resolve":true,
+	   "coerce": false,
 	   "quirks": ["data_types.string.permissive"],
 	   "inputs":"",
 	   "inputsUrl": ""
