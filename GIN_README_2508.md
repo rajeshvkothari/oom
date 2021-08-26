@@ -1042,13 +1042,13 @@ Table of contents
         Click Close 
       ```
 	  
-   - Instantiate a VNF
+    - Instantiate a VNF
 		
-     ```sh
+      ```sh
 	Click on “Add node instance” and select the VNF available.
         Complete the fields indicated by the red star and click Confirm.
         Wait for 7-8 minutes and success message will display.
-     ```
+      ```
   
 ## Steps to Verify Deloyed Tosca Models 
  
