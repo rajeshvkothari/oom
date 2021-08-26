@@ -37,31 +37,51 @@ Table of contents
       Storage: 80GB
       Key Pair: cciPublicKey
       ``` 
+	  
     - Setup Docker on DMaaP server:
+	
       ```sh
       sudo apt update
       sudo apt install docker.io
       sudo apt  install docker-compose
-      sudo systemctl stop docker 
+	  Create daemon.json in /etc/docker and following in it.
+       { "insecure-registries":["172.31.27.186:5000"] }
+      sudo systemctl stop docker.socket 
       sudo systemctl start docker
-      sudo systemctl status docker
       sudo chmod 777 /var/run/docker.sock
       ```
-      Make sure docker is installed properly by running following command :		
+	  
+      Make sure docker is installed properly by running following command :	
+	  
       ```sh
       docker info
       ```	
+	  
     - Clone the messageservice folder:
+	
       ```sh
+      cd ~/
       mkdir ~/local-dmaap
+	  cd local-dmaap
       git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
       ```
     
-      /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yaml	
-    
-      Should Include Following Line:
+      Note: Verify that CCI_REPO VM on Ohio Region is in running state
+	
+	  Replace the docker image in docker-compose.yml as follows:
+	
+      Go to this location cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yml	
+	
+      Image to be replaced:
+	  
+	  ```sh
+	  image:  nexus3.onap.org:10001/onap/dmaap/dmaap-mr:1.1.18
+	  ```
+	  
+	  New image:
+	  
       ```sh          
-      image: 172.31.27.186:5000/dmaap:localadapt_0.1
+      image:  172.31.27.186:5000/dmaap:localadapt_0.1
       ```	
 	
 	  Note: 172.31.27.186 is the IP address of CCI_REPO  VM.
@@ -71,6 +91,7 @@ Table of contents
       cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
       docker-compose up -d
       ```
+	  
     - Verify DMaap Server is deployed:
   
 	  Run the command given below and verify that the entire containers are UP.
@@ -87,6 +108,7 @@ Table of contents
 	
       ```sh
 	  curl -X GET "http://{IP_OF_DMaap_Server}:3904/topics" 
+	  {"topics": []}
 	  ```
 
   - **Demo server:**
@@ -106,9 +128,10 @@ Table of contents
       sudo apt update
       sudo apt install docker.io
       sudo apt  install docker-compose
-      sudo systemctl stop docker 
+	  Create daemon.json in /etc/docker and following in it.
+       { "insecure-registries":["172.31.27.186:5000"] }
+      sudo systemctl stop docker.socket 
       sudo systemctl start docker
-      sudo systemctl status docker
       sudo chmod 777 /var/run/docker.sock
       ```
 
@@ -179,7 +202,7 @@ Table of contents
       sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
       sudo chown -R $USER $HOME/.kube $HOME/.minikube
       kubectl get pods -n onap -o=wide
-	 ```
+	  ```
 	
     - Download/Clone the CCI ONAP OOM:
     
@@ -312,47 +335,48 @@ Table of contents
 	To Build the csar of each model we have to first clone the tosca-models on Demo Server or OOM_VM from github for that use the below link and store it on /home/ubuntu.
 	
 	```sh
-	git clone https://github.com/customercaresolutions/tosca-models 
+	git clone https://github.com/customercaresolutions/tosca-models
+    sudo chmod 777 -R tosca-models 
 	```
 	Run following commands to build model csar.
 	
   - SDWAN:
-    Go to the cd home/ubuntu/tosca-models/cci/sdwan and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/sdwan and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```  
   - FW:
-    Go to the cd home/ubuntu/tosca-models/cci/firewall and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/firewall and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
   - NONRTRIC:
-    Go to the cd home/ubuntu/tosca-models/cci/nonrtric and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/nonrtric and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
   - RIC:
-    Go to the cd home/ubuntu/tosca-models/cci/ric and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/ric and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
   - QP:
-    Go to the cd home/ubuntu/tosca-models/cci/qp and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/qp and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
   - QP-DRIVER:
-    Go to the cd home/ubuntu/tosca-models/cci/qp-driver and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/qp-driver and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
   - TS:
-    Go to the cd home/ubuntu/tosca-models/cci/ts and then run the build.sh file as follows:
+    Go to the cd /home/ubuntu/tosca-models/cci/ts and then run the build.sh file as follows:
     ```sh
     ./build.sh
     ```
-    
-    Check wither all csar are created at home/ubuntu/tosca-models/cci.
+   
+    Check wither all csar are created at /home/ubuntu/tosca-models/cci.
     
 ## Deploying Tosca Models using tosca docker containers 
 - **List of components and their summary:**(TBD)
@@ -379,101 +403,101 @@ Table of contents
   
     - Make following changes in puccini/docker-compose.yml of puccini
 	    
-		```sh
-	    orchestrator:
-		    image: 172.31.27.186:5000/tosca-so:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+	  ```sh
+	  orchestrator:
+          image: 172.31.27.186:5000/tosca-so:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
 
-	    compiler:
-		    image: 172.31.27.186:5000/tosca-compiler:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+	  compiler:
+		  image: 172.31.27.186:5000/tosca-compiler:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
 
-	    workflow:
-		    image: 172.31.27.186:5000/tosca-workflow:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+	  workflow:
+		  image: 172.31.27.186:5000/tosca-workflow:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
 
-	    policy:
-		    image: 172.31.27.186:5000/tosca-policy:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+	  policy:
+		  image: 172.31.27.186:5000/tosca-policy:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
 
-	    gawp:
-		    image: 172.31.27.186:5000/tosca-gawp:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
-		```
+	  gawp:
+		  image: 172.31.27.186:5000/tosca-gawp:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+      ```
 		 
   - To build new tosca images:
   
     - Make following changes in puccini/docker-compose.yml of puccini
 	    
-		```sh
-		orchestrator:
-			build:
-			  context: .
-			  dockerfile: Dockerfile.so.multistage
-			volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log		   
-	    compiler:
-			build:
-			  context: .
-			  dockerfile: Dockerfile.compiler.multistage
-			volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    workflow:
-			build:
-			  context: .
-			  dockerfile: Dockerfile.workflow.multistage
-			volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    policy:
-			build:
-			  context: .
-			  dockerfile: Dockerfile.policy.multistage
-			volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    gawp:
-			build:
-			  context: .
-			  dockerfile: Dockerfile.gawp.multistage
-			volumes:
-			   -  ./dvol/config:/opt/app/config
-			   -  ./dvol/models:/opt/app/models
-			   -  ./dvol/data:/opt/app/data
-			   -  ./dvol/log:/opt/app/log  
-		```		 
+	  ```sh
+	  orchestrator:
+	      build:
+		    context: .
+			dockerfile: Dockerfile.so.multistage
+		  volumes:
+			-  ./dvol/config:/opt/app/config
+			-  ./dvol/models:/opt/app/models
+			-  ./dvol/data:/opt/app/data
+			-  ./dvol/log:/opt/app/log		   
+	  compiler:
+	      build:
+		    context: .
+			dockerfile: Dockerfile.compiler.multistage
+		  volumes:
+			-  ./dvol/config:/opt/app/config
+			-  ./dvol/models:/opt/app/models
+			-  ./dvol/data:/opt/app/data
+			-  ./dvol/log:/opt/app/log
+	  workflow:
+	      build:
+			context: .
+			dockerfile: Dockerfile.workflow.multistage
+		  volumes:
+			-  ./dvol/config:/opt/app/config
+			-  ./dvol/models:/opt/app/models
+			-  ./dvol/data:/opt/app/data
+			-  ./dvol/log:/opt/app/log
+	  policy:
+	      build:
+			context: .
+			dockerfile: Dockerfile.policy.multistage
+		  volumes:
+			-  ./dvol/config:/opt/app/config
+			-  ./dvol/models:/opt/app/models
+			-  ./dvol/data:/opt/app/data
+			-  ./dvol/log:/opt/app/log
+	  gawp:
+	      build:
+			context: .
+			dockerfile: Dockerfile.gawp.multistage
+		  volumes:
+		    -  ./dvol/config:/opt/app/config
+			-  ./dvol/models:/opt/app/models
+			-  ./dvol/data:/opt/app/data
+			-  ./dvol/log:/opt/app/log  
+	  ```		 
 
-	- Modify ~/puccini/dvol/config/application.cfg as follows:					
+  - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
 		  [remote]
 		  remoteHost={IP_of_server}
@@ -483,19 +507,28 @@ Table of contents
 		  msgBusURL={IP_OF_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-	  Note1: {IP_of_server}
+	Note1: {IP_of_server}
       - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
       - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in Oran Servers of 'Pre Deployment Steps')     
   
-      Note2: {IP_OF_DMaap_Server}
+    Note2: {IP_OF_DMaap_Server}
       - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
 
-      Note3: cciPrivateKey is the Key to login/ssh into AWS.   
+    Note3: cciPrivateKey is the Key to login/ssh into AWS.   
 	  
-	- Copy files as given follows:
-	  - Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
-	  - Copy cciPrivateKey  to ~/puccini/dvol/config/
-	  - Copy /puccini/config/TOSCA-Dgraph-Schema.txt to /puccini/dvol/config/
+  - Copy files as given follows:
+	  
+	```sh
+	cd puccini/dvol/
+	mkdir models
+	cd ~/
+	cd tosca-models/cci
+	cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+	cd ~/
+	cp cciPrivateKey puccini/dvol/config
+	```
+	 
+	- Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
   - Build Docker images:
     ```sh
@@ -532,35 +565,48 @@ Table of contents
 	
   **#Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)** 
 
-	- Store model in Dgraph:
+  - Store model in Dgraph:
 	  
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10010/compiler/model/db/save
-	  {
-		  "url":"/opt/app/models/<ModelName>.csar",
-		  "output": "./<ModelName>-dgraph-clout.json",
-		  "resolve":true,
-		  "quirks": ["data_types.string.permissive"],
-		  "inputs":"",
-		  "inputsUrl": ""
-	  }
-	  ```  		 
-	  For sdwan use following:
-	  ```sh
-		{
-		  "url":"/opt/app/models/firewall.csar",
-		  "output": "./firewall-dgraph-clout.json",
-		}
-	  ```	
+	```sh
+	POST http://{IP_OF_bonap_server}:10010/compiler/model/db/save
+	{
+	   "url":"/opt/app/models/<ModelName>.csar",
+	   "output": "./<ModelName>-dgraph-clout.json",
+	   "resolve":true,
+	   "quirks": ["data_types.string.permissive"],
+	   "inputs":"",
+	   "inputsUrl": ""
+	}
+	``` 
+	
+	For sdwan,firewall,nonrtric,qp,qp-driver,ts use following:
 	  
-	- Create Service Instances Without Deployment:
+	```sh
+	{
+	   "inputs":"",
+	   "url":"/opt/app/models/<model_name>.csar",
+	   "output": "./<model_name>-dgraph-clout.json",
+	}
+	```
+	  
+    For ric use following:
+	  
+	```sh
+	{
+	   "inputs":{"helm_version":"2.17.0"},
+	   "url":"/opt/app/models/ric.csar",
+	   "output": "./ric-dgraph-clout.json",
+	}
+    ```	
+	  
+  - Create Service Instances Without Deployment:
 	
-	  Note: To  Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
+	Note: To  Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
 	
-	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
-	  ```sh			
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	  {
+	For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
+	```sh			
+	POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
 		"inputs": "<input_for_model>",
@@ -569,75 +615,76 @@ Table of contents
 		"execute-workflow":true,
 		"list-steps-only":true,
 		"service":"<service_url_for_model>"
-	  }
-	  ```
+	}
+	```
 	  
-      Use Following InputUrl and Service in API body for:
+  Use Following InputUrl and Service in API body for:
 	  
-	  **Firewall:**  
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	    "execute-policy":false
-	  ```
+    **Firewall:**  
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+	  "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	  "execute-policy":false
+	```
 	  
-	  **Sdwan:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	    "execute-policy":false
-	  ```
+	**Sdwan:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  "execute-policy":false
+	```
 	  
-	  **Ric:**
-	  ```sh
-	    "inputs":{"helm_version":"2.17.0"},
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-	    "execute-policy":false
-	  ```	
+	**Ric:**
+	```sh
+	  "inputs":{"helm_version":"2.17.0"},
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+	  "execute-policy":false
+	```	
 	  
-	  **Nonrtric:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-            "execute-policy":false
-	  ```
+	**Nonrtric:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+      "execute-policy":false
+	```
 	  
-	  **Qp:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-	    "execute-policy":false
-	  ```
+	**Qp:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+	  "execute-policy":false
+	```
 	 
-	  **Qp-driver:**
-	  ```sh
-	     "inputs":"",
-	     "inputsUrl":"",
-	     "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-             "execute-policy":false
-	  ```
+	**Qp-driver:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+      "execute-policy":false
+	```
 	 
-	  **Ts:**
-	  ```sh
-	     "inputs":"",
-	     "inputsUrl":"",
-	     "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-	     "execute-policy":false
-	   ```
+	**Ts:**
+	```sh
+	   "inputs":"",
+	   "inputsUrl":"",
+	   "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+	   "execute-policy":false
+	```
 
-	- Create Service Instances With Deployment:
+  - Create Service Instances With Deployment:
 	  
-	  Note: To Deploy models while create instance ("list-steps-only":false and "execute-policy":true)
+	Note: To Deploy models while create instance ("list-steps-only":false and "execute-policy":true)
 	
-	  For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
-	  ```sh			
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
-	  {
+	For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
+	
+	```sh			
+	POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
 		"inputs": "<input_for_model>",
@@ -646,108 +693,108 @@ Table of contents
 		"execute-workflow":true,
 		"list-steps-only":false,
 		"service":"<service_url_for_model>"
-	  }
-	  ```	
+	}
+	```	
 	  
-      Use Following InputUrl and Service in API body for:
+  Use Following InputUrl and Service in API body for:
 
-	  **Firewall:**  
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	    "execute-policy":false
-	  ```
+    **Firewall:**  
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+	  "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
+	  "execute-policy":true
+	```
 	  
-	  **Sdwan:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	    "execute-policy":false
-	  ```
+	**Sdwan:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
+	  "execute-policy":true
+	```
 	  
-	  **Ric:**
-	  ```sh
-	    "inputs":{"helm_version":"2.17.0"},
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-	    "execute-policy":false
-	  ```	
+	**Ric:**
+	```sh
+	  "inputs":{"helm_version":"2.17.0"},
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
+	  "execute-policy":true
+	```	
 	  
-	  **Nonrtric:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-            "execute-policy":false
-	  ```
+	**Nonrtric:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
+      "execute-policy":true
+	```
 	  
-	  **Qp:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-	    "execute-policy":false
-	  ```
+	**Qp:**
+	```sh
+	  "inputs":"",
+	  "inputsUrl":"",
+	  "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
+	  "execute-policy":true
+	```
 	 
-	  **Qp-driver:**
-	  ```sh
-	     "inputs":"",
-	     "inputsUrl":"",
-	     "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-             "execute-policy":false
-	  ```
+	**Qp-driver:**
+	```sh
+	   "inputs":"",
+	   "inputsUrl":"",
+	   "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
+       "execute-policy":true
+	```
 	 
-	  **Ts:**
-	  ```sh
-	     "inputs":"",
-	     "inputsUrl":"",
-	     "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-	     "execute-policy":false
-	  ```
+	**Ts:**
+	```sh
+	   "inputs":"",
+	   "inputsUrl":"",
+	   "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
+	   "execute-policy":true
+	```
 
-	- ExecuteWorkfow Service without Deployment:
+  - ExecuteWorkfow Service without Deployment:
 	  
-	  Note: ExecuteWorkfow API Without Deploy("list-steps-only":true)
+	Note: ExecuteWorkfow API Without Deploy("list-steps-only":true)
 	  
-	  ```sh
-          POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
-	  {
-	      "list-steps-only": true,
-	      "execute-policy": false
-	  }
-	  ```		 
+	```sh
+    POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+	{
+	   "list-steps-only": true,
+	   "execute-policy": false
+	}
+	```		 
 
-	- ExecuteWorkfow Service with Deployment:
+  - ExecuteWorkfow Service with Deployment:
 	  
-	  Note: ExecuteWorkfow API With Deploy("list-steps-only":false)
+	Note: ExecuteWorkfow API With Deploy("list-steps-only":false)
 	   
-	  ```sh	
-          POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
-	  {
-              "list-steps-only": false,
-	      "execute-policy": true
-	  }
-	  ```
+	```sh	
+    POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+	{
+       "list-steps-only": false,
+	   "execute-policy": true
+	}
+	```
 	  
-	- Execute Policy(only for firewall model): 
+  - Execute Policy(only for firewall model): 
 	  
-	  ```sh
-	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-	  ```
+	```sh
+	POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	```
 	  
-    - Stop Policy(only for firewall model):
+  - Stop Policy(only for firewall model):
          
-	  ```sh
-	  DELETE http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
-   	  ```
+	```sh
+	DELETE http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+   	```
 	  
-    - Get Policies(only for firewall model):
+  - Get Policies(only for firewall model):
          
-	  ```sh
-	  GET http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policies
-	  ```
+	```sh
+	GET http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policies
+	```
 	  
   - **Summary Of Options Available**
       ----------------------------
@@ -803,7 +850,7 @@ Table of contents
   - Create 'NCalifornia' Region: 
 		
 	```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
+	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
 		  {
 			"cloud-owner": "aws",
 			"cloud-region-id": "NCalifornia",
@@ -821,7 +868,7 @@ Table of contents
   - Create customer:   
 		  
 	```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
+	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
 		  {
 		   "global-customer-id": "CCIDemonstration",
 		   "subscriber-name": "CCIDemonstration",
@@ -928,72 +975,72 @@ Table of contents
   - Create a Dummy Service:
 		
 	```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
-			 {
-				"service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
-				"service-description": "CCI"
-			 }
+	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
+	{
+	   "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
+	   "service-description": "CCI"
+	}
 	```
 		  
   - Create Zone:
 		  
 	```sh
-		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
-			 {
-			   "zone-name": "cci",
-			   "design-type":"abcd",
-			   "zone-context":"abcd"
-			 }
+	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
+	{
+	   "zone-name": "cci",
+	   "design-type":"abcd",
+	   "zone-context":"abcd"
+	}
 	```
 		
     Update VID with following REST requests using POSTMAN
 	  
     Note : Use following headers in a request
 	  
-      ```sh
+    ```sh
 	Content-Type:application/json
-        X-FromAppId:VID
-        Accept:application/json
-        X-TransactionId:get_vid_subscr
-        Cache-Control:no-cache
-        Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-      ```
+    X-FromAppId:VID
+    Accept:application/json
+    X-TransactionId:get_vid_subscr
+    Cache-Control:no-cache
+    Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+    ```
 		
   - Declare Owning Entity:
 		
 	```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
-		  {
-			"options": ["cciowningentity1"]
-		  }
+    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
+    {
+		"options": ["cciowningentity1"]
+    }
 	```
 		
   - Create Platform:
 		
 	```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
-		  {
-		    "options": ["Test_Platform"]
-		  }
+	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
+	{
+		 "options": ["Test_Platform"]
+	}
 	```
 		
   - Create Line Of Business:
 		
-        ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
-		  { 
-			"options": ["Test_LOB"]
-		  }
+    ```sh
+	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
+	{ 
+	    "options": ["Test_LOB"]
+	}
 	```
 		
   - Create Project:
 		
-       ```sh
-		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
-		  {
-		    "options": ["Test_project"]
-		  }
-       ```
+    ```sh
+	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
+	{
+		"options": ["Test_project"]
+	}
+    ```
 		
   - Create and Distribute CCI models in SDC:
 	  
@@ -1001,39 +1048,39 @@ Table of contents
 	    
 	  Login Portal using designer(cs0008/demo123456!)
 	  ```sh
-		 https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-		 Open SDC application, click on the OnBoard tab.
-         Click 'CREATE NEW VSP'
-         Give the name to VSP, i.e.  cci_ric_vsp. 
-         Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'
-         In 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version', 
-         'License Agreement' and 'Feature Groups'.
-         Goto 'Overview'. In 'Software Product Attachements' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
-         based on your requirement.
-         Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
-	   ```
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  Open SDC application, click on the OnBoard tab.
+      Click 'CREATE NEW VSP'
+      Give the name to VSP, i.e.  cci_ric_vsp. 
+      Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'
+      In 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version', 
+      'License Agreement' and 'Feature Groups'.
+      Goto 'Overview'. In 'Software Product Attachements' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
+      based on your requirement.
+      Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
+	  ```
 	  
     - Virtual Function (VF) Creation:
 	  
 	  ```sh
-		Go to SDC home. Click on the top right icon with the orange arrow.
-		Select your VSP and click on 'IMPORT VSP'.
-		Click on 'Create' 
-		Click on 'Check-in' and enter comment then Press OK.
-		Click on 'Certify' and enter comment then Press OK.
+	  Go to SDC home. Click on the top right icon with the orange arrow.
+	  Select your VSP and click on 'IMPORT VSP'.
+	  Click on 'Create' 
+	  Click on 'Check-in' and enter comment then Press OK.
+	  Click on 'Certify' and enter comment then Press OK.
 	  ```
 	  
 	- Service Creation/Distribution:
 	    
 	  ```sh
-		Go to SDC home. From 'Add' box click on 'ADD SERVICE'
-		Enter Name and then select 'Category' as 'Network Service'. Enter description and click on Create.
-		Click on the 'Composition' left tab
-		In the search bar, Search your VSP and Drag it
-		Click on 'Check-in' and enter comment then Press OK.
-		Click on Certify and enter comment then Press OK.
-		Click on Distribute.
-		Wait for two minutes and go to 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
+	  Go to SDC home. From 'Add' box click on 'ADD SERVICE'
+	  Enter Name and then select 'Category' as 'Network Service'. Enter description and click on Create.
+	  Click on the 'Composition' left tab
+	  In the search bar, Search your VSP and Drag it
+	  Click on 'Check-in' and enter comment then Press OK.
+	  Click on Certify and enter comment then Press OK.
+	  Click on Distribute.
+	  Wait for two minutes and go to 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
 	  ```
 	  
   - Create service instance and VNF from VID:
