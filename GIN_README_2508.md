@@ -7,7 +7,7 @@ Table of contents
      * [For Tosca Docker containers testing](#For-Tosca-Docker-containers-testing)
        * [DMaap_Server](#DMaap-Server)
        * [Demo_Server](#Demo-Server)
-     * [For ONAP OOM testing](#For-NAP-OOM-testing)
+     * [For ONAP OOM testing](#For-ONAP-OOM-testing)
        * [ONAP_OOM_DEMO_server](#ONAP-OOM-DEMO-server)
      * [Oran_Server(optional->create only when need to deploy oran models)](#Oran-Server-(optional->create-only-when-need-to-deploy-oran-models))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
