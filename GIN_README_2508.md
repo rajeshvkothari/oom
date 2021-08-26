@@ -1034,20 +1034,20 @@ Table of contents
     - Instantiate Service
 	    
       ```sh
-	Click 'Browse SDC Service Models'
-        Select a service and click Deploy.
-        Complete the fields indicated by the red star and click Confirm.
-        Wait for few minutes and it will return success message.
-        Service object is created in Puccini-SO.
-        Click Close 
+	  Click 'Browse SDC Service Models'
+      Select a service and click Deploy.
+      Complete the fields indicated by the red star and click Confirm.
+      Wait for few minutes and it will return success message.
+      Service object is created in Puccini-SO.
+      Click Close 
       ```
 	  
     - Instantiate a VNF
 		
       ```sh
-	Click on “Add node instance” and select the VNF available.
-        Complete the fields indicated by the red star and click Confirm.
-        Wait for 7-8 minutes and success message will display.
+	  Click on “Add node instance” and select the VNF available.
+      Complete the fields indicated by the red star and click Confirm.
+      Wait for 7-8 minutes and success message will display.
       ```
   
 ## Steps to Verify Deloyed Tosca Models 
