@@ -907,7 +907,7 @@ Table of contents
 		  }
     ```
 		
-  NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
+    NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
 		
   - Create a Dummy Service:
 		
@@ -930,18 +930,18 @@ Table of contents
 			 }
 	```
 		
-  Update VID with following REST requests using POSTMAN
+    Update VID with following REST requests using POSTMAN
 	  
-  Note : Use following headers in a request
+    Note : Use following headers in a request
 	  
-    ```sh
-		Content-Type:application/json
+      ```sh
+	Content-Type:application/json
         X-FromAppId:VID
         Accept:application/json
         X-TransactionId:get_vid_subscr
         Cache-Control:no-cache
         Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-	```
+      ```
 		
   - Declare Owning Entity:
 		
@@ -963,7 +963,7 @@ Table of contents
 		
   - Create Line Of Business:
 		
-    ```sh
+        ```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
 		  { 
 			"options": ["Test_LOB"]
@@ -972,12 +972,12 @@ Table of contents
 		
   - Create Project:
 		
-    ```sh
+       ```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
 		  {
 		    "options": ["Test_project"]
 		  }
-    ```
+       ```
 		
   - Create and Distribute CCI models in SDC:
 	  
@@ -1022,33 +1022,33 @@ Table of contents
 	  
   - Create service instance and VNF from VID:
 	
-	- Access to VID portal
+    - Access to VID portal
 	    
       Login portal using demo/demo123456! credentials.
-	  ```sh
+      ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	  ```
+      ```
 		
 	  Select the VID icon from 
 		
-   - Instantiate Service
+    - Instantiate Service
 	    
-	 ```sh
-		Click 'Browse SDC Service Models'
+      ```sh
+	Click 'Browse SDC Service Models'
         Select a service and click Deploy.
         Complete the fields indicated by the red star and click Confirm.
         Wait for few minutes and it will return success message.
         Service object is created in Puccini-SO.
         Click Close 
-	```
+      ```
 	  
-  - Instantiate a VNF
+   - Instantiate a VNF
 		
-	```sh
-	    Click on “Add node instance” and select the VNF available.
+     ```sh
+	Click on “Add node instance” and select the VNF available.
         Complete the fields indicated by the red star and click Confirm.
         Wait for 7-8 minutes and success message will display.
-	```
+     ```
   
 ## Steps to Verify Deloyed Tosca Models 
  
