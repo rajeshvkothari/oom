@@ -285,7 +285,7 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **Oran Servers:**(TBD)
+- **Oran Servers:**(optional)
 
   - Set up the oran Servers on AWS, follow the wiki page:
 
