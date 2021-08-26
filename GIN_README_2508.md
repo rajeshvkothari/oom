@@ -17,13 +17,13 @@ Table of contents
    * [Steps To Verify Deployed Tosca Models](#Steps-To-Verify-Deployed-Tosca-Models)
 <!--te-->
 
-## Introduction(TBD)
+## Introduction
 
   This page is describe step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
 
 
 ## Pre Deployment Steps
-- **For Docker container testing:**
+- **For Tosca Docker containers testing:**
   - **DMaaP Server:**
 
     - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using putty:
@@ -285,7 +285,7 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **Oran Servers:**(TBD)
+- **Oran_Servers(optional -> create only when need to deploy oran models):**
 
   - Set up the oran Servers on AWS, follow the wiki page:
 
@@ -298,8 +298,11 @@ Table of contents
 ## Building Tosca Model Csars
 
 - **List Of Models And Their Summary:**
+
+	SSH demo_server or OOM_VM to create tosca model csar.
 	
-	To Build the csar of each model we have to first clone the tosca-models on Demo Server from github for that use the below link and store it on /home/ubuntu.
+	To Build the csar of each model we have to first clone the tosca-models on Demo Server or OOM_VM from github for that use the below link and store it on /home/ubuntu.
+	
 	```sh
 	git clone https://github.com/customercaresolutions/tosca-models 
 	```
@@ -472,8 +475,14 @@ Table of contents
 		  msgBusURL={IP_OF_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-	  Note1:  IP_of_server if we want to deploy sdwan, firewall then use IP_of_demo_server and if we want to deploy firewall, sdwan & oran models then use IP_of_bonap_server.   
-	  Note2: cciPrivateKey is the Key to login/ssh into AWS.   
+	  Note1: {IP_of_server}
+      - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
+      - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in Oran Servers of 'Pre Deployment Steps')     
+  
+      Note2: {IP_OF_DMaap_Server}
+      - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
+
+      Note3: cciPrivateKey is the Key to login/ssh into AWS.   
 	  
 	- Copy files as given follows:
 	  - Copy all csar(sdwan.csar, firewall.csar etc) to ~/puccini/dvol/models/
@@ -714,19 +723,19 @@ Table of contents
 	  }
 	  ```
 	  
-	- Execute Policy: 
+	- Execute Policy(only for firewall model): 
 	  
 	  ```sh
 	  POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	  ```
 	  
-        - Stop Policy:
+    - Stop Policy(only for firewall model):
          
 	  ```sh
 	  DELETE http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	  ```
 	  
-        - Get Policies:
+    - Get Policies(only for firewall model):
          
 	  ```sh
 	  GET http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policies
@@ -744,8 +753,7 @@ Table of contents
 	
 ## Deploying Tosca Models using OOM deployment
 
-  As we see the all CCI model in docker container method same deployemnt we are going to do with OOM based ONAP environment.
-	for that we have to follow the below step.
+  As we see the how to deploy CCI models using tosca docker containers method, same deployment we are going to do with OOM based ONAP environment. For that we have to follow the below steps.
 	
   - One time Steps for intialization/configuration the envinorment:
 	  
