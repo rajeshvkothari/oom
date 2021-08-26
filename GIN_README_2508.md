@@ -285,7 +285,7 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **Oran Servers:**(optional)
+- **Oran Servers:**(TBD)
 
   - Set up the oran Servers on AWS, follow the wiki page:
 
@@ -747,46 +747,46 @@ Table of contents
   As we see the all CCI model in docker container method same deployemnt we are going to do with OOM based ONAP environment.
 	for that we have to follow the below step.
 	
-    - One time Steps for intialization/configuration the envinorment:
+  - One time Steps for intialization/configuration the envinorment:
 	  
-	  Login ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
+	Login ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
 	  
-	  ```sh
-	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	  ```
+	```sh
+	https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	```
 	  
-	  ```sh
-	  Virtual Licence Model creation
-      Open SDC application, click on the 'ONBOARD' tab.
-      Click 'CREATE NEW VLM' (Licence Model)
-      Use 'cci' as Vendor Name, and enter a description
-      Click 'CREATE'
-      Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
-      Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
-      Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-      Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups
-      Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
-      Features Groups, drag the feature group created previously.
-      Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
-	  ```
+	```sh
+	Virtual Licence Model creation
+    Open SDC application, click on the 'ONBOARD' tab.
+    Click 'CREATE NEW VLM' (Licence Model)
+    Use 'cci' as Vendor Name, and enter a description
+    Click 'CREATE'
+    Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
+    Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
+    Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
+    Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups
+    Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
+    Features Groups, drag the feature group created previously.
+    Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
+	```
 	  
-      Update AAI with following REST requests using POSTMAN
+    Update AAI with following REST requests using POSTMAN
 	  
-	  Note :  Use following headers in a POSTMAN request
+	Note :  Use following headers in a POSTMAN request
 	  
-        ```sh
-		headers :
-        Content-Type:application/json
-        X-FromAppId:AAI
-        Accept:application/json
-        X-TransactionId:get_aai_subscr
-        Cache-Control:no-cache
-        Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-		```
+    ```sh
+    headers :
+    Content-Type:application/json
+    X-FromAppId:AAI
+    Accept:application/json
+    X-TransactionId:get_aai_subscr
+    Cache-Control:no-cache
+    Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+    ```
 		
-		- Create 'NCalifornia' Region: 
+  - Create 'NCalifornia' Region: 
 		
-		  ```sh
+	```sh
 		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
 		  {
 			"cloud-owner": "aws",
@@ -800,11 +800,11 @@ Table of contents
 			  ]
 			}
 		  }
-		  ```
+	```
 		  
-		- Create customer:   
+  - Create customer:   
 		  
-	      ```sh
+	```sh
 		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
 		  {
 		   "global-customer-id": "CCIDemonstration",
@@ -905,86 +905,86 @@ Table of contents
 			}				
 		   ]}
 		  }
-		  ```
+    ```
 		
-		NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
+  NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
 		
-		- Create a Dummy Service:
+  - Create a Dummy Service:
 		
-		  ```sh
+	```sh
 		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
 			 {
 				"service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
 				"service-description": "CCI"
 			 }
-		  ```
+	```
 		  
-		- Create Zone:
+  - Create Zone:
 		  
-		  ```sh
+	```sh
 		  PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
 			 {
 			   "zone-name": "cci",
 			   "design-type":"abcd",
 			   "zone-context":"abcd"
 			 }
-		  ```
+	```
 		
-      Update VID with following REST requests using POSTMAN
+  Update VID with following REST requests using POSTMAN
 	  
-	  Note : Use following headers in a request
+  Note : Use following headers in a request
 	  
-	    ```sh
+    ```sh
 		Content-Type:application/json
         X-FromAppId:VID
         Accept:application/json
         X-TransactionId:get_vid_subscr
         Cache-Control:no-cache
         Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-		```
+	```
 		
-		- Declare Owning Entity:
+  - Declare Owning Entity:
 		
-		  ```sh
+	```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
 		  {
 			"options": ["cciowningentity1"]
 		  }
-		  ```
+	```
 		
-		- Create Platform:
+  - Create Platform:
 		
-		  ```sh
+	```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
 		  {
 		    "options": ["Test_Platform"]
 		  }
-		  ```
+	```
 		
-		- Create Line Of Business:
+  - Create Line Of Business:
 		
-		  ```sh
+    ```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
 		  { 
 			"options": ["Test_LOB"]
 		  }
-		  ```
+	```
 		
-		- Create Project:
+  - Create Project:
 		
-		  ```sh
+    ```sh
 		  POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
 		  {
 		    "options": ["Test_project"]
 		  }
-		  ```
+    ```
 		
-	- Create and Distribute CCI models in SDC:
+  - Create and Distribute CCI models in SDC:
 	  
-	  - Vendor Software Product(VSP) onboarding/creation:
+	- Vendor Software Product(VSP) onboarding/creation:
 	    
-		Login Portal using designer(cs0008/demo123456!)
-		```sh
+	  Login Portal using designer(cs0008/demo123456!)
+	  ```sh
 		 https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 		 Open SDC application, click on the OnBoard tab.
          Click 'CREATE NEW VSP'
@@ -995,21 +995,21 @@ Table of contents
          Goto 'Overview'. In 'Software Product Attachements' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
          based on your requirement.
          Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
-		```
+	   ```
 	  
-	  - Virtual Function (VF) Creation:
+    - Virtual Function (VF) Creation:
 	  
-	    ```sh
+	  ```sh
 		Go to SDC home. Click on the top right icon with the orange arrow.
 		Select your VSP and click on 'IMPORT VSP'.
 		Click on 'Create' 
 		Click on 'Check-in' and enter comment then Press OK.
 		Click on 'Certify' and enter comment then Press OK.
-		```
+	  ```
 	  
-	  - Service Creation/Distribution:
+	- Service Creation/Distribution:
 	    
-		```sh
+	  ```sh
 		Go to SDC home. From 'Add' box click on 'ADD SERVICE'
 		Enter Name and then select 'Category' as 'Network Service'. Enter description and click on Create.
 		Click on the 'Composition' left tab
@@ -1018,37 +1018,37 @@ Table of contents
 		Click on Certify and enter comment then Press OK.
 		Click on Distribute.
 		Wait for two minutes and go to 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
-		```
+	  ```
 	  
-	- Create service instance and VNF from VID:
+  - Create service instance and VNF from VID:
 	
-	  - Access to VID portal
+	- Access to VID portal
 	    
-		Login portal using demo/demo123456! credentials.
-		```sh
-		https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-		```
+      Login portal using demo/demo123456! credentials.
+	  ```sh
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  ```
 		
-		Select the VID icon from 
+	  Select the VID icon from 
 		
-	  - Instantiate Service
+   - Instantiate Service
 	    
-		```sh
+	 ```sh
 		Click 'Browse SDC Service Models'
         Select a service and click Deploy.
         Complete the fields indicated by the red star and click Confirm.
         Wait for few minutes and it will return success message.
         Service object is created in Puccini-SO.
         Click Close 
-		```
+	```
 	  
-	  - Instantiate a VNF
+  - Instantiate a VNF
 		
-		```sh
+	```sh
 	    Click on “Add node instance” and select the VNF available.
         Complete the fields indicated by the red star and click Confirm.
         Wait for 7-8 minutes and success message will display.
-		```
+	```
   
 ## Steps to Verify Deloyed Tosca Models 
  
