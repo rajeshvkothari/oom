@@ -11,9 +11,8 @@ Table of contents
        * [ONAP_OOM_DEMO_server](#ONAP-OOM-DEMO-server)
      * [Oran_Server(optional)](#Oran-Server-(optional))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
-   * [Building images and starting docker containers of puccini tosca components](#Building-images-nd-starting-docker-containers-of-puccini-tosca-components)
-   * [Deploying Tosca Models](#Deploying-Tosca-Models)
-   * [Summary Of Options Available](#Summary-Of-Options-Available)
+   * [Deploying Tosca Models using tosca docker containers](#Deploying-Tosca-Models-using-tosca-docker-containers)
+   * [Deploying Tosca Models using OOM deployment](#Deploying-Tosca-Models-using-OOM-deployment)
    * [Steps To Verify Deployed Tosca Models](#Steps-To-Verify-Deployed-Tosca-Models)
 <!--te-->  
 
