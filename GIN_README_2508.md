@@ -24,8 +24,9 @@ Table of contents
 
 ## Pre Deployment Steps
 - **For Tosca Docker containers testing:**
+    -----------------------------------
   - **DMaaP Server:**
-
+      ------------
     - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using putty:
     
       ```sh
