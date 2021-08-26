@@ -7,7 +7,7 @@ Table of contents
        * [DMaap_Server](#DMaap-Server)
        * [Demo_Server](#Demo-Server)
      * [For ONAP OOM testing](#For-NAP-OOM-testing)
-       *[ONAP_OOM_DEMO_server](#ONAP-OOM-DEMO-server)
+       * [ONAP_OOM_DEMO_server](#ONAP-OOM-DEMO-server)
      * [Oran_Server(optional)](#Oran-Server-(optional))
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
