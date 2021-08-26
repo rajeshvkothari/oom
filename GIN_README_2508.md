@@ -88,7 +88,7 @@ Table of contents
 	  ```
 
   - **Demo server:**
-
+      -----------
     - Create AWS VM (demo_server) with following specifications and SSH it using putty:
     
       ```sh		
@@ -116,8 +116,9 @@ Table of contents
       ```
 
 -**For ONAP OOM testing:**
-
+   --------------------
   - **ONAP_OOM_DEMO_server**
+      --------------------
     Note: Setup this server when we want to test through ONAP OOM environment.
   
     - Create AWS VM (ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
@@ -287,7 +288,7 @@ Table of contents
 	  ```
   
 - **Oran_Servers(optional -> create only when need to deploy oran models):**
-
+    ---------------------------------------------------------------------
   - Set up the oran Servers on AWS, follow the wiki page:
 
     ```sh	
@@ -297,9 +298,9 @@ Table of contents
 	Note :If you want to deploy oran models
 	
 ## Building Tosca Model Csars
-
+   
 - **List Of Models And Their Summary:**
-
+    
 	SSH demo_server or OOM_VM to create tosca model csar.
 	
 	To Build the csar of each model we have to first clone the tosca-models on Demo Server or OOM_VM from github for that use the below link and store it on /home/ubuntu.
@@ -743,7 +744,7 @@ Table of contents
 	  ```
 	  
   - **Summary Of Options Available**
-
+      ----------------------------
     Following are the short description of various options in request body while creating service instance.(TBD)
 
     - list-steps-only:
