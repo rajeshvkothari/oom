@@ -9,7 +9,7 @@ Table of contents
        * [Demo Server](#Demo-Server)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
-     * [ORAN Server (optional)](#ORAN-Server-(optional))
+     * [ORAN Server optional](#ORAN-Server-optional)
      * [Building tosca images (optional)](#Building-tosca-images-(optional))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
@@ -314,7 +314,7 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Server (optional)**
+- **ORAN Server optional**
     ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
