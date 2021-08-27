@@ -8,7 +8,7 @@ Table of contents
        * [DMaaP Server](#DMaap-Server)
        * [Demo Server](#Demo-Server)
 	   * [Tosca images](#Tosca-images)
-	     * [Building fresh images](#Building-fresh-images)
+	     * [Building images](#Building-images)
 		 * [Using pre built tosca images](#Using-pre-built-tosca-images)
 		 * [Deploying](#Deploying)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
@@ -150,7 +150,7 @@ There are two ways of deploying models for testing GIN functionality one is dock
       ```
 	  
   - **Tosca images**
-      ---------------------
+      ------------
   
     - **List of components and their summary:**(TBD)
    
@@ -174,8 +174,8 @@ There are two ways of deploying models for testing GIN functionality one is dock
         git clone https://github.com/customercaresolutions/puccini
         ```
     
-	  - **Building fresh images**
-	
+	  - **Building images**
+	      ---------------
         Make following changes in puccini/docker-compose.yml of puccini
 	    
 	    ```sh
@@ -227,7 +227,7 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	    ```	
 
       - **Using pre built tosca images**
-  
+          ----------------------------
         Make following changes in puccini/docker-compose.yml of puccini
 	    
 	    ```sh
@@ -273,7 +273,7 @@ There are two ways of deploying models for testing GIN functionality one is dock
         ```	  
 
       - **Deploying**
-	  
+	      ---------
 	    - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
 		      [remote]
