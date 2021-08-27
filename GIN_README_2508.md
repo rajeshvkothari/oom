@@ -10,7 +10,7 @@ Table of contents
 	   * [Tosca images](#Tosca-images)
 	     * [Building images](#Building-images)
 		 * [Using pre built tosca images](#Using-pre-built-tosca-images)
-		 * [Deploying](#Deploying)
+		 * [Deploying images](#Deploying-images)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Server optional](#ORAN-Server-optional)
