@@ -258,7 +258,7 @@ Table of contents
 	  http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
 	  ```
   
-    - Add Public IP of bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
+    - Add public IP of bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
 
       ```sh
       [remote]
@@ -296,16 +296,16 @@ Table of contents
 	
 	  Wait till all pods go into 'Running' state.
 	
-    - To access portal using browser from your local machine, add 'ip_of_ONAP_OOM_DEMO' in /etc/hosts file:
+    - To access portal using browser from your local machine, add 'IP_of_ONAP_OOM_DEMO' in /etc/hosts file:
   
 	  ```sh
-	  {ip_of_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
-      {ip_of_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
-      {ip_of_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
-      {ip_of_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
-      {ip_of_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
-      {ip_of_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
-      {ip_of_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
+	  {IP_of_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
+      {IP_of_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
+      {IP_of_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
+      {IP_of_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
+      {IP_of_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
+      {IP_of_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
+      {IP_of_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
 	  ```
 	
     - Access ONAP portal from browser:
@@ -460,7 +460,7 @@ Table of contents
 				  
 	Note1: {IP_of_server}
       - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
-      - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in Oran Servers of 'Pre Deployment Steps')     
+      - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
   
     Note2: {IP_OF_DMaap_Server}
       - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
@@ -563,16 +563,16 @@ Table of contents
     ------------------------------
   There are several models in puccini tosca as follows:
 	
-  **#Sdwan** 
+  **#sdwan** 
 	
-  **#Firewall**
+  **#firewall**
 	
-  **#Oran (Nonrtric, Ric, Qp, Qp-driver, Ts)** 
+  **#oran (nonrtric, ric, qp, qp-driver, ts)** 
 
   - Store model in Dgraph:
 	  
 	```sh
-	POST http://{IP_OF_bonap_server}:10010/compiler/model/db/save
+	POST http://{IP_of_bonap_server}:10010/compiler/model/db/save
 	{
 	   "url":"/opt/app/models/<ModelName>.csar",
 	   "output": "./<ModelName>-dgraph-clout.json",
@@ -608,9 +608,9 @@ Table of contents
 	
 	Note: To  Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
 	
-	For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	```sh			
-	POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	POST http://{IP_of_bonap_server}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -685,7 +685,7 @@ Table of contents
 	  
 	Note: To Deploy models while create instance ("list-steps-only":false and "execute-policy":true)
 	
-	For Sdwan, Firewall, Nonrtric, Ric, qp, qp-driver, ts:
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
 	```sh			
 	POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
@@ -764,7 +764,7 @@ Table of contents
 	Note: ExecuteWorkfow API Without Deploy("list-steps-only":true)
 	  
 	```sh
-    POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
 	   "list-steps-only": true,
 	   "execute-policy": false
@@ -776,7 +776,7 @@ Table of contents
 	Note: ExecuteWorkfow API With Deploy("list-steps-only":false)
 	   
 	```sh	
-    POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -786,19 +786,19 @@ Table of contents
   - Execute Policy(only for firewall model): 
 	  
 	```sh
-	POST http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(only for firewall model):
          
 	```sh
-	DELETE http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	DELETE http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(only for firewall model):
          
 	```sh
-	GET http://{IP_OF_bonap_server}:10000/bonap/templates/<InstanceName>/policies
+	GET http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policies
 	```
 	  
   - **Summary Of Options Available**
@@ -1120,9 +1120,9 @@ Table of contents
   
 ## Post Deployment Verification Steps 
  
-  Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
+  Below steps help us to verfiy firewall,sdwan,oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
-- Verify Sdwan Model:  
+- Verify sdwan model:  
  
   - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
   - SSH SDWAN_Site_A VM and fire 'ifconfig -a'
@@ -1131,13 +1131,13 @@ Table of contents
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
   - Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
 	
-- Verify Firewall Model:
+- Verify firewall model:
 
   - Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
 	  Validate that number of captured packets by sink will gets increase in 'Graphs' section
   - Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
 
-- Verify Nonrtric Model:
+- Verify nonrtric model:
 	
   - Comaands to verify all pods are running using following commands on bonap-server: 
     ```sh
@@ -1145,7 +1145,7 @@ Table of contents
 	```     
   - Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
 	
-- Verify Ric Model:
+- Verify ric model:
 
   - Comaands to verify all pods are running using following commands :
 	```sh		
@@ -1155,21 +1155,21 @@ Table of contents
 	```		
   - Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
 
-- Verify Qp Model:
+- Verify qp model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
 	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
   - Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
 
-- Verify Qp-driver Model:
+- Verify qp-driver model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
   - Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
 
-- Verify Ts Model:
+- Verify ts model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
