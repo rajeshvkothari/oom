@@ -31,7 +31,7 @@ Table of contents
 
 There are two ways of deploying models for testing GIN functionality one is docker container and other is ONAP OOM based following.
 
-- **Creating Environment for Docker container **
+- **Creating Environment for Docker container**
     -------------------------------------------------------
     
   - **DMaaP Server**
@@ -272,7 +272,7 @@ There are two ways of deploying models for testing GIN functionality one is dock
 		      -  ../dvol/log:/opt/app/log
         ```	  
 
-      - **Deploying**
+      - **Deploying images**
 	      ---------
 	    - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
@@ -305,8 +305,8 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	      cp cciPrivateKey puccini/dvol/config
 	      ```
 	      
-	      Note: For creating csar go to the Building Tosca Model Csars and build csar.
-	 
+		  Note: For creating csar go to the Building Tosca Model Csars and build csar.  
+		  
 	      - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
         - Build Docker images:
