@@ -7,10 +7,10 @@ Table of contents
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaap-Server)
        * [Demo Server](#Demo-Server)
+	   * [Building tosca images](#Building-tosca-images)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Server optional](#ORAN-Server-optional)
-     * [Building tosca images optional](#Building-tosca-images-optional)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -143,6 +143,189 @@ Table of contents
       ```sh
       docker info
       ```
+	  
+  - **Building tosca images**
+      ---------------------
+  
+    - **List of components and their summary:**(TBD)
+   
+      GIN consists of following components:
+    
+      - TOSCA_SO -  service orchestrator    
+      - TOSCA_COMPILER - puccini tosca compiler
+      - TOSCA_WORKFLOW - builtin workflow microservice
+      - TOSCA_POLICY - policy microservice
+      - TOSCA_GAWP - argo based workflow microservice
+
+    - **Steps for Building/using tosca images:**
+
+      For above mentioned tosca components, its possible to either build fresh images or use pre-built images from CCI_REPO.
+  
+	  Log in to the demo_server and perform steps as follows:
+	
+      - clone puccini:
+  
+        ```sh
+        git clone https://github.com/customercaresolutions/puccini
+        ```
+    
+	  - **Building fresh images**
+	
+        Make following changes in puccini/docker-compose.yml of puccini
+	    
+	    ```sh
+	    orchestrator:
+	        build:
+		      context: .
+			  dockerfile: Dockerfile.so.multistage
+		    volumes:
+			  -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log		   
+	    compiler:
+	        build:
+		      context: .
+			  dockerfile: Dockerfile.compiler.multistage
+		    volumes:
+			  -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log
+	    workflow:
+	        build:
+			  context: .
+			  dockerfile: Dockerfile.workflow.multistage
+		    volumes:
+			  -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log
+	    policy:
+	        build:
+			  context: .
+			  dockerfile: Dockerfile.policy.multistage
+		    volumes:
+			  -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log
+	    gawp:
+	        build:
+			  context: .
+			  dockerfile: Dockerfile.gawp.multistage
+		    volumes:
+		      -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log  
+	    ```	
+
+      - **Using pre-built tosca images**
+  
+        Make following changes in puccini/docker-compose.yml of puccini
+	    
+	    ```sh
+	    orchestrator:
+            image: 172.31.27.186:5000/tosca-so:0.1
+		    volumes:
+		      -  ../dvol/config:/opt/app/config
+		      -  ../dvol/models:/opt/app/models
+		      -  ../dvol/data:/opt/app/data
+		      -  ../dvol/log:/opt/app/log
+
+	    compiler:
+		    image: 172.31.27.186:5000/tosca-compiler:0.1
+		    volumes:
+		      -  ../dvol/config:/opt/app/config
+		      -  ../dvol/models:/opt/app/models
+		      -  ../dvol/data:/opt/app/data
+		      -  ../dvol/log:/opt/app/log
+
+	    workflow:
+		    image: 172.31.27.186:5000/tosca-workflow:0.1
+		    volumes:
+		      -  ../dvol/config:/opt/app/config
+		      -  ../dvol/models:/opt/app/models
+		      -  ../dvol/data:/opt/app/data
+		      -  ../dvol/log:/opt/app/log
+
+	    policy:
+		    image: 172.31.27.186:5000/tosca-policy:0.1
+		    volumes:
+		      -  ../dvol/config:/opt/app/config
+		      -  ../dvol/models:/opt/app/models
+		      -  ../dvol/data:/opt/app/data
+		      -  ../dvol/log:/opt/app/log
+
+	    gawp:
+		    image: 172.31.27.186:5000/tosca-gawp:0.1
+		    volumes:
+		      -  ../dvol/config:/opt/app/config
+		      -  ../dvol/models:/opt/app/models
+		      -  ../dvol/data:/opt/app/data
+		      -  ../dvol/log:/opt/app/log
+        ```	  
+
+      - Modify ~/puccini/dvol/config/application.cfg as follows:					
+			
+		    [remote]
+		    remoteHost={IP_of_server}
+		    remotePort=22
+		    remoteUser=ubuntu
+		    remotePubKey=/opt/app/config/cciPrivateKey
+		    msgBusURL={IP_of_DMaap_Server}:3904
+		    schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+				  
+	  Note1: {IP_of_server}
+        - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
+        - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
+  
+      Note2: {IP_of_DMaap_Server}
+        - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
+
+      Note3: cciPrivateKey is the Key to login/ssh into AWS.   
+	  
+      - Copy files as given follows:
+	  
+	    ```sh
+	    cd puccini/dvol/
+	    mkdir models
+	    cd ~/
+	    cd tosca-models/cci
+	    cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+	    cd ~/
+	    cp cciPrivateKey puccini/dvol/config
+	    ```
+	 
+	    - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
+
+      - Build Docker images:
+        ```sh
+        cd ~/puccini
+        docker-compose up -d
+        ```
+
+      - Check either the images are created:
+        ```sh
+        docker images -a
+        ```
+	
+      - Verify docker containers  are deployed:
+
+        All containers should be up.
+   
+        ```sh
+        e.g:
+        ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
+        CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
+        e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
+        2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
+        d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
+        68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
+        344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
+        634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
+        ```
 
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
@@ -322,191 +505,7 @@ Table of contents
 
     ```sh	
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-    ```
-
-- **Building tosca images optional**
-    --------------------------------
-  
-  - **List of components and their summary:**(TBD)
-   
-    GIN consists of following components:
-    
-    - TOSCA_SO -  service orchestrator    
-    - TOSCA_COMPILER - puccini tosca compiler
-    - TOSCA_WORKFLOW - builtin workflow microservice
-    - TOSCA_POLICY - policy microservice
-    - TOSCA_GAWP - argo based workflow microservice
-
-  - **Steps for Building/using tosca images:**
-
-    For above mentioned tosca components, its possible to either build fresh images
-    or use pre-built images from CCI_REPO.
-  
-	Log in to the demo_server and perform steps as follows:
-	
-    - clone puccini:
-  
-      ```sh
-      git clone https://github.com/customercaresolutions/puccini
-      ```
-    
-	- **Building fresh images**
-	
-      Make following changes in puccini/docker-compose.yml of puccini
-	    
-	  ```sh
-	  orchestrator:
-	      build:
-		    context: .
-			dockerfile: Dockerfile.so.multistage
-		  volumes:
-			-  ./dvol/config:/opt/app/config
-			-  ./dvol/models:/opt/app/models
-			-  ./dvol/data:/opt/app/data
-			-  ./dvol/log:/opt/app/log		   
-	  compiler:
-	      build:
-		    context: .
-			dockerfile: Dockerfile.compiler.multistage
-		  volumes:
-			-  ./dvol/config:/opt/app/config
-			-  ./dvol/models:/opt/app/models
-			-  ./dvol/data:/opt/app/data
-			-  ./dvol/log:/opt/app/log
-	  workflow:
-	      build:
-			context: .
-			dockerfile: Dockerfile.workflow.multistage
-		  volumes:
-			-  ./dvol/config:/opt/app/config
-			-  ./dvol/models:/opt/app/models
-			-  ./dvol/data:/opt/app/data
-			-  ./dvol/log:/opt/app/log
-	  policy:
-	      build:
-			context: .
-			dockerfile: Dockerfile.policy.multistage
-		  volumes:
-			-  ./dvol/config:/opt/app/config
-			-  ./dvol/models:/opt/app/models
-			-  ./dvol/data:/opt/app/data
-			-  ./dvol/log:/opt/app/log
-	  gawp:
-	      build:
-			context: .
-			dockerfile: Dockerfile.gawp.multistage
-		  volumes:
-		    -  ./dvol/config:/opt/app/config
-			-  ./dvol/models:/opt/app/models
-			-  ./dvol/data:/opt/app/data
-			-  ./dvol/log:/opt/app/log  
-	  ```	
-
-    - **Using pre-built tosca images**
-  
-      Make following changes in puccini/docker-compose.yml of puccini
-	    
-	  ```sh
-	  orchestrator:
-          image: 172.31.27.186:5000/tosca-so:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  compiler:
-		  image: 172.31.27.186:5000/tosca-compiler:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  workflow:
-		  image: 172.31.27.186:5000/tosca-workflow:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  policy:
-		  image: 172.31.27.186:5000/tosca-policy:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  gawp:
-		  image: 172.31.27.186:5000/tosca-gawp:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-      ```	  
-
-    - Modify ~/puccini/dvol/config/application.cfg as follows:					
-			
-		  [remote]
-		  remoteHost={IP_of_server}
-		  remotePort=22
-		  remoteUser=ubuntu
-		  remotePubKey=/opt/app/config/cciPrivateKey
-		  msgBusURL={IP_of_DMaap_Server}:3904
-		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
-				  
-	Note1: {IP_of_server}
-      - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
-      - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
-  
-    Note2: {IP_of_DMaap_Server}
-      - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
-
-    Note3: cciPrivateKey is the Key to login/ssh into AWS.   
-	  
-    - Copy files as given follows:
-	  
-	  ```sh
-	  cd puccini/dvol/
-	  mkdir models
-	  cd ~/
-	  cd tosca-models/cci
-	  cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
-	  cd ~/
-	  cp cciPrivateKey puccini/dvol/config
-	  ```
-	 
-	  - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
-
-    - Build Docker images:
-      ```sh
-      cd ~/puccini
-      docker-compose up -d
-      ```
-
-    - Check either the images are created:
-      ```sh
-      docker images -a
-      ```
-	
-    - Verify docker containers  are deployed:
-
-      All containers should be up.
-   
-      ```sh
-      e.g:
-      ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
-      CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
-      e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-      2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-      d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
-      68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-      344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-      634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
-      ```	
+    ```	
 	
 ## Building Tosca Model Csars
     
@@ -556,6 +555,8 @@ Table of contents
     ```
    
     Check wither all csar are created at /home/ubuntu/tosca-models/cci.
+	
+	If we want to test through the OOM Environment then keep a copy of all csar on local machine.
     
 ## Deployment Steps
  
