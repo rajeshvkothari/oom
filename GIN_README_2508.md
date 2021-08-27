@@ -7,7 +7,10 @@ Table of contents
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaap-Server)
        * [Demo Server](#Demo-Server)
-	   * [Building tosca images](#Building-tosca-images)
+	   * [Tosca images](#Tosca-images)
+	     *[Building fresh images](#Building-fresh-images)
+		 *[Using pre built tosca images](#Using-pre-built-tosca-images)
+		 *[](#)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Server optional](#ORAN-Server-optional)
@@ -26,7 +29,9 @@ Table of contents
 
 ## Pre Deployment Steps
 
-- **Creating Environment for Docker container based testing**
+There are two ways of deploying models for testing GIN functionality one is docker container and other is ONAP OOM based following.
+
+- **Creating Environment for Docker container **
     -------------------------------------------------------
     
   - **DMaaP Server**
@@ -144,7 +149,7 @@ Table of contents
       docker info
       ```
 	  
-  - **Building tosca images**
+  - **Tosca images**
       ---------------------
   
     - **List of components and their summary:**(TBD)
@@ -159,7 +164,7 @@ Table of contents
 
     - **Steps for Building/using tosca images:**
 
-      For above mentioned tosca components, its possible to either build fresh images or use pre-built images from CCI_REPO.
+      For above mentioned tosca components, it’s possible to either build fresh images or use pre-built images from CCI_REPO.
   
 	  Log in to the demo_server and perform steps as follows:
 	
@@ -221,7 +226,7 @@ Table of contents
 			  -  ./dvol/log:/opt/app/log  
 	    ```	
 
-      - **Using pre-built tosca images**
+      - **Using pre built tosca images**
   
         Make following changes in puccini/docker-compose.yml of puccini
 	    
@@ -267,65 +272,67 @@ Table of contents
 		      -  ../dvol/log:/opt/app/log
         ```	  
 
-      - Modify ~/puccini/dvol/config/application.cfg as follows:					
+      - **Deploying**
+	  
+	    - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
-		    [remote]
-		    remoteHost={IP_of_server}
-		    remotePort=22
-		    remoteUser=ubuntu
-		    remotePubKey=/opt/app/config/cciPrivateKey
-		    msgBusURL={IP_of_DMaap_Server}:3904
-		    schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+		      [remote]
+		      remoteHost={IP_of_server}
+		      remotePort=22
+		      remoteUser=ubuntu
+		      remotePubKey=/opt/app/config/cciPrivateKey
+		      msgBusURL={IP_of_DMaap_Server}:3904
+		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
-	  Note1: {IP_of_server}
-        - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
-        - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
+	    Note1: {IP_of_server}
+          - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
+          - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
   
-      Note2: {IP_of_DMaap_Server}
-        - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
+        Note2: {IP_of_DMaap_Server}
+          - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
 
-      Note3: cciPrivateKey is the Key to login/ssh into AWS.   
+        Note3: cciPrivateKey is the Key to login/ssh into AWS.   
 	  
-      - Copy files as given follows:
+        - Copy files as given follows:
 	  
-	    ```sh
-	    cd puccini/dvol/
-	    mkdir models
-	    cd ~/
-	    cd tosca-models/cci
-	    cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
-	    cd ~/
-	    cp cciPrivateKey puccini/dvol/config
-	    ```
+	      ```sh
+	      cd puccini/dvol/
+	      mkdir models
+	      cd ~/
+	      cd tosca-models/cci
+	      cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+	      cd ~/
+	      cp cciPrivateKey puccini/dvol/config
+	      ```
 	 
-	    - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
+	      - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
-      - Build Docker images:
-        ```sh
-        cd ~/puccini
-        docker-compose up -d
-        ```
+        - Build Docker images:
+          ```sh
+          cd ~/puccini
+          docker-compose up -d
+          ```
 
-      - Check either the images are created:
-        ```sh
-        docker images -a
-        ```
+        - Check either the images are created:
+          ```sh
+          docker images -a
+          ```
 	
-      - Verify docker containers  are deployed:
+        - Verify docker containers are deployed:
 
-        All containers should be up.
+          All containers should be up.
    
-        ```sh
-        e.g:
-        ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
-        CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
-        e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-        2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-        d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
-        68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-        344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-        634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
-        ```
+          ```sh
+          e.g:
+          ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
+          CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
+          e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
+          2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
+          d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
+          68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
+          344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
+          634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
+          ```
 
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
@@ -561,14 +568,9 @@ Table of contents
 ## Deployment Steps
  
 - **Docker container based testing**
-    ------------------------------
-  There are several models in puccini tosca as follows:
-	
-  **#sdwan** 
-	
-  **#firewall**
-	
-  **#oran (nonrtric, ric, qp, qp-driver, ts)** 
+    ------------------------------ 
+ 
+  Use following request to store model in Dgraph.
 
   - Store model in Dgraph:
 	  
@@ -585,17 +587,9 @@ Table of contents
 	}
 	``` 
 	
-	For sdwan,firewall,nonrtric,qp,qp-driver,ts use following:
+	For sdwan,firewall,nonrtric,qp,qp-driver,ts use following addiatia:
 	  
-	```sh
-	{
-	   "inputs":"",
-	   "url":"/opt/app/models/<model_name>.csar",
-	   "output": "./<model_name>-dgraph-clout.json",
-	}
-	```
-	  
-    For ric use following:
+    For ric make following changes:
 	  
 	```sh
 	{
@@ -605,9 +599,7 @@ Table of contents
 	}
     ```	
 	  
-  - Create Service Instances Without Deployment:
-	
-	Note: To  Deploy models while create instance ("list-steps-only":true and "execute-policy":false)
+  - Create Service Instance Without Deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	```sh			
@@ -615,76 +607,65 @@ Table of contents
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-		"inputs": "<input_for_model>",
-		"inputsUrl":"<input_url_for_model>",
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":true,
-		"service":"<service_url_for_model>"
+		"execute-policy":false
 	}
 	```
 	  
-    Use Following InputUrl and Service in API body for:
+    Use following models-specific additional fields:
 	  
       **Firewall:**  
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	    "execute-policy":false
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
 	  ```
 	  
 	  **Sdwan:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	    "execute-policy":false
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
 	  ```
 	  
 	  **Ric:**
 	  ```sh
 	    "inputs":{"helm_version":"2.17.0"},
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-	    "execute-policy":false
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  ```	
 	  
 	  **Nonrtric:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-        "execute-policy":false
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  ```
 	  
 	  **Qp:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-	    "execute-policy":false
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  ```
 	 
 	  **Qp-driver:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-        "execute-policy":false
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  ```
 	 
 	  **Ts:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-	    "execute-policy":false
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
-  - Create Service Instances With Deployment:
-	  
-	Note: To Deploy models while create instance ("list-steps-only":false and "execute-policy":true)
+  - Create Service Instance With Deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
@@ -693,76 +674,65 @@ Table of contents
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
-		"inputs": "<input_for_model>",
-		"inputsUrl":"<input_url_for_model>",
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":false,
-		"service":"<service_url_for_model>"
+		"execute-policy":true
 	}
 	```	
 	  
-    Use Following InputUrl and Service in API body for:
+    Use following models-specific additional fields:
 
       **Firewall:**  
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml",
-	    "execute-policy":true
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
 	  ```
 	  
 	  **Sdwan:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml",
-	    "execute-policy":true
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
 	  ```
 	  
 	  **Ric:**
 	  ```sh
 	    "inputs":{"helm_version":"2.17.0"},
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml",
-	    "execute-policy":true
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
 	  ```	
 	  
 	  **Nonrtric:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml",
-        "execute-policy":true
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
 	  ```
 	  
 	  **Qp:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml",
-	    "execute-policy":true
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
 	  ```
 	 
 	  **Qp-driver:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml",
-        "execute-policy":true
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
 	  ```
 	 
 	  **Ts:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml",
-	    "execute-policy":true
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
-  - ExecuteWorkfow Service without Deployment:
-	  
-	Note: ExecuteWorkfow API Without Deploy("list-steps-only":true)
+  - To only list the Execute Workflow Service without Deploying them use following:
 	  
 	```sh
     POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
@@ -772,9 +742,7 @@ Table of contents
 	}
 	```		 
 
-  - ExecuteWorkfow Service with Deployment:
-	  
-	Note: ExecuteWorkfow API With Deploy("list-steps-only":false)
+  - To Execute Workflow steps for as model which has already been saved in database:
 	   
 	```sh	
     POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
@@ -784,41 +752,31 @@ Table of contents
 	}
 	```
 	  
-  - Execute Policy(only for firewall model): 
+  - Execute Policy(This is vaild only for firewall model): 
 	  
 	```sh
 	POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	```
 	  
-  - Stop Policy(only for firewall model):
+  - Stop Policy(This is vaild only for firewall model):
          
 	```sh
 	DELETE http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	```
 	  
-  - Get Policies(only for firewall model):
+  - Get Policies(This is vaild only for firewall model):
          
 	```sh
 	GET http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policies
 	```
-	  
-  - **Summary Of Options Available**
-      
-    Following are the short description of various options in request body while creating service instance.(TBD)
-
-    - list-steps-only:
- 
-      There is option called "list-steps-only" key-pair present in API body If the "list-steps-only" value is "true" means we are just list the steps of deployment and if value of it   is "false" it means we deploy model on AWS.
-  
-    - execute-workflow:
 	
 - **ONAP OOM testing**
     ----------------
-  As we see the how to deploy CCI models using tosca docker containers method, same deployment we are going to do with OOM based ONAP environment. For that we have to follow the below steps.
+  Use following steps in ONAP OOM Environment.
 	
-  - One time Steps for intialization/configuration the envinorment:
+  - One time Steps for intialization/configuration of the envinorment:
 	  
-	Login ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
+	Login to ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
 	  
 	```sh
 	https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
@@ -1121,7 +1079,7 @@ Table of contents
   
 ## Post Deployment Verification Steps 
  
-  Below steps help us to verfiy firewall,sdwan,oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
+  Use following steps to verify that models are correctly deployed. 
   
 - Verify sdwan model:  
  
@@ -1134,13 +1092,12 @@ Table of contents
 	
 - Verify firewall model:
 
-  - Browse the metrics using browser at http://{IP_OF_PACKET_SINK}:667
-	  Validate that number of captured packets by sink will gets increase in 'Graphs' section
+  - Check that VM are created on AWS.
   - Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
 
 - Verify nonrtric model:
 	
-  - Comaands to verify all pods are running using following commands on bonap-server: 
+  - Verify that all pods are running using following command on bonap-server: 
     ```sh
 	kubectl get pods -n nonrtric
 	```     
@@ -1148,7 +1105,7 @@ Table of contents
 	
 - Verify ric model:
 
-  - Comaands to verify all pods are running using following commands :
+  - Verify all pods are running using following commands :
 	```sh		
 	kubectl get pods -n ricplt
 	kubectl get pods -n ricinfra
