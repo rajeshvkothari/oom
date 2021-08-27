@@ -110,7 +110,7 @@ Table of contents
 	  Or run the following command 
 	
       ```sh
-	  curl -X GET "http://{IP_OF_DMaap_Server}:3904/topics" 
+	  curl -X GET "http://{IP_of_DMaap_Server}:3904/topics" 
 	  {"topics": []}
 	  ```
 
@@ -455,14 +455,14 @@ Table of contents
 		  remotePort=22
 		  remoteUser=ubuntu
 		  remotePubKey=/opt/app/config/cciPrivateKey
-		  msgBusURL={IP_OF_DMaap_Server}:3904
+		  msgBusURL={IP_of_DMaap_Server}:3904
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 				  
 	Note1: {IP_of_server}
       - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
       - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
   
-    Note2: {IP_OF_DMaap_Server}
+    Note2: {IP_of_DMaap_Server}
       - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
 
     Note3: cciPrivateKey is the Key to login/ssh into AWS.   
@@ -688,7 +688,7 @@ Table of contents
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
 	```sh			
-	POST http://{IP_OF_bonap_server}:10000/bonap/templates/createInstance
+	POST http://{IP_of_bonap_server}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -1029,7 +1029,7 @@ Table of contents
 	}
 	```
 		
-  - Create Line Of Business:
+  - Create Line of Business:
 		
     ```sh
 	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
