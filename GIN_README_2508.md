@@ -12,7 +12,7 @@ Table of contents
      * [ORAN Server (optional)](#ORAN-Server-(optional))
      * [Building tosca images (optional)](#Building-tosca-images-(optional))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
-   * [Deployment Steps] 
+   * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
      * [ONAP OOM testing](#ONAP-OOM-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
