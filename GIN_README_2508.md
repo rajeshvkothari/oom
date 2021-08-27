@@ -26,10 +26,10 @@ Table of contents
 
 ## Pre Deployment Steps
 
-- **Creating Environment for Docker container based testing:**
-    -----------------------------------
+- **Creating Environment for Docker container based testing**
+    -------------------------------------------------------
     
-  - **DMaaP Server:**
+  - **DMaaP Server**
       ------------
       
     - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using putty:
@@ -114,7 +114,7 @@ Table of contents
 	  {"topics": []}
 	  ```
 
-  - **Demo server:**
+  - **Demo server**
       -----------
       
     - Create AWS VM (demo_server) with following specifications and SSH it using putty:
@@ -144,11 +144,11 @@ Table of contents
       docker info
       ```
 
-- **Creating Environment for ONAP OOM testing:**
-    --------------------
+- **Creating Environment for ONAP OOM testing**
+    -----------------------------------------
     
   - **OOM DEMO Server**
-      --------------------
+      ---------------
       
     This server is used for testing in ONAP OOM environment.
   
@@ -314,8 +314,8 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Server(optional):**
-    ----------------------
+- **ORAN Server(optional)**
+    ---------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
   - Set up the oran Servers on AWS, follow the wiki page:
@@ -324,8 +324,8 @@ Table of contents
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
     ```
 
-- **Building tosca images(optional):**
-    --------------------------------
+- **Building tosca images(optional)**
+    -------------------------------
   
   - **List of components and their summary:**(TBD)
    
