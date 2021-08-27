@@ -4,26 +4,29 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [For Tosca Docker containers testing](#For-Tosca-Docker-containers-testing)
-       * [DMaap_Server](#DMaap-Server)
-       * [Demo_Server](#Demo-Server)
-     * [For ONAP OOM testing](#For-ONAP-OOM-testing)
-       * [ONAP_OOM_DEMO_server](#ONAP_OOM_DEMO_server)
-     * [Oran_Server(optional->create only when need to deploy oran models)](#Oran_Server(optional->create-only-when-need-to-deploy-oran-models))
+     * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
+       * [DMaaP Server](#DMaap-Server)
+       * [Demo Server](#Demo-Server)
+     * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
+       * [OOM DEMO Server](#OOM-DEMO-Server)
+     * [ORAN Server (optional)](#ORAN-Server-(optional))
+     * [Building tosca images (optional)](#Building-tosca-images-(optional))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
-   * [Deploying Tosca Models using tosca docker containers](#Deploying-Tosca-Models-using-tosca-docker-containers)
-     * [Summary Of Options Available](#Summary-Of-Options-Available)
-   * [Deploying Tosca Models using OOM deployment](#Deploying-Tosca-Models-using-OOM-deployment)
-   * [Steps To Verify Deployed Tosca Models](#Steps-To-Verify-Deployed-Tosca-Models)
+   * [Deployment Steps] 
+     * [Docker container based testing](#Docker-container-based-testing)
+     * [ONAP OOM testing](#ONAP-OOM-testing)
+   * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
 ## Introduction
-
-  This page is describe step to follow to create necessary environment for deploying tosca models including pre & post deployment and verification steps.
+  
+  This page describes steps that need to be followed in order to create necessary environment for deploying tosca models.
+  It also describes steps for building csars for various models currently available.
 
 
 ## Pre Deployment Steps
-- **For Tosca Docker containers testing:**
+
+- **Creating Environment for Docker container based testing:**
     -----------------------------------
     
   - **DMaaP Server:**
@@ -36,7 +39,9 @@ Table of contents
       Instance Type: t2.large
       Storage: 80GB
       Key Pair: cciPublicKey
-      ``` 
+      ```
+	  
+	  Note: cciPublicKey is the auth key to login/ssh into AWS (which should be available with you locally).
 	  
     - Setup Docker on DMaaP server:
 	
@@ -44,7 +49,7 @@ Table of contents
       sudo apt update
       sudo apt install docker.io
       sudo apt  install docker-compose
-	  Create daemon.json in /etc/docker and following in it.
+	  Create daemon.json in /etc/docker and add following content to it.
        { "insecure-registries":["172.31.27.186:5000"] }
       sudo systemctl stop docker.socket 
       sudo systemctl start docker
@@ -68,9 +73,7 @@ Table of contents
     
       Note: Verify that CCI_REPO VM on Ohio Region is in running state
 	
-	  Replace the docker image in docker-compose.yml as follows:
-	
-      Go to this location cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose/docker-compose.yml	
+	  Replace the docker image in docker-compose.yml (located in /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose)
 	
       Image to be replaced:
 	  
@@ -94,7 +97,7 @@ Table of contents
 	  
     - Verify DMaap Server is deployed:
   
-	  Run the command given below and verify that the entire containers are UP.
+	  Run the command given below and verify that the all containers are UP.
 	
 	  ```sh
 	  ubuntu@message_router:~/local-dmaap/messageservice/target/classes/docker-compose$ docker ps -a
@@ -128,26 +131,26 @@ Table of contents
       sudo apt update
       sudo apt install docker.io
       sudo apt  install docker-compose
-	  Create daemon.json in /etc/docker and following in it.
+	  Create daemon.json in /etc/docker and add following content in it.
        { "insecure-registries":["172.31.27.186:5000"] }
       sudo systemctl stop docker.socket 
       sudo systemctl start docker
       sudo chmod 777 /var/run/docker.sock
       ```
 
-      Make sure docker is installed properly by running below command:
+      Make sure docker is installed properly by running following command:
 		
       ```sh
       docker info
       ```
 
-- **For ONAP OOM testing:**
+- **Creating Environment for ONAP OOM testing:**
     --------------------
     
-  - **ONAP_OOM_DEMO_server**
+  - **OOM DEMO Server**
       --------------------
       
-    Note: Setup this server when we want to test through ONAP OOM environment.
+    This server is used for testing in ONAP OOM environment.
   
     - Create AWS VM (ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
   
@@ -204,7 +207,7 @@ Table of contents
       kubectl get pods -n onap -o=wide
 	  ```
 	
-    - Download/Clone the CCI ONAP OOM:
+    - Download/clone CCI ONAP OOM:
     
 	  ```sh
 	  cd ~/
@@ -249,7 +252,7 @@ Table of contents
       sudo apt install awscli
 	  ```
 	
-    - To deploy oran models create bonap server with clustering enable (ric and nonrtric clusters) using following link:
+    - To deploy oran models, create bonap server with clustering enabled (ric and nonrtric clusters) using following link:
   
       ```sh
 	  http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
@@ -265,12 +268,8 @@ Table of contents
       remotePubKey=/opt/app/config/cciPrivateKey
 	  ```	
 	
-	  Note1: IP_of_server if we want to deploy sdwan, firewall then use IP_of_demo_server(which we created in Pre Deployment). 
-	         
-			if we want to deploy firewall, sdwan & oran models then use IP_of_bonap_server(which we created in Pre Deployment).
-
-			IP_OF_DMaap_Server is a server which we created in Pre Deployment.
-			 
+	  Note1: IP_of_server should be set to IP_of_demo_server for deploying sdwan, firewall and it should be set to IP_of_bonap_server for deploying oran models.
+	  
 	  Note2: cciPrivateKey is the Key to login/ssh into AWS.
 	
     - Build helm charts:
@@ -285,7 +284,7 @@ Table of contents
       sudo apt-get install socat
 	  ```
 	
-	  Note: Verify 'CCI-REPO' VM on AWS Ohio Region should be in running state.
+	  Note: Make sure 'CCI-REPO' VM in AWS Ohio Region is in running state.
 	
     - Deploy ONAP:
     
@@ -295,7 +294,7 @@ Table of contents
 	  kubectl get pods -n onap
 	  ```
 	
-	  Note: Wait till all pods go into 'Running' state.
+	  Wait till all pods go into 'Running' state.
 	
     - To access portal using browser from your local machine, add 'ip_of_ONAP_OOM_DEMO' in /etc/hosts file:
   
@@ -315,139 +314,45 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **Oran_Servers(optional -> create only when need to deploy oran models):**
-    ---------------------------------------------------------------------
-    
+- **ORAN Server (optional):**
+    ----------------------
+  This server needs to be setup only if oran model(s) are to be deployed.
+  
   - Set up the oran Servers on AWS, follow the wiki page:
 
     ```sh	
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
     ```
-	
-	Note :If you want to deploy oran models
-	
-## Building Tosca Model Csars
-   
-- **List Of Models And Their Summary:**
-    
-	SSH demo_server or OOM_VM to create tosca model csar.
-	
-	To Build the csar of each model we have to first clone the tosca-models on Demo Server or OOM_VM from github for that use the below link and store it on /home/ubuntu.
-	
-	```sh
-	git clone https://github.com/customercaresolutions/tosca-models
-    sudo chmod 777 -R tosca-models 
-	```
-	Run following commands to build model csar.
-	
-  - SDWAN:
-    Go to the cd /home/ubuntu/tosca-models/cci/sdwan and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```  
-  - FW:
-    Go to the cd /home/ubuntu/tosca-models/cci/firewall and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-  - NONRTRIC:
-    Go to the cd /home/ubuntu/tosca-models/cci/nonrtric and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-  - RIC:
-    Go to the cd /home/ubuntu/tosca-models/cci/ric and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-  - QP:
-    Go to the cd /home/ubuntu/tosca-models/cci/qp and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-  - QP-DRIVER:
-    Go to the cd /home/ubuntu/tosca-models/cci/qp-driver and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-  - TS:
-    Go to the cd /home/ubuntu/tosca-models/cci/ts and then run the build.sh file as follows:
-    ```sh
-    ./build.sh
-    ```
-   
-    Check wither all csar are created at /home/ubuntu/tosca-models/cci.
-    
-## Deploying Tosca Models using tosca docker containers 
-- **List of components and their summary:**(TBD)
-   
-    GIN consists of following components which need to be build puccini repository
-    
-  - TOSCA_SO
-  - TOSCA_COMPILER
-  - TOSCA_WORKFLOW
-  - TOSCA_POLICY
-  - TOSCA_GAWP
 
-- **Steps for Building Images/using pre-build Images and starting docker containers:**
-
-	Login into the demo_server and perform the steps as follows:
-	
-  - clone puccini:
+- **Building tosca images (optional):**
+    --------------------------------
   
-    ```sh
-    git clone https://github.com/customercaresolutions/puccini
-    ```
-	
-  - To use pre-build tosca images:
+  - **List of components and their summary:**(TBD)
+   
+    GIN consists of following components:
+    
+    - TOSCA_SO -  service orchestrator    
+    - TOSCA_COMPILER - puccini tosca compiler
+    - TOSCA_WORKFLOW - builtin workflow microservice
+    - TOSCA_POLICY - policy microservice
+    - TOSCA_GAWP - argo based workflow microservice
+
+  - **Steps for Building/using tosca images:**
+
+    For above mentioned tosca components, its possible to either build fresh images
+    or use pre-built images from CCI_REPO.
   
-    - Make following changes in puccini/docker-compose.yml of puccini
-	    
-	  ```sh
-	  orchestrator:
-          image: 172.31.27.186:5000/tosca-so:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  compiler:
-		  image: 172.31.27.186:5000/tosca-compiler:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  workflow:
-		  image: 172.31.27.186:5000/tosca-workflow:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  policy:
-		  image: 172.31.27.186:5000/tosca-policy:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
-
-	  gawp:
-		  image: 172.31.27.186:5000/tosca-gawp:0.1
-		  volumes:
-		    -  ../dvol/config:/opt/app/config
-		    -  ../dvol/models:/opt/app/models
-		    -  ../dvol/data:/opt/app/data
-		    -  ../dvol/log:/opt/app/log
+	Log in to the demo_server and perform steps as follows:
+	
+    - clone puccini:
+  
+      ```sh
+      git clone https://github.com/customercaresolutions/puccini
       ```
-		 
-  - To build new tosca images:
-  
-    - Make following changes in puccini/docker-compose.yml of puccini
+    
+	- ** Building fresh images **
+	
+      Make following changes in puccini/docker-compose.yml of puccini
 	    
 	  ```sh
 	  orchestrator:
@@ -495,9 +400,55 @@ Table of contents
 			-  ./dvol/models:/opt/app/models
 			-  ./dvol/data:/opt/app/data
 			-  ./dvol/log:/opt/app/log  
-	  ```		 
+	  ```	
 
-  - Modify ~/puccini/dvol/config/application.cfg as follows:					
+    - ** Using pre-built tosca images **
+  
+      Make following changes in puccini/docker-compose.yml of puccini
+	    
+	  ```sh
+	  orchestrator:
+          image: 172.31.27.186:5000/tosca-so:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+
+	  compiler:
+		  image: 172.31.27.186:5000/tosca-compiler:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+
+	  workflow:
+		  image: 172.31.27.186:5000/tosca-workflow:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+
+	  policy:
+		  image: 172.31.27.186:5000/tosca-policy:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+
+	  gawp:
+		  image: 172.31.27.186:5000/tosca-gawp:0.1
+		  volumes:
+		    -  ../dvol/config:/opt/app/config
+		    -  ../dvol/models:/opt/app/models
+		    -  ../dvol/data:/opt/app/data
+		    -  ../dvol/log:/opt/app/log
+      ```	  
+
+    - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
 		  [remote]
 		  remoteHost={IP_of_server}
@@ -516,47 +467,100 @@ Table of contents
 
     Note3: cciPrivateKey is the Key to login/ssh into AWS.   
 	  
-  - Copy files as given follows:
+    - Copy files as given follows:
 	  
-	```sh
-	cd puccini/dvol/
-	mkdir models
-	cd ~/
-	cd tosca-models/cci
-	cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
-	cd ~/
-	cp cciPrivateKey puccini/dvol/config
-	```
+	  ```sh
+	  cd puccini/dvol/
+	  mkdir models
+	  cd ~/
+	  cd tosca-models/cci
+	  cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+	  cd ~/
+	  cp cciPrivateKey puccini/dvol/config
+	  ```
 	 
-	- Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
+	  - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
-  - Build Docker images:
-    ```sh
-    cd ~/puccini
-    docker-compose up -d
-    ```
+    - Build Docker images:
+      ```sh
+      cd ~/puccini
+      docker-compose up -d
+      ```
 
-  - Check either the images are created:
-    ```sh
-    docker images -a
-    ```
+    - Check either the images are created:
+      ```sh
+      docker images -a
+      ```
 	
-  - Verify docker containers  are deployed:
+    - Verify docker containers  are deployed:
 
-    All containers should be up.
+      All containers should be up.
    
+      ```sh
+      e.g:
+      ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
+      CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
+      e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
+      2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
+      d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
+      68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
+      344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
+      634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
+      ```	
+	
+## Building Tosca Model Csars
+    
+  SSH into demo_server or OOM_VM and run following commands.
+	
+	```sh
+	cd /home/ubuntu
+	git clone https://github.com/customercaresolutions/tosca-models
+    sudo chmod 777 -R tosca-models 
+	```
+	Run following commands to build model csar.
+	
+  - SDWAN:
     ```sh
-    e.g:
-    ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
-    CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
-    e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-    2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-    d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
-    68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-    344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-    634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
+	cd /home/ubuntu/tosca-models/cci/sdwan
+    ./build.sh
+    ```  
+  - FW:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/firewall
+    ./build.sh
+    ```
+  - NONRTRIC:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/nonrtric
+    ./build.sh
+    ```
+  - RIC:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/ric
+    ./build.sh
+    ```
+  - QP:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/qp
+    ./build.sh
+    ```
+  - QP-DRIVER:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/qp-driver
+    ./build.sh
+    ```
+  - TS:
+    ```sh
+	cd /home/ubuntu/tosca-models/cci/ts
+    ./build.sh
     ```
    
+    Check wither all csar are created at /home/ubuntu/tosca-models/cci.
+    
+## Deployment Steps
+ 
+- **Docker container based testing**
+    ------------------------------
   There are several models in puccini tosca as follows:
 	
   **#Sdwan** 
@@ -798,7 +802,7 @@ Table of contents
 	```
 	  
   - **Summary Of Options Available**
-      ----------------------------
+      
     Following are the short description of various options in request body while creating service instance.(TBD)
 
     - list-steps-only:
@@ -807,8 +811,8 @@ Table of contents
   
     - execute-workflow:
 	
-## Deploying Tosca Models using OOM deployment
-
+- **ONAP OOM testing**
+    ----------------
   As we see the how to deploy CCI models using tosca docker containers method, same deployment we are going to do with OOM based ONAP environment. For that we have to follow the below steps.
 	
   - One time Steps for intialization/configuration the envinorment:
@@ -1114,7 +1118,7 @@ Table of contents
       Wait for 7-8 minutes and success message will display.
       ```
   
-## Steps to Verify Deloyed Tosca Models 
+## Post Deployment Verification Steps 
  
   Below steps help us to verfiy Firewall,Sdwan,Oran(nonrtric,ric,qp,qp-driver,ts) model is deploy or not.
   
