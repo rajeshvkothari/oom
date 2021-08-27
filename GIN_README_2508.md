@@ -9,8 +9,8 @@ Table of contents
        * [Demo Server](#Demo-Server)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
-     * [ORAN Server (optional)](#ORAN-Server-(optional))
-     * [Building tosca images (optional)](#Building-tosca-images-(optional))
+     * [ORAN Server(optional)](#ORAN-Server(optional))
+     * [Building tosca images(optional)](#Building-tosca-images(optional))
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -314,7 +314,7 @@ Table of contents
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Server (optional):**
+- **ORAN Server(optional):**
     ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
@@ -324,7 +324,7 @@ Table of contents
     http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
     ```
 
-- **Building tosca images (optional):**
+- **Building tosca images(optional):**
     --------------------------------
   
   - **List of components and their summary:**(TBD)
@@ -350,7 +350,7 @@ Table of contents
       git clone https://github.com/customercaresolutions/puccini
       ```
     
-	- ** Building fresh images **
+	- **Building fresh images**
 	
       Make following changes in puccini/docker-compose.yml of puccini
 	    
@@ -402,7 +402,7 @@ Table of contents
 			-  ./dvol/log:/opt/app/log  
 	  ```	
 
-    - ** Using pre-built tosca images **
+    - **Using pre-built tosca images**
   
       Make following changes in puccini/docker-compose.yml of puccini
 	    
@@ -512,12 +512,12 @@ Table of contents
     
   SSH into demo_server or OOM_VM and run following commands.
 	
-	```sh
-	cd /home/ubuntu
-	git clone https://github.com/customercaresolutions/tosca-models
-    sudo chmod 777 -R tosca-models 
-	```
-	Run following commands to build model csar.
+  ```sh
+  cd /home/ubuntu
+  git clone https://github.com/customercaresolutions/tosca-models
+  sudo chmod 777 -R tosca-models 
+  ```
+  Run following commands to build model csar.
 	
   - SDWAN:
     ```sh
