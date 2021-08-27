@@ -304,6 +304,8 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	      cd ~/
 	      cp cciPrivateKey puccini/dvol/config
 	      ```
+	      
+	      Note: For creating csar go to the Building Tosca Model Csars and build csar.
 	 
 	      - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
