@@ -315,7 +315,7 @@ Table of contents
 	  ```
   
 - **ORAN Server (optional)**
-    ---------------------
+    ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
   - Set up the oran Servers on AWS, follow the wiki page:
@@ -325,7 +325,7 @@ Table of contents
     ```
 
 - **Building tosca images (optional)**
-    -------------------------------
+    --------------------------------
   
   - **List of components and their summary:**(TBD)
    
