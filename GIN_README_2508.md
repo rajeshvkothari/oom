@@ -5,15 +5,15 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
-       * [DMaaP Server](#DMaap-Server)
+       * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
 	   * [Tosca images](#Tosca-images)
 	     * [Building images](#Building-images)
-		 * [Using pre built tosca images](#Using-pre-built-tosca-images)
+		 * [Using pre built images](#Using-pre-built-images)
 		 * [Deploying images](#Deploying-images)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
-     * [ORAN Server optional](#ORAN-Server-optional)
+     * [ORAN Server](#ORAN-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -29,7 +29,7 @@ Table of contents
 
 ## Pre Deployment Steps
 
-There are two ways of deploying models for testing GIN functionality one is docker container and other is ONAP OOM based following.
+There are two ways of deploying models for testing GIN functionality, one is docker container and other is ONAP OOM based.
 
 - **Creating Environment for Docker container**
     -------------------------------------------------------
@@ -51,32 +51,34 @@ There are two ways of deploying models for testing GIN functionality one is dock
     - Setup Docker on DMaaP server:
 	
       ```sh
-      sudo apt update
-      sudo apt install docker.io
-      sudo apt  install docker-compose
-	  Create daemon.json in /etc/docker and add following content to it.
-       { "insecure-registries":["172.31.27.186:5000"] }
-      sudo systemctl stop docker.socket 
-      sudo systemctl start docker
-      sudo chmod 777 /var/run/docker.sock
+      $ sudo apt update
+      $ sudo apt install docker.io
+      $ sudo apt install docker-compose
+	  
+	  # Create a file named daemon.json in /etc/docker and add following content to it.
+           { "insecure-registries":["172.31.27.186:5000"] }
+		
+      $ sudo systemctl stop docker.socket 
+      $ sudo systemctl start docker
+      $ sudo chmod 777 /var/run/docker.sock
       ```
 	  
-      Make sure docker is installed properly by running following command :	
+	  Note: 172.31.27.186 is the Private IP address of CCI_REPO VM.
+	  
+      Make sure docker is installed properly by running following command:	
 	  
       ```sh
       docker info
-      ```	
+      ```	 
 	  
     - Clone the messageservice folder:
 	
       ```sh
-      cd ~/
-      mkdir ~/local-dmaap
-	  cd local-dmaap
-      git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
+      $ cd ~/
+      $ mkdir ~/local-dmaap
+	  $ cd local-dmaap
+      $ git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch frankfurt
       ```
-    
-      Note: Verify that CCI_REPO VM on Ohio Region is in running state
 	
 	  Replace the docker image in docker-compose.yml (located in /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose)
 	
@@ -89,18 +91,18 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	  New image:
 	  
       ```sh          
-      image:  172.31.27.186:5000/dmaap:localadapt_0.1
-      ```	
+      image:  {IP_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
+      ```
 	
-	  Note: 172.31.27.186 is the IP address of CCI_REPO  VM.
+	- Verify that CCI_REPO VM on Ohio Region is in running state. If it is not in running state then go to AWS and start it.
 	
-    - Start DMaaP Server:
+    - Start DMaaP Service:
       ```sh
-      cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
-      docker-compose up -d
+      $ cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
+      $ docker-compose up -d
       ```
 	  
-    - Verify DMaap Server is deployed:
+    - Verify DMaaP Service is Properly deployed:
   
 	  Run the command given below and verify that the all containers are UP.
 	
@@ -115,7 +117,12 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	  Or run the following command 
 	
       ```sh
-	  curl -X GET "http://{IP_of_DMaap_Server}:3904/topics" 
+	  $ curl -X GET "http://{IP_OF_DMaaP_SERVER}:3904/topics"
+      ```
+	  
+      Above command should return output as follows:
+	  
+      ```sh	  
 	  {"topics": []}
 	  ```
 
@@ -133,14 +140,16 @@ There are two ways of deploying models for testing GIN functionality one is dock
     
     - Setup Docker on demo_server
       ```sh
-      sudo apt update
-      sudo apt install docker.io
-      sudo apt  install docker-compose
-	  Create daemon.json in /etc/docker and add following content in it.
-       { "insecure-registries":["172.31.27.186:5000"] }
-      sudo systemctl stop docker.socket 
-      sudo systemctl start docker
-      sudo chmod 777 /var/run/docker.sock
+      $ sudo apt update
+      $ sudo apt install docker.io
+      $ sudo apt install docker-compose
+	  
+	  # Create a file named daemon.json in /etc/docker and add following content in it.
+         { "insecure-registries":["172.31.27.186:5000"] }
+      
+	  $ sudo systemctl stop docker.socket 
+      $ sudo systemctl start docker
+      $ sudo chmod 777 /var/run/docker.sock
       ```
 
       Make sure docker is installed properly by running following command:
@@ -151,9 +160,6 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	  
   - **Tosca images**
       ------------
-  
-    - **List of components and their summary:**(TBD)
-   
       GIN consists of following components:
     
       - TOSCA_SO -  service orchestrator    
@@ -161,6 +167,8 @@ There are two ways of deploying models for testing GIN functionality one is dock
       - TOSCA_WORKFLOW - builtin workflow microservice
       - TOSCA_POLICY - policy microservice
       - TOSCA_GAWP - argo based workflow microservice
+	  
+	  This are available which can be build can be 
 
     - **Steps for Building/using tosca images:**
 
@@ -171,7 +179,7 @@ There are two ways of deploying models for testing GIN functionality one is dock
       - clone puccini:
   
         ```sh
-        git clone https://github.com/customercaresolutions/puccini
+        $ git clone https://github.com/customercaresolutions/puccini
         ```
     
 	  - **Building images**
@@ -226,8 +234,8 @@ There are two ways of deploying models for testing GIN functionality one is dock
 			  -  ./dvol/log:/opt/app/log  
 	    ```	
 
-      - **Using pre built tosca images**
-          ----------------------------
+      - **Using pre built images**
+          ----------------------
         Make following changes in puccini/docker-compose.yml of puccini
 	    
 	    ```sh
@@ -281,28 +289,28 @@ There are two ways of deploying models for testing GIN functionality one is dock
 		      remotePort=22
 		      remoteUser=ubuntu
 		      remotePubKey=/opt/app/config/cciPrivateKey
-		      msgBusURL={IP_of_DMaap_Server}:3904
+		      msgBusURL={IP_of_DMaaP_Server}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
-				  
-	    Note1: {IP_of_server}
-          - To deploy sdwan, firewall then use public IP of 'Demo server'(created in 'Pre Deployment Steps')
-          - To deploy firewall, sdwan & oran models then use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
-  
-        Note2: {IP_of_DMaap_Server}
-          - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')
+			
 
-        Note3: cciPrivateKey is the Key to login/ssh into AWS.   
+			
+	    Note1: {IP_OF_server}
+          - To deploy sdwan or firewall, use public IP of 'Demo server'(created in 'Pre Deployment Steps')
+          - To deploy firewall, sdwan & oran models use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
+          - To deploy either 
+        Note2: {IP_OF_DMaaP_Server}
+          - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
 	  
 	      ```sh
-	      cd puccini/dvol/
-	      mkdir models
-	      cd ~/
-	      cd tosca-models/cci
-	      cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
-	      cd ~/
-	      cp cciPrivateKey puccini/dvol/config
+	      $ cd puccini/dvol/
+	      $ mkdir models
+	      $ cd ~/
+	      $ cd tosca-models/cci
+	      $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+	      $ cd ~/
+	      $ cp cciPrivateKey puccini/dvol/config
 	      ```
 	      
 		  Note: For creating csar go to the Building Tosca Model Csars and build csar.  
@@ -311,13 +319,13 @@ There are two ways of deploying models for testing GIN functionality one is dock
 
         - Build Docker images:
           ```sh
-          cd ~/puccini
-          docker-compose up -d
+          $ cd ~/puccini
+          $ docker-compose up -d
           ```
 
         - Check either the images are created:
           ```sh
-          docker images -a
+          $ docker images -a
           ```
 	
         - Verify docker containers are deployed:
@@ -356,22 +364,24 @@ There are two ways of deploying models for testing GIN functionality one is dock
     - Setup docker:
   
       ```sh
-	  sudo apt update
-      sudo apt install apt-transport-https ca-certificates curl software-properties-common
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-      sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-      sudo apt update
-      apt-cache policy docker-ce
-      sudo apt-get install containerd.io docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic
-      sudo usermod -aG docker ${USER}
-      id -nG
-      cd //
-      sudo chmod -R 777 /etc/docker
-      Create daemon.json in /etc/docker and following in it.
-       { "insecure-registries":["172.31.27.186:5000"] }
-      sudo systemctl stop docker 
-      sudo systemctl start docker
-      sudo chmod 777 /var/run/docker.sock
+	  $ sudo apt update
+      $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+      $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+      $ sudo apt update
+      $ apt-cache policy docker-ce
+      $ sudo apt-get install containerd.io docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic
+      $ sudo usermod -aG docker ${USER}
+      $ id -nG
+      $ cd //
+      $ sudo chmod -R 777 /etc/docker
+      
+	  # Create daemon.json in /etc/docker and following in it.
+         { "insecure-registries":["172.31.27.186:5000"] }
+      
+	  $ sudo systemctl stop docker 
+      $ sudo systemctl start docker
+      $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	
 	  Note :  172.31.27.186 is a IP address of 'CCI-REPO' VM
@@ -379,69 +389,69 @@ There are two ways of deploying models for testing GIN functionality one is dock
     - Setup kubernetes:
   
       ```sh'
-	  cd home/ubuntu
-      curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
-      sudo chmod +x ./kubectl
-      sudo mv ./kubectl /usr/local/bin/kubectl
-      grep -E --color 'vmx|svm' /proc/cpuinfo
+	  $ cd home/ubuntu
+      $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
+      $ sudo chmod +x ./kubectl
+      $ sudo mv ./kubectl /usr/local/bin/kubectl
+      $ grep -E --color 'vmx|svm' /proc/cpuinfo
 	  ```
 	
     - Setup minikube:
     
 	  ```sh
-      sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-      sudo chmod +x minikube
-      sudo mv ./minikube /usr/local/bin/minikube
-      sudo apt-get install conntrack
-      sudo minikube start --driver=none --kubernetes-version 1.15.9
-      sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
-      sudo chown -R $USER $HOME/.kube $HOME/.minikube
-      kubectl get pods -n onap -o=wide
+      $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+      $ sudo chmod +x minikube
+      $ sudo mv ./minikube /usr/local/bin/minikube
+      $ sudo apt-get install conntrack
+      $ sudo minikube start --driver=none --kubernetes-version 1.15.9
+      $ sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
+      $ sudo chown -R $USER $HOME/.kube $HOME/.minikube
+      $ kubectl get pods -n onap -o=wide
 	  ```
 	
     - Download/clone CCI ONAP OOM:
     
 	  ```sh
-	  cd ~/
-      git clone https://github.com/customercaresolutions/onap-oom-integ.git -b frankfurt --recurse-submodules
-      cd ~/onap-oom-integ/kubernetes
-      git clone https://github.com/onap/testsuite-oom -b frankfurt robot
+	  $ cd ~/
+      $ git clone https://github.com/customercaresolutions/onap-oom-integ.git -b frankfurt --recurse-submodules
+      $ cd ~/onap-oom-integ/kubernetes
+      $ git clone https://github.com/onap/testsuite-oom -b frankfurt robot
 	  ```
 	
     - Install Helm:
   
       ```sh
-	  cd ~/
-      curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-      sudo chmod 700 get_helm.sh
-      ./get_helm.sh -v v2.16.6
-      sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
+	  $ cd ~/
+      $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+      $ sudo chmod 700 get_helm.sh
+      $ ./get_helm.sh -v v2.16.6
+      $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
 	  ```
 	
     - Run following commands for setting up helm:
   
       ```sh
-	  sudo helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
-      helm --tiller-namespace tiller version
-      kubectl -n kube-system create serviceaccount tiller
-      kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
-      helm init --service-account tiller -i sapcc/tiller:v2.16.6
-      sudo helm serve &
-      sudo helm repo add local http://127.0.0.1:8879
-      sudo helm repo list
-      sudo apt install make
-      sudo chmod -R 777 .helm
+	  $ sudo helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
+      $ helm --tiller-namespace tiller version
+      $ kubectl -n kube-system create serviceaccount tiller
+      $ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller
+      $ helm init --service-account tiller -i sapcc/tiller:v2.16.6
+      $ sudo helm serve &
+      $ sudo helm repo add local http://127.0.0.1:8879
+      $ sudo helm repo list
+      $ sudo apt install make
+      $ sudo chmod -R 777 .helm
 	  ```
 	
     - Run following commands to install python, jq and AWS CLI:
   
 	  ```sh
-      sudo apt-get update
-      sudo apt install python
-      sudo apt-get -y install python-dev python-pip
-      sudo pip install --upgrade pip
-      sudo apt-get install jq
-      sudo apt install awscli
+      $ sudo apt-get update
+      $ sudo apt install python
+      $ sudo apt-get -y install python-dev python-pip
+      $ sudo pip install --upgrade pip
+      $ sudo apt-get install jq
+      $ sudo apt install awscli
 	  ```
 	
     - To deploy oran models, create bonap server with clustering enabled (ric and nonrtric clusters) using following link:
@@ -467,13 +477,13 @@ There are two ways of deploying models for testing GIN functionality one is dock
     - Build helm charts:
   
       ```sh
-	  cd /home/ubuntu/onap-oom-integ/kubernetes
-      make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
-      helm search onap -l
-      sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
-      cd ../..
-      sudo chmod -R 777 .helm
-      sudo apt-get install socat
+	  $ cd /home/ubuntu/onap-oom-integ/kubernetes
+      $ make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
+      $ helm search onap -l
+      $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
+      $ cd ../..
+      $ sudo chmod -R 777 .helm
+      $ sudo apt-get install socat
 	  ```
 	
 	  Note: Make sure 'CCI-REPO' VM in AWS Ohio Region is in running state.
@@ -481,9 +491,9 @@ There are two ways of deploying models for testing GIN functionality one is dock
     - Deploy ONAP:
     
 	  ```sh
-	  cd ~/onap-oom-integ/kubernetes
-      helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
-	  kubectl get pods -n onap
+	  $ cd ~/onap-oom-integ/kubernetes
+      $ helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
+	  $ kubectl get pods -n onap
 	  ```
 	
 	  Wait till all pods go into 'Running' state.
@@ -521,46 +531,46 @@ There are two ways of deploying models for testing GIN functionality one is dock
   SSH into demo_server or OOM_VM and run following commands.
 	
   ```sh
-  cd /home/ubuntu
-  git clone https://github.com/customercaresolutions/tosca-models
-  sudo chmod 777 -R tosca-models 
+  $ cd /home/ubuntu
+  $ git clone https://github.com/customercaresolutions/tosca-models
+  $ sudo chmod 777 -R tosca-models 
   ```
   Run following commands to build model csar.
 	
   - SDWAN:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/sdwan
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/sdwan
+    $ ./build.sh
     ```  
   - FW:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/firewall
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/firewall
+    $ ./build.sh
     ```
   - NONRTRIC:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/nonrtric
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/nonrtric
+    $ ./build.sh
     ```
   - RIC:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/ric
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/ric
+    $ ./build.sh
     ```
   - QP:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/qp
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/qp
+    $ ./build.sh
     ```
   - QP-DRIVER:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/qp-driver
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/qp-driver
+    $ ./build.sh
     ```
   - TS:
     ```sh
-	cd /home/ubuntu/tosca-models/cci/ts
-    ./build.sh
+	$ cd /home/ubuntu/tosca-models/cci/ts
+    $ ./build.sh
     ```
    
     Check wither all csar are created at /home/ubuntu/tosca-models/cci.
@@ -1090,48 +1100,41 @@ There are two ways of deploying models for testing GIN functionality one is dock
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
   - SSH SDWAN_Site_B VM and fire 'ifconfig -a'
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
-  - Compare tosca-models/cci/sdwanCsarClout.json with puccini/so/sdwan-dgraph-clout.json using compare tool.
 	
 - Verify firewall model:
 
   - Check that VM are created on AWS.
-  - Compare tosca-models/cci/firewallCsarClout.json with puccini/so/firewall-dgraph-clout.json using compare tool.
 
 - Verify nonrtric model:
 	
   - Verify that all pods are running using following command on bonap-server: 
     ```sh
-	kubectl get pods -n nonrtric
+	$ kubectl get pods -n nonrtric
 	```     
-  - Compare tosca-models/cci/nonrtricCsarClout.json with puccini/so/nonrtric-dgraph-clout.json using compare tool.
 	
 - Verify ric model:
 
   - Verify all pods are running using following commands :
 	```sh		
-	kubectl get pods -n ricplt
-	kubectl get pods -n ricinfra
-	kubectl get pods -n ricxapp   	   
+	$ kubectl get pods -n ricplt
+	$ kubectl get pods -n ricinfra
+	$ kubectl get pods -n ricxapp   	   
 	```		
-  - Compare tosca-models/cci/ricCsarClout.json with puccini/so/ric-dgraph-clout.json using compare tool.
 
 - Verify qp model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
 	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
-  - Compare tosca-models/cci/qpCsarClout.json with puccini/so/qp-dgraph-clout.json using compare tool.
 
 - Verify qp-driver model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
-  - Compare tosca-models/cci/qpDriverCsarClout.json with puccini/so/qp-driver-dgraph-clout.json using compare tool.
 
 - Verify ts model:
 
   - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}	  		   
-  - Compare tosca-models/cci/tsCsarClout.json with puccini/so/ts-dgraph-clout.json using compare tool.
