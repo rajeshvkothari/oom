@@ -499,15 +499,115 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Server optional**
+- **ORAN Server (optional)**
     ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
-  - Set up the oran Servers on AWS, follow the wiki page:
-
-    ```sh	
-    http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-    ```	
+  - Create AWS VMs in Ohio region
+    
+	```sh
+	. Bonap Server(banap-server-cci) 
+    . ric Server(oran-ric-cci)
+    . nonrtric Server(oran-nonrtric-cci)
+    ```
+	
+	with following specifications
+	
+	```sh
+    Image: ubuntu-18.04
+    Instance Type: t2.2xlarge
+    KeyPair : cciPublicKey
+    Disk: 80GB
+	```
+	
+	Login into Bonap Server(banap-server-cci) and follow steps:
+	
+	- Setup kubernetes
+	   
+	  ```sh
+	  $ cd /home/ubuntu
+      $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
+      $ sudo chmod +x ./kubectl
+      $ sudo mv ./kubectl /usr/local/bin/kubectl
+      $ grep -E --color 'vmx|svm' /proc/cpuinfo
+	  ```
+	  
+	- Copy cciPublicKey into $HOME/.ssh
+	  
+	  ```sh
+	  cp cciPublicKey $HOME/.ssh
+	  ```
+	
+	- Run following commands to setup k3sup:
+	  
+	  ```sh
+	  $ sudo apt update
+      $ curl -sLS https://get.k3sup.dev | sh
+      $ sudo install k3sup /usr/local/bin/
+      $ sudo apt-get install socat
+      $ sudo apt install jq
+  	  $ k3sup install --ip {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --context ric
+  	  $ sudo mkdir ~/.kube 
+      $ sudo cp /home/ubuntu/kubeconfig .kube/config
+      $ sudo chmod 777 .kube/config
+  	   
+      # Make sure the /home/ubuntu/kubeconfig file contains entry of cluster and context for ric.
+    
+      $ k3sup install --host {PRIVATE_IP_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --local-path ~/.kube/config --merge --context default
+      $ k3sup install --host {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --local-path ~/.kube/config --merge --context ric
+	  ```
+	  
+	- Run following commands to install python,jq and AWS CLI:
+      
+      ```sh
+	  $ sudo apt-get update
+      $ sudo apt-get install -y python
+      $ sudo apt-get install -y python3-dev python3-pip
+      $ sudo pip3 install --upgrade pip
+      $ sudo pip3 install simplejson
+      $ sudo apt-get install jq
+      $ sudo apt install awscli
+      $ sudo apt install python-pip
+      $ pip2 install simplejson
+      ```	
+    - Copy cciPublicKey
+	
+      ```sh
+	  $ cd /home/ubuntu
+      $ sudo mkdir onap-oom-integ
+      $ sudo mkdir onap-oom-integ/cci
+      $ sudo chmod -R 777 onap-oom-integ
+      $ cp cciPublicKey onap-oom-integ/cci
+      ```	  
+    
+	Login ric server(oran-ric-cci) and nonrtric server(oran-nonrtric-cci) and run following commands:
+	
+	```sh
+	$ sudo apt update
+    $ sudo apt install jq
+    $ sudo apt install socat
+    $ sudo chmod -R 777 /etc/rancher/k3s
+    
+	# Create file /etc/rancher/k3s/registries.yaml add following content to it.
+      mirrors:
+       "172.31.27.186:5000":
+          endpoint:
+            - "http://172.31.27.186:5000"
+	
+	$ sudo systemctl daemon-reload && sudo systemctl restart k3s
+	```
+	
+	Login into bonap-server (bonap-server-cci) and run following commands to check clustering setup:
+	
+	- Verify 'ric' and 'default' contexes are setup:  
+	  ```sh
+	  $ kubectl config get-contexts
+	  ```
+	  
+	- Run following command to Get all pods:
+	  ```sh
+	  $ kubectl get pods --all-namespaces
+	  ```
 	
 ## Building Tosca Model Csars
     
@@ -518,6 +618,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   $ git clone https://github.com/customercaresolutions/tosca-models
   $ sudo chmod 777 -R tosca-models 
   ```
+  
   Run following commands to build model csar.
 	
   - SDWAN:
