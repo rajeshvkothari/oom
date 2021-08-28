@@ -64,7 +64,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo chmod 777 /var/run/docker.sock
       ```
 	  
-	  Note: 172.31.27.186 is the Private IP address of CCI_REPO VM.
+	  Note: 172.31.27.186 is the Private IP Address of CCI_REPO VM.
 	  
       Make sure docker is installed properly by running following command:	
 	  
@@ -96,7 +96,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       image:  {IP_OF_CCI_REPO_ADDR}:5000/dmaap:localadapt_0.1
       ```
 	
-	- Verify that CCI_REPO VM on Ohio Region is in running state. If it is not in running state then go to AWS and start it.
+	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not in running state then go to AWS and start it.
 	
     - Start DMaaP Service:
       ```sh
@@ -294,9 +294,9 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
-	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR}(created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR}(created in oran servers'Pre Deployment Steps') for deploying oran models. 
+	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers'Pre Deployment Steps') for deploying oran models. 
 			
-        Note2: {IP_OF_DMAAP_SERVER_ADDR} is public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
+        Note2: {IP_OF_DMAAP_SERVER_ADDR} is Public IP Address of 'DMaaP Server'(created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
 	  
@@ -461,7 +461,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       remotePubKey=/opt/app/config/cciPublicKey
 	  ```	
 	
-	  Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models.
+	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers'Pre Deployment Steps') for deploying oran models.
 	
     - Build helm charts:
   
@@ -475,7 +475,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo apt-get install socat
 	  ```
 	
-	- Verify that CCI_REPO VM on Ohio Region is in running state. If it is not in running state then go to AWS and start it.
+	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not in running state then go to AWS and start it.
 	
     - Deploy ONAP:
     
@@ -485,7 +485,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  $ kubectl get pods -n onap
 	  ```
 	
-	  Wait till all pods goes into 'Running' state. Wait around 40-45 min to come all pods in running state. 
+	  Wait around 40-45 min to all pods will come in running state. 
 	
     - To access portal using browser from your local machine, add 'IP_of_ONAP_OOM_DEMO' in /etc/hosts file:
   
