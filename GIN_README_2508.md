@@ -161,19 +161,15 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   - **Tosca images**
       ------------
       GIN consists of following components:
-    
+	  
       - TOSCA_SO -  service orchestrator    
       - TOSCA_COMPILER - puccini tosca compiler
       - TOSCA_WORKFLOW - builtin workflow microservice
       - TOSCA_POLICY - policy microservice
       - TOSCA_GAWP - argo based workflow microservice
 	  
-	  This are available which can be build can be 
-
-    - **Steps for Building/using tosca images:**
-
-      For above mentioned tosca components, it’s possible to either build fresh images or use pre-built images from CCI_REPO.
-  
+	  These images can either be build from scratch repository or pre-build version of the images are use from CCI_REPO.
+	  
 	  Log in to the demo_server and perform steps as follows:
 	
       - clone puccini:
@@ -285,20 +281,16 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	    - Modify ~/puccini/dvol/config/application.cfg as follows:					
 			
 		      [remote]
-		      remoteHost={IP_of_server}
+		      remoteHost={IP_OF_SERVER_ADDR}
 		      remotePort=22
 		      remoteUser=ubuntu
 		      remotePubKey=/opt/app/config/cciPrivateKey
-		      msgBusURL={IP_of_DMaaP_Server}:3904
+		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
-
-			
-	    Note1: {IP_OF_server}
-          - To deploy sdwan or firewall, use public IP of 'Demo server'(created in 'Pre Deployment Steps')
-          - To deploy firewall, sdwan & oran models use public IP bonap_server(created in oran Servers of 'Pre Deployment Steps')     
-          - To deploy either 
-        Note2: {IP_OF_DMaaP_Server}
+	    Note1: {IP_OF_SERVER_ADDR}    
+          - To deploy sdwan and firewall models, use either public IP of Demo Server(created in Demo Server 'Pre Deployment Steps') or public IP of Bonap Server and for oran models use only public IP of Bonap Server.(created in oran Server of 'Pre Deployment Steps') 
+        Note2: {IP_OF_DMAAP_SERVER_ADDR}
           - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
