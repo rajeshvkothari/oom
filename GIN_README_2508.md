@@ -37,7 +37,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   - **DMaaP Server**
       ------------
       
-    - Create AWS VM (DMaaP server) in Ohio region with following specifications and SSH it using putty:
+    - Create AWS VM (DMaaP Server) in Ohio region with following specifications and SSH it using putty:
     
       ```sh
       Image: ubuntu-18.04
@@ -48,7 +48,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  
 	  Note: cciPublicKey is the auth key to login/ssh into AWS (which should be available with you locally).
 	  
-    - Setup Docker on DMaaP server:
+    - Setup Docker on DMaaP Server:
 	
       ```sh
       $ sudo apt update
@@ -117,7 +117,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  Or run the following command 
 	
       ```sh
-	  $ curl -X GET "http://{IP_OF_DMaaP_SERVER}:3904/topics"
+	  $ curl -X GET "http://{IP_OF_DMAAP_SERVER_ADDR}:3904/topics"
       ```
 	  
       Above command should return output as follows:
@@ -126,10 +126,10 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  {"topics": []}
 	  ```
 
-  - **Demo server**
+  - **Demo Server**
       -----------
       
-    - Create AWS VM (demo_server) with following specifications and SSH it using putty:
+    - Create AWS VM (Demo Server) with following specifications and SSH it using putty:
     
       ```sh		
       Image: ubuntu-18.04
@@ -138,7 +138,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       Key Pair: cciPublicKey
       ```
     
-    - Setup Docker on demo_server
+    - Setup Docker on Demo Server
       ```sh
       $ sudo apt update
       $ sudo apt install docker.io
@@ -170,7 +170,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  
 	  These images can either be build from scratch repository or pre-build version of the images are use from CCI_REPO.
 	  
-	  Log in to the demo_server and perform steps as follows:
+	  Log in to the Demo Server and perform steps as follows:
 	
       - clone puccini:
   
@@ -289,7 +289,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
 	    Note1: {IP_OF_SERVER_ADDR}    
-          - To deploy sdwan and firewall models, use either public IP of Demo Server(created in Demo Server 'Pre Deployment Steps') or public IP of Bonap Server and for oran models use only public IP of Bonap Server.(created in oran Server of 'Pre Deployment Steps') 
+          - {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
         Note2: {IP_OF_DMAAP_SERVER_ADDR}
           - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')  
 	  
@@ -299,15 +299,10 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	      $ cd puccini/dvol/
 	      $ mkdir models
 	      $ cd ~/
-	      $ cd tosca-models/cci
-	      $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
-	      $ cd ~/
-	      $ cp cciPrivateKey puccini/dvol/config
+	      $ cp cciPublicKey puccini/dvol/config
+		  $ cd /puccini/config/
+		  $ cp TOSCA-Dgraph-schema.txt /puccini/dvol/config/ 
 	      ```
-	      
-		  Note: For creating csar go to the Building Tosca Model Csars and build csar.  
-		  
-	      - Copy /puccini/config/TOSCA-Dgraph-schema.txt to /puccini/dvol/config/
 
         - Build Docker images:
           ```sh
@@ -375,8 +370,6 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo systemctl start docker
       $ sudo chmod 777 /var/run/docker.sock
 	  ```
-	
-	  Note :  172.31.27.186 is a IP address of 'CCI-REPO' VM
 	
     - Setup kubernetes:
   
@@ -446,25 +439,23 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo apt install awscli
 	  ```
 	
-    - To deploy oran models, create bonap server with clustering enabled (ric and nonrtric clusters) using following link:
+    - To deploy oran models, create Bonap Server with clustering enabled (ric and nonrtric clusters) using following link:
   
       ```sh
 	  http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
 	  ```
   
-    - Add public IP of bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
+    - Add public IP of Bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
 
       ```sh
       [remote]
-      remoteHost={bonap_server}
+      remoteHost={IP_OF_SERVER_ADDR}
       remotePort=22
       remoteUser=ubuntu
-      remotePubKey=/opt/app/config/cciPrivateKey
+      remotePubKey=/opt/app/config/cciPublicKey
 	  ```	
 	
-	  Note1: IP_of_server should be set to IP_of_demo_server for deploying sdwan, firewall and it should be set to IP_of_bonap_server for deploying oran models.
-	  
-	  Note2: cciPrivateKey is the Key to login/ssh into AWS.
+	  Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models.
 	
     - Build helm charts:
   
@@ -493,13 +484,13 @@ There are two ways of deploying models for testing GIN functionality, one is doc
     - To access portal using browser from your local machine, add 'IP_of_ONAP_OOM_DEMO' in /etc/hosts file:
   
 	  ```sh
-	  {IP_of_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
-      {IP_of_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
-      {IP_of_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
-      {IP_of_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
-      {IP_of_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
-      {IP_of_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
-      {IP_of_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
+	  {IP_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
+      {IP_OF_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
+      {IP_OF_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
+      {IP_OF_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
+      {IP_OF_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
+      {IP_OF_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
+      {IP_OF_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
 	  ```
 	
     - Access ONAP portal from browser:
@@ -520,7 +511,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	
 ## Building Tosca Model Csars
     
-  SSH into demo_server or OOM_VM and run following commands.
+  SSH into Demo Server or OOM VM and run following commands.
 	
   ```sh
   $ cd /home/ubuntu
@@ -567,19 +558,25 @@ There are two ways of deploying models for testing GIN functionality, one is doc
    
     Check wither all csar are created at /home/ubuntu/tosca-models/cci.
 	
-	If we want to test through the OOM Environment then keep a copy of all csar on local machine.
+	To Test through OOM Environment keep a copy of all csar on local machine.
     
 ## Deployment Steps
  
 - **Docker container based testing**
     ------------------------------ 
- 
+  Login into Demo Server and perform commands as follows to copy csar:
+  
+  ```sh
+  $ cd ~/
+  $ cd tosca-models/cci
+  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+  ```
   Use following request to store model in Dgraph.
 
   - Store model in Dgraph:
 	  
 	```sh
-	POST http://{IP_of_bonap_server}:10010/compiler/model/db/save
+	POST http://{IP_OF_BONAP_SERVER_ADDR}:10010/compiler/model/db/save
 	{
 	   "url":"/opt/app/models/<ModelName>.csar",
 	   "output": "./<ModelName>-dgraph-clout.json",
@@ -591,7 +588,17 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	}
 	``` 
 	
-	For sdwan,firewall,nonrtric,qp,qp-driver,ts use following addiatia:
+	For sdwan make following changes:
+	
+	```sh
+	{
+	   "inputs":"",
+	   "url":"/opt/app/models/sdwan.csar",
+	   "output": "./sdwan-dgraph-clout.json",
+	}
+    ```
+	
+	Use above changes for firewall,nonrtric,qp,qp-driver,ts instate of <ModelName>.
 	  
     For ric make following changes:
 	  
@@ -607,7 +614,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	```sh			
-	POST http://{IP_of_bonap_server}:10000/bonap/templates/createInstance
+	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -674,7 +681,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
 	```sh			
-	POST http://{IP_of_bonap_server}:10000/bonap/templates/createInstance
+	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -739,7 +746,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   - To only list the Execute Workflow Service without Deploying them use following:
 	  
 	```sh
-    POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
 	   "list-steps-only": true,
 	   "execute-policy": false
@@ -749,7 +756,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   - To Execute Workflow steps for as model which has already been saved in database:
 	   
 	```sh	
-    POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -759,19 +766,19 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   - Execute Policy(This is vaild only for firewall model): 
 	  
 	```sh
-	POST http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is vaild only for firewall model):
          
 	```sh
-	DELETE http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	DELETE http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is vaild only for firewall model):
          
 	```sh
-	GET http://{IP_of_bonap_server}:10000/bonap/templates/<InstanceName>/policies
+	GET http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policies
 	```
 	
 - **ONAP OOM testing**
@@ -803,7 +810,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  
     Update AAI with following REST requests using POSTMAN
 	  
-	Note :  Use following headers in a POSTMAN request
+	Note: Use following headers in a POSTMAN request
 	  
     ```sh
     headers :
@@ -963,7 +970,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		
     Update VID with following REST requests using POSTMAN
 	  
-    Note : Use following headers in a request
+    Note: Use following headers in the POSTMAN request
 	  
     ```sh
 	Content-Type:application/json
@@ -1099,7 +1106,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 
 - Verify nonrtric model:
 	
-  - Verify that all pods are running using following command on bonap-server: 
+  - Verify that all pods are running using following command on Bonap Server: 
     ```sh
 	$ kubectl get pods -n nonrtric
 	```     
@@ -1115,18 +1122,18 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 
 - Verify qp model:
 
-  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
 	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
 
 - Verify qp-driver model:
 
-  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
 
 - Verify ts model:
 
-  - Login 'bonap-server' and go to /tmp folder and see logs to check whether deployment is successful or not
+  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
           To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
           {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}	  		   
