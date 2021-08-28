@@ -104,7 +104,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ docker-compose up -d
       ```
 	  
-    - Verify DMaaP Service is Properly deployed:
+    - Verify DMaaP Service is properly deployed:
   
 	  Run the command given below and verify that the all containers are UP.
 	
@@ -122,7 +122,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  $ curl -X GET "http://{IP_OF_DMAAP_SERVER_ADDR}:3904/topics"
       ```
 	  
-	  Note2: {IP_OF_DMAAP_SERVER_ADDR} Use public IP of 'DMaaP Server'
+	  Note: {IP_OF_DMAAP_SERVER_ADDR} is public IP of 'DMaaP Server'
 	  
       Above command should return output as follows:
 	  
@@ -242,7 +242,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	    
 	    ```sh
 	    orchestrator:
-            image: 172.31.27.186:5000/tosca-so:0.1
+            image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-so:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -250,7 +250,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      -  ../dvol/log:/opt/app/log
 
 	    compiler:
-		    image: 172.31.27.186:5000/tosca-compiler:0.1
+		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-compiler:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -258,7 +258,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      -  ../dvol/log:/opt/app/log
 
 	    workflow:
-		    image: 172.31.27.186:5000/tosca-workflow:0.1
+		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-workflow:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -266,7 +266,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      -  ../dvol/log:/opt/app/log
 
 	    policy:
-		    image: 172.31.27.186:5000/tosca-policy:0.1
+		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-policy:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -274,7 +274,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      -  ../dvol/log:/opt/app/log
 
 	    gawp:
-		    image: 172.31.27.186:5000/tosca-gawp:0.1
+		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-gawp:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -294,9 +294,9 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
-	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
+	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR}(created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR}(created in oran servers'Pre Deployment Steps') for deploying oran models. 
 			
-        Note2: {IP_OF_DMAAP_SERVER_ADDR} Use public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
+        Note2: {IP_OF_DMAAP_SERVER_ADDR} is public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
 	  
@@ -441,6 +441,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo pip install --upgrade pip
       $ sudo apt-get install jq
       $ sudo apt install awscli
+	  $ sudo apt install python-pip
+      $ pip2 install simplejson
 	  ```
 	
     - To deploy oran models, create Bonap Server with clustering enabled (ric and nonrtric clusters) using following link:
@@ -524,7 +526,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
     Disk: 80GB
 	```
 	
-	Login into Bonap Server(banap-server-cci) and follow steps:
+  - Login into Bonap Server and perform steps as follows:
 	
 	- Setup kubernetes
 	   
@@ -584,7 +586,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ cp cciPublicKey onap-oom-integ/cci
       ```	  
     
-	Login ric server(oran-ric-cci) and nonrtric server(oran-nonrtric-cci) and run following commands:
+  - Login ric server and nonrtric server and run following commands:
 	
 	```sh
 	$ sudo apt update
@@ -601,14 +603,14 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	$ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	```
 	
-	Login into bonap-server (bonap-server-cci) and run following commands to check clustering setup:
+  - Login into bonap-server and run following commands to check clustering setup:
 	
 	- Verify 'ric' and 'default' contexes are setup:  
 	  ```sh
 	  $ kubectl config get-contexts
 	  ```
 	  
-	- Run following command to Get all pods:
+	- Run following command to get all pods:
 	  ```sh
 	  $ kubectl get pods --all-namespaces
 	  ```
