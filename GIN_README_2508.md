@@ -290,7 +290,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      remoteHost={IP_OF_SERVER_ADDR}
 		      remotePort=22
 		      remoteUser=ubuntu
-		      remotePubKey=/opt/app/config/cciPrivateKey
+		      remotePubKey=/opt/app/config/cciPublicKey
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
