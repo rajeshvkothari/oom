@@ -40,6 +40,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
     - Create AWS VM (DMaaP Server) in Ohio region with following specifications and SSH it using putty:
     
       ```sh
+	  Name: DMaaP Server
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
@@ -68,7 +69,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       Make sure docker is installed properly by running following command:	
 	  
       ```sh
-      docker info
+      $ docker ps 
+	  CONTAINER ID   IMAGE   COMMAND  CREATED   STATUS   PORTS    NAMES
       ```	 
 	  
     - Clone the messageservice folder:
@@ -120,6 +122,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  $ curl -X GET "http://{IP_OF_DMAAP_SERVER_ADDR}:3904/topics"
       ```
 	  
+	  Note2: {IP_OF_DMAAP_SERVER_ADDR} Use public IP of 'DMaaP Server'
+	  
       Above command should return output as follows:
 	  
       ```sh	  
@@ -131,7 +135,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       
     - Create AWS VM (Demo Server) with following specifications and SSH it using putty:
     
-      ```sh		
+      ```sh
+      Name: Demo Server 	  
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
@@ -155,7 +160,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       Make sure docker is installed properly by running following command:
 		
       ```sh
-      docker info
+      $ docker ps 
+	  CONTAINER ID   IMAGE   COMMAND  CREATED   STATUS   PORTS    NAMES
       ```
 	  
   - **Tosca images**
@@ -288,11 +294,9 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
-	    Note1: {IP_OF_SERVER_ADDR}    
-            - {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
+	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
 			
-        Note2: {IP_OF_DMAAP_SERVER_ADDR}
-            - Use public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
+        Note2: {IP_OF_DMAAP_SERVER_ADDR} Use public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
 	  
@@ -303,7 +307,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		  $ cp TOSCA-Dgraph-schema.txt /puccini/dvol/config/ 
 	      ```
 
-        - Build Docker images:
+        - Build Docker images and start docker conatiner:
           ```sh
           $ cd ~/puccini
           $ docker-compose up -d
@@ -338,9 +342,10 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       
     This server is used for testing in ONAP OOM environment.
   
-    - Create AWS VM (ONAP_OOM_DEMO) with following specifications and SSH it using Putty:
+    - Create AWS VM with following specifications and SSH it using Putty:
   
 	  ```sh
+	  Name: ONAP_OOM_DEMO
 	  Image: ubuntu-18.04
       Instance Type: m5a.4xlarge
       Storage: 400GB
@@ -362,7 +367,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ cd //
       $ sudo chmod -R 777 /etc/docker
       
-	  # Create daemon.json in /etc/docker and following in it.
+	  # Create a file named daemon.json in /etc/docker and add following content in it.
          { "insecure-registries":["172.31.27.186:5000"] }
       
 	  $ sudo systemctl stop docker 
@@ -393,7 +398,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ kubectl get pods -n onap -o=wide
 	  ```
 	
-    - Download/clone CCI ONAP OOM:
+    - Clone CCI ONAP OOM:
     
 	  ```sh
 	  $ cd ~/
@@ -427,7 +432,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo chmod -R 777 .helm
 	  ```
 	
-    - Run following commands to install python, jq and AWS CLI:
+    - Run following commands to install python,jq and AWS CLI:
   
 	  ```sh
       $ sudo apt-get update
@@ -468,7 +473,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       $ sudo apt-get install socat
 	  ```
 	
-	  Note: Make sure 'CCI-REPO' VM in AWS Ohio Region is in running state.
+	- Verify that CCI_REPO VM on Ohio Region is in running state. If it is not in running state then go to AWS and start it.
 	
     - Deploy ONAP:
     
@@ -478,7 +483,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  $ kubectl get pods -n onap
 	  ```
 	
-	  Wait till all pods go into 'Running' state.
+	  Wait till all pods goes into 'Running' state. Wait around 40-45 min to come all pods in running state. 
 	
     - To access portal using browser from your local machine, add 'IP_of_ONAP_OOM_DEMO' in /etc/hosts file:
   
@@ -492,7 +497,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       {IP_OF_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
 	  ```
 	
-    - Access ONAP portal from browser:
+    - Verfiy following link should open in browser to access ONAP portal:
     
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
@@ -502,15 +507,15 @@ There are two ways of deploying models for testing GIN functionality, one is doc
     ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
-  - Create AWS VMs in Ohio region
+  - Create three AWS VMs in Ohio region with name as follows:
     
 	```sh
-	. Bonap Server(banap-server-cci) 
-    . ric Server(oran-ric-cci)
-    . nonrtric Server(oran-nonrtric-cci)
+	VM1 Name: Bonap Server 
+    VM2 Name: ric Server
+    VM3 Name: nonrtric Server
     ```
 	
-	with following specifications
+	And use following specifications
 	
 	```sh
     Image: ubuntu-18.04
@@ -587,7 +592,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
     $ sudo apt install socat
     $ sudo chmod -R 777 /etc/rancher/k3s
     
-	# Create file /etc/rancher/k3s/registries.yaml add following content to it.
+	# Create file named registries.yaml on this (/etc/rancher/k3s/) location and add following content to it.
       mirrors:
        "172.31.27.186:5000":
           endpoint:
@@ -673,9 +678,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   $ cd tosca-models/cci
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
   ```
-  Use following request to store model in Dgraph.
 
-  - Store model in Dgraph:
+  - Use following request to store model in Dgraph:
 	  
 	```sh
 	POST http://{IP_OF_BONAP_SERVER_ADDR}:10010/compiler/model/db/save
@@ -700,7 +704,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	}
     ```
 	
-	Use above changes for firewall,nonrtric,qp,qp-driver,ts instate of <ModelName>.
+	Use above changes for firewall,nonrtric,qp,qp-driver,ts instate of ModelName.
 	  
     For ric make following changes:
 	  
@@ -883,51 +887,53 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	GET http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policies
 	```
 	
+	(TODO We can add the output of each command)
+	
 - **ONAP OOM testing**
     ----------------
   Use following steps in ONAP OOM Environment.
 	
   - One time Steps for intialization/configuration of the envinorment:
 	  
-	Login to ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
+	- Login to ONAP portal using designer(cs0008/demo123456!) and follow the steps as follows: 
 	  
-	```sh
-	https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	```
+	  ```sh
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  ```
 	  
-	```sh
-	Virtual Licence Model creation
-    Open SDC application, click on the 'ONBOARD' tab.
-    Click 'CREATE NEW VLM' (Licence Model)
-    Use 'cci' as Vendor Name, and enter a description
-    Click 'CREATE'
-    Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
-    Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
-    Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-    Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups
-    Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
-    Features Groups, drag the feature group created previously.
-    Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
-	```
+	  ```sh
+	  Virtual Licence Model creation
+      Open SDC application, click on the 'ONBOARD' tab.
+      Click 'CREATE NEW VLM' (Licence Model)
+      Use 'cci' as Vendor Name, and enter a description
+      Click 'CREATE'
+      Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields
+      Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields
+      Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
+      Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups
+      Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
+      Features Groups, drag the feature group created previously.
+      Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT' .
+	  ```
 	  
-    Update AAI with following REST requests using POSTMAN
+    - Update AAI with following REST requests using POSTMAN
 	  
-	Note: Use following headers in a POSTMAN request
+	  Note: Use following headers in a POSTMAN request
 	  
-    ```sh
-    headers :
-    Content-Type:application/json
-    X-FromAppId:AAI
-    Accept:application/json
-    X-TransactionId:get_aai_subscr
-    Cache-Control:no-cache
-    Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-    ```
+      ```sh
+      headers :
+      Content-Type:application/json
+      X-FromAppId:AAI
+      Accept:application/json
+      X-TransactionId:get_aai_subscr
+      Cache-Control:no-cache
+      Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+      ```
 		
-  - Create 'NCalifornia' Region: 
+      - Create 'NCalifornia' Region: 
 		
-	```sh
-	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
 		  {
 			"cloud-owner": "aws",
 			"cloud-region-id": "NCalifornia",
@@ -940,12 +946,12 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 			  ]
 			}
 		  }
-	```
+	    ```
 		  
-  - Create customer:   
+      - Create customer:   
 		  
-	```sh
-	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
+        ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
 		  {
 		   "global-customer-id": "CCIDemonstration",
 		   "subscriber-name": "CCIDemonstration",
@@ -1045,79 +1051,79 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 			}				
 		   ]}
 		  }
-    ```
+        ```
 		
-    NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
+        NOTE: For new CCI models add new service-type in service-subscription list of Create Customer rest api
 		
-  - Create a Dummy Service:
+      - Create a Dummy Service:
 		
-	```sh
-	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
-	{
-	   "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
-	   "service-description": "CCI"
-	}
-	```
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
+	    {
+	      "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
+	      "service-description": "CCI"
+	    }
+	    ```
 		  
-  - Create Zone:
+      - Create Zone:
 		  
-	```sh
-	PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
-	{
-	   "zone-name": "cci",
-	   "design-type":"abcd",
-	   "zone-context":"abcd"
-	}
-	```
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
+	    {
+	      "zone-name": "cci",
+	      "design-type":"abcd",
+	      "zone-context":"abcd"
+	    }
+	    ```
 		
-    Update VID with following REST requests using POSTMAN
+    - Update VID with following REST requests using POSTMAN
 	  
-    Note: Use following headers in the POSTMAN request
+      Note: Use following headers in the POSTMAN request
 	  
-    ```sh
-	Content-Type:application/json
-    X-FromAppId:VID
-    Accept:application/json
-    X-TransactionId:get_vid_subscr
-    Cache-Control:no-cache
-    Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-    ```
+      ```sh
+	  Content-Type:application/json
+      X-FromAppId:VID
+      Accept:application/json
+      X-TransactionId:get_vid_subscr
+      Cache-Control:no-cache
+      Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+      ```
 		
-  - Declare Owning Entity:
+      - Declare Owning Entity:
 		
-	```sh
-    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
-    {
-		"options": ["cciowningentity1"]
-    }
-	```
+	    ```sh
+        POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
+        {
+		  "options": ["cciowningentity1"]
+        }
+	    ```
 		
-  - Create Platform:
+      - Create Platform:
 		
-	```sh
-	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
-	{
-		 "options": ["Test_Platform"]
-	}
-	```
+	    ```sh
+	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
+	    {
+		  "options": ["Test_Platform"]
+	    }
+	    ```
 		
-  - Create Line of Business:
+      - Create Line of Business:
 		
-    ```sh
-	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
-	{ 
-	    "options": ["Test_LOB"]
-	}
-	```
+        ```sh
+ 	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
+	    { 
+	      "options": ["Test_LOB"]
+ 	    }
+	    ```
 		
-  - Create Project:
+      - Create Project:
 		
-    ```sh
-	POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
-	{
-		"options": ["Test_project"]
-	}
-    ```
+        ```sh
+	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
+ 	    {
+		  "options": ["Test_project"]
+	    }
+        ```
 		
   - Create and Distribute CCI models in SDC:
 	  
@@ -1196,15 +1202,24 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   
 - Verify sdwan model:  
  
-  - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS.
-  - SSH SDWAN_Site_A VM and fire 'ifconfig -a'
-	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
-  - SSH SDWAN_Site_B VM and fire 'ifconfig -a'
+  - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS N.California region.
+  - SSH SDWAN_Site_A VM and run following command:
+    
+	```sh
+	$ ifconfig -a
+	```
+    Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
+	
+  - SSH SDWAN_Site_B VM and run following command:
+    
+	```sh
+	$ ifconfig -a
+	```
 	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
 	
 - Verify firewall model:
 
-  - Check that VM are created on AWS.
+  - Verify {service_instance_name}_packet_firewall, {service_instance_name}_packet_genrator and {service_instance_name}_packet_sink VMs should be created on AWS N.Virginia.
 
 - Verify nonrtric model:
 	
@@ -1224,18 +1239,30 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 
 - Verify qp model:
 
-  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
-          To check qp models deploy successfully, verify following messages in /tmp/xapp.log. 
-	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}	  
+  - Login 'Bonap Server' and run the following commands:
+    ```sh
+    $ vim /tmp/xapp.log
+    
+	# To check qp models deploy successfully, verify following messages in /tmp/xapp.log.
+      {"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+    ```	  
 
 - Verify qp-driver model:
 
-  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
-          To check qp-driver models deploy successfully, verify following messages in /tmp/xapp.log. 
-          {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"} 
+  - Login 'Bonap Server' and run the following commands:
+    ```sh
+    $ vim /tmp/xapp.log
+    
+	# To check qp models deploy successfully, verify following messages in /tmp/xapp.log.
+      {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
+    ``` 
 
 - Verify ts model:
 
-  - Login 'Bonap Server' and go to /tmp folder and see logs to check whether deployment is successful or not
-          To check ts models deploy successfully, verify following messages in /tmp/xapp.log. 
-          {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}	  		   
+  - Login 'Bonap Server' and run the following commands:
+    ```sh
+    $ vim /tmp/xapp.log
+    
+	# To check qp models deploy successfully, verify following messages in /tmp/xapp.log.
+      {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
+    ```    	  		   
