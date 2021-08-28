@@ -13,7 +13,7 @@ Table of contents
 		 * [Deploying images](#Deploying-images)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
-     * [ORAN Server](#ORAN-Server)
+     * [ORAN Servers](#ORAN-Servers)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -91,7 +91,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  New image:
 	  
       ```sh          
-      image:  {IP_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
+      image:  {IP_OF_CCI_REPO_ADDR}:5000/dmaap:localadapt_0.1
       ```
 	
 	- Verify that CCI_REPO VM on Ohio Region is in running state. If it is not in running state then go to AWS and start it.
@@ -168,7 +168,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
       - TOSCA_POLICY - policy microservice
       - TOSCA_GAWP - argo based workflow microservice
 	  
-	  These images can either be build from scratch repository or pre-build version of the images are use from CCI_REPO.
+	  These images can either be build from scratch repository or pre-build version of the images are use from CCI_REPO VM.
 	  
 	  Log in to the Demo Server and perform steps as follows:
 	
@@ -289,15 +289,14 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
 	    Note1: {IP_OF_SERVER_ADDR}    
-          - {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
+            - {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} for deploying sdwan, firewall and it should be set to {IP_OF_BONAP_SERVER_ADDR} for deploying oran models. 
+			
         Note2: {IP_OF_DMAAP_SERVER_ADDR}
-          - Use public IP of 'DMaaP Server' (created in 'Pre Deployment Steps')  
+            - Use public IP of 'DMaaP Server'(created in 'Pre Deployment Steps')  
 	  
         - Copy files as given follows:
 	  
 	      ```sh
-	      $ cd puccini/dvol/
-	      $ mkdir models
 	      $ cd ~/
 	      $ cp cciPublicKey puccini/dvol/config
 		  $ cd /puccini/config/
@@ -310,7 +309,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
           $ docker-compose up -d
           ```
 
-        - Check either the images are created:
+        - Verify images are created:
           ```sh
           $ docker images -a
           ```
@@ -499,7 +498,7 @@ There are two ways of deploying models for testing GIN functionality, one is doc
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Server (optional)**
+- **ORAN Servers (optional)**
     ----------------------
   This server needs to be setup only if oran model(s) are to be deployed.
   
@@ -668,6 +667,8 @@ There are two ways of deploying models for testing GIN functionality, one is doc
   Login into Demo Server and perform commands as follows to copy csar:
   
   ```sh
+  $ cd puccini/dvol/
+  $ mkdir models
   $ cd ~/
   $ cd tosca-models/cci
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
