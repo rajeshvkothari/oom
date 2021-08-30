@@ -444,13 +444,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ sudo apt install python-pip
       $ pip2 install simplejson
 	  ```
-	
-    - To deploy oran models, create Bonap Server with clustering enabled (ric and nonrtric clusters) using following link:
-  
-      ```sh
-	  http://54.236.224.235/wiki/index.php/Steps_for_setting_up_clustering_for_ORAN_models
-	  ```
-  
+	  
     - Add public IP of Bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
 
       ```sh
@@ -482,12 +476,17 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```sh
 	  $ cd ~/onap-oom-integ/kubernetes
       $ helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
-	  $ kubectl get pods -n onap
 	  ```
 	
-	  Wait around 40-45 min to all pods will come in running state. 
+	  To deploy ONAP requires around 40-45 min. 
+	  
+    - To verify ONAP deployed successfully use following command and all check all pods are in running state.
+
+      ```sh
+	  $ kubectl get pods -n onap
+      ```	  
 	
-    - To access portal using browser from your local machine, add 'IP_OF_ONAP_OOM_DEMO' in /etc/hosts file:
+    - To access portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' V in /etc/hosts file:
   
 	  ```sh
 	  {IP_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
@@ -507,7 +506,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
 - **ORAN Servers**
     ----------------------
-  This server needs to be set up only if oran model(s) are to be deployed.
+  This servers needs to be create only if oran model(s) are to be deployed.
   
   - Create three AWS VMs on Ohio region with name as follows:
     
@@ -677,7 +676,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     $ ./build.sh
     ```
    
-    Check wither all csar are created at /home/ubuntu/tosca-models/cci.
+    Check whether all csar are created in /home/ubuntu/tosca-models/cci directory.
 	
 	To test through OOM Environment keep a copy of all csar on local machine.
     
@@ -685,7 +684,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
  
 - **Docker container based testing**
     ------------------------------ 
-  Login into Demo Server and perform commands as follows to copy csar:
+  Login into Demo Server and fire following commands to copy csar's:
   
   ```sh
   $ cd ~/
@@ -712,7 +711,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
 	``` 
 	
-	For sdwan make following changes:
+	For sdwan model make following changes in above requests:
 	
 	```sh
 	{
@@ -722,16 +721,16 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
     ```
 	
-	Use above changes for firewall,nonrtric,qp,qp-driver,ts instate of ModelName.
+	Note : Use similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
 	  
-    For ric make following changes:
+    For ric model make following changes:
 	  
 	```sh
 	{
-	   "inputs":{"helm_version":"2.17.0"},
-	   "url":"/opt/app/models/ric.csar",
-	   "output": "./ric-dgraph-clout.json",
-	}
+      "inputs":{"helm_version":"2.17.0"},
+      "url":"/opt/app/models/ric.csar",
+      "output": "./ric-dgraph-clout.json",
+    }
     ```	
 	  
   - Create service Instance without deployment:
@@ -867,7 +866,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
-  - To only list the Execute Workflow service without deploying them use following:
+  - To only list workflow steps of a model without executing/deploying them use following:
 	  
 	```sh
     POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
@@ -877,7 +876,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
 	```		 
 
-  - To Execute Workflow steps for as model which has already been saved in database:
+  - To Execute Workflow steps of a model which has already been saved in database:
 	   
 	```sh	
     POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
@@ -1216,7 +1215,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
 ## Post Deployment Verification Steps 
  
-  Use following steps to verify that models are correctly deployed. 
+  Use the following steps to verify models are deployed successfully. 
   
 - Verify sdwan model:  
  
