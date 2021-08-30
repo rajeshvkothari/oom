@@ -43,10 +43,10 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
-      Key Pair: cciPublicKey
+      Key Pair: cciPrivateKey
       ```
 	  
-	  Note: cciPublicKey is the authentication key to login/ssh into AWS (which should be available with you locally).
+	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
 	  
     - Setup Docker on DMaaP Server:
 	
@@ -139,7 +139,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
-      Key Pair: cciPublicKey
+      Key Pair: cciPrivateKey
       ```
     
     - Setup Docker on Demo Server
@@ -346,7 +346,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  Image: ubuntu-18.04
       Instance Type: m5a.4xlarge
       Storage: 400GB
-      KeyPair: cciPublicKey
+      KeyPair: cciPrivateKey
       ```
   
     - Setup Docker:
@@ -518,7 +518,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	```sh
     Image: ubuntu-18.04
     Instance Type: t2.2xlarge
-    KeyPair : cciPublicKey
+    KeyPair : cciPrivateKey
     Disk: 80GB
 	```
 	
@@ -534,10 +534,10 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ grep -E --color 'vmx|svm' /proc/cpuinfo
 	  ```
 	  
-	- Copy cciPublicKey into $HOME/.ssh
+	- Copy cciPrivateKey into $HOME/.ssh
 	  
 	  ```sh
-	  cp cciPublicKey $HOME/.ssh
+	  cp cciPrivateKey $HOME/.ssh
 	  ```
 	
 	- Run the following commands to setup k3sup:
@@ -548,15 +548,15 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo install k3sup /usr/local/bin/
       $ sudo apt-get install socat
       $ sudo apt install jq
-  	  $ k3sup install --ip {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --context ric
+  	  $ k3sup install --ip {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
   	  $ sudo mkdir ~/.kube 
       $ sudo cp /home/ubuntu/kubeconfig .kube/config
       $ sudo chmod 777 .kube/config
   	   
       # Make sure the /home/ubuntu/kubeconfig file contains an entry of cluster and context for ric.
     
-      $ k3sup install --host {PRIVATE_IP_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --local-path ~/.kube/config --merge --context default
-      $ k3sup install --host {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPublicKey --local-path ~/.kube/config --merge --context ric
+      $ k3sup install --host {PRIVATE_IP_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context default
+      $ k3sup install --host {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
 	  ```
 	  
 	- Run the following commands to install python,jq, and AWS CLI:
