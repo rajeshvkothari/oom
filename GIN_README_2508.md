@@ -1233,7 +1233,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 - Verify firewall model:
 
-  - Verify {service_instance_name}_packet_firewall, {service_instance_name}_packet_genrator and {service_instance_name}_packet_sink VMs should be created on AWS N.Virginia region.
+  - Verify {service_instance_name}_firewall, {service_instance_name}_packet_genrator and {service_instance_name}_packet_sink VMs should be created on AWS N.Virginia region.
 
 - Verify nonrtric model:
 	
@@ -1267,7 +1267,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ```sh
     $ cat /tmp/xapp.log
     
-	# To check qp models deploy successfully, verify the following messages in /tmp/xapp.log.
+	# To check qp-driver models deploy successfully, verify the following messages in /tmp/xapp.log.
       {"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
     ``` 
 
@@ -1277,6 +1277,6 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ```sh
     $ cat /tmp/xapp.log
     
-	# To check qp models deploy successfully, verify the following messages in /tmp/xapp.log.
+	# To check ts models deploy successfully, verify the following messages in /tmp/xapp.log.
       {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
     ```    	  		   
