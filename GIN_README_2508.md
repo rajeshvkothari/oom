@@ -908,7 +908,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ----------------
   Use the following steps in ONAP OOM Environment.
 	
-  - One time Steps for initialization/configuration of the environment:
+  - One time steps for initialization/configuration of the environment:
 	  
 	- Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
 	  
