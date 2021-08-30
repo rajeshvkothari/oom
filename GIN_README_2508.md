@@ -31,7 +31,7 @@ Table of contents
 
 There are two ways of deploying models for testing GIN functionality, one is Docker container and other is ONAP OOM based.
 
-- **Creating Environment for Docker container**
+- **Creating Environment for Docker container based testing**
     -------------------------------------------------------
     
   - **DMaaP Server**
@@ -505,7 +505,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
   
-- **ORAN Servers (optional)**
+- **ORAN Servers**
     ----------------------
   This server needs to be set up only if oran model(s) are to be deployed.
   
