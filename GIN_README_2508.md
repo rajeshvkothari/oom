@@ -23,7 +23,8 @@ Table of contents
 
 ## Introduction
   
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models. It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models.
+  It also describes steps for building csars for various models currently available.
 
 
 ## Pre Deployment Steps
@@ -289,7 +290,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      remoteHost={IP_OF_SERVER_ADDR}
 		      remotePort=22
 		      remoteUser=ubuntu
-		      remotePubKey=/opt/app/config/cciPublicKey
+		      remotePubKey=/opt/app/config/cciPrivateKey
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
@@ -301,7 +302,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	      ```sh
 	      $ cd ~/
-	      $ cp cciPublicKey puccini/dvol/config
+	      $ cp cciPrivateKey puccini/dvol/config
 		  $ cd /home/ubuntu/puccini/config/
 		  $ cp TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
 	      ```
@@ -449,7 +450,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       remoteHost={IP_OF_SERVER_ADDR}
       remotePort=22
       remoteUser=ubuntu
-      remotePubKey=/opt/app/config/cciPublicKey
+      remotePubKey=/opt/app/config/cciPrivateKey
 	  ```	
 	
 	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
@@ -572,14 +573,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo apt install python-pip
       $ pip2 install simplejson
       ```	
-    - Copy cciPublicKey
+    - Copy cciPrivateKey
 	
       ```sh
 	  $ cd /home/ubuntu
       $ sudo mkdir onap-oom-integ
       $ sudo mkdir onap-oom-integ/cci
       $ sudo chmod -R 777 onap-oom-integ
-      $ cp cciPublicKey onap-oom-integ/cci
+      $ cp cciPrivateKey onap-oom-integ/cci
       ```	  
     
   - Login into ric Server and nonrtric Server and run the following commands:
@@ -708,7 +709,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
 	``` 
 	
-	For the sdwan model make the following changes in the above requests:
+	For the sdwan model, make the following changes in the above requests:
 	
 	```sh
 	{
@@ -720,7 +721,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 	Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
 	  
-    For the ric model make the following changes:
+    For the ric model, make the following changes:
 	  
 	```sh
 	{
@@ -907,7 +908,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ----------------
   Use the following steps in ONAP OOM Environment.
 	
-  - One time steps for initialization/configuration of the environment:
+  - One time Steps for initialization/configuration of the environment:
 	  
 	- Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
 	  
