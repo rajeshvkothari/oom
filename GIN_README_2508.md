@@ -70,7 +70,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
       ```sh
       $ docker ps 
-	  CONTAINER ID   IMAGE   COMMAND  CREATED   STATUS   PORTS    NAMES
+	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
       ```	 
 	  
     - Clone the messageservice folder:
@@ -161,7 +161,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		
       ```sh
       $ docker ps 
-	  CONTAINER ID   IMAGE   COMMAND  CREATED   STATUS   PORTS    NAMES
+	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
       ```
 	  
   - **Tosca images**
@@ -176,7 +176,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  These images can either be build from scratch repository or pre-build version of the images are use from CCI_REPO VM.
 	  
-	  Login to the Demo Server and perform steps as follows:
+	  Login into the Demo Server and perform steps as follows:
 	
       - clone puccini:
   
@@ -294,7 +294,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
 		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 			
-	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers'Pre Deployment Steps') for deploying oran models. 
+	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
 			
         Note2: {IP_OF_DMAAP_SERVER_ADDR} is Public IP Address of 'DMaaP Server'(created in 'Pre Deployment Steps')  
 	  
@@ -303,8 +303,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	      ```sh
 	      $ cd ~/
 	      $ cp cciPublicKey puccini/dvol/config
-		  $ cd /puccini/config/
-		  $ cp TOSCA-Dgraph-schema.txt /puccini/dvol/config/ 
+		  $ cd /home/ubuntu/puccini/config/
+		  $ cp TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
 	      ```
 
         - Build Docker images and start Docker conatiner:
@@ -461,7 +461,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       remotePubKey=/opt/app/config/cciPublicKey
 	  ```	
 	
-	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers'Pre Deployment Steps') for deploying oran models.
+	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
 	
     - Build helm charts:
   
@@ -608,11 +608,25 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	- Verify 'ric' and 'default' contexes are setup:  
 	  ```sh
 	  $ kubectl config get-contexts
+	  
+	  ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
+      CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+          default   default   default
+      *         ric       ric       ric
 	  ```
 	  
 	- Run following command to get all pods:
 	  ```sh
 	  $ kubectl get pods --all-namespaces
+	  
+	  ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
+      NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+      kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
+      kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
+      kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
+      kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
+      kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
+      kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 	  ```
 	
 ## Building Tosca Model Csars
@@ -674,6 +688,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   Login into Demo Server and perform commands as follows to copy csar:
   
   ```sh
+  $ cd ~/
   $ cd puccini/dvol/
   $ mkdir models
   $ cd ~/
