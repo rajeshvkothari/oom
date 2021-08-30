@@ -23,8 +23,7 @@ Table of contents
 
 ## Introduction
   
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models.
-  It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models. It also describes steps for building csars for various models currently available.
 
 
 ## Pre Deployment Steps
