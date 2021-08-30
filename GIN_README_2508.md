@@ -693,13 +693,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   $ mkdir models
   $ cd ~/
   $ cd tosca-models/cci
+  $ sudo chmod 777 -R /home/ubuntu/puccini/dvol/models
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
   ```
 
   - Use following request to store model in Dgraph:
 	  
 	```sh
-	POST http://{IP_OF_BONAP_SERVER_ADDR}:10010/compiler/model/db/save
+	POST http://{IP_OF_DEMO_SERVER_ADDR}:10010/compiler/model/db/save
 	{
 	   "url":"/opt/app/models/<ModelName>.csar",
 	   "output": "./<ModelName>-dgraph-clout.json",
@@ -737,7 +738,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	```sh			
-	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/createInstance
+	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -804,7 +805,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
 	```sh			
-	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/createInstance
+	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/createInstance
 	{
 		"name" : "<Instance_Name>",
 		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
@@ -869,7 +870,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - To only list the Execute Workflow service without deploying them use following:
 	  
 	```sh
-    POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
 	   "list-steps-only": true,
 	   "execute-policy": false
@@ -879,7 +880,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - To Execute Workflow steps for as model which has already been saved in database:
 	   
 	```sh	
-    POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -889,19 +890,19 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - Execute Policy(This is vaild only for firewall model): 
 	  
 	```sh
-	POST http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is vaild only for firewall model):
          
 	```sh
-	DELETE http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	DELETE http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is vaild only for firewall model):
          
 	```sh
-	GET http://{IP_OF_BONAP_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policies
+	GET http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policies
 	```
 	
 	(TODO We can add the output of each command)
