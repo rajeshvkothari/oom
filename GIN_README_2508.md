@@ -23,7 +23,7 @@ Table of contents
 
 ## Introduction
   
-  This page describes steps that need to be followed in order to create the necessary environment for deploying tosca models.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models.
   It also describes steps for building csars for various models currently available.
 
 
@@ -56,7 +56,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo apt install docker.io
       $ sudo apt install docker-compose
 	  
-	  # Create a file named daemon.json in /etc/docker and add following content to it.
+	  # Create a file named daemon.json in /etc/docker and add the following content to it.
            { "insecure-registries":["172.31.27.186:5000"] }
 		
       $ sudo systemctl stop docker.socket 
@@ -96,7 +96,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       image:  {IP_OF_CCI_REPO_ADDR}:5000/dmaap:localadapt_0.1
       ```
 	
-	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not in a running state then go to AWS and start it.
+	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
 	
     - Start DMaaP Service:
       ```sh
@@ -149,7 +149,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo apt install docker.io
       $ sudo apt install docker-compose
 	  
-	  # Create a file named daemon.json in /etc/docker and add following content in it.
+	  # Create a file named daemon.json in /etc/docker and add the following content to it.
          { "insecure-registries":["172.31.27.186:5000"] }
       
 	  $ sudo systemctl stop docker.socket 
@@ -365,7 +365,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ cd //
       $ sudo chmod -R 777 /etc/docker
       
-	  # Create a file named daemon.json in /etc/docker and add following content in it.
+	  # Create a file named daemon.json in /etc/docker and add the following content to it.
          { "insecure-registries":["172.31.27.186:5000"] }
       
 	  $ sudo systemctl stop docker 
@@ -415,7 +415,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.helm
 	  ```
 	
-    - Run following commands for setting up the helm:
+    - Run the following commands for setting up the helm:
   
       ```sh
 	  $ sudo helm init --stable-repo-url=https://charts.helm.sh/stable --client-only
@@ -467,7 +467,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo apt-get install socat
 	  ```
 	
-	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not in a running state then go to AWS and start it.
+	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
 	
     - Deploy ONAP:
     
@@ -496,7 +496,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       {IP_OF_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
 	  ```
 	
-    - Verify the following link should open in a browser to access ONAP portal:
+    - Verify the following link should open in a browser to access the ONAP portal:
     
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
@@ -591,7 +591,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     $ sudo apt install socat
     $ sudo chmod -R 777 /etc/rancher/k3s
     
-	# Create file named registries.yaml on this (/etc/rancher/k3s/) location and add following content to it.
+	# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
       mirrors:
        "172.31.27.186:5000":
           endpoint:
@@ -709,7 +709,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
 	``` 
 	
-	For sdwan model make the following changes in the above requests:
+	For the sdwan model make the following changes in the above requests:
 	
 	```sh
 	{
@@ -719,9 +719,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	}
     ```
 	
-	Note : Use similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
+	Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
 	  
-    For ric model make the following changes:
+    For the ric model make the following changes:
 	  
 	```sh
 	{
@@ -1068,7 +1068,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  }
         ```
 		
-        NOTE: For new CCI models add a new service-type in the service-subscription list of Create customer REST API
+        NOTE: For new CCI models add a new service type in the service-subscription list of Create customer REST API
 		
       - Create a dummy service:
 		
@@ -1122,7 +1122,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
 	    ```
 		
-      - Create line of business:
+      - Create a line of business:
 		
         ```sh
  	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
@@ -1131,7 +1131,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
  	    }
 	    ```
 		
-      - Create project:
+      - Create a project:
 		
         ```sh
 	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
@@ -1153,7 +1153,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
       In the 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version',
       'License Agreement' and 'Feature Groups'.
-      Goto 'Overview'. In the 'Software Product Attachements' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
+      Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
       based on your requirement.
       Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
 	  ```
@@ -1164,8 +1164,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  Go to SDC home. Click on the top-right icon with the orange arrow.
 	  Select your VSP and click on 'IMPORT VSP'.
 	  Click on 'Create' 
-	  Click on 'Check-in' and enter comment then Press OK.
-	  Click on 'Certify' and enter comment then Press OK.
+	  Click on 'Check-in' and enter a comment then Press OK.
+	  Click on 'Certify' and enter a comment then Press OK.
 	  ```
 	  
 	- Service creation/distribution:
@@ -1215,7 +1215,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
  
   Use the following steps to verify models are deployed successfully. 
   
-- Verify sdwan model:  
+- Verify the sdwan model:  
  
   - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS N.California region.
   - SSH SDWAN_Site_A VM and run the following command:
@@ -1223,14 +1223,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	```sh
 	$ ifconfig -a
 	```
-    Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vpp2) of SDWAN_Site_B.
+    Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
 	
   - SSH SDWAN_Site_B VM and run the following command:
     
 	```sh
 	$ ifconfig -a
 	```
-	Ping WAN Public IP, LAN Private IP(vvp1) and VxLAN IP(vvp2) of SDWAN_Site_A.
+	Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vvp2) of SDWAN_Site_A.
 	
 - Verify firewall model:
 
