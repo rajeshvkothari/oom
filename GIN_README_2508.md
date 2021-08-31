@@ -70,6 +70,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       ```sh
       $ docker ps 
 	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+	  $
       ```	 
 	  
     - Clone the messageservice folder:
@@ -161,6 +162,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       ```sh
       $ docker ps 
 	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+	  $
       ```
 	  
   - **Tosca images**
@@ -1240,15 +1242,54 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - Verify that all pods are running using the following command on Bonap Server: 
     ```sh
 	$ kubectl get pods -n nonrtric
+	
+	ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
+	NAME                                       READY   STATUS    RESTARTS   AGE
+	db-5d6d996454-2r6js                        1/1     Running   0          4m25s
+	enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
+	policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
+	rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
+	a1-sim-std-0                               1/1     Running   0          4m25s
+	controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
+	a1-sim-osc-0                               1/1     Running   0          4m25s
+	a1-sim-std-1                               1/1     Running   0          2m54s
+	a1-sim-osc-1                               1/1     Running   0          2m50s
+	a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
 	```     
 	
 - Verify ric model:
 
-  - Verify all pods are running using the following commands
+  - Verify all pods are running using the following commands:
 	```sh		
 	$ kubectl get pods -n ricplt
 	$ kubectl get pods -n ricinfra
-	$ kubectl get pods -n ricxapp   	   
+	$ kubectl get pods -n ricxapp 
+
+	ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
+	NAME                                                        READY   STATUS    RESTARTS   AGE
+	statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
+	deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
+	deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
+	deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
+	deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
+	deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
+	deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
+	deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
+	deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
+	r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
+	r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
+	r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
+	deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
+	deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
+	deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
+	
+	ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
+	NAME                                         READY   STATUS      RESTARTS   AGE
+	tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
+	deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
+	
+	ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
+	No resources found.
 	```		
 
 - Verify qp model:
