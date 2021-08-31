@@ -43,7 +43,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
-      Key Pair: cciPublicKey
+      KeyPair: cciPublicKey
       ```
 	  
 	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
@@ -140,7 +140,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Image: ubuntu-18.04
       Instance Type: t2.large
       Storage: 80GB
-      Key Pair: cciPublicKey
+      KeyPair: cciPublicKey
       ```
     
     - Setup Docker on Demo Server
