@@ -1155,9 +1155,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
         Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
         In the 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version',
         'License Agreement' and 'Feature Groups'.
-        Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
-        based on your requirement.
+        Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts based on your requirement.
         Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
+		
 	    ```
 	  
       - Virtual Function (VF) creation:
