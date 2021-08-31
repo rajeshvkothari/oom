@@ -1150,17 +1150,17 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  Open the SDC application, click on the OnBoard tab.
-          Click 'CREATE NEW VSP'
-          Give the name to VSP, i.e.  cci_ric_vsp. 
-          Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
-          In the 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version',
-          'License Agreement' and 'Feature Groups'.
-          Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
-          based on your requirement.
-          Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'
+      Click 'CREATE NEW VSP'
+      Give the name to VSP, i.e.  cci_ric_vsp. 
+      Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
+      In the 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version',
+      'License Agreement' and 'Feature Groups'.
+      Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts 
+      based on your requirement.
+      Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
 	  ```
 	  
-        - Virtual Function (VF) creation:
+    - Virtual Function (VF) creation:
 	  
 	  ```sh
 	  Go to SDC home. Click on the top-right icon with the orange arrow.
