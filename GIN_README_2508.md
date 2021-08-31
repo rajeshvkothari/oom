@@ -36,7 +36,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - **DMaaP Server**
       ------------
       
-    - Create AWS VM in Ohio region with following specifications and SSH it using putty:
+    - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
     
       ```sh
 	  Name: DMaaP Server
@@ -133,7 +133,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - **Demo Server**
       -----------
       
-    - Create AWS VM in Ohio region with following specifications and SSH it using putty:
+    - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
     
       ```sh
       Name: Demo Server 	  
@@ -341,7 +341,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       
     This server is used for testing in the ONAP OOM environment.
   
-    - Create AWS VM in Ohio region with following specifications and SSH it using putty:
+    - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
   
 	  ```sh
 	  Name: ONAP_OOM_DEMO
@@ -515,7 +515,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     VM3 Name: nonrtric Server
     ```
 	
-	And use the following specifications
+	And use the following specifications and SSH it using putty by using cciPrivateKey:
 	
 	```sh
     Image: ubuntu-18.04
