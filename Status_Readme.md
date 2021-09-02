@@ -10,10 +10,10 @@
   <thead>
     <tr>
       <th rowspan="2">Environment</th>
-      <th rowspan="2">Setup</th>
-      <th rowspan="2">Workflow Micro-Service</th>
-      <th rowspan="2">Policy Micro-Service</th>
-	  <th colspan="2">Argo-Workflow Micro-Service</th>
+      <th rowspan="2">Standalone Puccini</th>
+      <th rowspan="2">Tosca Docker containers</th>
+      <th rowspan="2">Frankfurt</th>
+	  <th colspan="2">Honolulu</th>
     </tr>
   </thead>
   <tbody>
@@ -26,7 +26,7 @@
 	  <td>containerSet</td>
 	</tr>
     <tr>
-      <td>Standalone Puccini</td>
+      <td>Setup</td>
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
@@ -34,7 +34,7 @@
 	  <td>Not Supported</td>
     </tr>
     <tr>
-      <td>Tosca Docker containers</td>
+      <td>Workflow Micro-Service</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
@@ -42,7 +42,7 @@
 	  <td>Not Supported</td>
     </tr>
     <tr>
-      <td>Frankfurt</td>
+      <td>Policy Micro-Service</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
@@ -50,7 +50,7 @@
 	  <td>Not Supported</td>
     </tr>
 	<tr>
-      <td>Honolulu</td>
+      <td>Argo-Workflow Micro-Service</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>PENDING</td>
