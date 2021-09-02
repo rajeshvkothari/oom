@@ -51,7 +51,7 @@
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>Ok</td>
-	  <td>PENDING</td>
+	  <td>Pending</td>
     </tr>
   </tbody>
 </table>
