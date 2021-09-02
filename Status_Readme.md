@@ -10,21 +10,21 @@
   </thead>
   <tbody>
     <tr>
-      <td colspan="2">Setup</td>
+      <td colspan="2">Setup(Pre-deployment)</td>
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
 	  <td>OK</td>
     </tr>
     <tr>
-      <td colspan="2">Workflow Micro-Service</td>
+      <td colspan="2">Workflow(Buildin)</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>Ok</td>
     </tr>
     <tr>
-      <td rowspan="2">Policy Micro-Service</td>
+      <td rowspan="2">Policy</td>
 	  <td>Policy DAG</td>
 	  <td>OK</td>
 	  <td>OK</td>
@@ -39,12 +39,12 @@
 	  <td>Pending</td>
     </tr>
 	<tr>
-      <td rowspan="2">Argo-Workflow Micro-Service</td>
+      <td rowspan="2">Argo</td>
 	  <td>Argo DAG</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>Ok</td>
-	  <td>Firewall model deployment issue with DAG based argo-template (Withoutreposure changes)</td>
+	  <td>Firewall model deployment issue(Withoutreposure changes)</td>
     </tr>
 	<tr>
 	  <td>Argo CS</td>
