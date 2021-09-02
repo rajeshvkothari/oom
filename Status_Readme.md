@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>Setup</td>
+      <td colspan="2">Setup</td>
 	  <td></td>
       <td>OK</td>
       <td>OK</td>
@@ -20,7 +20,7 @@
 	  <td>Not Supported</td>
     </tr>
     <tr>
-      <td>Workflow Micro-Service</td>
+      <td colspan="2">Workflow Micro-Service</td>
 	  <td></td>
 	  <td>OK</td>
 	  <td>OK</td>
