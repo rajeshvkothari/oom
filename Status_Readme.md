@@ -41,7 +41,6 @@
 	  <td>Not Supported</td>
     </tr>
 	<tr>
-      <td></td>
 	  <td>Policy CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
@@ -50,8 +49,16 @@
 	  <td>Not Supported</td>
     </tr>
 	<tr>
-      <td>Argo-Workflow Micro-Service</td>
+      <td rowspan="2">Argo-Workflow Micro-Service</td>
 	  <td>Argo DAG</td>
+	  <td>Argo CS</td>
+	  <td>OK</td>
+	  <td>OK</td>
+	  <td>PENDING</td>
+	  <td>Firewall model deployment issue with DAG based argo-template (Withoutreposure changes)</td>
+	  <td>PENDING</td>
+    </tr>
+	<tr>
 	  <td>Argo CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
