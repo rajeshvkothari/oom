@@ -18,10 +18,10 @@
   </thead>
   <tbody>
     <tr>
-	  <td rowspan="2"></td>
-      <td rowspan="2"></td>
-      <td rowspan="2"></td>
-      <td rowspan="2"></td>
+	  <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
 	  <td>DAG</td>
 	  <td>containerSet</td>
 	</tr>
