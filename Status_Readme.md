@@ -18,14 +18,6 @@
   </thead>
   <tbody>
     <tr>
-	  <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-	  <td>DAG</td>
-	  <td>containerSet</td>
-	</tr>
-    <tr>
       <td>Setup</td>
       <td>OK</td>
       <td>OK</td>
