@@ -2,7 +2,6 @@
   <thead>
     <tr>
       <th colspan="2">Environment</th>
-	  <td></td>
       <th>Standalone Puccini</th>
       <th>Tosca Docker containers</th>
       <th>Frankfurt</th>
@@ -12,7 +11,6 @@
   <tbody>
     <tr>
       <td colspan="2">Setup</td>
-	  <td></td>
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
@@ -21,7 +19,6 @@
     </tr>
     <tr>
       <td colspan="2">Workflow Micro-Service</td>
-	  <td></td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
