@@ -13,7 +13,7 @@
       <th rowspan="2">Setup</th>
       <th rowspan="2">Workflow Micro-Service</th>
       <th rowspan="2">Policy Micro-Service</th>
-      <th colspan="2">Argo-Workflow Micro-Service</th>
+	  <th colspan="2">Argo-Workflow Micro-Service</th>
     </tr>
   </thead>
   <tbody>
