@@ -51,7 +51,6 @@
 	<tr>
       <td rowspan="2">Argo-Workflow Micro-Service</td>
 	  <td>Argo DAG</td>
-	  <td>Argo CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>PENDING</td>
