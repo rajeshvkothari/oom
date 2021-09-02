@@ -1,6 +1,8 @@
 <table>
   <thead>
     <tr>
+	  <td></td>
+	  <td></td>
       <th>Environment</th>
       <th>Standalone Puccini</th>
       <th>Tosca Docker containers</th>
@@ -10,6 +12,8 @@
   </thead>
   <tbody>
     <tr>
+	  <td></td>
+	  <td></td>
       <td>Setup</td>
       <td>OK</td>
       <td>OK</td>
@@ -19,6 +23,8 @@
     </tr>
     <tr>
       <td>Workflow Micro-Service</td>
+	  <td></td>
+	  <td></td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
