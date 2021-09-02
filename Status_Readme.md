@@ -9,11 +9,11 @@
 <table>
   <thead>
     <tr>
-      <th>Environment</th>
-      <th>Setup</th>
-      <th>Workflow Micro-Service</th>
-      <th>Policy Micro-Service</th>
-	  <th colspan="2">Argo-Workflow Micro-Service</th>
+      <th rowspan="2">Environment</th>
+      <th rowspan="2">Setup</th>
+      <th rowspan="2">Workflow Micro-Service</th>
+      <th rowspan="2">Policy Micro-Service</th>
+      <th colspan="2">Argo-Workflow Micro-Service</th>
     </tr>
   </thead>
   <tbody>
