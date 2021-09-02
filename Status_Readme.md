@@ -18,10 +18,10 @@
   </thead>
   <tbody>
     <tr>
-	  <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+	  <td rowsspan="2"></td>
+      <td rowsspan="2"></td>
+      <td rowsspan="2"></td>
+      <td rowsspan="2"></td>
 	  <td>DAG</td>
 	  <td>containerSet</td>
 	</tr>
@@ -30,8 +30,8 @@
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
-	  <td>DAG</td>
-	  <td>containerSet</td>
+	  <td>Not Supported</td>
+	  <td>Not Supported</td>
     </tr>
     <tr>
       <td>Tosca Docker containers</td>
