@@ -1,9 +1,9 @@
 <table>
   <thead>
     <tr>
-	  <td></td>
-	  <td></td>
       <th>Environment</th>
+	  <td></td>
+	  <td></td>
       <th>Standalone Puccini</th>
       <th>Tosca Docker containers</th>
       <th>Frankfurt</th>
@@ -12,9 +12,9 @@
   </thead>
   <tbody>
     <tr>
-	  <td></td>
-	  <td></td>
       <td>Setup</td>
+	  <td></td>
+	  <td></td>
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
