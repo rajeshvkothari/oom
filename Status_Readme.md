@@ -1,6 +1,6 @@
 # Testing
 
-Here is the status of all the conditions: 
+This page describes the information about the Environment we build/Develop and its Setup, Workflow Micro-Service, Policy Micro-Service, Argo-Workflow Micro-Service status: 
 
 | Environment             | Setup  | Workflow Micro-Service | Policy Micro-Service |       Argo-Workflow Micro-Service        |
 | :---------------------- | :----: | :--------------------: | :------------------: | :--------------------------------------: |
