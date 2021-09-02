@@ -14,14 +14,14 @@
       <td>OK</td>
       <td>OK</td>
       <td>OK</td>
-	  <td>Not Supported</td>
+	  <td>OK</td>
     </tr>
     <tr>
       <td colspan="2">Workflow Micro-Service</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
-	  <td>Not Supported</td>
+	  <td>Ok</td>
     </tr>
     <tr>
       <td rowspan="2">Policy Micro-Service</td>
@@ -29,28 +29,28 @@
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
-	  <td>Not Supported</td>
+	  <td>Pending</td>
     </tr>
 	<tr>
 	  <td>Policy CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
-	  <td>Not Supported</td>
+	  <td>Pending</td>
     </tr>
 	<tr>
       <td rowspan="2">Argo-Workflow Micro-Service</td>
 	  <td>Argo DAG</td>
 	  <td>OK</td>
 	  <td>OK</td>
-	  <td>PENDING</td>
+	  <td>Ok</td>
 	  <td>Firewall model deployment issue with DAG based argo-template (Withoutreposure changes)</td>
     </tr>
 	<tr>
 	  <td>Argo CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
-	  <td>PENDING</td>
+	  <td>Ok</td>
 	  <td>PENDING</td>
     </tr>
   </tbody>
