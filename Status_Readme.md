@@ -32,7 +32,7 @@
 	  <td>Not Supported</td>
     </tr>
     <tr>
-      <td>Policy Micro-Service</td>
+      <td rowspan="2">Policy Micro-Service</td>
 	  <td>Policy DAG</td>
 	  <td>OK</td>
 	  <td>OK</td>
