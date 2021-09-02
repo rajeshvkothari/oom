@@ -34,6 +34,14 @@
     <tr>
       <td>Policy Micro-Service</td>
 	  <td>Policy DAG</td>
+	  <td>OK</td>
+	  <td>OK</td>
+	  <td>OK</td>
+	  <td>Not Supported</td>
+	  <td>Not Supported</td>
+    </tr>
+	<tr>
+      <td></td>
 	  <td>Policy CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
