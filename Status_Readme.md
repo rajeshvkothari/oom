@@ -1,18 +1,10 @@
-# Testing 
-
-| Environment             | Setup  | Workflow Micro-Service | Policy Micro-Service |       Argo-Workflow Micro-Service        |
-| :---------------------- | :----: | :--------------------: | :------------------: | :--------------------------------------: |
-| Standalone Puccini      | TESTED |         TESTED         |        TESTED        |     NOT TESTED/ ARGO ENV NOT AVAILABLE   |
-| Tosca Docker containers | TESTED |         TESTED         |        TESTED        |     NOT TESTED/ ARGO ENV NOT AVAILABLE   |
-| Frankfurt               | TESTED |         TESTED         |        TESTED        |     NOT TESTED/ ARGO ENV NOT AVAILABLE   |
-| Honolulu                | TESTED |         TESTED         |        PENDING       | - Firewall model deployment issue with                                                                                       DAG based argo-template (Without                                                                                       reposure changes)<br>- Wotking on                                                                                       containerSet and DAG based                                                                                       argo-template with reposure changes    |
 <table>
   <thead>
     <tr>
-      <th rowspan="2">Environment</th>
-      <th rowspan="2">Standalone Puccini</th>
-      <th rowspan="2">Tosca Docker containers</th>
-      <th rowspan="2">Frankfurt</th>
+      <th>Environment</th>
+      <th>Standalone Puccini</th>
+      <th>Tosca Docker containers</th>
+      <th>Frankfurt</th>
 	  <th colspan="2">Honolulu</th>
     </tr>
   </thead>
@@ -35,6 +27,8 @@
     </tr>
     <tr>
       <td>Policy Micro-Service</td>
+	  <td>Policy DAG</td>
+	  <td>Policy CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>OK</td>
@@ -43,6 +37,8 @@
     </tr>
 	<tr>
       <td>Argo-Workflow Micro-Service</td>
+	  <td>Argo DAG</td>
+	  <td>Argo CS</td>
 	  <td>OK</td>
 	  <td>OK</td>
 	  <td>PENDING</td>
