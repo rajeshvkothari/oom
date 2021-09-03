@@ -1,4 +1,4 @@
-# Testing 
+# Testing
 
 <table>
   <thead>
@@ -53,7 +53,7 @@
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Pending</td>
+	  <td>Timeout issue in firewall</td>
     </tr>
   </tbody>
 </table>
