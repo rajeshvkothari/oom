@@ -27,14 +27,14 @@
     </tr>
     <tr>
       <td rowspan="2">Policy</td>
-	  <td>Policy DAG</td>
+	  <td>DAG</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Pending</td>
     </tr>
 	<tr>
-	  <td>Policy CS</td>
+	  <td>CS</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
@@ -42,14 +42,14 @@
     </tr>
 	<tr>
       <td rowspan="2">Argo</td>
-	  <td>Argo DAG</td>
+	  <td>DAG</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Firewall model deployment issue(Withoutreposure changes)</td>
     </tr>
 	<tr>
-	  <td>Argo CS</td>
+	  <td>CS</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
