@@ -19,7 +19,7 @@
 	  <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2">Workflow(Buildin)</td>
+      <td colspan="2">Workflow(Builtin)</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
