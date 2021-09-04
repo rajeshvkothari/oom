@@ -165,6 +165,25 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $
       ```
 	  
+	  To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
+	  
+	  ```sh
+	  $ sudo apt-get update
+      $ sudo apt-get install -y python
+      $ sudo apt-get install -y python3-dev python3-pip
+      $ sudo pip3 install --upgrade pip
+      $ sudo pip3 install simplejson
+      $ sudo apt-get install jq
+      $ sudo apt install awscli
+      $ sudo apt install python-pip
+      $ pip2 install simplejson
+	  $ cd /home/ubuntu
+      $ sudo mkdir onap-oom-integ
+      $ sudo mkdir onap-oom-integ/cci
+      $ sudo chmod -R 777 onap-oom-integ
+      $ cp cciPrivateKey onap-oom-integ/cci
+	  ```
+	  
   - **Tosca images**
       ------------
       GIN consists of the following components:
