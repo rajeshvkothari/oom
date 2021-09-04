@@ -165,7 +165,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $
       ```
 	  
-	  To deploy only sdwan and firewall model do some additional installation on demo server as follows:
+	  To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
 	  ```sh
 	  $ sudo apt-get update
