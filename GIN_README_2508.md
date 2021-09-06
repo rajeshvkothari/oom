@@ -14,7 +14,7 @@ Table of contents
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Servers](#ORAN-Servers)
-	 * [Creating Environment for OOM VM OF HONOLULU Release](#Creating-Environment-for-OOM-VM-OF-HONOLULU-Release)
+	 * [Creating environment for OOM VM of HONOLULU release](#Creating-environment-for-OOM-VM-of-HONOLULU-release)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -647,7 +647,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 	  ```
 	  
-- **Creating Environment for OOM VM OF HONOLULU Release**
+- **Creating environment for OOM VM of HONOLULU release**
     ---------------------------------------------------
   
   - **OOM DEMO Server**
@@ -669,7 +669,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ sudo apt update
 	  $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
 	  $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-	  $	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+      $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 	  $ sudo apt update
 	  $ apt-cache policy docker-ce
 	  $ sudo apt-get install containerd.io docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic
@@ -686,7 +686,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 		
-	- Setup Kubectl:
+	- Setup kubectl:
 	  
 	  ```sh
 	  $ cd /home/ubuntu/
@@ -696,7 +696,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
       ```
 	  
-	- Setup Minikube:
+	- Setup minikube:
 	
 	  ```sh
 	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -709,13 +709,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ kubectl get pods -n onap -o=wide
 	  ```
 
-	- Clone Repo:
+	- Clone repo:
 	
 	  ```sh
 	  $ git clone https://github.com/customercaresolutions/onap-oom-integ.git -b honolulu --recurse-submodules
 	  ```
 
-	- Install Helm:
+	- Install helm:
 	  
 	  ```sh
 	  $ wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
@@ -723,7 +723,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ sudo mv linux-amd64/helm /usr/local/bin/helm
 	  ```
 		
-	- Setup Helm:
+	- Setup helm:
 	
 	  ```sh
 	  $ sudo mkdir ~/.local
@@ -782,16 +782,16 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  $ sudo apt install jq
 		  $ sudo apt install socat
 		  $ sudo mkdir -p /etc/rancher/k3s
-		  $	sudo chmod -R 777 /etc/rancher/k3s
+          $ sudo chmod -R 777 /etc/rancher/k3s
 		
-		  # Create file /etc/rancher/k3s/registries.yaml and paste following data in it:
+		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
 			mirrors:
 			 "172.31.27.186:5000":
 				endpoint:
 				  - "http://172.31.27.186:5000"
 		  ```
 		  
-    - Add base on public IP and change workflowType in application.cfg 
+    - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
 	  - For Puccini-workflow :
 	    
