@@ -19,6 +19,7 @@ Table of contents
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
      * [ONAP OOM testing](#ONAP-OOM-testing)
+	 * [ONAP OOM testing with HONOLULU release](#ONAP-OOM-testing-with-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -1480,6 +1481,125 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Complete the fields indicated by the red star and click Confirm.
       Wait for 7-8 minutes and a success message will display.
       ```
+  
+- **ONAP OOM testing with HONOLULU release**
+
+  - Use the following request to store the model in Dgraph:
+    
+	```sh
+	POST http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30294/compiler/model/db/save
+	{
+	   "url":"/opt/app/config/<ModelName>.csar",
+	   "output": "./<ModelName>-dgraph-clout.json",
+	   "resolve":true,
+	   "coerce":false,
+	   "quirks": ["data_types.string.permissive"],
+	   "inputs":"",
+	   "inputsUrl": ""
+
+	}
+	```
+	
+	For the sdwan model, make the following changes in the above requests:
+	
+	```sh
+	{
+	   "inputs":"",
+	   "url":"/opt/app/models/sdwan.csar",
+	   "output": "./sdwan-dgraph-clout.json",
+	}
+    ```
+	
+	Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
+	  
+    For the ric model, make the following changes:
+	  
+	```sh
+	{
+      "inputs":{"helm_version":"2.17.0"},
+      "url":"/opt/app/models/ric.csar",
+      "output": "./ric-dgraph-clout.json",
+    }
+    ```
+	
+  - Create service Instance with deployment:
+	
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	
+	```sh			
+	POST http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30280/bonap/templates/createInstance
+	{
+	   "name":"<Instance_Name>",
+	   "output":"./<ModelName>.json",
+	   "list-steps-only":false,
+	   "generate-workflow":false,
+	   "execute-workflow":false,
+	   "execute-policy":false
+	}
+	```	
+	  
+    Use following models-specific additional fields:
+
+      **Firewall:**  
+	  ```sh
+	    "inputs":"",
+        "service":"zip:/opt/app/config/firewall.csar!/firewall/firewall_service.yaml",
+        "inputsUrl":"zip:/opt/app/config/firewall.csar!/firewall/inputs/aws.yaml",
+	  ```
+	  
+	  **Sdwan:**
+	  ```sh
+	    "inputs":"",
+	    "service":"zip:/opt/app/config/sdwan.csar!/sdwan/sdwan_service.yaml",
+	    "inputsUrl":"zip:/opt/app/config/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  ```
+	  
+	  **Ric:**
+	  ```sh
+	    "inputs":{"helm_version":"2.17.0"},
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/ric.csar!/ric.yaml"
+	  ```	
+	  
+	  **Nonrtric:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/nonrtric.csar!/nonrtric.yaml"    
+	  ```
+	  
+	  **Qp:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/qp.csar!/qp.yaml"
+	  ```
+	 
+	  **Qp-driver:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/qp-driver.csar!/qp-driver.yaml"      
+	  ```
+	 
+	  **Ts:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
+	  ```
+
+  - To deploy models:
+  
+    Use below API for all the models only replace the instance name which we used in the create instance step:
+    
+	```sh
+	http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30280/bonap/templates/<Instance_Name>/workflows/deploy
+		{
+			"list-steps-only": false,
+			"execute-policy": false
+		}
+	```
   
 ## Post Deployment Verification Steps 
  
