@@ -1497,7 +1497,6 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	   "quirks": ["data_types.string.permissive"],
 	   "inputs":"",
 	   "inputsUrl": ""
-
 	}
 	```
 	
@@ -1596,10 +1595,10 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     
 	```sh
 	http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30280/bonap/templates/<Instance_Name>/workflows/deploy
-		{
-			"list-steps-only": false,
-			"execute-policy": false
-		}
+	{
+	  "list-steps-only": false,
+	  "execute-policy": false
+	}
 	```
   
 ## Post Deployment Verification Steps 
