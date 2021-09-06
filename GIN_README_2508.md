@@ -1483,6 +1483,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       ```
   
 - **ONAP OOM testing with HONOLULU release**
+    --------------------------------------
 
   - Use the following request to store the model in Dgraph:
     
