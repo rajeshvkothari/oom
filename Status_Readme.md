@@ -38,7 +38,7 @@
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
-	  <td>Pending(FW=,Sdwan=,Ric=)</td>
+	  <td>Pending</td>
     </tr>
 	<tr>
       <td rowspan="2">Argo</td>
@@ -46,7 +46,7 @@
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Firewall model deployment issue(Withoutreposure changes)(FW=,Sdwan=,Ric=)</td>
+	  <td>Firewall model deployment issue(Withoutreposure changes)</td>
     </tr>
 	<tr>
 	  <td>CS</td>
