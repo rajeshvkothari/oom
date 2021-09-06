@@ -473,7 +473,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       remotePubKey=/opt/app/config/cciPrivateKey
 	  ```	
 	
-	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
 	
     - Build helm charts:
   
