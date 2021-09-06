@@ -19,7 +19,7 @@ Table of contents
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
      * [ONAP OOM testing](#ONAP-OOM-testing)
-	 * [ONAP OOM testing with HONOLULU release](#ONAP-OOM-testing-with-HONOLULU-release)
+	 * [ONAP OOM testing of HONOLULU release](#ONAP-OOM-testing-of-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -1482,7 +1482,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Wait for 7-8 minutes and a success message will display.
       ```
   
-- **ONAP OOM testing with HONOLULU release**
+- **ONAP OOM testing of HONOLULU release**
     --------------------------------------
 
   - Use the following request to store the model in Dgraph:
