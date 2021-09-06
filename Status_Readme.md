@@ -31,14 +31,14 @@
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
-	  <td>Pending</td>
+	  <td>Pending(FW=,Sdwan=,Ric=)</td>
     </tr>
 	<tr>
 	  <td>CS</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
-	  <td>Pending</td>
+	  <td>Pending(FW=,Sdwan=,Ric=)</td>
     </tr>
 	<tr>
       <td rowspan="2">Argo</td>
@@ -46,14 +46,14 @@
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Firewall model deployment issue(Withoutreposure changes)</td>
+	  <td>Firewall model deployment issue(Withoutreposure changes)(FW=,Sdwan=,Ric=)</td>
     </tr>
 	<tr>
 	  <td>CS</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Timeout issue in firewall</td>
+	  <td>Ok</td>
     </tr>
   </tbody>
 </table>
