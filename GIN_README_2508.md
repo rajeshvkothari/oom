@@ -14,6 +14,7 @@ Table of contents
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Servers](#ORAN-Servers)
+	 * [Creating Environment for OOM VM OF HONOLULU Release](#Creating-Environment-for-OOM-VM-OF-HONOLULU-Release)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
@@ -523,7 +524,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```
   
 - **ORAN Servers**
-    ----------------------
+    ------------
   These servers need to be created only if oran model(s) are to be deployed.
   
   - Create three AWS VMs in the Ohio region with names as follows:
@@ -645,7 +646,255 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
       kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 	  ```
+	  
+- **Creating Environment for OOM VM OF HONOLULU Release**
+    ---------------------------------------------------
+  
+  - **OOM DEMO Server**
+      ---------------
+	 
+	- Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
+	  
+	  ```sh
+	  Name: ONAP_OOM_DEMO
+	  Image: ubuntu-18.04
+	  InstanceType: m5a.4xlarge
+	  Storage: 100GB
+	  KeyPair : cciPublicKey
+	  ```
+	  
+    - Setup Docker:
 	
+	  ```sh
+	  $ sudo apt update
+	  $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+	  $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	  $	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+	  $ sudo apt update
+	  $ apt-cache policy docker-ce
+	  $ sudo apt-get install containerd.io docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic
+	  $ sudo usermod -aG docker ${USER}
+	  $ id -nG
+	  $ cd //
+	  $ sudo chmod -R 777 /etc/docker
+	
+      # Create a file named daemon.json in /etc/docker and add the following content to it.
+		  { "insecure-registries":["172.31.27.186:5000"] }
+		  
+	  $ sudo systemctl stop docker 
+	  $ sudo systemctl start docker
+	  $ sudo chmod 777 /var/run/docker.sock
+	  ```
+		
+	- Setup Kubectl:
+	  
+	  ```sh
+	  $ cd /home/ubuntu/
+	  $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.9/bin/linux/amd64/kubectl
+	  $ sudo chmod +x ./kubectl
+	  $ sudo mv ./kubectl /usr/local/bin/kubectl
+	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
+      ```
+	  
+	- Setup Minikube:
+	
+	  ```sh
+	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	  $ sudo chmod +x minikube
+	  $ sudo mv ./minikube /usr/local/bin/minikube
+	  $ sudo apt-get install conntrack
+	  $ sudo minikube start --driver=none --kubernetes-version 1.19.9
+	  $ sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
+	  $ sudo chown -R $USER $HOME/.kube $HOME/.minikube
+	  $ kubectl get pods -n onap -o=wide
+	  ```
+
+	- Clone Repo:
+	
+	  ```sh
+	  $ git clone https://github.com/customercaresolutions/onap-oom-integ.git -b honolulu --recurse-submodules
+	  ```
+
+	- Install Helm:
+	  
+	  ```sh
+	  $ wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
+	  $ tar xvfz helm-v3.5.2-linux-amd64.tar.gz
+	  $ sudo mv linux-amd64/helm /usr/local/bin/helm
+	  ```
+		
+	- Setup Helm:
+	
+	  ```sh
+	  $ sudo mkdir ~/.local
+	  $ sudo mkdir ~/.local/share
+	  $ sudo mkdir ~/.local/share/helm
+	  $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.local/share/helm/plugins
+	  $ sudo chmod -R 777 /home/ubuntu/.local
+	  $ helm plugin install https://github.com/chartmuseum/helm-push.git
+      ```
+	  
+	- Setup chartmuseum:
+		
+	  ```sh	
+	  $ curl -LO https://s3.amazonaws.com/chartmuseum/release/latest/bin/linux/amd64/chartmuseum
+	  $ chmod +x ./chartmuseum
+	  $ sudo mv ./chartmuseum /usr/local/bin
+	  $ chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &
+	  $ helm repo add local http://127.0.0.1:8879
+	  $ helm repo list
+	  $ sudo apt install make
+	  $ sudo chmod 777 /var/run/docker.sock
+	  ```
+	
+    - Create oran setup:
+      
+	  - Puccini-workflow:
+	    
+		To create oran setup for Puccini-workflow use the ReadMe.md as follows:
+		
+		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
+	  
+	  - Argo-workflow:
+	    
+		To create oran setup for Argo-workflow use the steps as follows:
+	  
+	    - Create two AWS VMs in the Ohio (us-east-2) region with names as follows:
+		
+		  ```sh
+		  VM1 Name: ric Server
+		  VM2 Name: nonrtric Server
+		  ```
+				
+	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
+		  
+		  ```sh
+		  Image: ubuntu-18.04
+		  InstanceTye: t2.2xlarge
+		  KeyPair : cciPublicKey
+		  Disk: 80GB
+		  ```
+				   
+	    - Login into ric Server and nonrtric Server and run the following commands:
+		  
+		  ```sh
+		  $ sudo apt update
+		  $ sudo apt install jq
+		  $ sudo apt install socat
+		  $ sudo mkdir -p /etc/rancher/k3s
+		  $	sudo chmod -R 777 /etc/rancher/k3s
+		
+		  # Create file /etc/rancher/k3s/registries.yaml and paste following data in it:
+			mirrors:
+			 "172.31.27.186:5000":
+				endpoint:
+				  - "http://172.31.27.186:5000"
+		  ```
+		  
+    - Add base on public IP and change workflowType in application.cfg 
+	  
+	  - For Puccini-workflow :
+	    
+		```sh
+		[remote]
+		remoteHost={IP_OF_SERVER_ADDR}
+		remotePort=22
+		remoteUser=ubuntu
+		remotePubKey=/opt/app/config/cciPrivateKey
+		workflowType=puccini-workflow
+		```
+		
+		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+				
+      - For Argo-workflow:
+
+		```sh
+		remoteHost={IP_OF_ONAP_OOM_DEMO}
+		reposureHost={IP_OF_ONAP_OOM_DEMO}
+		ricServerIP={IP_OF_RIC_VM_ADDR}
+		nonrtricServerIP={IP_OF_NONRTRIC_VM_ADDR}
+		workflowType=argo-workflow
+        ```		
+				
+	  - For using containerSet based argo template set:
+	    
+		```sh
+		argoTemplateType=containerSet
+		```
+				
+	  - For using DAG based argo template set:
+		
+		```sh	
+		argoTemplateType=DAG
+		```
+		
+    - Install golang:
+	  
+	  ```sh
+	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
+	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
+	  $ sudo mv go /usr/local
+	  
+      # Add the below path in .profile file: 
+      $ sudo vi ~/.profile
+		  export GOPATH=$HOME/go
+		  export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+	  $ source ~/.profile
+	  $ go version
+      ```
+
+    - Setup reposure:
+	  ```sh
+	  $ cd /home/ubuntu
+	  $ git clone https://github.com/tliron/reposure -b v0.1.6
+	
+	  $ vi reposure/reposure/commands/registry-create.go	
+	  # for insecure installation, commented out the section in reposure/reposure/commands/registry-create.go, as follows:
+		if authenticationSecret == "" {
+		//authenticationSecret = "reposure-simple-authentication"
+		}
+
+	  $ cd reposure/scripts
+	  $ ./build
+	  $ cd /home/ubuntu
+	  $ reposure operator install --wait	
+	  $ reposure simple install --wait
+	  $ reposure registry create default  --provider=simple --wait -v
+	  ```	
+
+	- Setup ARGO:
+	  
+	  ```sh
+	  $ kubectl create ns onap
+	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
+	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
+	  $ gunzip argo-linux-amd64.gz
+	  $ chmod +x argo-linux-amd64
+	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+	  $ argo version
+	  ```
+		
+	- Build charts:
+	  
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
+	  $ helm repo update
+	  $ helm search repo onap
+	  ```
+
+	- Deploy ONAP:
+		
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set     global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
+      ```
+	  
+	  Note of ARGO-WORKFLOW: In case if ONAP deployed fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
+	
+	- Copy updated CSARs to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO vm.
+	  
 ## Building Tosca Model Csars
     
   Login into Demo Server or OOM VM and run the following commands.
