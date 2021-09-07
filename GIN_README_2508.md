@@ -584,8 +584,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  onap-vid-galera-1                             1/1     Running            0          17m
 	  onap-vid-galera-2                             1/1     Running            0          16m
 	  onap-vid-galera-config-kmxft                  0/1     Completed          0          18m
-      ```	 
-	  Yes, It's know issue of onap-aaf-cert-service is in CrashLoopBackOff status after deploy onap. But it does not impact to access portal or deploy our tosca models through OOM.
+      ```
+	  
+	  Note: Yes, It's know issue of onap-aaf-cert-service is in CrashLoopBackOff status after deploy onap. But it does not impact to access portal or deploy our tosca models through OOM.
 	
     - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' VM in /etc/hosts file:
   
