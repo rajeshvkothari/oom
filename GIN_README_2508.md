@@ -398,7 +398,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     - Setup kubernetes:
   
       ```sh'
-	  $ cd home/ubuntu
+	  $ cd /home/ubuntu
       $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
       $ sudo chmod +x ./kubectl
       $ sudo mv ./kubectl /usr/local/bin/kubectl
@@ -465,7 +465,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ pip2 install simplejson
 	  ```
 	  
-    - Add public IP of Bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
+    - Add public IP of Bonap Server or ONAP_OOM_DEMO VM in ~/onap-oom-integ/cci/application.cfg file:
 
       ```sh
       [remote]
@@ -498,15 +498,96 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
 	  ```
 	
-	  To deploy ONAP requires around 40-45 min. 
+	  To deploy ONAP requires around 35-40 min. 
 	  
     - To verify ONAP deployed successfully use the following command and all check all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
-      ```	  
+	  ubuntu@ip-172-31-20-20:~/onap-oom-integ/kubernetes$ kubectl get pods -n onap
+	  NAME                                          READY   STATUS             RESTARTS   AGE
+	  onap-aaf-cass-575bf449c6-b94n5                1/1     Running            0          35m
+	  onap-aaf-cert-service-68cbb6d96-p6t7m         0/1     CrashLoopBackOff   11         35m
+	  onap-aaf-cm-658cf794b8-8swpg                  1/1     Running            0          35m
+	  onap-aaf-fs-5cb897c864-8dcxz                  1/1     Running            0          35m
+	  onap-aaf-gui-86ff454d8-g9rl9                  1/1     Running            0          35m
+	  onap-aaf-locate-5b569c7866-7cmtv              1/1     Running            0          35m
+	  onap-aaf-oauth-9f9574ddb-68b84                1/1     Running            0          35m
+	  onap-aaf-service-75899d9dcc-z4wzc             1/1     Running            0          35m
+	  onap-aaf-sms-fdfc84c8-fdhcp                   1/1     Running            0          35m
+	  onap-aaf-sms-preload-7rgz9                    0/1     Completed          0          35m
+	  onap-aaf-sms-quorumclient-0                   1/1     Running            0          35m
+	  onap-aaf-sms-quorumclient-1                   1/1     Running            0          33m
+	  onap-aaf-sms-quorumclient-2                   1/1     Running            0          32m
+	  onap-aaf-sms-vault-0                          2/2     Running            0          35m
+	  onap-aaf-sshsm-distcenter-wp67z               0/1     Completed          0          35m
+	  onap-aaf-sshsm-testca-4dnc8                   0/1     Completed          0          35m
+	  onap-aai-5f7fb54b4-z9sfg                      1/1     Running            0          35m
+	  onap-aai-babel-7b9fbf67d6-sdwc4               2/2     Running            0          35m
+	  onap-aai-data-router-59ddf964d7-6q2m6         2/2     Running            0          35m
+	  onap-aai-elasticsearch-74b686d9d5-85qpx       1/1     Running            0          35m
+	  onap-aai-graphadmin-7f5d7d86cc-pnmtd          2/2     Running            0          35m
+	  onap-aai-graphadmin-create-db-schema-t6jp9    0/1     Completed          0          35m
+	  onap-aai-modelloader-846cb7c86-9fdv2          2/2     Running            0          35m
+	  onap-aai-resources-59476c874d-vvrrx           2/2     Running            0          35m
+	  onap-aai-schema-service-774d497db4-p5xdl      2/2     Running            0          35m
+	  onap-aai-search-data-79bccd8f5d-ngbp7         2/2     Running            0          35m
+	  onap-aai-sparky-be-6669bf7df5-26kdr           2/2     Running            0          35m
+	  onap-aai-traversal-78877769f-kqdn8            2/2     Running            0          35m
+	  onap-aai-traversal-update-query-data-tlz9v    0/1     Completed          0          35m
+	  onap-cassandra-0                              1/1     Running            0          35m
+	  onap-cassandra-1                              1/1     Running            0          31m
+	  onap-cassandra-2                              1/1     Running            0          29m
+	  onap-dbc-pg-primary-58c4479cdb-tp8nz          1/1     Running            0          35m
+	  onap-dbc-pg-replica-5d87fdddbb-dlhxl          1/1     Running            0          35m
+	  onap-dmaap-bc-55d947bbbf-fzvdp                1/1     Running            0          35m
+	  onap-dmaap-dr-db-0                            1/1     Running            0          35m
+	  onap-dmaap-dr-db-1                            1/1     Running            0          32m
+	  onap-dmaap-dr-node-0                          2/2     Running            0          35m
+	  onap-dmaap-dr-prov-77b9b6cffc-sv98v           2/2     Running            0          35m
+	  onap-mariadb-galera-0                         1/1     Running            0          20m
+	  onap-mariadb-galera-1                         1/1     Running            0          20m
+	  onap-mariadb-galera-2                         1/1     Running            0          19m
+	  onap-message-router-0                         1/1     Running            0          35m
+	  onap-message-router-kafka-0                   1/1     Running            1          35m
+	  onap-message-router-kafka-1                   1/1     Running            1          35m
+	  onap-message-router-kafka-2                   1/1     Running            1          35m
+	  onap-message-router-zookeeper-0               1/1     Running            0          35m
+	  onap-message-router-zookeeper-1               1/1     Running            0          35m
+	  onap-message-router-zookeeper-2               1/1     Running            0          35m
+	  onap-portal-app-dddf4c6b8-sfj6g               2/2     Running            0          20m
+	  onap-portal-cassandra-675bdb96f5-jk4wj        1/1     Running            0          20m
+	  onap-portal-db-595bdfb9f4-49jks               1/1     Running            0          20m
+	  onap-portal-db-config-n52bc                   0/2     Completed          0          20m
+	  onap-portal-sdk-84dbd94944-vqskv              2/2     Running            0          20m
+	  onap-portal-widget-69f46b4655-sbmcm           1/1     Running            0          20m
+	  onap-portal-zookeeper-7fc998bd5b-tmjzs        1/1     Running            0          20m
+	  onap-robot-5f78f4576d-smhd7                   1/1     Running            0          20m
+	  onap-sdc-be-86df7d484f-64dth                  2/2     Running            0          20m
+	  onap-sdc-be-config-backend-b7s5n              0/1     Completed          0          20m
+	  onap-sdc-cs-config-cassandra-l42bm            0/1     Completed          0          20m
+	  onap-sdc-fe-5c9d454b54-jlc6t                  1/2     Running            0          20m
+	  onap-sdc-onboarding-be-6585667fb4-dwjkk       2/2     Running            0          20m
+	  onap-sdc-onboarding-be-cassandra-init-t66tl   0/1     Completed          0          20m
+	  onap-so-5d58457f7-nxwfw                       2/2     Running            0          20m
+	  onap-so-catalog-db-adapter-57db4f8d97-ccdkt   1/1     Running            0          20m
+	  onap-so-mariadb-config-job-lnrp5              0/1     Completed          0          20m
+	  onap-so-request-db-adapter-847c845599-8gg4v   1/1     Running            0          20m
+	  onap-so-sdc-controller-f9575c9d-qjh8d         2/2     Running            0          20m
+	  onap-tosca-5894c44459-spddq                   2/2     Running            0          18m
+	  onap-tosca-compiler-64bcbf66c4-44rjp          2/2     Running            0          18m
+	  onap-tosca-dgraph-7f5568745c-l2hxx            2/2     Running            0          18m
+	  onap-tosca-policy-5b55d799b7-mqhtc            2/2     Running            0          18m
+	  onap-tosca-workflow-65c567566c-b52pg          2/2     Running            0          18m
+	  onap-vid-7477ff4944-jcbxv                     2/2     Running            0          18m
+	  onap-vid-galera-0                             1/1     Running            0          18m
+	  onap-vid-galera-1                             1/1     Running            0          17m
+	  onap-vid-galera-2                             1/1     Running            0          16m
+	  onap-vid-galera-config-kmxft                  0/1     Completed          0          18m
+      ```	 
+	  Yes, It's know issue of onap-aaf-cert-service is in CrashLoopBackOff status after deploy onap. But it does not impact to access portal or deploy our tosca models through OOM.
 	
-    - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' V in /etc/hosts file:
+    - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' VM in /etc/hosts file:
   
 	  ```sh
 	  {IP_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
