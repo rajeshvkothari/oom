@@ -46,6 +46,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: t2.large
       Storage: 80GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
 	  
 	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
@@ -143,6 +144,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: t2.large
       Storage: 80GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
     
     - Setup Docker on Demo Server
@@ -370,6 +372,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: m5a.4xlarge
       Storage: 400GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
   
     - Setup Docker:
@@ -625,6 +628,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     Instance Type: t2.2xlarge
     KeyPair : cciPublicKey
     Disk: 80GB
+	Security group: launch-wizard-19
 	```
 	
   - Login into Bonap Server and perform steps as follows:
@@ -744,6 +748,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  InstanceType: m5a.4xlarge
 	  Storage: 100GB
 	  KeyPair : cciPublicKey
+	  Security group: launch-wizard-19
 	  ```
 	  
     - Setup Docker:
@@ -856,6 +861,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  InstanceTye: t2.2xlarge
 		  KeyPair : cciPublicKey
 		  Disk: 80GB
+		  Security group: launch-wizard-19
 		  ```
 				   
 	    - Login into ric Server and nonrtric Server and run the following commands:
