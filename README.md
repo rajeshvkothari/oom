@@ -14,10 +14,12 @@ Table of contents
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
      * [ORAN Servers](#ORAN-Servers)
+	 * [Creating environment for OOM VM of HONOLULU release](#Creating-environment-for-OOM-VM-of-HONOLULU-release)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
      * [ONAP OOM testing](#ONAP-OOM-testing)
+	 * [ONAP OOM testing of HONOLULU release](#ONAP-OOM-testing-of-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -44,6 +46,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: t2.large
       Storage: 80GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
 	  
 	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
@@ -141,6 +144,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: t2.large
       Storage: 80GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
     
     - Setup Docker on Demo Server
@@ -368,6 +372,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Instance Type: m5a.4xlarge
       Storage: 400GB
       KeyPair: cciPublicKey
+	  Security group: launch-wizard-19
       ```
   
     - Setup Docker:
@@ -396,7 +401,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     - Setup kubernetes:
   
       ```sh'
-	  $ cd home/ubuntu
+	  $ cd /home/ubuntu
       $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
       $ sudo chmod +x ./kubectl
       $ sudo mv ./kubectl /usr/local/bin/kubectl
@@ -463,7 +468,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ pip2 install simplejson
 	  ```
 	  
-    - Add public IP of Bonap Server VM in ~/onap-oom-integ/cci/application.cfg file:
+    - Add public IP of Bonap Server or ONAP_OOM_DEMO VM in ~/onap-oom-integ/cci/application.cfg file:
 
       ```sh
       [remote]
@@ -473,7 +478,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       remotePubKey=/opt/app/config/cciPrivateKey
 	  ```	
 	
-	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
 	
     - Build helm charts:
   
@@ -496,15 +501,97 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
 	  ```
 	
-	  To deploy ONAP requires around 40-45 min. 
+	  To deploy ONAP requires around 35-40 min. 
 	  
     - To verify ONAP deployed successfully use the following command and all check all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
-      ```	  
+	  ubuntu@ip-172-31-20-20:~/onap-oom-integ/kubernetes$ kubectl get pods -n onap
+	  NAME                                          READY   STATUS             RESTARTS   AGE
+	  onap-aaf-cass-575bf449c6-b94n5                1/1     Running            0          35m
+	  onap-aaf-cert-service-68cbb6d96-p6t7m         0/1     CrashLoopBackOff   11         35m
+	  onap-aaf-cm-658cf794b8-8swpg                  1/1     Running            0          35m
+	  onap-aaf-fs-5cb897c864-8dcxz                  1/1     Running            0          35m
+	  onap-aaf-gui-86ff454d8-g9rl9                  1/1     Running            0          35m
+	  onap-aaf-locate-5b569c7866-7cmtv              1/1     Running            0          35m
+	  onap-aaf-oauth-9f9574ddb-68b84                1/1     Running            0          35m
+	  onap-aaf-service-75899d9dcc-z4wzc             1/1     Running            0          35m
+	  onap-aaf-sms-fdfc84c8-fdhcp                   1/1     Running            0          35m
+	  onap-aaf-sms-preload-7rgz9                    0/1     Completed          0          35m
+	  onap-aaf-sms-quorumclient-0                   1/1     Running            0          35m
+	  onap-aaf-sms-quorumclient-1                   1/1     Running            0          33m
+	  onap-aaf-sms-quorumclient-2                   1/1     Running            0          32m
+	  onap-aaf-sms-vault-0                          2/2     Running            0          35m
+	  onap-aaf-sshsm-distcenter-wp67z               0/1     Completed          0          35m
+	  onap-aaf-sshsm-testca-4dnc8                   0/1     Completed          0          35m
+	  onap-aai-5f7fb54b4-z9sfg                      1/1     Running            0          35m
+	  onap-aai-babel-7b9fbf67d6-sdwc4               2/2     Running            0          35m
+	  onap-aai-data-router-59ddf964d7-6q2m6         2/2     Running            0          35m
+	  onap-aai-elasticsearch-74b686d9d5-85qpx       1/1     Running            0          35m
+	  onap-aai-graphadmin-7f5d7d86cc-pnmtd          2/2     Running            0          35m
+	  onap-aai-graphadmin-create-db-schema-t6jp9    0/1     Completed          0          35m
+	  onap-aai-modelloader-846cb7c86-9fdv2          2/2     Running            0          35m
+	  onap-aai-resources-59476c874d-vvrrx           2/2     Running            0          35m
+	  onap-aai-schema-service-774d497db4-p5xdl      2/2     Running            0          35m
+	  onap-aai-search-data-79bccd8f5d-ngbp7         2/2     Running            0          35m
+	  onap-aai-sparky-be-6669bf7df5-26kdr           2/2     Running            0          35m
+	  onap-aai-traversal-78877769f-kqdn8            2/2     Running            0          35m
+	  onap-aai-traversal-update-query-data-tlz9v    0/1     Completed          0          35m
+	  onap-cassandra-0                              1/1     Running            0          35m
+	  onap-cassandra-1                              1/1     Running            0          31m
+	  onap-cassandra-2                              1/1     Running            0          29m
+	  onap-dbc-pg-primary-58c4479cdb-tp8nz          1/1     Running            0          35m
+	  onap-dbc-pg-replica-5d87fdddbb-dlhxl          1/1     Running            0          35m
+	  onap-dmaap-bc-55d947bbbf-fzvdp                1/1     Running            0          35m
+	  onap-dmaap-dr-db-0                            1/1     Running            0          35m
+	  onap-dmaap-dr-db-1                            1/1     Running            0          32m
+	  onap-dmaap-dr-node-0                          2/2     Running            0          35m
+	  onap-dmaap-dr-prov-77b9b6cffc-sv98v           2/2     Running            0          35m
+	  onap-mariadb-galera-0                         1/1     Running            0          20m
+	  onap-mariadb-galera-1                         1/1     Running            0          20m
+	  onap-mariadb-galera-2                         1/1     Running            0          19m
+	  onap-message-router-0                         1/1     Running            0          35m
+	  onap-message-router-kafka-0                   1/1     Running            1          35m
+	  onap-message-router-kafka-1                   1/1     Running            1          35m
+	  onap-message-router-kafka-2                   1/1     Running            1          35m
+	  onap-message-router-zookeeper-0               1/1     Running            0          35m
+	  onap-message-router-zookeeper-1               1/1     Running            0          35m
+	  onap-message-router-zookeeper-2               1/1     Running            0          35m
+	  onap-portal-app-dddf4c6b8-sfj6g               2/2     Running            0          20m
+	  onap-portal-cassandra-675bdb96f5-jk4wj        1/1     Running            0          20m
+	  onap-portal-db-595bdfb9f4-49jks               1/1     Running            0          20m
+	  onap-portal-db-config-n52bc                   0/2     Completed          0          20m
+	  onap-portal-sdk-84dbd94944-vqskv              2/2     Running            0          20m
+	  onap-portal-widget-69f46b4655-sbmcm           1/1     Running            0          20m
+	  onap-portal-zookeeper-7fc998bd5b-tmjzs        1/1     Running            0          20m
+	  onap-robot-5f78f4576d-smhd7                   1/1     Running            0          20m
+	  onap-sdc-be-86df7d484f-64dth                  2/2     Running            0          20m
+	  onap-sdc-be-config-backend-b7s5n              0/1     Completed          0          20m
+	  onap-sdc-cs-config-cassandra-l42bm            0/1     Completed          0          20m
+	  onap-sdc-fe-5c9d454b54-jlc6t                  1/2     Running            0          20m
+	  onap-sdc-onboarding-be-6585667fb4-dwjkk       2/2     Running            0          20m
+	  onap-sdc-onboarding-be-cassandra-init-t66tl   0/1     Completed          0          20m
+	  onap-so-5d58457f7-nxwfw                       2/2     Running            0          20m
+	  onap-so-catalog-db-adapter-57db4f8d97-ccdkt   1/1     Running            0          20m
+	  onap-so-mariadb-config-job-lnrp5              0/1     Completed          0          20m
+	  onap-so-request-db-adapter-847c845599-8gg4v   1/1     Running            0          20m
+	  onap-so-sdc-controller-f9575c9d-qjh8d         2/2     Running            0          20m
+	  onap-tosca-5894c44459-spddq                   2/2     Running            0          18m
+	  onap-tosca-compiler-64bcbf66c4-44rjp          2/2     Running            0          18m
+	  onap-tosca-dgraph-7f5568745c-l2hxx            2/2     Running            0          18m
+	  onap-tosca-policy-5b55d799b7-mqhtc            2/2     Running            0          18m
+	  onap-tosca-workflow-65c567566c-b52pg          2/2     Running            0          18m
+	  onap-vid-7477ff4944-jcbxv                     2/2     Running            0          18m
+	  onap-vid-galera-0                             1/1     Running            0          18m
+	  onap-vid-galera-1                             1/1     Running            0          17m
+	  onap-vid-galera-2                             1/1     Running            0          16m
+	  onap-vid-galera-config-kmxft                  0/1     Completed          0          18m
+      ```
+	  
+	  Note: Yes, It's know issue of onap-aaf-cert-service is in CrashLoopBackOff status after deploy onap. But it does not impact to access portal or deploy our tosca models through OOM.
 	
-    - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' V in /etc/hosts file:
+    - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' VM in /etc/hosts file:
   
 	  ```sh
 	  {IP_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
@@ -523,7 +610,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```
   
 - **ORAN Servers**
-    ----------------------
+    ------------
   These servers need to be created only if oran model(s) are to be deployed.
   
   - Create three AWS VMs in the Ohio region with names as follows:
@@ -541,6 +628,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     Instance Type: t2.2xlarge
     KeyPair : cciPublicKey
     Disk: 80GB
+	Security group: launch-wizard-19
 	```
 	
   - Login into Bonap Server and perform steps as follows:
@@ -645,7 +733,257 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
       kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 	  ```
+	  
+- **Creating environment for OOM VM of HONOLULU release**
+    ---------------------------------------------------
+  
+  - **OOM DEMO Server**
+      ---------------
+	 
+	- Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
+	  
+	  ```sh
+	  Name: ONAP_OOM_DEMO
+	  Image: ubuntu-18.04
+	  InstanceType: m5a.4xlarge
+	  Storage: 100GB
+	  KeyPair : cciPublicKey
+	  Security group: launch-wizard-19
+	  ```
+	  
+    - Setup Docker:
 	
+	  ```sh
+	  $ sudo apt update
+	  $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+	  $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+	  $ sudo apt update
+	  $ apt-cache policy docker-ce
+	  $ sudo apt-get install containerd.io docker-ce=5:19.03.5~3-0~ubuntu-bionic docker-ce-cli=5:19.03.5~3-0~ubuntu-bionic
+	  $ sudo usermod -aG docker ${USER}
+	  $ id -nG
+	  $ cd //
+	  $ sudo chmod -R 777 /etc/docker
+	
+      # Create a file named daemon.json in /etc/docker and add the following content to it.
+		  { "insecure-registries":["172.31.27.186:5000"] }
+		  
+	  $ sudo systemctl stop docker 
+	  $ sudo systemctl start docker
+	  $ sudo chmod 777 /var/run/docker.sock
+	  ```
+		
+	- Setup kubectl:
+	  
+	  ```sh
+	  $ cd /home/ubuntu/
+	  $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.9/bin/linux/amd64/kubectl
+	  $ sudo chmod +x ./kubectl
+	  $ sudo mv ./kubectl /usr/local/bin/kubectl
+	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
+      ```
+	  
+	- Setup minikube:
+	
+	  ```sh
+	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	  $ sudo chmod +x minikube
+	  $ sudo mv ./minikube /usr/local/bin/minikube
+	  $ sudo apt-get install conntrack
+	  $ sudo minikube start --driver=none --kubernetes-version 1.19.9
+	  $ sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
+	  $ sudo chown -R $USER $HOME/.kube $HOME/.minikube
+	  $ kubectl get pods -n onap -o=wide
+	  ```
+
+	- Clone repo:
+	
+	  ```sh
+	  $ git clone https://github.com/customercaresolutions/onap-oom-integ.git -b honolulu --recurse-submodules
+	  ```
+
+	- Install helm:
+	  
+	  ```sh
+	  $ wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
+	  $ tar xvfz helm-v3.5.2-linux-amd64.tar.gz
+	  $ sudo mv linux-amd64/helm /usr/local/bin/helm
+	  ```
+		
+	- Setup helm:
+	
+	  ```sh
+	  $ sudo mkdir ~/.local
+	  $ sudo mkdir ~/.local/share
+	  $ sudo mkdir ~/.local/share/helm
+	  $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.local/share/helm/plugins
+	  $ sudo chmod -R 777 /home/ubuntu/.local
+	  $ helm plugin install https://github.com/chartmuseum/helm-push.git
+      ```
+	  
+	- Setup chartmuseum:
+		
+	  ```sh	
+	  $ curl -LO https://s3.amazonaws.com/chartmuseum/release/latest/bin/linux/amd64/chartmuseum
+	  $ chmod +x ./chartmuseum
+	  $ sudo mv ./chartmuseum /usr/local/bin
+	  $ chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &
+	  $ helm repo add local http://127.0.0.1:8879
+	  $ helm repo list
+	  $ sudo apt install make
+	  $ sudo chmod 777 /var/run/docker.sock
+	  ```
+	
+    - Create oran setup:
+      
+	  - Puccini-workflow:
+	    
+		To create oran setup for Puccini-workflow use the ReadMe.md as follows:
+		
+		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
+	  
+	  - Argo-workflow:
+	    
+		To create oran setup for Argo-workflow use the steps as follows:
+	  
+	    - Create two AWS VMs in the Ohio (us-east-2) region with names as follows:
+		
+		  ```sh
+		  VM1 Name: ric Server
+		  VM2 Name: nonrtric Server
+		  ```
+				
+	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
+		  
+		  ```sh
+		  Image: ubuntu-18.04
+		  InstanceTye: t2.2xlarge
+		  KeyPair : cciPublicKey
+		  Disk: 80GB
+		  Security group: launch-wizard-19
+		  ```
+				   
+	    - Login into ric Server and nonrtric Server and run the following commands:
+		  
+		  ```sh
+		  $ sudo apt update
+		  $ sudo apt install jq
+		  $ sudo apt install socat
+		  $ sudo mkdir -p /etc/rancher/k3s
+          $ sudo chmod -R 777 /etc/rancher/k3s
+		
+		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+			mirrors:
+			 "172.31.27.186:5000":
+				endpoint:
+				  - "http://172.31.27.186:5000"
+		  ```
+		  
+    - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
+	  
+	  - For Puccini-workflow :
+	    
+		```sh
+		[remote]
+		remoteHost={IP_OF_SERVER_ADDR}
+		remotePort=22
+		remoteUser=ubuntu
+		remotePubKey=/opt/app/config/cciPrivateKey
+		workflowType=puccini-workflow
+		```
+		
+		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+				
+      - For Argo-workflow:
+
+		```sh
+		remoteHost={IP_OF_ONAP_OOM_DEMO}
+		reposureHost={IP_OF_ONAP_OOM_DEMO}
+		ricServerIP={IP_OF_RIC_VM_ADDR}
+		nonrtricServerIP={IP_OF_NONRTRIC_VM_ADDR}
+		workflowType=argo-workflow
+        ```		
+				
+	  - For using containerSet based argo template set:
+	    
+		```sh
+		argoTemplateType=containerSet
+		```
+				
+	  - For using DAG based argo template set:
+		
+		```sh	
+		argoTemplateType=DAG
+		```
+		
+    - Install golang:
+	  
+	  ```sh
+	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
+	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
+	  $ sudo mv go /usr/local
+	  
+      # Add the below path in .profile file: 
+      $ sudo vi ~/.profile
+		  export GOPATH=$HOME/go
+		  export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+	  $ source ~/.profile
+	  $ go version
+      ```
+
+    - Setup reposure:
+	  ```sh
+	  $ cd /home/ubuntu
+	  $ git clone https://github.com/tliron/reposure -b v0.1.6
+	
+	  $ vi reposure/reposure/commands/registry-create.go	
+	  # for insecure installation, commented out the section in reposure/reposure/commands/registry-create.go, as follows:
+		if authenticationSecret == "" {
+		//authenticationSecret = "reposure-simple-authentication"
+		}
+
+	  $ cd reposure/scripts
+	  $ ./build
+	  $ cd /home/ubuntu
+	  $ reposure operator install --wait	
+	  $ reposure simple install --wait
+	  $ reposure registry create default  --provider=simple --wait -v
+	  ```	
+
+	- Setup ARGO:
+	  
+	  ```sh
+	  $ kubectl create ns onap
+	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
+	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
+	  $ gunzip argo-linux-amd64.gz
+	  $ chmod +x argo-linux-amd64
+	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+	  $ argo version
+	  ```
+		
+	- Build charts:
+	  
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ make SKIP_LINT=TRUE all; make SKIP_LINT=TRUE onap
+	  $ helm repo update
+	  $ helm search repo onap
+	  ```
+
+	- Deploy ONAP:
+		
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set     global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
+      ```
+	  
+	  Note of ARGO-WORKFLOW: In case if ONAP deployed fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
+	
+	- Copy updated CSARs to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO vm.
+	  
 ## Building Tosca Model Csars
     
   Login into Demo Server or OOM VM and run the following commands.
@@ -1231,6 +1569,125 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Complete the fields indicated by the red star and click Confirm.
       Wait for 7-8 minutes and a success message will display.
       ```
+  
+- **ONAP OOM testing of HONOLULU release**
+    --------------------------------------
+
+  - Use the following request to store the model in Dgraph:
+    
+	```sh
+	POST http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30294/compiler/model/db/save
+	{
+	   "url":"/opt/app/config/<ModelName>.csar",
+	   "output": "./<ModelName>-dgraph-clout.json",
+	   "resolve":true,
+	   "coerce":false,
+	   "quirks": ["data_types.string.permissive"],
+	   "inputs":"",
+	   "inputsUrl": ""
+	}
+	```
+	
+	For the sdwan model, make the following changes in the above requests:
+	
+	```sh
+	{
+	   "inputs":"",
+	   "url":"/opt/app/models/sdwan.csar",
+	   "output": "./sdwan-dgraph-clout.json",
+	}
+    ```
+	
+	Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
+	  
+    For the ric model, make the following changes:
+	  
+	```sh
+	{
+      "inputs":{"helm_version":"2.17.0"},
+      "url":"/opt/app/models/ric.csar",
+      "output": "./ric-dgraph-clout.json",
+    }
+    ```
+	
+  - Create service Instance with deployment:
+	
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	
+	```sh			
+	POST http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30280/bonap/templates/createInstance
+	{
+	   "name":"<Instance_Name>",
+	   "output":"./<ModelName>.json",
+	   "list-steps-only":false,
+	   "generate-workflow":false,
+	   "execute-workflow":false,
+	   "execute-policy":false
+	}
+	```	
+	  
+    Use following models-specific additional fields:
+
+      **Firewall:**  
+	  ```sh
+	    "inputs":"",
+        "service":"zip:/opt/app/config/firewall.csar!/firewall/firewall_service.yaml",
+        "inputsUrl":"zip:/opt/app/config/firewall.csar!/firewall/inputs/aws.yaml",
+	  ```
+	  
+	  **Sdwan:**
+	  ```sh
+	    "inputs":"",
+	    "service":"zip:/opt/app/config/sdwan.csar!/sdwan/sdwan_service.yaml",
+	    "inputsUrl":"zip:/opt/app/config/sdwan.csar!/sdwan/inputs/aws.yaml",
+	  ```
+	  
+	  **Ric:**
+	  ```sh
+	    "inputs":{"helm_version":"2.17.0"},
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/ric.csar!/ric.yaml"
+	  ```	
+	  
+	  **Nonrtric:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/nonrtric.csar!/nonrtric.yaml"    
+	  ```
+	  
+	  **Qp:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/qp.csar!/qp.yaml"
+	  ```
+	 
+	  **Qp-driver:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/qp-driver.csar!/qp-driver.yaml"      
+	  ```
+	 
+	  **Ts:**
+	  ```sh
+	    "inputs":"",
+		"inputsUrl":"",
+        "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
+	  ```
+
+  - To deploy models:
+  
+    Use below API for all the models only replace the instance name which we used in the create instance step:
+    
+	```sh
+	http://{IP_OF_ONAP_OOM_DEMO_VM_ADDR}:30280/bonap/templates/<Instance_Name>/workflows/deploy
+	{
+	  "list-steps-only": false,
+	  "execute-policy": false
+	}
+	```
   
 ## Post Deployment Verification Steps 
  
