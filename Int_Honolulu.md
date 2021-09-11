@@ -117,7 +117,7 @@ Table of contents
       
 	  - Puccini-workflow:
 	    
-		To create oran setup for Puccini-workflow use the ReadMe.md as follows:
+		To create oran setup for Puccini-workflow use the README.md as follows:
 		
 		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
 	  
@@ -156,13 +156,9 @@ Table of contents
 		       "172.31.27.186:5000":
 			       endpoint:
 			   	      - "http://172.31.27.186:5000"
-		  ```
 		  
-		  Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the below command on ric and nonrtric VM:
-		  "journalctl -xe"
-
-		  Also, check the registries.yaml whether it contains the valid yaml or not. if not then validate that content add and run the below command:
-		  "sudo systemctl restart k3s"
+		  # Use the validate YAML format while adding above content in registries.yaml. 
+		  ```
 		  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
@@ -272,7 +268,7 @@ Table of contents
 		
 	  ```sh
 	  $ cd ~/onap-oom-integ/kubernetes
-	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
       ```
 	  
 	  To deploy ONAP requires around 25-30 min.
@@ -448,7 +444,16 @@ Table of contents
 	a1-sim-std-1                               1/1     Running   0          6m3s
 	a1-sim-osc-1                               1/1     Running   0          5m58s
 	a1controller-cb6d7f6b8-tkql7               1/1     Running   0          7m15s
-	```     
+	``` 
+
+	Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
+	```sh
+	journalctl -xe
+	```
+    Also, check the registries.yaml whether it contains the validate YAML format or not. if not then validate that content and run the below command:
+	```sh
+	sudo systemctl restart k3s
+	```
 	
 - Verify ric model:
 
