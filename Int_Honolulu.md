@@ -209,7 +209,7 @@
 		    argoTemplateType=containerSet
 		    ```
 			
-        - DAG : Add one line description
+        - DAG : DAG (Directed Acyclic Graph) contains set of steps (nodes) and the dependencies (edges) between them.
 				
 	      - For using DAG-based argo template set:
 		
