@@ -201,7 +201,7 @@
 		
 		In an Argo workflow, there is two ways/method for executing argo template.
 		
-        - containerSet : A container set templates is similar to a normal container or script template, but allows you to     specify multiple containers to run within a single pod.
+        - containerSet : A containerSet template is similar to a normal container or script template but allow you to     specify multiple containers to run within a single pod.
 				
 	      - For using containerSet based argo template set:
 	    
@@ -209,7 +209,7 @@
 		    argoTemplateType=containerSet
 		    ```
 			
-        - DAG : DAG (Directed Acyclic Graph) contains set of steps (nodes) and the dependencies (edges) between them.
+        - DAG : DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
 				
 	      - For using DAG-based argo template set:
 		
@@ -289,8 +289,6 @@
       ```
 	  
 	  To deploy ONAP requires around 25-30 min.
-	  
-	  Note for ARGO-WORKFLOW: In case if ONAP deployed fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
 	  
 	- To verify ONAP deployed successfully use the following command and all check all pods are in running state:
 
