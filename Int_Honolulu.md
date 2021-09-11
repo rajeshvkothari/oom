@@ -119,7 +119,7 @@ Table of contents
 	
     - Create oran setup(optional):
 	  
-	  Note: Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall model.
+	 Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall model.
 	  
 	  GIN can deploy the tosca model using two ways.
 	  
