@@ -426,11 +426,11 @@
   
   Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
   ```sh
-  ournalctl -xe
+  $ journalctl -xe
   ```
   Also, check the registries.yaml whether it contains the validated YAML format or not. if not then validate that content and run the below command:
   ```sh
-  sudo systemctl restart k3s
+  $ sudo systemctl restart k3s
   ```
 
 ## Post Deployment Verification Steps 
