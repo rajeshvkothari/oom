@@ -3,10 +3,16 @@
 Table of contents
 =================
 <!--ts-->
+   * [Introduction](#Introduction)
    * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
-   * [ONAP OOM testing of HONOLULU release](#ONAP-OOM-testing-of-HONOLULU-release)
+   * [Testing of tosca models in HONOLULU release](#Testing-of-tosca-models-in-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
+## Introduction
+  
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo workflow. It also describes steps for building csars for various models currently available.
+	
+  For now, we can test argo workflow only in tosca components running in pods format in the OOM Honolulu environment.
 
 ## Creating an environment for OOM VM of HONOLULU release
   
@@ -111,58 +117,63 @@ Table of contents
 	  
 	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &" this command we have to press enter and go ahead.
 	
-    - Create oran setup:
+    - Create oran setup(optional):
 	  
-	  Create oran setup while testing oran models otherwise no need to set up them for sdwan and firewall models.
+	  Note: Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall model.
+	  
+	  GIN can deploy the tosca model using two ways.
+      - Build-in(puccini) workflow
+      - Argo workflow
       
-	  - Puccini-workflow:
-	    
-		To create oran setup for Puccini-workflow use the README.md as follows:
-		
-		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
-	  
-	  - Argo-workflow:
-	    
-		To create oran setup for Argo-workflow uses the steps as follows:
-	  
-	    - Create two AWS VMs in Ohio region with names as follows:
-		
+	    - Build-in(puccini) workflow:
+	     
+		  To create oran setup for Build-in(puccini) workflow use the README.md as follows:
 		  ```sh
-		  VM1 Name: ric Server
-		  VM2 Name: nonrtric Server
+		  https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
 		  ```
+	  
+	    - Argo-workflow:
+	    
+		  To create oran setup for Argo-workflow uses the steps as follows:
+	  
+	      - Create two AWS VMs in the Ohio region with names as follows:
+		
+		    ```sh
+		    VM1 Name: ric Server
+		    VM2 Name: nonrtric Server
+		    ```
 				
-	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
+	      - And use the following specifications and SSH it using putty by using cciPrivateKey:
 		  
-		  ```sh
-		  Image: ubuntu-18.04
-		  InstanceTye: t2.2xlarge
-		  KeyPair : cciPublicKey
-		  Disk: 80GB
-		  Security group: launch-wizard-19
-		  ```
+		    ```sh
+		    Image: ubuntu-18.04
+		    InstanceTye: t2.2xlarge
+		    KeyPair : cciPublicKey
+		    Disk: 80GB
+		    Security group: launch-wizard-19
+		    ```
 				   
-	    - Login into ric Server and nonrtric Server and run the following commands:
+	      - Login into ric Server and nonrtric Server and run the following commands:
 		  
-		  ```sh
-		  $ sudo apt update
-		  $ sudo apt install jq
-		  $ sudo apt install socat
-		  $ sudo mkdir -p /etc/rancher/k3s
-          $ sudo chmod -R 777 /etc/rancher/k3s
+		    ```sh
+		    $ sudo apt update
+		    $ sudo apt install jq
+		    $ sudo apt install socat
+		    $ sudo mkdir -p /etc/rancher/k3s
+            $ sudo chmod -R 777 /etc/rancher/k3s
 		
-		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
-			mirrors:
-		       "172.31.27.186:5000":
-			       endpoint:
-			   	      - "http://172.31.27.186:5000"
+		    # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+			  mirrors:
+		         "172.31.27.186:5000":
+			         endpoint:
+			   	        - "http://172.31.27.186:5000"
 		  
-		  # Use the validate YAML format while adding above content in registries.yaml. 
-		  ```
+		    # Use the validate YAML format while adding the above content in registries.yaml. 
+		    ```
 		  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
-	  - For Puccini-workflow :
+	  - For Build-in(puccini) workflow:
 	    
 		```sh
 		[remote]
@@ -187,18 +198,24 @@ Table of contents
         ```		
 		
 		Note: To deploy a firewall, sdwan models add only {IP_OF_ONAP_OOM_DEMO_ADDR} and oran models add all IP.
-				
-	    - For using containerSet based argo template set:
-	    
-		  ```sh
-		  argoTemplateType=containerSet
-		  ```
-				
-	    - For using DAG-based argo template set:
 		
-		  ```sh	
-		  argoTemplateType=DAG
-		  ```
+		In an Argo workflow, there is two ways/method for executing argo template.
+		
+		- containerSet : Add one line description
+		
+		- DAG          : Add one line description
+				
+	      - For using containerSet based argo template set:
+	    
+		    ```sh
+		    argoTemplateType=containerSet
+		    ```
+				
+	      - For using DAG-based argo template set:
+		
+		    ```sh	
+		    argoTemplateType=DAG
+		    ```
 		
     - Install golang:
 	  
@@ -243,7 +260,7 @@ Table of contents
 	  # For containerSet use below command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
 	  
-	  # For DAG use below command:
+	  # For DAG use the below command:
 	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
 	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
@@ -281,9 +298,17 @@ Table of contents
 	  $ kubectl get pods -n onap
 	  ```
 	
+	- To build the csars follow the README.md as follows:
+	
+      ```sh
+	  https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#Building-Tosca-Model-Csars
+	  ```
+	
 	- Copy updated csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
 
-## ONAP OOM testing of HONOLULU release
+## Testing of tosca models in HONOLULU release
+
+  Send requests to tosca pods using postman.
 
 - Use the following request to store the model in Dgraph:
     
@@ -405,7 +430,7 @@ Table of contents
   ```sh
   ournalctl -xe
   ```
-  Also, check the registries.yaml whether it contains the validate YAML format or not. if not then validate that content and run the below command:
+  Also, check the registries.yaml whether it contains the validated YAML format or not. if not then validate that content and run the below command:
   ```sh
   sudo systemctl restart k3s
   ```
