@@ -400,6 +400,15 @@ Table of contents
 	 "execute-policy": false
   }
   ```
+  
+  Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
+  ```sh
+  ournalctl -xe
+  ```
+  Also, check the registries.yaml whether it contains the validate YAML format or not. if not then validate that content and run the below command:
+  ```sh
+  sudo systemctl restart k3s
+  ```
 
 ## Post Deployment Verification Steps 
  
@@ -445,15 +454,6 @@ Table of contents
 	a1-sim-osc-1                               1/1     Running   0          5m58s
 	a1controller-cb6d7f6b8-tkql7               1/1     Running   0          7m15s
 	``` 
-
-	Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
-	```sh
-	journalctl -xe
-	```
-    Also, check the registries.yaml whether it contains the validate YAML format or not. if not then validate that content and run the below command:
-	```sh
-	sudo systemctl restart k3s
-	```
 	
 - Verify ric model:
 
