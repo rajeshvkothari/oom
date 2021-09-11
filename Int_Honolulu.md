@@ -46,6 +46,8 @@ Table of contents
 	  $ sudo systemctl start docker
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
+	  
+	  Note: 172.31.27.186 is the private IP address of CCI_REPO VM.
 		
 	- Setup kubectl:
 	  
@@ -111,6 +113,8 @@ Table of contents
 	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &" this command we have to press enter and go ahead.
 	
     - Create oran setup:
+	  
+	  Create oran setup while testing oran models otherwise no need to set up them for sdwan and firewall models.
       
 	  - Puccini-workflow:
 	    
@@ -122,7 +126,7 @@ Table of contents
 	    
 		To create oran setup for Argo-workflow uses the steps as follows:
 	  
-	    - Create two AWS VMs in Ohio (us-east-2) region with names as follows:
+	    - Create two AWS VMs in Ohio region with names as follows:
 		
 		  ```sh
 		  VM1 Name: ric Server
@@ -155,7 +159,7 @@ Table of contents
 			   	      - "http://172.31.27.186:5000"
 		  ```
 		  
-		  Note: If the nonrtric get failed then check that whether the ks3 is installed properly or not by running the below command on ric and nonrtric VM:
+		  Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the below command on ric and nonrtric VM:
 		  "journalctl -xe"
 
 		  Also, check the registries.yaml whether it contains the valid yaml or not. if not then validate that content add and run the below command:
@@ -174,17 +178,20 @@ Table of contents
 		workflowType=puccini-workflow
 		```
 		
-		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
 				
       - For Argo-workflow:
 
 		```sh
 		remoteHost={IP_OF_ONAP_OOM_DEMO_ADDR}
 		reposureHost={IP_OF_ONAP_OOM_DEMO_ADDR}
+		reposureHost={IP_OF_ONAP_OOM_DEMO_ADDR}
 		ricServerIP={IP_OF_RIC_ADDR}
 		nonrtricServerIP={IP_OF_NONRTRIC_ADDR}
 		workflowType=argo-workflow
         ```		
+		
+		Note: To deploy a firewall, sdwan models add only IP_OF_ONAP_OOM_DEMO_ADDR and oran models add all IP.
 				
 	  - For using containerSet based argo template set:
 	    
