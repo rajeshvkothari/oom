@@ -1,13 +1,14 @@
 # Int_Honolulul
 
 ## Table of contents
-   =================
+
 <!--ts-->
    * [Introduction](#Introduction)
    * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
    * [Testing of tosca models in HONOLULU release](#Testing-of-tosca-models-in-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
+
 ## Introduction
   
   This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo workflow. It also describes steps for building csars for various models currently available.
@@ -200,7 +201,7 @@
 		
 		In an Argo workflow, there is two ways/method for executing argo template.
 		
-        - containerSet : Add one line description
+        - containerSet : A container set templates is similar to a normal container or script template, but allows you to     specify multiple containers to run within a single pod.
 				
 	      - For using containerSet based argo template set:
 	    
