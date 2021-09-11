@@ -53,7 +53,7 @@
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Ok</td>
+	  <td>Ok(FW=,Sdwan=,Ric=)</td>
     </tr>
   </tbody>
 </table>
