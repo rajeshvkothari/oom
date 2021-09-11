@@ -1,7 +1,7 @@
 # Int_Honolulul
 
-Table of contents
-=================
+## Table of contents
+   =================
 <!--ts-->
    * [Introduction](#Introduction)
    * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
