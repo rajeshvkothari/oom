@@ -3,7 +3,7 @@
 Table of contents
 =================
 <!--ts-->
-   * [Creating environment for OOM VM of HONOLULU release](#Creating-environment-for-OOM-VM-of-HONOLULU-release)
+   * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
    * [ONAP OOM testing of HONOLULU release](#ONAP-OOM-testing-of-HONOLULU-release)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
@@ -11,7 +11,6 @@ Table of contents
 ## Creating an environment for OOM VM of HONOLULU release
   
   - **OOM DEMO Server**
-      ---------------
 	 
 	- Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
 	  
