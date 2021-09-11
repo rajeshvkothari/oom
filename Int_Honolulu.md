@@ -238,10 +238,10 @@ Table of contents
 	  ```sh
 	  $ kubectl create ns onap
 	  
-	  # For CS
+	  # For containerSet use below command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
 	  
-	  # For DAG
+	  # For DAG use below command:
 	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
 	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
@@ -266,18 +266,18 @@ Table of contents
 		
 	  ```sh
 	  $ cd ~/onap-oom-integ/kubernetes
-	  $ helm deploy onap local/onap --namespace onap --create-namespace --set     global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml --timeout 900s
       ```
 	  
 	  To deploy ONAP requires around 25-30 min.
+	  
+	  Note for ARGO-WORKFLOW: In case if ONAP deployed fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
 	  
 	- To verify ONAP deployed successfully use the following command and all check all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
 	  ```
-	  
-	  Note for ARGO-WORKFLOW: In case if ONAP deployed fails check logs in /home/ubuntu/.local/share/helm/plugins/deploy/cache/onap/logs
 	
 	- Copy updated csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
 
