@@ -186,19 +186,19 @@ Table of contents
 		workflowType=argo-workflow
         ```		
 		
-		Note: To deploy a firewall, sdwan models add only IP_OF_ONAP_OOM_DEMO_ADDR and oran models add all IP.
+		Note: To deploy a firewall, sdwan models add only {IP_OF_ONAP_OOM_DEMO_ADDR} and oran models add all IP.
 				
-	  - For using containerSet based argo template set:
+	    - For using containerSet based argo template set:
 	    
-		```sh
-		argoTemplateType=containerSet
-		```
+		  ```sh
+		  argoTemplateType=containerSet
+		  ```
 				
-	  - For using DAG-based argo template set:
+	    - For using DAG-based argo template set:
 		
-		```sh	
-		argoTemplateType=DAG
-		```
+		  ```sh	
+		  argoTemplateType=DAG
+		  ```
 		
     - Install golang:
 	  
