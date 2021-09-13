@@ -166,9 +166,9 @@
                 endpoint:
                    - "http://172.31.27.186:5000"
 		  ```
-		  IMP Note: Above YAML must be in a valid format. also, check whether proper indentation is used.
+		  **IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
 
-		  To know more about valid YAML format use below link: 
+		  To know more about valid YAML format use link as follows: 
 
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
@@ -206,19 +206,19 @@
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
 				
-	      - For using containerSet based argo template set:
+	      For using containerSet based argo template set:
 	    
-		    ```sh
-		    argoTemplateType=containerSet
-		    ```
+		  ```sh
+		  argoTemplateType=containerSet
+		  ```
 			
         - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
 				
-	      - For using DAG-based argo template set:
+	      For using DAG-based argo template set:
 		
-		    ```sh	
-		    argoTemplateType=DAG
-		    ```
+		  ```sh	
+		  argoTemplateType=DAG
+		  ```
 		
     - Install golang:
 	  
@@ -265,7 +265,7 @@
 	  # For containerSet use following command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
 	  
-	  # For DAG use following command:
+	  # For DAG use the following command:
 	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
 	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
@@ -423,7 +423,7 @@
   }
   ```
 	
-  For all models except the ric model use following model-specific additional fields:
+  For all models except the ric model use the following model-specific additional fields:
 	
   ```sh
   {
@@ -432,8 +432,6 @@
 	 "output": "./sdwan-dgraph-clout.json",
   }
   ```
-	
-  Use similar pattern for firewall, nonrtric, qp, qp-driver, ts models(means change only csar name).
 	  
   For ric model use following model-specific additional fields:
 	  
@@ -514,7 +512,7 @@
 
 - To deploy models:
   
-  Use following API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step
+  Use following REST API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step
     
   ```sh
   http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
@@ -573,17 +571,17 @@
   -- Unit k3s.service has failed.
   ```
   
-  Also, check registries.yaml whether it contains the valid YAML format or not. if not then validate that YAML format and run the command as follows:
+  Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command as follows:
   
   ```sh
   $ sudo systemctl restart k3s
   ```
   
-  After running the restart command try to deploy the nonrtric server again. 
+  After K3s restart, check whether it install properly or not and try to deploy the nonrtric server again. 
 
 ## Post Deployment Verification Steps 
  
-  Use following steps to verify models are deployed successfully. 
+  Use the following steps to verify models are deployed successfully. 
   
 - Verify sdwan model:  
  
@@ -593,7 +591,7 @@
 	```sh
 	$ ifconfig -a
 	```
-	TODO:
+	
     Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
 	
   - SSH SDWAN_Site_B VM and run the following command:
@@ -605,11 +603,11 @@
 	
 - Verify firewall model:
 
-  - Verify TODO{SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs are created on AWS N.Virginia region.
+  - Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs are created on AWS N.Virginia region.
 
 - Verify nonrtric model:
 	
-  - Verify that all pods are running using the following command on a nonrtric server: 
+  - Verify that all pods are in running state using the following command on a nonrtric server: 
     ```sh
 	$ sudo kubectl get pods -n nonrtric
 	
@@ -629,7 +627,7 @@
 	
 - Verify ric model:
 
-  - Verify all pods are running using the following commands on the ric server:
+  - Verify that all pods are in running state using the following command on a ric server:
 	```sh		
 	$ sudo kubectl get pods -n ricplt
 	$ sudo kubectl get pods -n ricinfra
@@ -664,7 +662,7 @@
 
 - Verify qp model:
 
-  - Login 'ONAP_OOM_DEMO' and run the following commands:
+  - Login 'ONAP_OOM_DEMO' and run following commands:
     ```sh
     $ cd ~/
 	$ argo list -n onap | grep qp
@@ -706,7 +704,7 @@
 
 - Verify qp-driver model:
 
-  - Login 'ONAP_OOM_DEMO' and run the following commands:
+  - Login 'ONAP_OOM_DEMO' and run following commands:
     ```sh
     $ cd ~/
 	$ argo list -n onap | grep qp-driver
@@ -747,7 +745,7 @@
 
 - Verify ts model:
 
-  - Login 'ONAP_OOM_DEMO' and run the following commands:
+  - Login 'ONAP_OOM_DEMO' and run following commands:
     ```sh
     $ cd ~/
 	$ argo list -n onap | grep ts
