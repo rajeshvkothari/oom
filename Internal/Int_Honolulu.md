@@ -185,19 +185,22 @@
 		```
 		
 		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers of 'Pre Deployment Steps') for deploying oran models.
+		
+		To deploy oran models use the link as follows:
+		```sh
+		```
 				
       - For argo-workflow:
 
 		```sh
 		remoteHost={IP_OF_ONAP_OOM_DEMO_ADDR}
 		reposureHost={IP_OF_ONAP_OOM_DEMO_ADDR}
-		reposureHost={IP_OF_ONAP_OOM_DEMO_ADDR}
 		ricServerIP={IP_OF_RIC_ADDR}
 		nonrtricServerIP={IP_OF_NONRTRIC_ADDR}
 		workflowType=argo-workflow
         ```		
 		
-		Note: To deploy a firewall, sdwan models only add {IP_OF_ONAP_OOM_DEMO_ADDR} and for oran models add all IPs.
+		Note: To deploy a firewall and sdwan models only add {IP_OF_ONAP_OOM_DEMO_ADDR} and for oran models add all IPs.
 		
 		In an argo workflow, there is two ways for executing argo template.
 		
