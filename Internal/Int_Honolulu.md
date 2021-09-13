@@ -302,107 +302,105 @@
       ```sh
 	  $ kubectl get pods -n onap
 	  
-	  ubuntu@ip-172-31-38-49:~$ kubectl get pods -n onap
+	  ubuntu@ip-172-31-29-51:~/onap-oom-integ/kubernetes$ kubectl get pods -n onap
 	  NAME                                           READY   STATUS             RESTARTS   AGE
-	  argo-server-576b68c7cf-ttq8m                   1/1     Running            2          76m
-	  minio-58977b4b48-wnl6c                         1/1     Running            0          76m
-	  onap-aaf-cass-54c568c8cf-zhfsw                 1/1     Running            0          22m
-	  onap-aaf-cm-8649d449f6-wz66c                   1/1     Running            0          22m
-  	  onap-aaf-fs-5864f44d-cmvbc                     1/1     Running            0          22m
-	  onap-aaf-gui-7496fcc766-x8r8m                  1/1     Running            0          22m
-	  onap-aaf-locate-5c64459758-l87c7               1/1     Running            0          22m
-	  onap-aaf-oauth-588658b9dd-wcfp2                1/1     Running            0          22m
-	  onap-aaf-service-78579cb56f-p5rln              1/1     Running            0          22m
-	  onap-aaf-sms-5b45b944d9-rzzfv                  1/1     Running            0          22m
-	  onap-aaf-sms-preload-9wml6                     0/1     Completed          0          22m
-	  onap-aaf-sms-quorumclient-0                    1/1     Running            0          22m
-	  onap-aaf-sms-quorumclient-1                    1/1     Running            0          22m
-	  onap-aaf-sms-quorumclient-2                    1/1     Running            0          21m
-	  onap-aaf-sms-vault-0                           2/2     Running            0          22m
-	  onap-aaf-sshsm-distcenter-r9tbb                0/1     Completed          0          22m
-	  onap-aaf-sshsm-testca-mjqxt                    0/1     Completed          0          22m
-	  onap-aai-58c68fb8fc-hjx2w                      1/1     Running            0          22m
-	  onap-aai-babel-d6d9b588-2nrx2                  2/2     Running            0          22m
-	  onap-aai-graphadmin-6d8c65bccf-48szt           2/2     Running            0          22m
-	  onap-aai-graphadmin-create-db-schema-qt8gg     0/1     Completed          0          22m
-	  onap-aai-modelloader-857d4697b-5wh2j           2/2     Running            0          22m
-	  onap-aai-resources-5857bf6bb8-bqwrv            2/2     Running            0          22m
-	  onap-aai-schema-service-7c5d56d55-hqqfd        2/2     Running            0          22m
-	  onap-aai-sparky-be-55db5b5d74-tpst8            2/2     Running            0          22m
-	  onap-aai-traversal-759cc5c867-zzzb6            2/2     Running            0          22m
-	  onap-aai-traversal-update-query-data-f6vk5     0/1     Completed          0          22m
-	  onap-awx-0                                     1/4     ImagePullBackOff   0          21m
-	  onap-awx-postgres-66886c8994-lwg6v             1/1     Running            0          21m
-	  onap-awx-qc9bs                                 0/1     Completed          0          21m
-	  onap-cassandra-0                               1/1     Running            0          22m
-	  onap-cassandra-1                               1/1     Running            0          18m
-	  onap-cassandra-2                               1/1     Running            0          14m
-	  onap-dbc-pg-primary-78585f6b7-4jx4k            1/1     Running            0          20m
-	  onap-dbc-pg-replica-58ff5d98dc-vd8cf           1/1     Running            0          20m
-	  onap-dmaap-bc-76bb577d58-bgxnv                 1/1     Running            0          20m
-	  onap-dmaap-bc-dmaap-provisioning-2qjml         0/1     Init:Error         0          20m
-	  onap-dmaap-bc-dmaap-provisioning-rccc4         0/1     Completed          0          10m
-	  onap-dmaap-dr-db-0                             2/2     Running            0          20m
-	  onap-dmaap-dr-node-0                           2/2     Running            0          20m
-	  onap-dmaap-dr-prov-6f7465bbc6-kc2r5            2/2     Running            0          20m
-	  onap-ejbca-ccb7b44c6-r8l2r                     1/1     Running            0          21m
-	  onap-ejbca-config-config-job-nqq25             0/1     Completed          0          10m
-	  onap-ejbca-config-config-job-vbddf             0/1     Init:Error         0          21m
-	  onap-mariadb-galera-0                          2/2     Running            0          20m
-	  onap-mariadb-galera-1                          2/2     Running            0          16m
-	  onap-mariadb-galera-2                          2/2     Running            0          8m11s
-	  onap-message-router-0                          1/1     Running            0          20m
-	  onap-message-router-kafka-0                    1/1     Running            0          20m
-	  onap-message-router-kafka-1                    1/1     Running            0          20m
-	  onap-message-router-kafka-2                    1/1     Running            0          20m
-	  onap-message-router-zookeeper-0                1/1     Running            0          20m
-	  onap-message-router-zookeeper-1                1/1     Running            0          20m
-	  onap-message-router-zookeeper-2                1/1     Running            0          20m
-	  onap-netbox-app-674f9d5f-krgrt                 1/1     Running            1          21m
-	  onap-netbox-app-provisioning-lj5dv             0/1     ImagePullBackOff   0          21m
-	  onap-netbox-nginx-76464b784-psjjz              1/1     Running            0          21m
-	  onap-netbox-postgres-594f478d68-wvgjv          1/1     Running            0          21m
-	  onap-portal-app-964f7cf5-jt8xg                 2/2     Running            0          20m
-	  onap-portal-cassandra-dd4fc76b7-m8m8z          1/1     Running            0          20m
-	  onap-portal-db-5d4db9d8dd-4ggtp                1/1     Running            0          20m
-	  onap-portal-db-config-tf28x                    0/2     Completed          0          20m
-	  onap-portal-sdk-644d7bfdfd-bvvbr               2/2     Running            0          20m
-	  onap-portal-widget-5fcb9c4d89-rzdvd            1/1     Running            0          20m
-	  onap-robot-7f59bd9f97-hbc58                    1/1     Running            0          20m
-	  onap-sdc-be-558b4d86cf-d5mn2                   1/2     Running            0          20m
-	  onap-sdc-be-config-backend-m7wxd               0/1     Init:0/1           0          20m
-	  onap-sdc-cs-config-cassandra-6w9vl             0/1     Completed          0          20m
-	  onap-sdc-fe-679bc6f44d-8tvq6                   0/2     Init:2/4           0          20m
-	  onap-sdc-onboarding-be-78d5d955b4-czl4g        2/2     Running            0          20m
-	  onap-sdc-onboarding-be-cassandra-init-l7vsn    0/1     Completed          0          20m
-	  onap-sdc-wfd-be-7956d95666-q8f8c               1/1     Running            0          20m
-	  onap-sdc-wfd-be-workflow-init-4wlcx            0/1     Completed          0          20m
-	  onap-sdc-wfd-fe-76c94bc665-2hwq4               2/2     Running            0          20m
-	  onap-so-5d48886cb8-r8bbf                       2/2     Running            0          8m53s
-	  onap-so-admin-cockpit-584d586894-sqt8v         1/1     Running            0          8m52s
-	  onap-so-bpmn-infra-7868f977d4-2ctd6            2/2     Running            0          8m53s
-	  onap-so-catalog-db-adapter-5bdd4f7ff-9h594     1/1     Running            0          8m53s
-	  onap-so-cnf-adapter-5bfbd6486b-jmzxf           1/1     Running            0          8m52s
-	  onap-so-etsi-nfvo-ns-lcm-59f455d7b-4fjwf       1/1     Running            4          8m53s
-	  onap-so-etsi-sol003-adapter-794d599bbb-9m5gx   1/1     Running            0          8m53s
-	  onap-so-etsi-sol005-adapter-698447dc8b-wjtnp   1/1     Running            0          8m53s
-	  onap-so-mariadb-config-job-nvtgz               0/1     Completed          0          8m52s
-	  onap-so-nssmf-adapter-7687766f-l2vk7           1/1     Running            0          8m53s
-	  onap-so-oof-adapter-847bf7f67f-9rdvv           2/2     Running            0          8m53s
-	  onap-so-openstack-adapter-56fb87f5d9-lwwcr     2/2     Running            0          8m53s
-	  onap-so-request-db-adapter-666fdf8f7f-fssv9    1/1     Running            0          8m52s
-	  onap-so-sdc-controller-856b9596c-f9qtb         2/2     Running            0          8m52s
-	  onap-so-sdnc-adapter-fb94764c8-5qdgq           2/2     Running            0          8m53s
-	  onap-tosca-858768ff5b-gzx4t                    2/2     Running            0          4m29s
-	  onap-tosca-compiler-6c58c67657-gcv7x           2/2     Running            0          4m29s
-	  onap-tosca-dgraph-56cdf6ddd9-z2zrk             2/2     Running            0          4m29s
-	  onap-tosca-gawp-684d7b8544-n88k5               2/2     Running            0          4m29s
-	  onap-tosca-policy-7754748966-q9j6v             2/2     Running            0          4m29s
-	  onap-tosca-workflow-76445fb68-7rz6x            2/2     Running            0          4m29s
-	  onap-vid-7b5c7f48f9-mwjwj                      2/2     Running            0          4m25s
-	  onap-vid-mariadb-init-config-job-z8xd2         0/1     Completed          0          4m25s
-	  postgres-6b5c55f477-lkrml                      1/1     Running            0          76m
-	  workflow-controller-6587f8545-dzx9d            1/1     Running            2          76m
+	  argo-server-fc8b6dfc9-wchnq                    1/1     Running            0          52m
+	  onap-aaf-cass-54c568c8cf-8blvq                 1/1     Running            0          41m
+	  onap-aaf-cm-8649d449f6-8cwxf                   1/1     Running            0          41m
+	  onap-aaf-fs-5864f44d-wd2xj                     1/1     Running            0          41m
+	  onap-aaf-gui-7496fcc766-nfhpz                  1/1     Running            0          41m
+	  onap-aaf-locate-5c64459758-thr9t               1/1     Running            0          41m
+	  onap-aaf-oauth-588658b9dd-vmgms                1/1     Running            0          41m
+	  onap-aaf-service-78579cb56f-qnvhz              1/1     Running            0          41m
+	  onap-aaf-sms-5b45b944d9-gdphg                  1/1     Running            0          41m
+	  onap-aaf-sms-preload-knsmz                     0/1     Completed          0          41m
+	  onap-aaf-sms-quorumclient-0                    1/1     Running            0          41m
+	  onap-aaf-sms-quorumclient-1                    1/1     Running            0          40m
+	  onap-aaf-sms-quorumclient-2                    1/1     Running            0          39m
+	  onap-aaf-sms-vault-0                           2/2     Running            0          41m
+	  onap-aaf-sshsm-distcenter-wkjgr                0/1     Completed          0          41m
+	  onap-aaf-sshsm-testca-c4kzl                    0/1     Completed          0          41m
+	  onap-aai-58c68fb8fc-fnh96                      1/1     Running            0          41m
+	  onap-aai-babel-d6d9b588-qmw9m                  2/2     Running            0          41m
+	  onap-aai-graphadmin-6d8c65bccf-vkdt9           2/2     Running            0          41m
+	  onap-aai-graphadmin-create-db-schema-vzz8s     0/1     Completed          0          41m
+	  onap-aai-modelloader-857d4697b-4swwm           2/2     Running            0          41m
+	  onap-aai-resources-5857bf6bb8-dm2gs            2/2     Running            0          41m
+	  onap-aai-schema-service-7c5d56d55-jjsr6        2/2     Running            0          41m
+	  onap-aai-sparky-be-55db5b5d74-6fzmj            2/2     Running            0          41m
+	  onap-aai-traversal-759cc5c867-kfm8z            2/2     Running            0          41m
+	  onap-aai-traversal-update-query-data-hv5lx     0/1     Completed          0          41m
+	  onap-awx-0                                     1/4     ImagePullBackOff   0          40m
+	  onap-awx-postgres-66886c8994-7vgzc             1/1     Running            0          40m
+	  onap-awx-spwsv                                 0/1     Completed          0          40m
+	  onap-cassandra-0                               1/1     Running            0          41m
+	  onap-cassandra-1                               1/1     Running            0          37m
+	  onap-cassandra-2                               1/1     Running            0          33m
+	  onap-dbc-pg-primary-78585f6b7-fl58j            1/1     Running            0          39m
+	  onap-dbc-pg-replica-58ff5d98dc-p2qqz           1/1     Running            0          39m
+	  onap-dmaap-bc-76bb577d58-qgfd9                 1/1     Running            0          39m
+	  onap-dmaap-bc-dmaap-provisioning-kwcbt         0/1     Init:Error         0          39m
+	  onap-dmaap-bc-dmaap-provisioning-zz6x4         0/1     Completed          0          29m
+	  onap-dmaap-dr-db-0                             2/2     Running            0          39m
+	  onap-dmaap-dr-node-0                           2/2     Running            0          39m
+	  onap-dmaap-dr-prov-6f7465bbc6-xnh9x            2/2     Running            0          39m
+	  onap-ejbca-ccb7b44c6-vfb7f                     1/1     Running            0          40m
+	  onap-ejbca-config-config-job-66d9b             0/1     Completed          0          30m
+	  onap-ejbca-config-config-job-8gwpp             0/1     Init:Error         0          40m
+	  onap-mariadb-galera-0                          2/2     Running            0          39m
+	  onap-mariadb-galera-1                          2/2     Running            0          34m
+	  onap-mariadb-galera-2                          2/2     Running            0          26m
+	  onap-message-router-0                          1/1     Running            0          39m
+	  onap-message-router-kafka-0                    1/1     Running            0          39m
+	  onap-message-router-kafka-1                    1/1     Running            0          39m
+	  onap-message-router-kafka-2                    1/1     Running            0          39m
+	  onap-message-router-zookeeper-0                1/1     Running            0          39m
+	  onap-message-router-zookeeper-1                1/1     Running            0          39m
+ 	  onap-message-router-zookeeper-2                1/1     Running            0          39m
+	  onap-netbox-app-674f9d5f-lvjm8                 1/1     Running            1          40m
+	  onap-netbox-app-provisioning-xw45w             0/1     ImagePullBackOff   0          40m
+	  onap-netbox-nginx-76464b784-j97wp              1/1     Running            0          40m
+	  onap-netbox-postgres-594f478d68-kqp8t          1/1     Running            0          40m
+	  onap-portal-app-964f7cf5-x75r2                 2/2     Running            0          39m
+	  onap-portal-cassandra-dd4fc76b7-s4gn7          1/1     Running            0          39m
+	  onap-portal-db-5d4db9d8dd-trxpc                1/1     Running            0          39m
+	  onap-portal-db-config-bsrc5                    0/2     Completed          0          39m
+	  onap-portal-sdk-644d7bfdfd-54kql               2/2     Running            0          39m
+	  onap-portal-widget-5fcb9c4d89-zb97c            1/1     Running            0          39m
+	  onap-robot-7f59bd9f97-tg4gm                    1/1     Running            0          39m
+	  onap-sdc-be-558b4d86cf-xl88g                   2/2     Running            0          38m
+	  onap-sdc-be-config-backend-kf68n               0/1     Completed          0          38m
+	  onap-sdc-cs-config-cassandra-54qtd             0/1     Completed          0          38m
+	  onap-sdc-fe-679bc6f44d-gw58q                   2/2     Running            0          38m
+	  onap-sdc-onboarding-be-78d5d955b4-8pz2n        2/2     Running            0          38m
+	  onap-sdc-onboarding-be-cassandra-init-cts5x    0/1     Completed          0          38m
+	  onap-sdc-wfd-be-7956d95666-g9nqz               1/1     Running            0          38m
+	  onap-sdc-wfd-be-workflow-init-hzwq5            0/1     Completed          0          38m
+	  onap-sdc-wfd-fe-76c94bc665-75d7t               2/2     Running            0          38m
+	  onap-so-5d48886cb8-c2mq7                       2/2     Running            0          27m
+	  onap-so-admin-cockpit-584d586894-b24nm         1/1     Running            0          27m
+	  onap-so-bpmn-infra-7868f977d4-ntbnc            2/2     Running            0          27m
+	  onap-so-catalog-db-adapter-5bdd4f7ff-wxpqs     1/1     Running            0          27m
+	  onap-so-cnf-adapter-5bfbd6486b-br9dd           1/1     Running            0          27m
+	  onap-so-etsi-nfvo-ns-lcm-59f455d7b-m268f       1/1     Running            4          27m
+	  onap-so-etsi-sol003-adapter-794d599bbb-9f9cp   1/1     Running            0          27m
+	  onap-so-etsi-sol005-adapter-698447dc8b-4d96g   1/1     Running            0          27m
+	  onap-so-mariadb-config-job-9wsx9               0/1     Completed          0          27m
+	  onap-so-nssmf-adapter-7687766f-rgjsq           1/1     Running            0          27m
+	  onap-so-oof-adapter-847bf7f67f-n4xlv           2/2     Running            0          27m
+	  onap-so-openstack-adapter-56fb87f5d9-x89gs     2/2     Running            0          27m
+	  onap-so-request-db-adapter-666fdf8f7f-xzwcr    1/1     Running            0          27m
+	  onap-so-sdc-controller-856b9596c-z9q6v         2/2     Running            0          27m
+	  onap-so-sdnc-adapter-fb94764c8-5np85           2/2     Running            0          27m
+	  onap-tosca-858768ff5b-k8t9l                    2/2     Running            0          22m
+	  onap-tosca-compiler-6c58c67657-pfkxd           2/2     Running            0          22m
+	  onap-tosca-dgraph-56cdf6ddd9-65szw             2/2     Running            0          22m
+	  onap-tosca-gawp-684d7b8544-lh9n8               2/2     Running            0          22m
+	  onap-tosca-policy-7754748966-fhw26             2/2     Running            0          22m
+	  onap-tosca-workflow-76445fb68-mpn6n            2/2     Running            0          22m
+	  onap-vid-7b5c7f48f9-24x6g                      2/2     Running            0          22m
+	  onap-vid-mariadb-init-config-job-rt4d4         0/1     Completed          0          22m
+	  workflow-controller-7fb47d49bb-gt88k           1/1     Running            0          52m
 	  ```
 	
 	- Copy latest models csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
@@ -416,22 +414,25 @@
   ```sh
   POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30294/compiler/model/db/save
   {
-	 "url":"/opt/app/config/{MODEL_NAME}.csar",
-	 "output": "./{MODEL_NAME}-dgraph-clout.json",
-	 "resolve":true,
-	 "coerce":false,
-	 "quirks": ["data_types.string.permissive"],
-	 "inputsUrl": ""
+    "url": "/opt/app/config/{MODEL_NAME}.csar",
+    "resolve": true,
+    "coerce": false,
+    "quirks": [
+        "data_types.string.permissive"
+    ],
+    "output": "./{MODEL_NAME}-dgraph-clout.json",
+    "inputs": "",
+    "inputsUrl": ""
   }
   ```
 	
-  For all models except the ric model use the following model-specific additional fields:
+  For all models except the ric model use the following model-specific fields:
 	
   ```sh
   {
 	 "inputs":"",
-	 "url":"/opt/app/models/{MODEL_NAME}.csar",
-	 "output": "./{MODEL_NAME}-dgraph-clout.json",
+	 "url":"/opt/app/models/sdwan.csar",
+	 "output": "./sdwan-dgraph-clout.json"
   }
   ```
 	  
