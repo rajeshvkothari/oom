@@ -166,7 +166,7 @@
                 endpoint:
                    - "http://172.31.27.186:5000"
 		  ```
-		  IMP Note: Above YAML must be in valid format. also check whether proper indentation is used.
+		  IMP Note: Above YAML must be in a valid format. also, check whether proper indentation is used.
 
 		  To know more about valid YAML format use below link: 
 
@@ -187,7 +187,7 @@
 		workflowType=puccini-workflow
 		```
 		
-		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} for deploying sdwan, firewall. In case of oran models it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 				
       - For argo-workflow:
 
@@ -200,11 +200,11 @@
 		argoTemplateType=containerSet
         ```		
 		
-		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran models add all IPs.
+		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
 		
 		In argo workflow, there are two ways for executing argo templates.
 		
-        - containerSet : A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
+        - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
 				
 	      - For using containerSet based argo template set:
 	    
@@ -212,7 +212,7 @@
 		    argoTemplateType=containerSet
 		    ```
 			
-        - DAG : DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
+        - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
 				
 	      - For using DAG-based argo template set:
 		
@@ -573,13 +573,13 @@
   -- Unit k3s.service has failed.
   ```
   
-  Also, check registries.yaml whether it contains the vaild YAML format or not. if not then validate that YAML format and run the command as follows:
+  Also, check registries.yaml whether it contains the valid YAML format or not. if not then validate that YAML format and run the command as follows:
   
   ```sh
   $ sudo systemctl restart k3s
   ```
   
-  After running the restart command try to deploy nonrtric server again. 
+  After running the restart command try to deploy the nonrtric server again. 
 
 ## Post Deployment Verification Steps 
  
@@ -629,7 +629,7 @@
 	
 - Verify ric model:
 
-  - Verify all pods are running using the following commands on ric server:
+  - Verify all pods are running using the following commands on the ric server:
 	```sh		
 	$ sudo kubectl get pods -n ricplt
 	$ sudo kubectl get pods -n ricinfra
