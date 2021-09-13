@@ -94,7 +94,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  New image:
 	  
       ```sh          
-      image:  {IP_OF_CCI_REPO_ADDR}:5000/dmaap:localadapt_0.1
+      image:  {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
       ```
 	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
@@ -107,7 +107,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
     - Verify DMaaP Service is properly deployed:
   
-	  Run the command given below and verify that all containers are up.
+	  Run the following command and verify that all containers are up.
 	
 	  ```sh
 	  ubuntu@message_router:~/local-dmaap/messageservice/target/classes/docker-compose$ docker ps -a
@@ -117,15 +117,15 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  a93fcf78bcb9   nexus3.onap.org:10001/onap/dmaap/zookeeper:6.0.3   "/etc/confluent/dock…"   9 seconds ago   Up 6 seconds   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp   dockercompose_zookeeper_1
 	  ```
 	
-	  And run the following command 
+	  Also run the following command.
 	
       ```sh
-	  $ curl -X GET "http://{IP_OF_DMAAP_SERVER_ADDR}:3904/topics"
+	  $ curl -X GET "http://{IP_ADDR_OF_DMAAP_SERVER}:3904/topics"
       ```
 	  
-	  Note: {IP_OF_DMAAP_SERVER_ADDR} is the public IP address of 'DMaaP Server'
+	  Note: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
 	  
-      The above command should return output as follows:
+      The above command return output as follows:
 	  
       ```sh	  
 	  {"topics": []}
@@ -192,7 +192,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
       - TOSCA_SO -  service orchestrator    
       - TOSCA_COMPILER - puccini tosca compiler
-      - TOSCA_WORKFLOW - builtin workflow microservice
+      - TOSCA_WORKFLOW - built-in workflow microservice
       - TOSCA_POLICY - policy microservice
       - TOSCA_GAWP - argo based workflow microservice
 	  
@@ -260,11 +260,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
       - **Using pre built images**
           ----------------------
-        Make the following changes in puccini/docker-compose.yml of puccini
+        Make the following changes in puccini/docker-compose.yml file:
 	    
 	    ```sh
 	    orchestrator:
-            image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-so:0.1
+            image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-so:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -272,7 +272,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      -  ../dvol/log:/opt/app/log
 
 	    compiler:
-		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-compiler:0.1
+		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-compiler:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -280,7 +280,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      -  ../dvol/log:/opt/app/log
 
 	    workflow:
-		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-workflow:0.1
+		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-workflow:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -288,7 +288,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      -  ../dvol/log:/opt/app/log
 
 	    policy:
-		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-policy:0.1
+		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-policy:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -296,7 +296,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		      -  ../dvol/log:/opt/app/log
 
 	    gawp:
-		    image: {IP_OF_CCI_REPO_ADDR}:5000/tosca-gawp:0.1
+		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-gawp:0.1
 		    volumes:
 		      -  ../dvol/config:/opt/app/config
 		      -  ../dvol/models:/opt/app/models
@@ -306,19 +306,21 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
       - **Deploying images**
 	      ---------
-	    - Modify ~/puccini/dvol/config/application.cfg as follows:					
+	    - Modify ~/puccini/dvol/config/application.cfg as follows:
+
+		  ```sh
+		  [remote]
+		  remoteHost={IP_ADDR_OF_SERVER}
+		  remotePort=22
+		  remoteUser=ubuntu
+		  remotePubKey=/opt/app/config/cciPrivateKey
+		  msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
+		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+		  ```
 			
-		      [remote]
-		      remoteHost={IP_OF_SERVER_ADDR}
-		      remotePort=22
-		      remoteUser=ubuntu
-		      remotePubKey=/opt/app/config/cciPrivateKey
-		      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
-		      schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
 			
-	    Note1: {IP_OF_SERVER_ADDR} should be set to {IP_OF_DEMO_SERVER_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
-			
-        Note2: {IP_OF_DMAAP_SERVER_ADDR} is thr public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
+          Note2: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
 	  
         - Copy files as given follows:
 	  
@@ -476,7 +478,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       remotePubKey=/opt/app/config/cciPrivateKey
 	  ```	
 	
-	  Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+	  Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
 	
     - Build helm charts:
   
@@ -499,9 +501,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ helm deploy onap local/onap --namespace onap --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 900
 	  ```
 	
-	  To deploy ONAP requires around 35-40 min. 
+	  This step requires around 35-40 min to deploy ONAP. 
 	  
-    - To verify ONAP deployed successfully use the following command and all check all pods are in running state:
+    - To verify that ONAP is deployed successfully, use the following command and all check that all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
@@ -592,13 +594,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' VM in /etc/hosts file:
   
 	  ```sh
-	  {IP_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
-      {IP_OF_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
-      {IP_OF_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
-      {IP_OF_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
-      {IP_OF_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
-      {IP_OF_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
-      {IP_OF_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
+	  {IP_ADDR_OF_ONAP_OOM_DEMO} portal.api.simpledemo.onap.org    
+      {IP_ADDR_OF_ONAP_OOM_DEMO} vid.api.simpledemo.onap.org
+      {IP_ADDR_OF_ONAP_OOM_DEMO} sdc.api.simpledemo.onap.org
+      {IP_ADDR_OF_ONAP_OOM_DEMO} sdc.api.fe.simpledemo.onap.org
+      {IP_ADDR_OF_ONAP_OOM_DEMO} cli.api.simpledemo.onap.org
+      {IP_ADDR_OF_ONAP_OOM_DEMO} aai.api.sparky.simpledemo.onap.org
+      {IP_ADDR_OF_ONAP_OOM_DEMO} sdnc.api.simpledemo.onap.org
 	  ```
 	
     - Verify the following link should open in a browser to access the ONAP portal:
@@ -655,15 +657,15 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo install k3sup /usr/local/bin/
       $ sudo apt-get install socat
       $ sudo apt install jq
-  	  $ k3sup install --ip {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
+  	  $ k3sup install --ip {PRIVATE_IP_ADDR_OF__RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
   	  $ sudo mkdir ~/.kube 
       $ sudo cp /home/ubuntu/kubeconfig .kube/config
       $ sudo chmod 777 .kube/config
   	   
       # Make sure the /home/ubuntu/kubeconfig file contains an entry of cluster and context for ric.
     
-      $ k3sup install --host {PRIVATE_IP_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context default
-      $ k3sup install --host {PRIVATE_IP_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
+      $ k3sup install --host {PRIVATE_IP_ADDR_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context default
+      $ k3sup install --host {PRIVATE_IP_ADDR_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
 	  ```
 	  
 	- Run the following commands to install python,jq, and AWS CLI:
@@ -803,31 +805,28 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - Use the following request to store the model in Dgraph:
 	  
 	```sh
-	POST http://{IP_OF_DEMO_SERVER_ADDR}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
 	{
-	   "url":"/opt/app/models/<ModelName>.csar",
-	   "output": "./<ModelName>-dgraph-clout.json",
+	   "url":"/opt/app/models/{MODEL_NAME}.csar",
+	   "output": "./{MODEL_NAME}-dgraph-clout.json",
 	   "resolve":true,
 	   "coerce": false,
 	   "quirks": ["data_types.string.permissive"],
-	   "inputs":"",
 	   "inputsUrl": ""
 	}
 	``` 
 	
-	For the sdwan model, make the following changes in the above requests:
+	For all models except the ric model use the following model-specific additional fields:
 	
 	```sh
 	{
 	   "inputs":"",
-	   "url":"/opt/app/models/sdwan.csar",
-	   "output": "./sdwan-dgraph-clout.json",
+	   "url":"/opt/app/models/{MODEL_NAME}.csar",
+	   "output": "./{MODEL_NAME}-dgraph-clout.json",
 	}
     ```
 	
-	Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
-	  
-    For the ric model, make the following changes:
+	For ric model use following model-specific additional fields:
 	  
 	```sh
 	{
@@ -837,14 +836,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     }
     ```	
 	  
-  - Create service Instance without deployment:
+  - Create service instance without deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	```sh			
-	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/createInstance
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
 	{
-		"name" : "<Instance_Name>",
-		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
+		"name" : "{INSTANCE_NAME}",
+		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":true,
@@ -903,15 +902,15 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
 	  ```
 
-  - Create service Instance with deployment:
+  - Create service instance with deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
 	```sh			
-	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/createInstance
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
 	{
-		"name" : "<Instance_Name>",
-		"output": "../../workdir/<ModelName>-dgraph-clout.yaml",
+		"name" : "{INSTANCE_NAME}",
+		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
 		"generate-workflow":true,
 		"execute-workflow":true,
 		"list-steps-only":false,
@@ -973,7 +972,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - To only list workflow steps of a model without executing/deploying them use the following:
 	  
 	```sh
-    POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
 	   "list-steps-only": true,
 	   "execute-policy": false
@@ -983,7 +982,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - To Execute Workflow steps of a model which has already been saved in the database:
 	   
 	```sh	
-    POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/workflows/deploy
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -993,22 +992,20 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - Execute Policy(This is valid only for the firewall model): 
 	  
 	```sh
-	POST http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is valid only for the firewall model):
          
 	```sh
-	DELETE http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policy/packet_volume_limiter
+	DELETE http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is valid only for the firewall model):
          
 	```sh
-	GET http://{IP_OF_DEMO_SERVER_ADDR}:10000/bonap/templates/<InstanceName>/policies
+	GET http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policies
 	```
-	
-	(TODO We can add the output of each command)
 	
 - **ONAP OOM testing**
     ----------------
@@ -1039,7 +1036,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	  
-	  Note: Use the following headers in a POSTMAN request
+	  Use the following headers in a POSTMAN request
 	  
       ```sh
       headers :
@@ -1174,7 +1171,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  }
         ```
 		
-        NOTE: For new CCI models add a new service type in the service-subscription list of Create customer REST API
+        For new CCI models add a new service type in the service-subscription list of create customer REST API.
 		
       - Create a dummy service:
 		
@@ -1197,9 +1194,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
 	    ```
 		
-    - Update VID with the following REST requests using POSTMAN
+    - Update VID with the following REST API requests using POSTMAN
 	  
-      Note: Use the following headers in the POSTMAN request
+      Use the following headers in the POSTMAN request
 	  
       ```sh
 	  Content-Type:application/json
@@ -1262,7 +1259,6 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       'License Agreement' and 'Feature Groups'.
       Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts based on your requirement.
       Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
-		
 	  ```
 	  
     - Virtual Function (VF) creation:
@@ -1324,7 +1320,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
 - Verify the sdwan model:  
  
-  - Verify {service_instance_name}_SDWAN_Site_A and {service_instance_name}_SDWAN_Site_B VMs should be created on AWS N.California region.
+  - Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should be created on AWS N.California region.
   - SSH SDWAN_Site_A VM and run the following command:
     
 	```sh
@@ -1341,11 +1337,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 - Verify firewall model:
 
-  - Verify {service_instance_name}_firewall, {service_instance_name}_packet_genrator and {service_instance_name}_packet_sink VMs should be created on AWS N.Virginia region.
+  - Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 
 - Verify nonrtric model:
 	
-  - Verify that all pods are running using the following command on Bonap Server: 
+  - Verify that all pods are in running state using the following command on Bonap Server: 
     ```sh
 	$ kubectl get pods -n nonrtric
 	
@@ -1365,7 +1361,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 - Verify ric model:
 
-  - Verify all pods are running using the following commands:
+  - Verify all pods are in running state using the following commands on Bonap Server:
 	```sh		
 	$ kubectl get pods -n ricplt
 	$ kubectl get pods -n ricinfra
