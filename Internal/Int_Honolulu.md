@@ -1,4 +1,4 @@
-# Int_Honolulul
+# Int_Honolulu
 
 ## Table of contents
 
