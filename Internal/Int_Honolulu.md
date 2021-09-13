@@ -128,7 +128,7 @@
 	     
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
-		[ORAN-Servers](https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers)
+		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
 	  
 	  - Argo-workflow:
 	    
@@ -166,9 +166,10 @@
                 endpoint:
                    - "http://172.31.27.186:5000"
 		  ```
+		  
 		  **IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
 
-		  To know more about valid YAML format use link as follows: 
+		  To know more about valid YAML format use the follwoing link: 
 
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
@@ -187,7 +188,7 @@
 		workflowType=puccini-workflow
 		```
 		
-		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 				
       - For argo-workflow:
 
@@ -414,8 +415,8 @@
   ```sh
   POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30294/compiler/model/db/save
   {
-	 "url":"/opt/app/config/<MODEL_NAME>.csar",
-	 "output": "./<MO>-dgraph-clout.json",
+	 "url":"/opt/app/config/{MODEL_NAME}.csar",
+	 "output": "./{MODEL_NAME}-dgraph-clout.json",
 	 "resolve":true,
 	 "coerce":false,
 	 "quirks": ["data_types.string.permissive"],
@@ -428,8 +429,8 @@
   ```sh
   {
 	 "inputs":"",
-	 "url":"/opt/app/models/sdwan.csar",
-	 "output": "./sdwan-dgraph-clout.json",
+	 "url":"/opt/app/models/{MODEL_NAME}.csar",
+	 "output": "./{MODEL_NAME}-dgraph-clout.json",
   }
   ```
 	  
@@ -450,8 +451,8 @@
   ```sh			
   POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/createInstance
   {
-	 "name":"<INSTANCE_NAME>",
-	 "output":"./<MODEL_NAME>.json",
+	 "name":"{INSTANCE_NAME}",
+	 "output":"./{MODEL_NAME}.json",
 	 "list-steps-only":false,
 	 "generate-workflow":false,
 	 "execute-workflow":false,
@@ -512,7 +513,7 @@
 
 - To deploy models:
   
-  Use following REST API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step
+  Use following REST API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step:
     
   ```sh
   http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
@@ -571,13 +572,13 @@
   -- Unit k3s.service has failed.
   ```
   
-  Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command as follows:
+  Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command to restart Ks3:
   
   ```sh
   $ sudo systemctl restart k3s
   ```
   
-  After K3s restart, check whether it install properly or not and try to deploy the nonrtric server again. 
+  After K3s restart, check whether it install properly or not and try to deploy the nonrtric model again. 
 
 ## Post Deployment Verification Steps 
  
@@ -585,7 +586,7 @@
   
 - Verify sdwan model:  
  
-  - Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should be created on AWS N.California region.
+  - Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs are created on AWS N.California region.
   - SSH SDWAN_Site_A VM and run the following command:
     
 	```sh
@@ -599,6 +600,7 @@
 	```sh
 	$ ifconfig -a
 	```
+	
 	Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vvp2) of SDWAN_Site_A.
 	
 - Verify firewall model:
