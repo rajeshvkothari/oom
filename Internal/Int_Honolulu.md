@@ -223,6 +223,7 @@
     - Install golang:
 	  
 	  ```sh
+	  $ /home/ubuntu
 	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
 	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
 	  $ sudo mv go /usr/local
