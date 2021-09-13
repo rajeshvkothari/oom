@@ -11,7 +11,7 @@
 
 ## Introduction
   
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo workflow. It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo-workflow. It also describes steps for building csars for various models currently available.
 	
   For now, we can test argo workflow only in tosca components running in pods format in the OOM Honolulu environment.
 
@@ -120,13 +120,13 @@
 	
     - Create oran setup(optional):
 	  
-	  Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall model.
+	  Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall models.
 	  
-	  GIN can deploy the tosca model using two ways.
+	  GIN can deploy the tosca models using two ways.
 	  
-      - Build-in(puccini) workflow:
+      - Built-in(puccini) workflow:
 	     
-		To create oran setup for Build-in(puccini) workflow use the README.md as follows:
+		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
 		```sh
 		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
@@ -134,7 +134,7 @@
 	  
 	  - Argo-workflow:
 	    
-		To create oran setup for Argo-workflow uses the steps as follows:
+		To create oran setup for argo-workflow use the steps as follows:
 	  
 	    - Create two AWS VMs in the Ohio region with names as follows:
 		
@@ -153,7 +153,7 @@
 		  Security group: launch-wizard-19
 		  ```
 				   
-	    - Login into ric Server and nonrtric Server and run the following commands:
+	    - Login into ric server and nonrtric server and run the following commands:
 		  
 		  ```sh
 		  $ sudo apt update
@@ -173,7 +173,7 @@
 		  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
-	  - For Build-in(puccini) workflow:
+	  - For built-in(puccini) workflow:
 	    
 		```sh
 		[remote]
@@ -184,9 +184,9 @@
 		workflowType=puccini-workflow
 		```
 		
-		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} (created in 'Pre Deployment Steps') for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers 'Pre Deployment Steps') for deploying oran models.
+		Note: {IP_OF_SERVER_ADDR} should be set to {IP_OF_ONAP_OOM_DEMO_ADDR} for deploying sdwan, firewall or it should be set to {IP_OF_BONAP_SERVER_ADDR} (created in oran servers of 'Pre Deployment Steps') for deploying oran models.
 				
-      - For Argo-workflow:
+      - For argo-workflow:
 
 		```sh
 		remoteHost={IP_OF_ONAP_OOM_DEMO_ADDR}
@@ -197,11 +197,11 @@
 		workflowType=argo-workflow
         ```		
 		
-		Note: To deploy a firewall, sdwan models add only {IP_OF_ONAP_OOM_DEMO_ADDR} and oran models add all IP.
+		Note: To deploy a firewall, sdwan models only add {IP_OF_ONAP_OOM_DEMO_ADDR} and for oran models add all IPs.
 		
-		In an Argo workflow, there is two ways/method for executing argo template.
+		In an argo workflow, there is two ways for executing argo template.
 		
-        - containerSet : A containerSet template is similar to a normal container or script template but allow you to     specify multiple containers to run within a single pod.
+        - containerSet : A containerSet template is similar to a normal container or script template but allow you to specify multiple containers to run within a single pod.
 				
 	      - For using containerSet based argo template set:
 	    
@@ -290,13 +290,13 @@
 	  
 	  To deploy ONAP requires around 25-30 min.
 	  
-	- To verify ONAP deployed successfully use the following command and all check all pods are in running state:
+	- To verify ONAP deployed successfully use the following command and check all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
 	  ```
 	
-	- To build the csars follow the README.md as follows:
+	- To build the csars use the GIN_README as follows:
 	
       ```sh
 	  https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#Building-Tosca-Model-Csars
@@ -308,7 +308,7 @@
 
   Send requests to tosca pods using postman.
 
-- Use the following request to store the model in Dgraph:
+- Use the following request to store the models in Dgraph:
     
   ```sh
   POST http://{IP_OF_ONAP_OOM_DEMO_ADDR}:30294/compiler/model/db/save
@@ -333,7 +333,7 @@
   }
   ```
 	
-  Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts model(means change only csar name).
+  Note: Use a similar pattern for firewall, nonrtric, qp, qp-driver, ts models(means change only csar name).
 	  
   For the ric model, make the following changes:
 	  
@@ -345,7 +345,7 @@
   }
   ```
 	
-- Create service Instance:
+- Create service instance:
 	
   For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
 	
@@ -361,7 +361,7 @@
   }
   ```	
 	  
-  Use following models-specific additional fields:
+  Use following model-specific additional fields:
 
     **Firewall:**  
 	```sh
@@ -424,11 +424,13 @@
   }
   ```
   
-  Note: While testing if nonrtric get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
+  Note: While testing if nonrtric model get failed then check that whether the ks3 is installed properly or not by running the command on ric and nonrtric VM as follows:
+  
   ```sh
   $ journalctl -xe
   ```
-  Also, check the registries.yaml whether it contains the validated YAML format or not. if not then validate that content and run the below command:
+  
+  Also, check the registries.yaml whether it contains the validated YAML format or not. if not then validate that content and run the command as follows:
   ```sh
   $ sudo systemctl restart k3s
   ```
@@ -460,7 +462,7 @@
 
 - Verify nonrtric model:
 	
-  - Verify that all pods are running using the following command on a nonrtric Server: 
+  - Verify that all pods are running using the following command on a nonrtric server: 
     ```sh
 	$ sudo kubectl get pods -n nonrtric
 	
@@ -480,7 +482,7 @@
 	
 - Verify ric model:
 
-  - Verify all pods are running using the following commands on ric Server:
+  - Verify all pods are running using the following commands on ric server:
 	```sh		
 	$ sudo kubectl get pods -n ricplt
 	$ sudo kubectl get pods -n ricinfra
