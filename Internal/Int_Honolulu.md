@@ -129,6 +129,7 @@
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
 		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
+		
 	  
 	  - Argo-workflow:
 	    
@@ -224,7 +225,7 @@
     - Install golang:
 	  
 	  ```sh
-	  $ /home/ubuntu
+	  $ cd /home/ubuntu
 	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
 	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
 	  $ sudo mv go /usr/local
