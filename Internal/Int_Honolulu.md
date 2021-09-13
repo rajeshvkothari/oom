@@ -201,7 +201,7 @@
 		argoTemplateType=containerSet
         ```		
 		
-		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
+		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran models add all IPs.
 		
 		In argo workflow, there are two ways for executing argo templates.
 		
