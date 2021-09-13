@@ -128,9 +128,7 @@
 	     
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
-		```sh
 		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
-		```
 	  
 	  - Argo-workflow:
 	    
@@ -302,9 +300,7 @@
 	
 	- To build the csars use the GIN_README as follows:
 	
-      ```sh
 	  https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#Building-Tosca-Model-Csars
-	  ```
 	
 	- Copy updated csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
 
