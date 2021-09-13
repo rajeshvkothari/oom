@@ -207,7 +207,7 @@
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
 				
-	      For using containerSet based argo template set:
+	      For using containerSet based argo template use as follows:
 	    
 		  ```sh
 		  argoTemplateType=containerSet
@@ -215,7 +215,7 @@
 			
         - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
 				
-	      For using DAG-based argo template set:
+	      For using DAG-based argo template use as follows:
 		
 		  ```sh	
 		  argoTemplateType=DAG
