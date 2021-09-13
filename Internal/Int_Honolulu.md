@@ -197,6 +197,7 @@
 		ricServerIP={IP_ADDR_OF_RIC}
 		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
 		workflowType=argo-workflow
+		argoTemplateType=containerSet
         ```		
 		
 		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran models add all IPs.
@@ -227,7 +228,7 @@
 	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
 	  $ sudo mv go /usr/local
 	  
-      # Add the below paths in .profile file: 
+      # Add following paths in .profile file: 
       $ sudo vi ~/.profile
 		  export GOPATH=$HOME/go
 		  export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
@@ -261,10 +262,10 @@
 	  ```sh
 	  $ kubectl create ns onap
 	  
-	  # For containerSet use below command:
+	  # For containerSet use following command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
 	  
-	  # For DAG use the below command:
+	  # For DAG use following command:
 	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
 	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
@@ -406,7 +407,7 @@
 
 ## Testing of tosca models in HONOLULU release
 
-  Currently testing of tosca models in honolulu is done using REST API requests sent from POSTMAN. This requests and there order is describe as follows.
+  Currently, testing of tosca models in Honolulu is done using REST API requests sent from POSTMAN. These requests and their order is described as follows.
 
 - Store models in Dgraph:
     
@@ -422,7 +423,7 @@
   }
   ```
 	
-  For all models except ric model use following model-specific additional fields:
+  For all models except the ric model use following model-specific additional fields:
 	
   ```sh
   {
@@ -584,7 +585,7 @@
  
   Use following steps to verify models are deployed successfully. 
   
-- Verify the sdwan model:  
+- Verify sdwan model:  
  
   - Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should be created on AWS N.California region.
   - SSH SDWAN_Site_A VM and run the following command:
