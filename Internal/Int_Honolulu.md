@@ -11,7 +11,7 @@
 
 ## Introduction
   
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo-workflow. It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo-workflow.
 	
   For now, we can test argo workflow only in tosca components running in pods format in the OOM Honolulu environment.
 
