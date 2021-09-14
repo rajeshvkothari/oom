@@ -128,7 +128,7 @@
 	     
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
-		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
+		https://github.com/customercaresolutions/tosca-models/blob/master/GIN_README.md#ORAN-Servers
 		
 	  
 	  - Argo-workflow:
@@ -199,7 +199,7 @@
 		ricServerIP={IP_ADDR_OF_RIC}
 		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
 		workflowType=argo-workflow
-		argoTemplateType=containerSet
+		argoTemplateType=containerSet | DAG
         ```		
 		
 		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran models add all IPs.
@@ -410,6 +410,8 @@
   Currently, testing of tosca models in Honolulu is done using REST API requests sent from POSTMAN. These requests and their order is described as follows.
 
 - Store models in Dgraph:
+
+  For sdwan, firewall, nonrtric, qp, qp-driver, ts models use following:
     
   ```sh
   POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30294/compiler/model/db/save
@@ -425,24 +427,22 @@
     "inputsUrl": ""
   }
   ```
-	
-  For all models except the ric model use the following model-specific fields:
-	
+	  
+  For ric model use following:
+	  
   ```sh
   {
-	 "inputs":"",
-	 "url":"/opt/app/models/sdwan.csar",
-	 "output": "./sdwan-dgraph-clout.json"
-  }
-  ```
-	  
-  For ric model use following model-specific additional fields:
-	  
-  ```sh
-  { 
-     "inputs":{"helm_version":"2.17.0"},
-     "url":"/opt/app/models/ric.csar",
-     "output": "./ric-dgraph-clout.json",
+    "url": "/opt/app/config/ric.csar",
+    "resolve": true,
+    "coerce": false,
+    "quirks": [
+        "data_types.string.permissive"
+    ],
+    "output": "./nonrtric-dgraph-clout.json",
+    "inputs": {
+        "helm_version": "2.17.0"
+    },
+    "inputsUrl": ""
   }
   ```
 	
@@ -595,7 +595,7 @@
 	$ ifconfig -a
 	```
 	
-    Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
+    Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
 	
   - SSH SDWAN_Site_B VM and run the following command:
     
@@ -603,7 +603,7 @@
 	$ ifconfig -a
 	```
 	
-	Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vvp2) of SDWAN_Site_A.
+	Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_A.
 	
 - Verify firewall model:
 
