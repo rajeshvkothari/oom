@@ -128,8 +128,7 @@
 	     
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
-		https://github.com/customercaresolutions/tosca-models/blob/master/GIN_README.md#ORAN-Servers
-		
+		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
 	  
 	  - Argo-workflow:
 	    
