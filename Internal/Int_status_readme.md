@@ -26,15 +26,7 @@
 	  <td>Ok</td>
     </tr>
     <tr>
-      <td rowspan="2">Policy</td>
-	  <td>DAG</td>
-	  <td>Ok</td>
-	  <td>Ok</td>
-	  <td>Ok</td>
-	  <td>Pending(FW=,Sdwan=,Ric=)</td>
-    </tr>
-	<tr>
-	  <td>CS</td>
+      <td>Policy</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
