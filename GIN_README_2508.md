@@ -200,9 +200,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  There are two ways to use tosca images:
 	  
-      . Building images - built from a scratch repository
+      $ Building images - built from a scratch repository
 	  
-	  . Using pre built images - use pre-build version of the images from CCI_REPO
+	  $ Using pre built images - use pre-build version of the images from CCI_REPO
 	  
 	  Login into the Demo Server and perform steps as follows:
 	
@@ -223,11 +223,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  dgraphdb:
 		    image: dgraph/standalone:latest
 		    ports:
-			  - "8000:8000"
-			  - "8080:8080"
-			  - "9080:9080"
+              - "8000:8000"
+              - "8080:8080"
+              - "9080:9080"
 		    networks:
-			  - cciso-ntwk
+              - cciso-ntwk
 
 		  orchestrator:
 		    build:
@@ -252,26 +252,26 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 			  dockerfile: Dockerfile.compiler.multistage
 		    image: cci/tosca-compiler:latest
 		    ports:
-			    - "10010:10010"
+			  - "10010:10010"
 		    volumes:
-			    -  ./dvol/config:/opt/app/config
-				-  ./dvol/models:/opt/app/models
-				-  ./dvol/data:/opt/app/data
-				-  ./dvol/log:/opt/app/log
+			  -  ./dvol/config:/opt/app/config
+			  -  ./dvol/models:/opt/app/models
+			  -  ./dvol/data:/opt/app/data
+			  -  ./dvol/log:/opt/app/log
 		    networks:
-			    - cciso-ntwk
+			  - cciso-ntwk
 		    depends_on:
-			    - dgraphdb
+			  - dgraphdb
 
 		  workflow:
-		        build:
-				context: .
-				  dockerfile: Dockerfile.workflow.multistage
-                image: cci/tosca-workflow:latest
+		      build:
+		        context: .
+		        dockerfile: Dockerfile.workflow.multistage
+              image: cci/tosca-workflow:latest
 			    ports:
-					- "10020:10020"
+			        - "10020:10020"
 			    volumes:
-					-  ./dvol/config:/opt/app/config
+				    -  ./dvol/config:/opt/app/config
 					-  ./dvol/models:/opt/app/models
 					-  ./dvol/data:/opt/app/data
 					-  ./dvol/log:/opt/app/log
