@@ -330,80 +330,80 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  dgraphdb:
 		    image: dgraph/standalone:latest
 		    ports:
-			  - "8000:8000"
-			  - "8080:8080"
-			  - "9080:9080"
+		      - "8000:8000"
+		      - "8080:8080"
+		      - "9080:9080"
 		    networks:
-			  - cciso-ntwk
+		      - cciso-ntwk
 
 		  orchestrator:
 		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-so:0.1
 		    ports:
-			  - "10000:10000"
+		      - "10000:10000"
 		    volumes:
-			  -  ../dvol/config:/opt/app/config
-			  -  ../dvol/models:/opt/app/models
-			  -  ../dvol/data:/opt/app/data
-			  -  ../dvol/log:/opt/app/log
+	          -  ../dvol/config:/opt/app/config
+	          -  ../dvol/models:/opt/app/models
+	          -  ../dvol/data:/opt/app/data
+	          -  ../dvol/log:/opt/app/log
 		    networks:
-			  - cciso-ntwk
+		      - cciso-ntwk
 			depends_on:
-			  - dgraphdb
+              - dgraphdb
 
 		  compiler:
 		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-compiler:0.1
 		    ports:
-				- "10010:10010"
+		        - "10010:10010"
 		    volumes:
-				-  ../dvol/config:/opt/app/config
-				-  ../dvol/models:/opt/app/models
-				-  ../dvol/data:/opt/app/data
-				-  ../dvol/log:/opt/app/log
+			    -  ../dvol/config:/opt/app/config
+		        -  ../dvol/models:/opt/app/models
+		        -  ../dvol/data:/opt/app/data
+		        -  ../dvol/log:/opt/app/log
 		    networks:
-				- cciso-ntwk
+		        - cciso-ntwk
 		    depends_on:
 				- dgraphdb
 
 		  workflow:
 			    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-workflow:0.1
 			    ports:
-					- "10020:10020"
+			        - "10020:10020"
 			    volumes:
-					-  ../dvol/config:/opt/app/config
-					-  ../dvol/models:/opt/app/models
-					-  ../dvol/data:/opt/app/data
-					-  ../dvol/log:/opt/app/log
+		            -  ../dvol/config:/opt/app/config
+		            -  ../dvol/models:/opt/app/models
+	                -  ../dvol/data:/opt/app/data
+	                -  ../dvol/log:/opt/app/log
 			    networks:
-					- cciso-ntwk
+		            - cciso-ntwk
 			    depends_on:
-					- dgraphdb
+		            - dgraphdb
 
 		  policy:
 			    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-policy:0.1
 			    ports:
-					- "10030:10030"
+			        - "10030:10030"
 			    volumes:
-					-  ../dvol/config:/opt/app/config
-					-  ../dvol/models:/opt/app/models
-					-  ../dvol/data:/opt/app/data
-					-  ../dvol/log:/opt/app/log
+		            -  ../dvol/config:/opt/app/config
+		            -  ../dvol/models:/opt/app/models
+	                -  ../dvol/data:/opt/app/data
+	                -  ../dvol/log:/opt/app/log
 			    networks:
-					- cciso-ntwk
+		            - cciso-ntwk
 			    depends_on:
-					- dgraphdb
+	                - dgraphdb
 		  gawp:
 			    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-gawp:0.1
 			    ports:
-					- "10040:10040"
+		            - "10040:10040"
 			    volumes:
-					-  ../dvol/config:/opt/app/config
-					-  ../dvol/models:/opt/app/models
-					-  ../dvol/data:/opt/app/data
-					-  ../dvol/log:/opt/app/log
+		            -  ../dvol/config:/opt/app/config
+	                -  ../dvol/models:/opt/app/models
+	                -  ../dvol/data:/opt/app/data
+	                -  ../dvol/log:/opt/app/log
 			    networks:
-					- cciso-ntwk
+	                - cciso-ntwk
 			    depends_on:
-					- dgraphdb
+	                - dgraphdb
 		# custom bridge network
 		networks:
 		  cciso-ntwk:
