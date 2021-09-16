@@ -182,6 +182,7 @@
 		```sh
 		[remote]
 		remoteHost={IP_ADDR_OF_SERVER}
+		reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
 		remotePort=22
 		remoteUser=ubuntu
 		remotePubKey=/opt/app/config/cciPrivateKey
@@ -294,7 +295,7 @@
 	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
       ```
 	  
-	  This step requires around 25-30 min to deploy ONAP.
+	  This step requires around 35-40 min to deploy ONAP.
 	  
 	- To verify that ONAP is deployed successfully, use the following command and check that all pods are in running state:
 
@@ -437,7 +438,7 @@
     "quirks": [
         "data_types.string.permissive"
     ],
-    "output": "./nonrtric-dgraph-clout.json",
+    "output": "./ric-dgraph-clout.json",
     "inputs": {
         "helm_version": "2.17.0"
     },
@@ -517,7 +518,7 @@
   Use following REST API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step:
     
   ```sh
-  http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+  POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
   {
 	 "list-steps-only": false,
 	 "execute-policy": false
@@ -592,6 +593,43 @@
     
 	```sh
 	$ ifconfig -a
+	
+	ubuntu@ip-172-19-254-33:~$ ifconfig -a
+	ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			inet 172.19.254.33  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::4cf:94ff:fe39:30a7  prefixlen 64  scopeid 0x20<link>
+			ether 06:cf:94:39:30:a7  txqueuelen 1000  (Ethernet)
+			RX packets 139  bytes 25029 (25.0 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 161  bytes 24640 (24.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 254  bytes 21608 (21.6 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 254  bytes 21608 (21.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			inet 172.19.1.249  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::476:2dff:fe3c:f8a9  prefixlen 64  scopeid 0x20<link>
+			ether 06:76:2d:3c:f8:a9  txqueuelen 1000  (Ethernet)
+			RX packets 3  bytes 126 (126.0 B)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 40  bytes 2852 (2.8 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			inet 10.100.0.18  netmask 255.255.255.254  broadcast 0.0.0.0
+			inet6 fe80::27ff:fefd:18  prefixlen 64  scopeid 0x20<link>
+			ether 02:00:27:fd:00:18  txqueuelen 1000  (Ethernet)
+			RX packets 38  bytes 3260 (3.2 KB)
+			RX errors 0  dropped 1  overruns 0  frame 0
+			TX packets 50  bytes 4164 (4.1 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 	```
 	
     Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
@@ -600,6 +638,43 @@
     
 	```sh
 	$ ifconfig -a
+	
+	ubuntu@ip-172-14-254-13:~$ ifconfig -a
+	ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			inet 172.14.254.13  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::43f:10ff:fedf:b2b3  prefixlen 64  scopeid 0x20<link>
+			ether 06:3f:10:df:b2:b3  txqueuelen 1000  (Ethernet)
+			RX packets 322  bytes 38221 (38.2 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 325  bytes 37083 (37.0 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 255  bytes 21720 (21.7 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 255  bytes 21720 (21.7 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			inet 172.14.1.152  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::4a3:43ff:fe0a:33eb  prefixlen 64  scopeid 0x20<link>
+			ether 06:a3:43:0a:33:eb  txqueuelen 1000  (Ethernet)
+			RX packets 6  bytes 252 (252.0 B)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 63  bytes 4530 (4.5 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			inet 10.100.0.19  netmask 255.255.255.254  broadcast 0.0.0.0
+			inet6 fe80::27ff:fefd:19  prefixlen 64  scopeid 0x20<link>
+			ether 02:00:27:fd:00:19  txqueuelen 1000  (Ethernet)
+			RX packets 64  bytes 5380 (5.3 KB)
+			RX errors 0  dropped 1  overruns 0  frame 0
+			TX packets 83  bytes 6698 (6.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 	```
 	
 	Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_A.
