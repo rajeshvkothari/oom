@@ -211,7 +211,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  - **Building images**
 	      ---------------
        
-	    To build the images make sure puccini/docker-compose.yaml is look likes as follows:
+	    To build the images make sure puccini/docker-compose.yaml is looks as follows: 
 		
 	    ```sh
 	    version: '3'
@@ -316,7 +316,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
       - **Using pre built images**
           ----------------------
-        To use pre-build images make sure puccini/docker-compose.yaml is look likes as follows:
+        To use pre-build images make sure puccini/docker-compose.yaml is looks as follows:
 	    
 	    ```sh
 	    version: '3'
