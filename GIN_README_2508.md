@@ -198,13 +198,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       - TOSCA_POLICY - policy microservice
       - TOSCA_GAWP - argo based workflow microservice
 	  
-	  These images can either be built from a scratch repository or a pre-build version of the images are used from CCI_REPO VM.
-	  
 	  There are two ways to use tosca images:
 	  
-      - Building images built from a scratch repository
+      . Building images - built from a scratch repository
 	  
-	  - Using pre built images use pre-build version of the images from CCI_REPO
+	  . Using pre built images - use pre-build version of the images from CCI_REPO
 	  
 	  Login into the Demo Server and perform steps as follows:
 	
@@ -254,22 +252,22 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 			  dockerfile: Dockerfile.compiler.multistage
 		    image: cci/tosca-compiler:latest
 		    ports:
-				- "10010:10010"
+			    - "10010:10010"
 		    volumes:
-				-  ./dvol/config:/opt/app/config
+			    -  ./dvol/config:/opt/app/config
 				-  ./dvol/models:/opt/app/models
 				-  ./dvol/data:/opt/app/data
 				-  ./dvol/log:/opt/app/log
 		    networks:
-				- cciso-ntwk
+			    - cciso-ntwk
 		    depends_on:
-				- dgraphdb
+			    - dgraphdb
 
 		  workflow:
-			    build:
-				  context: .
+		        build:
+				context: .
 				  dockerfile: Dockerfile.workflow.multistage
-			    image: cci/tosca-workflow:latest
+                image: cci/tosca-workflow:latest
 			    ports:
 					- "10020:10020"
 			    volumes:
