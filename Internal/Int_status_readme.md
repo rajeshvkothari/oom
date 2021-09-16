@@ -26,7 +26,7 @@
 	  <td>Ok</td>
     </tr>
     <tr>
-      <td>Policy</td>
+      <td colspan="2">Policy</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
