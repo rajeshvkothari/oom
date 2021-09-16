@@ -223,29 +223,29 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    version: '3'
 		services:
 		  dgraphdb:
-			image: dgraph/standalone:latest
-			ports:
+		    image: dgraph/standalone:latest
+		    ports:
 			  - "8000:8000"
 			  - "8080:8080"
 			  - "9080:9080"
-			networks:
+		    networks:
 			  - cciso-ntwk
 
 		  orchestrator:
-			build:
+		    build:
 			  context: .
 			  dockerfile: Dockerfile.so.multistage
-			image: cci/tosca-so:latest
-			ports:
+		    image: cci/tosca-so:latest
+		    ports:
 			  - "10000:10000"
-			volumes:
+		    volumes:
 			  -  ./dvol/config:/opt/app/config
 			  -  ./dvol/models:/opt/app/models
 			  -  ./dvol/data:/opt/app/data
 			  -  ./dvol/log:/opt/app/log
-			networks:
+		    networks:
 			  - cciso-ntwk
-			depends_on:
+		    depends_on:
 			  - dgraphdb
 
 		  compiler:
