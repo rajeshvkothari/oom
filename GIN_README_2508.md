@@ -100,6 +100,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
 	
     - Start DMaaP Service:
+	
       ```sh
       $ cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
       $ docker-compose up -d
@@ -117,7 +118,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  a93fcf78bcb9   nexus3.onap.org:10001/onap/dmaap/zookeeper:6.0.3   "/etc/confluent/dock…"   9 seconds ago   Up 6 seconds   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp   dockercompose_zookeeper_1
 	  ```
 	
-	  Also run the following command.
+	  Also, run the following command.
 	
       ```sh
 	  $ curl -X GET "http://{IP_ADDR_OF_DMAAP_SERVER}:3904/topics"
@@ -145,7 +146,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  Security group: launch-wizard-19
       ```
     
-    - Setup Docker on Demo Server
+    - Setup Docker on Demo Server:
+	
       ```sh
       $ sudo apt update
       $ sudo apt install docker.io
@@ -208,100 +210,198 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     
 	  - **Building images**
 	      ---------------
-        Make the following changes in puccini/docker-compose.yml of puccini
-	    
+       
+	    To build the images make sure puccini/docker-compose.yaml is look likes as follows:
+		
 	    ```sh
-	    orchestrator:
-	        build:
-		      context: .
+	    version: '3'
+		services:
+		  dgraphdb:
+			image: dgraph/standalone:latest
+			ports:
+			  - "8000:8000"
+			  - "8080:8080"
+			  - "9080:9080"
+			networks:
+			  - cciso-ntwk
+
+		  orchestrator:
+			build:
+			  context: .
 			  dockerfile: Dockerfile.so.multistage
-		    volumes:
+			image: cci/tosca-so:latest
+			ports:
+			  - "10000:10000"
+			volumes:
 			  -  ./dvol/config:/opt/app/config
 			  -  ./dvol/models:/opt/app/models
 			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log		   
-	    compiler:
-	        build:
-		      context: .
+			  -  ./dvol/log:/opt/app/log
+			networks:
+			  - cciso-ntwk
+			depends_on:
+			  - dgraphdb
+
+		  compiler:
+			build:
+			  context: .
 			  dockerfile: Dockerfile.compiler.multistage
-		    volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    workflow:
-	        build:
-			  context: .
-			  dockerfile: Dockerfile.workflow.multistage
-		    volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    policy:
-	        build:
-			  context: .
-			  dockerfile: Dockerfile.policy.multistage
-		    volumes:
-			  -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log
-	    gawp:
-	        build:
-			  context: .
-			  dockerfile: Dockerfile.gawp.multistage
-		    volumes:
-		      -  ./dvol/config:/opt/app/config
-			  -  ./dvol/models:/opt/app/models
-			  -  ./dvol/data:/opt/app/data
-			  -  ./dvol/log:/opt/app/log  
+			image: cci/tosca-compiler:latest
+			ports:
+				- "10010:10010"
+			volumes:
+				-  ./dvol/config:/opt/app/config
+				-  ./dvol/models:/opt/app/models
+				-  ./dvol/data:/opt/app/data
+				-  ./dvol/log:/opt/app/log
+			networks:
+				- cciso-ntwk
+			depends_on:
+				- dgraphdb
+
+		  workflow:
+				build:
+				  context: .
+				  dockerfile: Dockerfile.workflow.multistage
+				image: cci/tosca-workflow:latest
+				ports:
+					- "10020:10020"
+				volumes:
+					-  ./dvol/config:/opt/app/config
+					-  ./dvol/models:/opt/app/models
+					-  ./dvol/data:/opt/app/data
+					-  ./dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
+
+		  policy:
+				build:
+				  context: .
+				  dockerfile: Dockerfile.policy.multistage
+				image: cci/tosca-policy:latest
+				ports:
+					- "10030:10030"
+				volumes:
+					-  ./dvol/config:/opt/app/config
+					-  ./dvol/models:/opt/app/models
+					-  ./dvol/data:/opt/app/data
+					-  ./dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
+		  gawp:
+				build:
+				  context: .
+				  dockerfile: Dockerfile.gawp.multistage
+				image: cci/tosca-gawp:latest
+				ports:
+					- "10040:10040"
+				volumes:
+					-  ./dvol/config:/opt/app/config
+					-  ./dvol/models:/opt/app/models
+					-  ./dvol/data:/opt/app/data
+					-  ./dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
+		# custom bridge network
+		networks:
+		  cciso-ntwk:
+			driver: bridge  
 	    ```	
 
       - **Using pre built images**
           ----------------------
-        Make the following changes in puccini/docker-compose.yml file:
+        To use pre-build images make sure puccini/docker-compose.yaml is look likes as follows:
 	    
 	    ```sh
-	    orchestrator:
-            image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-so:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+	    version: '3'
+		services:
+		  dgraphdb:
+			image: dgraph/standalone:latest
+			ports:
+			  - "8000:8000"
+			  - "8080:8080"
+			  - "9080:9080"
+			networks:
+			  - cciso-ntwk
 
-	    compiler:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-compiler:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+		  orchestrator:
+			image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-so:0.1
+			ports:
+			  - "10000:10000"
+			volumes:
+			  -  ../dvol/config:/opt/app/config
+			  -  ../dvol/models:/opt/app/models
+			  -  ../dvol/data:/opt/app/data
+			  -  ../dvol/log:/opt/app/log
+			networks:
+			  - cciso-ntwk
+			depends_on:
+			  - dgraphdb
 
-	    workflow:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-workflow:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+		  compiler:
+			image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-compiler:0.1
+			ports:
+				- "10010:10010"
+			volumes:
+				-  ../dvol/config:/opt/app/config
+				-  ../dvol/models:/opt/app/models
+				-  ../dvol/data:/opt/app/data
+				-  ../dvol/log:/opt/app/log
+			networks:
+				- cciso-ntwk
+			depends_on:
+				- dgraphdb
 
-	    policy:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-policy:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+		  workflow:
+				image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-workflow:0.1
+				ports:
+					- "10020:10020"
+				volumes:
+					-  ../dvol/config:/opt/app/config
+					-  ../dvol/models:/opt/app/models
+					-  ../dvol/data:/opt/app/data
+					-  ../dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
 
-	    gawp:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-gawp:0.1
-		    volumes:
-		      -  ../dvol/config:/opt/app/config
-		      -  ../dvol/models:/opt/app/models
-		      -  ../dvol/data:/opt/app/data
-		      -  ../dvol/log:/opt/app/log
+		  policy:
+				image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-policy:0.1
+				ports:
+					- "10030:10030"
+				volumes:
+					-  ../dvol/config:/opt/app/config
+					-  ../dvol/models:/opt/app/models
+					-  ../dvol/data:/opt/app/data
+					-  ../dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
+		  gawp:
+				image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-gawp:0.1
+				ports:
+					- "10040:10040"
+				volumes:
+					-  ../dvol/config:/opt/app/config
+					-  ../dvol/models:/opt/app/models
+					-  ../dvol/data:/opt/app/data
+					-  ../dvol/log:/opt/app/log
+				networks:
+					- cciso-ntwk
+				depends_on:
+					- dgraphdb
+		# custom bridge network
+		networks:
+		  cciso-ntwk:
+			driver: bridge
         ```	  
 
       - **Deploying images**
@@ -332,12 +432,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	      ```
 
         - Build Docker images and start Docker containers:
+		
           ```sh
           $ cd ~/puccini
           $ docker-compose up -d
           ```
 
         - Verify images are created:
+		
           ```sh
           $ docker images -a
           ```
@@ -455,7 +557,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo chmod -R 777 .helm
 	  ```
 	
-    - Run the following commands to install python,jq, and AWS CLI:
+    - Run the following commands to install python, jq, and AWS CLI:
   
 	  ```sh
       $ sudo apt-get update
@@ -503,7 +605,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 	  This step requires around 35-40 min to deploy ONAP. 
 	  
-    - To verify that ONAP is deployed successfully, use the following command and all check that all pods are in running state:
+    - To verify that ONAP is deployed successfully, use the following command and check that all pods are in running state:
 
       ```sh
 	  $ kubectl get pods -n onap
@@ -589,7 +691,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  onap-vid-galera-config-kmxft                  0/1     Completed          0          18m
       ```
 	  
-	  Note: Yes, It's know issue of onap-aaf-cert-service is in CrashLoopBackOff status after deploy onap. But it does not impact to access portal or deploy our tosca models through OOM.
+	  Note: Yes, It's a known issue of onap-aaf-cert-service is in CrashLoopBackOff status after deployment onap. But it does not impact the access portal or deploy our tosca models through OOM.
 	
     - To access the portal using browser from your local machine, add public IP 'ONAP_OOM_DEMO' VM in /etc/hosts file:
   
@@ -681,7 +783,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       $ sudo apt install python-pip
       $ pip2 install simplejson
       ```	
-    - Copy cciPrivateKey
+	  
+    - Copy cciPrivateKey:
 	
       ```sh
 	  $ cd /home/ubuntu
@@ -711,6 +814,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - Login into Bonap Server and run the following commands to check clustering setup:
 	
 	- Verify 'ric' and 'default' contexts are setup:  
+	
 	  ```sh
 	  $ kubectl config get-contexts
 	  
@@ -721,6 +825,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```
 	  
 	- Run the following command to get all pods:
+	
 	  ```sh
 	  $ kubectl get pods --all-namespaces
 	  
@@ -747,36 +852,49 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   Run following commands to build model csar.
 	
   - SDWAN:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/sdwan
     $ ./build.sh
     ```  
+	
   - FW:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/firewall
     $ ./build.sh
     ```
+	
   - NONRTRIC:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/nonrtric
     $ ./build.sh
     ```
+	
   - RIC:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/ric
     $ ./build.sh
     ```
+	
   - QP:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/qp
     $ ./build.sh
     ```
+	
   - QP-DRIVER:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/qp-driver
     $ ./build.sh
     ```
+	
   - TS:
+  
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/ts
     $ ./build.sh
@@ -802,43 +920,48 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
   ```
 
-  - Use the following request to store the model in Dgraph:
+  - Use the following request to store the models in Dgraph:
 	  
-	```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
-	{
-	   "url":"/opt/app/models/{MODEL_NAME}.csar",
-	   "output": "./{MODEL_NAME}-dgraph-clout.json",
-	   "resolve":true,
-	   "coerce": false,
-	   "quirks": ["data_types.string.permissive"],
-	   "inputsUrl": ""
-	}
-	``` 
-	
-	For all models except the ric model use the following model-specific additional fields:
-	
-	```sh
-	{
-	   "inputs":"",
-	   "url":"/opt/app/models/{MODEL_NAME}.csar",
-	   "output": "./{MODEL_NAME}-dgraph-clout.json",
-	}
-    ```
-	
-	For ric model use following model-specific additional fields:
-	  
-	```sh
-	{
-      "inputs":{"helm_version":"2.17.0"},
-      "url":"/opt/app/models/ric.csar",
-      "output": "./ric-dgraph-clout.json",
+	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
+    
+    ```sh
+    POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:10010/compiler/model/db/save
+    {
+      "url": "/opt/app/config/{MODEL_NAME}.csar",
+      "resolve": true,
+      "coerce": false,
+      "quirks": [
+          "data_types.string.permissive"
+      ],
+      "output": "./{MODEL_NAME}-dgraph-clout.json",
+      "inputs": "",
+      "inputsUrl": ""
     }
-    ```	
+    ```
+	  
+    For ric model use following:
+	  
+    ```sh
+	POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:10010/compiler/model/db/save
+    {
+       "url": "/opt/app/config/ric.csar",
+       "resolve": true,
+       "coerce": false,
+       "quirks": [
+        "data_types.string.permissive"
+       ],
+       "output": "./nonrtric-dgraph-clout.json",
+       "inputs": {
+          "helm_version": "2.17.0"
+       },
+       "inputsUrl": ""
+    }
+    ```
 	  
   - Create service instance without deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	
 	```sh			
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
 	{
@@ -1289,6 +1412,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     - Access to VID portal
 	    
       Login into the portal using demo/demo123456! credentials.
+	  
       ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
       ```
@@ -1325,23 +1449,98 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     
 	```sh
 	$ ifconfig -a
+	
+	ubuntu@ip-172-19-254-33:~$ ifconfig -a
+	ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			inet 172.19.254.33  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::4cf:94ff:fe39:30a7  prefixlen 64  scopeid 0x20<link>
+			ether 06:cf:94:39:30:a7  txqueuelen 1000  (Ethernet)
+			RX packets 139  bytes 25029 (25.0 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 161  bytes 24640 (24.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 254  bytes 21608 (21.6 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 254  bytes 21608 (21.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			inet 172.19.1.249  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::476:2dff:fe3c:f8a9  prefixlen 64  scopeid 0x20<link>
+			ether 06:76:2d:3c:f8:a9  txqueuelen 1000  (Ethernet)
+			RX packets 3  bytes 126 (126.0 B)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 40  bytes 2852 (2.8 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			inet 10.100.0.18  netmask 255.255.255.254  broadcast 0.0.0.0
+			inet6 fe80::27ff:fefd:18  prefixlen 64  scopeid 0x20<link>
+			ether 02:00:27:fd:00:18  txqueuelen 1000  (Ethernet)
+			RX packets 38  bytes 3260 (3.2 KB)
+			RX errors 0  dropped 1  overruns 0  frame 0
+			TX packets 50  bytes 4164 (4.1 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 	```
-    Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
+    Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
 	
   - SSH SDWAN_Site_B VM and run the following command:
     
 	```sh
 	$ ifconfig -a
+	
+	ubuntu@ip-172-14-254-13:~$ ifconfig -a
+	ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			inet 172.14.254.13  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::43f:10ff:fedf:b2b3  prefixlen 64  scopeid 0x20<link>
+			ether 06:3f:10:df:b2:b3  txqueuelen 1000  (Ethernet)
+			RX packets 322  bytes 38221 (38.2 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 325  bytes 37083 (37.0 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 255  bytes 21720 (21.7 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 255  bytes 21720 (21.7 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			inet 172.14.1.152  netmask 255.255.255.0  broadcast 0.0.0.0
+			inet6 fe80::4a3:43ff:fe0a:33eb  prefixlen 64  scopeid 0x20<link>
+			ether 06:a3:43:0a:33:eb  txqueuelen 1000  (Ethernet)
+			RX packets 6  bytes 252 (252.0 B)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 63  bytes 4530 (4.5 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+	vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			inet 10.100.0.19  netmask 255.255.255.254  broadcast 0.0.0.0
+			inet6 fe80::27ff:fefd:19  prefixlen 64  scopeid 0x20<link>
+			ether 02:00:27:fd:00:19  txqueuelen 1000  (Ethernet)
+			RX packets 64  bytes 5380 (5.3 KB)
+			RX errors 0  dropped 1  overruns 0  frame 0
+			TX packets 83  bytes 6698 (6.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 	```
-	Ping WAN Public IP, LAN Private IP(vvp1), and VxLAN IP(vvp2) of SDWAN_Site_A.
+	Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_A.
 	
 - Verify firewall model:
 
   - Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 
 - Verify nonrtric model:
-	
-  - Verify that all pods are in running state using the following command on Bonap Server: 
+
+  - To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state  on Bonap Server:
+  
     ```sh
 	$ kubectl get pods -n nonrtric
 	
@@ -1361,7 +1560,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 - Verify ric model:
 
-  - Verify all pods are in running state using the following commands on Bonap Server:
+  - To verify that ric is deployed successfully, use the following command and check that all pods are in running state on    Bonap Server:
+  
 	```sh		
 	$ kubectl get pods -n ricplt
 	$ kubectl get pods -n ricinfra
@@ -1396,7 +1596,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 - Verify qp model:
 
-  - Login 'Bonap Server' and run the following commands:
+  - Login into 'Bonap Server' and run the following commands:
+  
     ```sh
     $ cat /tmp/xapp.log
     
@@ -1406,7 +1607,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 - Verify qp-driver model:
 
-  - Login 'Bonap Server' and run the following commands:
+  - Login into 'Bonap Server' and run the following commands:
+  
     ```sh
     $ cat /tmp/xapp.log
     
@@ -1416,7 +1618,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 - Verify ts model:
 
-  - Login 'Bonap Server' and run the following commands:
+  - Login into 'Bonap Server' and run the following commands:
+  
     ```sh
     $ cat /tmp/xapp.log
     
