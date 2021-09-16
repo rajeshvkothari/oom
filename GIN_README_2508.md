@@ -200,6 +200,12 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  These images can either be built from a scratch repository or a pre-build version of the images are used from CCI_REPO VM.
 	  
+	  There are two ways to use tosca images:
+	  
+      - Building images built from a scratch repository
+	  
+	  - Using pre built images use pre-build version of the images from CCI_REPO
+	  
 	  Login into the Demo Server and perform steps as follows:
 	
       - clone puccini:
