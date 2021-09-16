@@ -315,7 +315,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		# custom bridge network
 		networks:
 		  cciso-ntwk:
-			driver: bridge  
+            driver: bridge  
 	    ```	
 
       - **Using pre built images**
@@ -405,7 +405,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		# custom bridge network
 		networks:
 		  cciso-ntwk:
-			driver: bridge
+            driver: bridge
         ```	  
 
       - **Deploying images**
