@@ -929,37 +929,37 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
     
     ```sh
-    POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
     {
-      "url": "/opt/app/config/{MODEL_NAME}.csar",
-      "resolve": true,
-      "coerce": false,
-      "quirks": [
-          "data_types.string.permissive"
-      ],
-      "output": "./{MODEL_NAME}-dgraph-clout.json",
-      "inputs": "",
-      "inputsUrl": ""
-    }
+	  "url": "/opt/app/models/{MODEL_NAME}.csar",
+	  "resolve": true,
+	  "coerce": false,
+	  "quirks": [
+			"data_types.string.permissive"
+		],
+	  "output": "./{MODEL_NAME}-dgraph-clout.json",
+	  "inputs": "",
+	  "inputsUrl": ""
+	}
     ```
 	  
     For ric model use following:
 	  
     ```sh
-	POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
     {
-       "url": "/opt/app/config/ric.csar",
-       "resolve": true,
-       "coerce": false,
-       "quirks": [
-        "data_types.string.permissive"
-       ],
-       "output": "./nonrtric-dgraph-clout.json",
-       "inputs": {
+	  "url": "/opt/app/models/ric.csar",
+	  "resolve": true,
+	  "coerce": false,
+	  "quirks": [
+			"data_types.string.permissive"
+		],
+	  "output": "./ric-dgraph-clout.json",
+	  "inputs": {
           "helm_version": "2.17.0"
        },
-       "inputsUrl": ""
-    }
+	  "inputsUrl": ""
+	}
     ```
 	  
   - Create service instance without deployment:
