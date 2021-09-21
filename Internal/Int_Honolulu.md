@@ -297,7 +297,7 @@
 	  
 	  This step requires around 35-40 min to deploy ONAP.
 	  
-	- To deploy only sdwan and firewall model do some additional installation on ONAP_OOM_DEMO VM as follows:
+	- To deploy only sdwan and firewall model with built-in(puccini) workflow do some additional installation on ONAP_OOM_DEMO  VM as follows:
 	  
 	  ```sh
 	  $ sudo apt-get update
