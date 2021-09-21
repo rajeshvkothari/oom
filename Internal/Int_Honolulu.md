@@ -297,6 +297,20 @@
 	  
 	  This step requires around 35-40 min to deploy ONAP.
 	  
+	- To deploy only sdwan and firewall model do some additional installation on ONAP_OOM_DEMO VM as follows:
+	  
+	  ```sh
+	  $ sudo apt-get update
+      $ sudo apt-get install -y python
+      $ sudo apt-get install -y python3-dev python3-pip
+      $ sudo pip3 install --upgrade pip
+      $ sudo pip3 install simplejson
+      $ sudo apt-get install jq
+      $ sudo apt install awscli
+      $ sudo apt install python-pip
+      $ pip2 install simplejson
+	  ```
+	  
 	- To verify that ONAP is deployed successfully, use the following command and check that all pods are in running state:
 
       ```sh
