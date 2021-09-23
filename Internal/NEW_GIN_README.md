@@ -1693,7 +1693,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Verify nonrtric model:
 
-	- For Built-in(puccini) workflow:
+	- For built-in(puccini) workflow:
 
 	  To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state on Bonap Server:
 		
