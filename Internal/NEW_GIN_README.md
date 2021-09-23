@@ -460,7 +460,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
           344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
           634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 		          ```
-## Creating Environment for ONAP OOM testing
+- **Creating Environment for ONAP OOM testing**
+    -----------------------------------------
   
   - **OOM DEMO Server**
 	  ---------------
@@ -881,6 +882,134 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
 	- Copy latest models csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
+	
+- **ORAN Servers**
+    ------------
+  These servers need to be created only if oran model(s) are to be deployed.
+  
+  - Create three AWS VMs in the Ohio region with names as follows:
+    
+	```sh
+	VM1 Name: Bonap Server 
+    VM2 Name: ric Server
+    VM3 Name: nonrtric Server
+    ```
+	
+	And use the following specifications and SSH it using putty by using cciPrivateKey:
+	
+	```sh
+    Image: ubuntu-18.04
+    Instance Type: t2.2xlarge
+    KeyPair : cciPublicKey
+    Disk: 80GB
+	Security group: launch-wizard-19
+	```
+	
+  - Login into Bonap Server and perform steps as follows:
+	
+	- Setup kubernetes
+	   
+	  ```sh
+	  $ cd /home/ubuntu
+      $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
+      $ sudo chmod +x ./kubectl
+      $ sudo mv ./kubectl /usr/local/bin/kubectl
+      $ grep -E --color 'vmx|svm' /proc/cpuinfo
+	  ```
+	  
+	- Copy cciPrivateKey into $HOME/.ssh
+	  
+	  ```sh
+	  cp cciPrivateKey $HOME/.ssh
+	  ```
+	
+	- Run the following commands to setup k3sup:
+	  
+	  ```sh
+	  $ sudo apt update
+      $ curl -sLS https://get.k3sup.dev | sh
+      $ sudo install k3sup /usr/local/bin/
+      $ sudo apt-get install socat
+      $ sudo apt install jq
+  	  $ k3sup install --ip {PRIVATE_IP_ADDR_OF__RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
+  	  $ sudo mkdir ~/.kube 
+      $ sudo cp /home/ubuntu/kubeconfig .kube/config
+      $ sudo chmod 777 .kube/config
+  	   
+      # Make sure the /home/ubuntu/kubeconfig file contains an entry of cluster and context for ric.
+    
+      $ k3sup install --host {PRIVATE_IP_ADDR_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context default
+      $ k3sup install --host {PRIVATE_IP_ADDR_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
+	  ```
+	  
+	- Run the following commands to install python,jq, and AWS CLI:
+      
+      ```sh
+	  $ sudo apt-get update
+      $ sudo apt-get install -y python
+      $ sudo apt-get install -y python3-dev python3-pip
+      $ sudo pip3 install --upgrade pip
+      $ sudo pip3 install simplejson
+      $ sudo apt-get install jq
+      $ sudo apt install awscli
+      $ sudo apt install python-pip
+      $ pip2 install simplejson
+      ```	
+	  
+    - Copy cciPrivateKey:
+	
+      ```sh
+	  $ cd /home/ubuntu
+      $ sudo mkdir onap-oom-integ
+      $ sudo mkdir onap-oom-integ/cci
+      $ sudo chmod -R 777 onap-oom-integ
+      $ cp cciPrivateKey onap-oom-integ/cci
+      ```	  
+    
+  - Login into ric Server and nonrtric Server and run the following commands:
+	
+	```sh
+	$ sudo apt update
+    $ sudo apt install jq
+    $ sudo apt install socat
+    $ sudo chmod -R 777 /etc/rancher/k3s
+    
+	# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+      mirrors:
+       "172.31.27.186:5000":
+          endpoint:
+            - "http://172.31.27.186:5000"
+	
+	$ sudo systemctl daemon-reload && sudo systemctl restart k3s
+	```
+	
+  - Login into Bonap Server and run the following commands to check clustering setup:
+	
+	- Verify 'ric' and 'default' contexts are setup:  
+	
+	  ```sh
+	  $ kubectl config get-contexts
+	  
+	  ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
+      CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+          default   default   default
+      *         ric       ric       ric
+	  ```
+	  
+	- Run the following command to get all pods:
+	
+	  ```sh
+	  $ kubectl get pods --all-namespaces
+	  
+	  ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
+      NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+      kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
+      kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
+      kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
+      kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
+      kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
+      kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
+	  ```
 		  
 ## Building Tosca Model Csars
     
@@ -952,180 +1081,213 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Use the following request to store the models in Dgraph:
 	  
-    For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
+	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
     
-    - Store models in Dgraph:
-
-      For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
-    
-      ```sh
-      POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30294/compiler/model/db/save
-      {
-       "url": "/opt/app/config/{MODEL_NAME}.csar",
-       "resolve": true,
-       "coerce": false,
-       "quirks": [
-       "data_types.string.permissive"
-        ],
-       "output": "./{MODEL_NAME}-dgraph-clout.json",
-       "inputs": "",
-       "inputsUrl": ""
-      }
-      ```
+    ```sh
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+    {
+	  "url": "/opt/app/models/{MODEL_NAME}.csar",
+	  "resolve": true,
+	  "coerce": false,
+	  "quirks": [
+			"data_types.string.permissive"
+		],
+	  "output": "./{MODEL_NAME}-dgraph-clout.json",
+	  "inputs": "",
+	  "inputsUrl": ""
+	}
+    ```
 	  
-      For ric model use following:
+    For ric model use following:
 	  
-      ```sh
-      {
-        "url": "/opt/app/config/ric.csar",
-        "resolve": true,
-        "coerce": false,
-        "quirks": [
-           "data_types.string.permissive"
-        ],
-        "output": "./ric-dgraph-clout.json",
-        "inputs": {
+    ```sh
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+    {
+	  "url": "/opt/app/models/ric.csar",
+	  "resolve": true,
+	  "coerce": false,
+	  "quirks": [
+			"data_types.string.permissive"
+		],
+	  "output": "./ric-dgraph-clout.json",
+	  "inputs": {
           "helm_version": "2.17.0"
-         },
-        "inputsUrl": ""
-      }
-      ```
-	
-    - Create service instance:
-	
-      For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
-	
-      ```sh			
-      POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/createInstance
-      {
-	    "name":"{INSTANCE_NAME}",
-	    "output":"./{MODEL_NAME}.json",
-	    "list-steps-only":false,
-	    "generate-workflow":false,
-	    "execute-workflow":false,
-	    "execute-policy":false
-      }
-      ```	
+       },
+	  "inputsUrl": ""
+	}
+    ```
 	  
-      Use following model-specific additional fields:
-
-	  - **Firewall:**  
-	    ```sh
-	     "inputs":"",
-	     "service":"zip:/opt/app/config/firewall.csar!/firewall/firewall_service.yaml",
-	     "inputsUrl":"zip:/opt/app/config/firewall.csar!/firewall/inputs/aws.yaml",
-	    ```
-		
-      - **Sdwan:**
-	    ```sh
-	     "inputs":"",
-	     "service":"zip:/opt/app/config/sdwan.csar!/sdwan/sdwan_service.yaml",
-	     "inputsUrl":"zip:/opt/app/config/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    ```
-		
-	  - **Ric:**
-	    ```sh
-	     "inputs":{"helm_version":"2.17.0"},
-	     "inputsUrl":"",
-	     "service":"zip:/opt/app/config/ric.csar!/ric.yaml"
-	    ```	
-		
-	  - **Nonrtric:**
-	    ```sh
-	     "inputs":"",
-         "inputsUrl":"",
-	     "service":"zip:/opt/app/config/nonrtric.csar!/nonrtric.yaml"    
-	    ```
+  - Create service instance without deployment:
+	
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	
+	```sh			
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
+	{
+		"name" : "{INSTANCE_NAME}",
+		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":true,
+		"execute-policy":false
+	}
+	```
 	  
-	  - **Qp:**
-	    ```sh
-	     "inputs":"",
-         "inputsUrl":"",
-         "service":"zip:/opt/app/config/qp.csar!/qp.yaml"
-	    ```
-	 
-	  - **Qp-driver:**
-	    ```sh
-	     "inputs":"",
-         "inputsUrl":"",
-         "service":"zip:/opt/app/config/qp-driver.csar!/qp-driver.yaml"      
-	    ```
-	 
-	  - **Ts:**
-	    ```sh
-	     "inputs":"",
-         "inputsUrl":"",
-         "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
-		```
-
-	- To deploy models:
-  
-      Use following REST API for all the models only replace the {INSTANCE_NAME} which we used in the create instance step:
-    
-      ```sh
-       POST http://{IP_ADDR_OF_ONAP_OOM_DEMO}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
-       {
-	     "list-steps-only": false,
-	     "execute-policy": false
-       }
-      ```	   
-
-      Note: If nonrtric model failed to deploy then check whether k3s is installed properly or not by running the following command on ric and nonrtric VM:
-  
-      ```sh
-      $ journalctl -xe
-  
-	  ubuntu@ip-172-31-21-29:~$ journalctl -xe
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.347968   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.348993   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.349018   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.366652   29192 master.go:271] Using reconciler: lease
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.777399   29192 genericapiserver.go:418] Skipping API batch/v2alpha1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.795932   29192 genericapiserver.go:418] Skipping API discovery.k8s.io/v1alpha1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.816518   29192 genericapiserver.go:418] Skipping API node.k8s.io/v1alpha1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.847037   29192 genericapiserver.go:418] Skipping API rbac.authorization.k8s.io/v1alpha1 because it has no res
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.851495   29192 genericapiserver.go:418] Skipping API scheduling.k8s.io/v1alpha1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.869121   29192 genericapiserver.go:418] Skipping API storage.k8s.io/v1alpha1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890727   29192 genericapiserver.go:418] Skipping API apps/v1beta2 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890752   29192 genericapiserver.go:418] Skipping API apps/v1beta1 because it has no resources.
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902722   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902746   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915795643Z" level=info msg="Running kube-scheduler --address=127.0.0.1 --bind-address=127.0.0.1 --
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915967145Z" level=info msg="Waiting for API server to become available"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916062   29192 registry.go:173] Registering SelectorSpread plugin
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916077   29192 registry.go:173] Registering SelectorSpread plugin
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.916406959Z" level=info msg="Running kube-controller-manager --address=127.0.0.1 --allocate-node-ci
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917797965Z" level=info msg="Node token is available at /var/lib/rancher/k3s/server/token"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917846043Z" level=info msg="To join node to cluster: k3s agent -s https://172.31.21.29:6443 -t ${N
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918716760Z" level=info msg="Wrote kubeconfig /etc/rancher/k3s/k3s.yaml"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918753818Z" level=info msg="Run: k3s kubectl"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.946803448Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.950787677Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.960206765Z" level=info msg="certificate CN=ip-172-31-21-29 signed by CN=k3s-server-ca@1631253391:
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.962751749Z" level=info msg="certificate CN=system:node:ip-172-31-21-29,O=system:nodes signed by CN
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967411013Z" level=info msg="Module overlay was already loaded"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967442354Z" level=info msg="Module nf_conntrack was already loaded"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967454400Z" level=info msg="Module br_netfilter was already loaded"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967464422Z" level=info msg="Module iptable_nat was already loaded"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973067751Z" level=info msg="Using registry config file at /etc/rancher/k3s/registries.yaml"
-	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973136323Z" level=fatal msg="yaml: line 3: found character that cannot start any token"
-	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Main process exited, code=exited, status=1/FAILURE
-	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Failed with result 'exit-code'.
-	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: Failed to start Lightweight Kubernetes.
-	  -- Subject: Unit k3s.service has failed
-	  -- Defined-By: systemd
-	  -- Support: http://www.ubuntu.com/support
-	  --
-	  -- Unit k3s.service has failed.
-	  ```
-  
-      Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command to restart Ks3:
-  
+    Use following models-specific additional fields:
+	  
+      **Firewall:**  
 	  ```sh
-	  $ sudo systemctl restart k3s
+	    "inputs":"",
+	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
 	  ```
-  
-	  After K3s restart, check whether it install properly or not and try to deploy the nonrtric model again.
+	  
+	  **Sdwan:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	  ```
+	  
+	  **Ric:**
+	  ```sh
+	    "inputs":{"helm_version":"2.17.0"},
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  ```	
+	  
+	  **Nonrtric:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  ```
+	  
+	  **Qp:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  ```
+	 
+	  **Qp-driver:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  ```
+	 
+	  **Ts:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	  ```
+
+  - Create service instance with deployment:
+	
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	
+	```sh			
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
+	{
+		"name" : "{INSTANCE_NAME}",
+		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
+		"generate-workflow":true,
+		"execute-workflow":true,
+		"list-steps-only":false,
+		"execute-policy":true
+	}
+	```	
+	  
+    Use following models-specific additional fields:
+
+      **Firewall:**  
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
+	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
+	  ```
+	  
+	  **Sdwan:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
+	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	  ```
+	  
+	  **Ric:**
+	  ```sh
+	    "inputs":{"helm_version":"2.17.0"},
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	  ```	
+	  
+	  **Nonrtric:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	  ```
+	  
+	  **Qp:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	  ```
+	 
+	  **Qp-driver:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	  ```
+	 
+	  **Ts:**
+	  ```sh
+	    "inputs":"",
+	    "inputsUrl":"",
+	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	  ```
+
+  - To only list workflow steps of a model without executing/deploying them use the following:
+	  
+	```sh
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+	{
+	   "list-steps-only": true,
+	   "execute-policy": false
+	}
+	```		 
+
+  - To Execute Workflow steps of a model which has already been saved in the database:
+	   
+	```sh	
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+	{
+       "list-steps-only": false,
+	   "execute-policy": true
+	}
+	```
+	  
+  - Execute Policy(This is valid only for the firewall model): 
+	  
+	```sh
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	```
+	  
+  - Stop Policy(This is valid only for the firewall model):
+         
+	```sh
+	DELETE http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+   	```
+	  
+  - Get Policies(This is valid only for the firewall model):
+         
+	```sh
+	GET http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policies
+	```
   
   - **ONAP OOM testing**
       ----------------
