@@ -87,13 +87,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Image to be replaced:
 	  
 	  ```sh
-	  image:  nexus3.onap.org:10001/onap/dmaap/dmaap-mr:latest
+	  image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:latest
 	  ```
 	  
 	  New image:
 	  
       ```sh          
-      image:  {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
+      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
       ```
 	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
@@ -1290,7 +1290,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	```
   
 - **ONAP OOM testing**
-      ----------------
+    ----------------
+	  
     Use the following steps in ONAP OOM Environment.
 	
     - One time steps for initialization/configuration of the environment:
