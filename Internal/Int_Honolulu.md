@@ -6,7 +6,7 @@
    * [Introduction](#Introduction)
    * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
    * [Testing of tosca models in HONOLULU release](#Testing-of-tosca-models-in-HONOLULU-release)
-   * [ONAP OOM testing](ONAP-OOM-testing)
+   * [ONAP OOM testing](#ONAP-OOM-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
