@@ -1289,7 +1289,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	GET http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policies
 	```
   
-  - **ONAP OOM testing**
+- **ONAP OOM testing**
       ----------------
     Use the following steps in ONAP OOM Environment.
 	
@@ -1591,7 +1591,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
   - Verify the sdwan model:
   
-	- For Built-in(puccini) workflow and Argo-Workflow:
+	- For built-in(puccini) workflow and argo-workflow:
 		
 	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
 
@@ -1687,7 +1687,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		
   - Verify firewall model:
 
-	- For Built-in(puccini) workflow and Argo-Workflow:
+	- For built-in(puccini) workflow and argo-workflow:
 
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 
@@ -1714,7 +1714,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
 	  ```   
 	  
-    - For Argo-Workflow:
+    - For argo-workflow:
 
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on nonrtric server:
 	  
@@ -1737,7 +1737,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Verify ric model:
 
-    - For Built-in(puccini) workflow:
+    - For built-in(puccini) workflow:
 	      
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 
@@ -1773,7 +1773,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  No resources found.
 	  ```	
 
-    - For Argo-Workflow:
+    - For argo-workflow:
 		   
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on ric server:
 	  
@@ -1811,7 +1811,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Verify qp model:
 	
-	- For Built-in Workflow:
+	- For built-in workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 	  
@@ -1822,7 +1822,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}
 	  ```
 
-    - For Argo-Workflow:
+    - For argo-workflow:
 
 	  Login 'ONAP_OOM_DEMO' and run following commands:
 
@@ -1868,7 +1868,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Verify qp-driver model:
 
-	- For Built-in(puccini) workflow:
+	- For built-in(puccini) workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 
@@ -1879,7 +1879,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		{"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
       ```
 	  
-    - For Argo-Workflow:  
+    - For argo-workflow:  
 
 	  Login 'ONAP_OOM_DEMO' and run following commands:
 
@@ -1923,7 +1923,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
   - Verify ts model:
 
-    - For Built-in(puccini) workflow:
+    - For built-in(puccini) workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 	  
@@ -1934,7 +1934,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
       ``` 
 		
-	- For Argo-Workflow: 
+	- For argo-workflow: 
 
 	  Login 'ONAP_OOM_DEMO' and run following commands:
 
