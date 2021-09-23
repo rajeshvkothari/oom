@@ -6,6 +6,7 @@
    * [Introduction](#Introduction)
    * [Creating an environment for OOM VM of HONOLULU release](#Creating-an-environment-for-OOM-VM-of-HONOLULU-release)
    * [Testing of tosca models in HONOLULU release](#Testing-of-tosca-models-in-HONOLULU-release)
+   * [ONAP OOM testing](ONAP-OOM-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -595,6 +596,302 @@
   ```
   
   After K3s restart, check whether it install properly or not and try to deploy the nonrtric model again. 
+  
+## ONAP OOM testing
+   
+   Use the following steps in ONAP OOM Environment.
+	
+   - One time steps for initialization/configuration of the environment:
+	  
+	 - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
+	  
+	   ```sh
+	   https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	   ```
+	  
+	   ```sh
+	   Virtual Licence Model creation
+	   Open the SDC application, click on the 'ONBOARD' tab.
+	   Click 'CREATE NEW VLM' (Licence Model)
+	   Use 'cci' as Vendor Name, and enter a description
+	   Click 'CREATE'
+	   Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields.
+	   Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields.
+	   Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
+	   Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups.
+	   Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
+	   Features Groups, drag the feature group created previously.
+	   Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
+	   ```
+	  
+     - Update AAI with the following REST requests using POSTMAN.
+	  
+	   Use the following headers in a POSTMAN request
+	  
+       ```sh
+       headers :
+       Content-Type:application/json
+       X-FromAppId:AAI
+       Accept:application/json
+       X-TransactionId:get_aai_subscr
+       Cache-Control:no-cache
+       Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+       ```
+		
+       - Create 'NCalifornia' region: 
+		
+	     ```sh
+	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
+		  {
+			"cloud-owner": "aws",
+			"cloud-region-id": "NCalifornia",
+			"tenants": {
+			  "tenant": [
+			   {
+				 "tenant-id": "1",
+				 "tenant-name": "admin"
+			   }
+			  ]
+			}
+		  }
+	     ```
+		  
+       - Create customer:   
+		  
+         ```sh
+	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
+		  {
+		   "global-customer-id": "CCIDemonstration",
+		   "subscriber-name": "CCIDemonstration",
+		   "subscriber-type": "INFRA",
+		   "service-subscriptions": {
+			 "service-subscription": [
+			  {
+				"service-type": "vSDWAN",
+				"relationship-list": {
+				   "relationship": [{
+						"related-to": "tenant",
+						"relationship-data": [
+						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						 ]
+					}]
+				 }
+			  },
+			  {
+				"service-type": "vFirewall",
+				"relationship-list": {
+				   "relationship": [{
+						"related-to": "tenant",
+						"relationship-data": [
+						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						 ]
+					}]
+				 }
+			   },
+			  {
+				"service-type": "vNonrtric",
+				"relationship-list": {
+				   "relationship": [{
+						"related-to": "tenant",
+						"relationship-data": [
+						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						 ]
+					}]
+				 }
+			 },
+			{
+				"service-type": "vRIC",
+				"relationship-list": {
+				   "relationship": [{
+						"related-to": "tenant",
+						"relationship-data": [
+						   {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						   {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						   {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						 ]
+					}]
+				 }
+			 },
+			 {
+			   "service-type": "vQp",
+			   "relationship-list": {
+				  "relationship": [{
+					   "related-to": "tenant",
+					   "relationship-data": [
+						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						]
+				   }]
+				}
+			},
+			 {
+			   "service-type": "vQp-driver",
+			   "relationship-list": {
+				  "relationship": [{
+					   "related-to": "tenant",
+					   "relationship-data": [
+						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						]
+				   }]
+				}
+			},
+			 {
+			   "service-type": "vTs",
+			   "relationship-list": {
+				  "relationship": [{
+					   "related-to": "tenant",
+					   "relationship-data": [
+						  {"relationship-key": "cloud-region.cloud-owner", "relationship-value": "aws"},
+						  {"relationship-key": "cloud-region.cloud-region-id", "relationship-value": "NCalifornia"},
+						  {"relationship-key": "tenant.tenant-id", "relationship-value": "1"}
+						]
+				   }]
+				}
+			}				
+		   ]}
+		  }
+         ```
+		
+         For new CCI models add a new service type in the service-subscription list of create customer REST API.
+		
+       - Create a dummy service:
+		
+	     ```sh
+	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
+	     {
+	       "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
+	       "service-description": "CCI"
+	     }
+	     ```
+		  
+       - Create zone:
+		  
+	     ```sh
+	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
+	     {
+	       "zone-name": "cci",
+	       "design-type":"abcd",
+	       "zone-context":"abcd"
+	     }
+	     ```
+		
+    - Update VID with the following REST API requests using POSTMAN
+	  
+      Use the following headers in the POSTMAN request
+	  
+      ```sh
+	  Content-Type:application/json
+      X-FromAppId:VID
+      Accept:application/json
+      X-TransactionId:get_vid_subscr
+      Cache-Control:no-cache
+      Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+      ```
+		
+      - Declare owning entity:
+		
+	    ```sh
+        POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/owningEntity
+        {
+		  "options": ["cciowningentity1"]
+        }
+	    ```
+		
+      - Create platform:
+		
+	    ```sh
+	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/platform
+	    {
+		  "options": ["Test_Platform"]
+	    }
+	    ```
+		
+      - Create a line of business:
+		
+        ```sh
+ 	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/lineOfBusiness
+	    { 
+	      "options": ["Test_LOB"]
+ 	    }
+	    ```
+		
+      - Create a project:
+		
+        ```sh
+	    POST https://vid.api.simpledemo.onap.org:30200/vid/maintenance/category_parameter/project
+ 	    {
+		  "options": ["Test_project"]
+	    }
+        ```
+		
+  - Create and distribute CCI models in SDC:
+	  
+    - Vendor Software Product(VSP) onboarding/creation:
+	    
+	  Login into the portal using designer (cs0008/demo123456!)
+	  
+	  ```sh
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  Open the SDC application, click on the OnBoard tab.
+      Click 'CREATE NEW VSP'
+      Give the name to VSP, i.e.  cci_ric_vsp. 
+      Select the Vendor as 'cci', Category as 'Network Service (Generic)', ONBOARDING PROCEDURE as 'Network Package' and give it a description then click on 'CREATE'.
+      In the 'Software Product Details' box click on the License Agreement as 'Internal' and select 'Licensing Version',
+      'License Agreement' and 'Feature Groups'.
+      Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts based on your requirement.
+      Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
+	  ```
+	  
+    - Virtual Function (VF) creation:
+	  
+	  ```sh
+	  Go to SDC home. Click on the top-right icon with the orange arrow.
+	  Select your VSP and click on 'IMPORT VSP'.
+	  Click on 'Create' 
+	  Click on 'Check-in' and enter a comment then Press OK.
+	  Click on 'Certify' and enter a comment then Press OK.
+	  ```
+	  
+	- Service creation/distribution:
+	    
+	  ```sh
+	  Go to SDC home. From the 'Add' box click on 'ADD SERVICE'
+	  Enter Name and then select 'Category' as 'Network Service'. Enter the description and click on Create.
+	  Click on the 'Composition' left tab
+	  In the search bar, Search your VSP and Drag it
+	  Click on 'Check-in' and enter a comment then Press OK.
+	  Click on Certify and enter a comment then Press OK.
+	  Click on Distribute.
+	  Wait for two minutes and go to the 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
+	  ```
+	  
+  - Create service instance and VNF from VID:
+	
+    - Access to VID portal
+	    
+      Login into the portal using demo/demo123456! credentials.
+	  
+      ```sh
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+      ```
+		
+	  Select the VID icon from portal
+		
+    - Instantiate service
+	    
+      ```sh
+	  Click 'Browse SDC Service Models'
+      Check that all distributed model are there.
+      ```
 
 ## Post Deployment Verification Steps 
  
