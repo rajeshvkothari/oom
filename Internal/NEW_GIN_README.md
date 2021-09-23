@@ -408,7 +408,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
         ```	  
 
       - **Deploying images**
-	      ---------
+	      ----------------
 	    - Modify ~/puccini/dvol/config/application.cfg as follows:
 
 		  ```sh
@@ -460,11 +460,12 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
           344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
           634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
 		          ```
-## Creating an environment for OOM VM of HONOLULU release
+## Creating Environment for ONAP OOM testing
   
   - **OOM DEMO Server**
-	
-	 This server is used for testing in the ONAP OOM environment.	
+	  ---------------
+	  
+	  This server is used for testing in the ONAP OOM environment.	
 		
 	- Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
 	  
@@ -502,7 +503,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  Note: 172.31.27.186 is the private IP address of CCI_REPO VM.
 		
-	- Setup kubectl:
+    - Setup kubectl:
 	  
 	  ```sh
 	  $ cd /home/ubuntu/
@@ -512,7 +513,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
       ```
 	  
-	- Setup minikube:
+    - Setup minikube:
 	
 	  ```sh
 	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -949,9 +950,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
   ```
 
-- Use the following request to store the models in Dgraph:
+  - Use the following request to store the models in Dgraph:
 	  
-   For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
+    For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
     
     - Store models in Dgraph:
 
@@ -1008,49 +1009,49 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
       Use following model-specific additional fields:
 
-	   **Firewall:**  
+	  - **Firewall:**  
 	    ```sh
 	     "inputs":"",
 	     "service":"zip:/opt/app/config/firewall.csar!/firewall/firewall_service.yaml",
 	     "inputsUrl":"zip:/opt/app/config/firewall.csar!/firewall/inputs/aws.yaml",
 	    ```
 		
-       **Sdwan:**
+      - **Sdwan:**
 	    ```sh
 	     "inputs":"",
 	     "service":"zip:/opt/app/config/sdwan.csar!/sdwan/sdwan_service.yaml",
 	     "inputsUrl":"zip:/opt/app/config/sdwan.csar!/sdwan/inputs/aws.yaml",
 	    ```
 		
-	   **Ric:**
+	  - **Ric:**
 	    ```sh
 	     "inputs":{"helm_version":"2.17.0"},
 	     "inputsUrl":"",
 	     "service":"zip:/opt/app/config/ric.csar!/ric.yaml"
 	    ```	
 		
-	   **Nonrtric:**
+	  - **Nonrtric:**
 	    ```sh
 	     "inputs":"",
          "inputsUrl":"",
 	     "service":"zip:/opt/app/config/nonrtric.csar!/nonrtric.yaml"    
 	    ```
 	  
-	   **Qp:**
+	  - **Qp:**
 	    ```sh
 	     "inputs":"",
          "inputsUrl":"",
          "service":"zip:/opt/app/config/qp.csar!/qp.yaml"
 	    ```
 	 
-	   **Qp-driver:**
+	  - **Qp-driver:**
 	    ```sh
 	     "inputs":"",
          "inputsUrl":"",
          "service":"zip:/opt/app/config/qp-driver.csar!/qp-driver.yaml"      
 	    ```
 	 
-	   **Ts:**
+	  - **Ts:**
 	    ```sh
 	     "inputs":"",
          "inputsUrl":"",
@@ -1066,72 +1067,73 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
        {
 	     "list-steps-only": false,
 	     "execute-policy": false
-       }	 
+       }
+      ```	   
 
-Note: If nonrtric model failed to deploy then check whether k3s is installed properly or not by running the following command on ric and nonrtric VM:
+      Note: If nonrtric model failed to deploy then check whether k3s is installed properly or not by running the following command on ric and nonrtric VM:
   
-  ```sh
-  $ journalctl -xe
+      ```sh
+      $ journalctl -xe
   
-  ubuntu@ip-172-31-21-29:~$ journalctl -xe
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.347968   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.348993   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.349018   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.366652   29192 master.go:271] Using reconciler: lease
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.777399   29192 genericapiserver.go:418] Skipping API batch/v2alpha1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.795932   29192 genericapiserver.go:418] Skipping API discovery.k8s.io/v1alpha1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.816518   29192 genericapiserver.go:418] Skipping API node.k8s.io/v1alpha1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.847037   29192 genericapiserver.go:418] Skipping API rbac.authorization.k8s.io/v1alpha1 because it has no res
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.851495   29192 genericapiserver.go:418] Skipping API scheduling.k8s.io/v1alpha1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.869121   29192 genericapiserver.go:418] Skipping API storage.k8s.io/v1alpha1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890727   29192 genericapiserver.go:418] Skipping API apps/v1beta2 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890752   29192 genericapiserver.go:418] Skipping API apps/v1beta1 because it has no resources.
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902722   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902746   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915795643Z" level=info msg="Running kube-scheduler --address=127.0.0.1 --bind-address=127.0.0.1 --
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915967145Z" level=info msg="Waiting for API server to become available"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916062   29192 registry.go:173] Registering SelectorSpread plugin
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916077   29192 registry.go:173] Registering SelectorSpread plugin
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.916406959Z" level=info msg="Running kube-controller-manager --address=127.0.0.1 --allocate-node-ci
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917797965Z" level=info msg="Node token is available at /var/lib/rancher/k3s/server/token"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917846043Z" level=info msg="To join node to cluster: k3s agent -s https://172.31.21.29:6443 -t ${N
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918716760Z" level=info msg="Wrote kubeconfig /etc/rancher/k3s/k3s.yaml"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918753818Z" level=info msg="Run: k3s kubectl"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.946803448Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.950787677Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.960206765Z" level=info msg="certificate CN=ip-172-31-21-29 signed by CN=k3s-server-ca@1631253391:
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.962751749Z" level=info msg="certificate CN=system:node:ip-172-31-21-29,O=system:nodes signed by CN
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967411013Z" level=info msg="Module overlay was already loaded"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967442354Z" level=info msg="Module nf_conntrack was already loaded"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967454400Z" level=info msg="Module br_netfilter was already loaded"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967464422Z" level=info msg="Module iptable_nat was already loaded"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973067751Z" level=info msg="Using registry config file at /etc/rancher/k3s/registries.yaml"
-  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973136323Z" level=fatal msg="yaml: line 3: found character that cannot start any token"
-  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Main process exited, code=exited, status=1/FAILURE
-  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Failed with result 'exit-code'.
-  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: Failed to start Lightweight Kubernetes.
-  -- Subject: Unit k3s.service has failed
-  -- Defined-By: systemd
-  -- Support: http://www.ubuntu.com/support
-  --
-  -- Unit k3s.service has failed.
-  ```
+	  ubuntu@ip-172-31-21-29:~$ journalctl -xe
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.347968   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.348993   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.349018   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.366652   29192 master.go:271] Using reconciler: lease
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.777399   29192 genericapiserver.go:418] Skipping API batch/v2alpha1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.795932   29192 genericapiserver.go:418] Skipping API discovery.k8s.io/v1alpha1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.816518   29192 genericapiserver.go:418] Skipping API node.k8s.io/v1alpha1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.847037   29192 genericapiserver.go:418] Skipping API rbac.authorization.k8s.io/v1alpha1 because it has no res
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.851495   29192 genericapiserver.go:418] Skipping API scheduling.k8s.io/v1alpha1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.869121   29192 genericapiserver.go:418] Skipping API storage.k8s.io/v1alpha1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890727   29192 genericapiserver.go:418] Skipping API apps/v1beta2 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: W0910 06:18:44.890752   29192 genericapiserver.go:418] Skipping API apps/v1beta1 because it has no resources.
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902722   29192 plugins.go:158] Loaded 12 mutating admission controller(s) successfully in the following order
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.902746   29192 plugins.go:161] Loaded 10 validating admission controller(s) successfully in the following ord
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915795643Z" level=info msg="Running kube-scheduler --address=127.0.0.1 --bind-address=127.0.0.1 --
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.915967145Z" level=info msg="Waiting for API server to become available"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916062   29192 registry.go:173] Registering SelectorSpread plugin
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: I0910 06:18:44.916077   29192 registry.go:173] Registering SelectorSpread plugin
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.916406959Z" level=info msg="Running kube-controller-manager --address=127.0.0.1 --allocate-node-ci
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917797965Z" level=info msg="Node token is available at /var/lib/rancher/k3s/server/token"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.917846043Z" level=info msg="To join node to cluster: k3s agent -s https://172.31.21.29:6443 -t ${N
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918716760Z" level=info msg="Wrote kubeconfig /etc/rancher/k3s/k3s.yaml"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.918753818Z" level=info msg="Run: k3s kubectl"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.946803448Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.950787677Z" level=info msg="Cluster-Http-Server 2021/09/10 06:18:44 http: TLS handshake error from
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.960206765Z" level=info msg="certificate CN=ip-172-31-21-29 signed by CN=k3s-server-ca@1631253391:
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.962751749Z" level=info msg="certificate CN=system:node:ip-172-31-21-29,O=system:nodes signed by CN
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967411013Z" level=info msg="Module overlay was already loaded"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967442354Z" level=info msg="Module nf_conntrack was already loaded"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967454400Z" level=info msg="Module br_netfilter was already loaded"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.967464422Z" level=info msg="Module iptable_nat was already loaded"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973067751Z" level=info msg="Using registry config file at /etc/rancher/k3s/registries.yaml"
+	  Sep 10 06:18:44 ip-172-31-21-29 k3s[29192]: time="2021-09-10T06:18:44.973136323Z" level=fatal msg="yaml: line 3: found character that cannot start any token"
+	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Main process exited, code=exited, status=1/FAILURE
+	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: k3s.service: Failed with result 'exit-code'.
+	  Sep 10 06:18:44 ip-172-31-21-29 systemd[1]: Failed to start Lightweight Kubernetes.
+	  -- Subject: Unit k3s.service has failed
+	  -- Defined-By: systemd
+	  -- Support: http://www.ubuntu.com/support
+	  --
+	  -- Unit k3s.service has failed.
+	  ```
   
-  Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command to restart Ks3:
+      Also, check registries.yaml has a valid YAML format. if not then validate that YAML format and run the following command to restart Ks3:
   
-  ```sh
-  $ sudo systemctl restart k3s
-  ```
+	  ```sh
+	  $ sudo systemctl restart k3s
+	  ```
   
-  After K3s restart, check whether it install properly or not and try to deploy the nonrtric model again.
+	  After K3s restart, check whether it install properly or not and try to deploy the nonrtric model again.
   
   - **ONAP OOM testing**
-    ----------------
-     Use the following steps in ONAP OOM Environment.
+      ----------------
+    Use the following steps in ONAP OOM Environment.
 	
     - One time steps for initialization/configuration of the environment:
 	  
-	 - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
+      - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
 	  
 	    ```sh
 	    https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
@@ -1373,7 +1375,7 @@ Note: If nonrtric model failed to deploy then check whether k3s is installed pro
       Click 'CREATE NEW VSP'
       Give the name to VSP, i.e.  cci_ric_vsp. 
       Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
-      In the 'Software Product Details' box click on the warning as 'Missing' and select 'Licensing Version',
+      In the 'Software Product Details' box click on the License Agreement as 'Internal' and select 'Licensing Version',
       'License Agreement' and 'Feature Groups'.
       Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts based on your requirement.
       Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
@@ -1404,7 +1406,7 @@ Note: If nonrtric model failed to deploy then check whether k3s is installed pro
 	  
   - Create service instance and VNF from VID:
 	
-    - Access to VID portal
+    - Access to VID portal:
 	    
       Login into the portal using demo/demo123456! credentials.
 	  
@@ -1414,407 +1416,401 @@ Note: If nonrtric model failed to deploy then check whether k3s is installed pro
 		
 	  Select the VID icon from portal
 		
-    - Instantiate service
+    - Instantiate service:
 	    
       ```sh
 	  Click 'Browse SDC Service Models'
-      Select a service and click Deploy.
-      Complete the fields indicated by the red star and click Confirm.
-      Wait for few minutes and it will return a success message.
-      A service object is created in Puccini-SO.
-      Click Close 
-      ```
-	  
-    - Instantiate a VNF
-		
-      ```sh
-	  Click on “Add node instance” and select the VNF available.
-      Complete the fields indicated by the red star and click Confirm.
-      Wait for 7-8 minutes and a success message will display.
+      Check that all distributed models are there.
       ```
   
 ## Post Deployment Verification Steps
 
-  - Built-in(puccini) workflow and Argo-Workflow 
-
-     Use the following steps to verify sdwan or firewall models are deployed successfully . 
+  Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
-	 - Verify the sdwan model:  
-	   - Built-in(puccini) workflow OR Argo-Workflow
+  - Verify the sdwan model:
+  
+	- For Built-in(puccini) workflow and Argo-Workflow:
 		
-		 Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
+	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
 
-		 SSH SDWAN_Site_A VM and run the following command:
+	  - SSH SDWAN_Site_A VM and run the following command:
 			
-			```sh
-			$ ifconfig -a
+		```sh
+		$ ifconfig -a
 			
-			ubuntu@ip-172-19-254-33:~$ ifconfig -a
-			ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
-					inet 172.19.254.33  netmask 255.255.255.0  broadcast 0.0.0.0
-					inet6 fe80::4cf:94ff:fe39:30a7  prefixlen 64  scopeid 0x20<link>
-					ether 06:cf:94:39:30:a7  txqueuelen 1000  (Ethernet)
-					RX packets 139  bytes 25029 (25.0 KB)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 161  bytes 24640 (24.6 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+		ubuntu@ip-172-19-254-33:~$ ifconfig -a
+		ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			  inet 172.19.254.33  netmask 255.255.255.0  broadcast 0.0.0.0
+			  inet6 fe80::4cf:94ff:fe39:30a7  prefixlen 64  scopeid 0x20<link>
+			  ether 06:cf:94:39:30:a7  txqueuelen 1000  (Ethernet)
+			  RX packets 139  bytes 25029 (25.0 KB)
+			  RX errors 0  dropped 0  overruns 0  frame 0
+			  TX packets 161  bytes 24640 (24.6 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-			lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-					inet 127.0.0.1  netmask 255.0.0.0
-					inet6 ::1  prefixlen 128  scopeid 0x10<host>
-					loop  txqueuelen 1000  (Local Loopback)
-					RX packets 254  bytes 21608 (21.6 KB)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 254  bytes 21608 (21.6 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+		lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 254  bytes 21608 (21.6 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 254  bytes 21608 (21.6 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-			vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-					inet 172.19.1.249  netmask 255.255.255.0  broadcast 0.0.0.0
-					inet6 fe80::476:2dff:fe3c:f8a9  prefixlen 64  scopeid 0x20<link>
-					ether 06:76:2d:3c:f8:a9  txqueuelen 1000  (Ethernet)
-					RX packets 3  bytes 126 (126.0 B)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 40  bytes 2852 (2.8 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+		vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			  inet 172.19.1.249  netmask 255.255.255.0  broadcast 0.0.0.0
+			  inet6 fe80::476:2dff:fe3c:f8a9  prefixlen 64  scopeid 0x20<link>
+			  ether 06:76:2d:3c:f8:a9  txqueuelen 1000  (Ethernet)
+			  RX packets 3  bytes 126 (126.0 B)
+			  RX errors 0  dropped 0  overruns 0  frame 0
+			  TX packets 40  bytes 2852 (2.8 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-			vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
-					inet 10.100.0.18  netmask 255.255.255.254  broadcast 0.0.0.0
-					inet6 fe80::27ff:fefd:18  prefixlen 64  scopeid 0x20<link>
-					ether 02:00:27:fd:00:18  txqueuelen 1000  (Ethernet)
-					RX packets 38  bytes 3260 (3.2 KB)
-					RX errors 0  dropped 1  overruns 0  frame 0
-					TX packets 50  bytes 4164 (4.1 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-			```
-			Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
-			
-		  SSH SDWAN_Site_B VM and run the following command:
-			
-			```sh
-			$ ifconfig -a
-			
-			ubuntu@ip-172-14-254-13:~$ ifconfig -a
-			ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
-					inet 172.14.254.13  netmask 255.255.255.0  broadcast 0.0.0.0
-					inet6 fe80::43f:10ff:fedf:b2b3  prefixlen 64  scopeid 0x20<link>
-					ether 06:3f:10:df:b2:b3  txqueuelen 1000  (Ethernet)
-					RX packets 322  bytes 38221 (38.2 KB)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 325  bytes 37083 (37.0 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-			lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-					inet 127.0.0.1  netmask 255.0.0.0
-					inet6 ::1  prefixlen 128  scopeid 0x10<host>
-					loop  txqueuelen 1000  (Local Loopback)
-					RX packets 255  bytes 21720 (21.7 KB)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 255  bytes 21720 (21.7 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-			vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-					inet 172.14.1.152  netmask 255.255.255.0  broadcast 0.0.0.0
-					inet6 fe80::4a3:43ff:fe0a:33eb  prefixlen 64  scopeid 0x20<link>
-					ether 06:a3:43:0a:33:eb  txqueuelen 1000  (Ethernet)
-					RX packets 6  bytes 252 (252.0 B)
-					RX errors 0  dropped 0  overruns 0  frame 0
-					TX packets 63  bytes 4530 (4.5 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-			vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
-					inet 10.100.0.19  netmask 255.255.255.254  broadcast 0.0.0.0
-					inet6 fe80::27ff:fefd:19  prefixlen 64  scopeid 0x20<link>
-					ether 02:00:27:fd:00:19  txqueuelen 1000  (Ethernet)
-					RX packets 64  bytes 5380 (5.3 KB)
-					RX errors 0  dropped 1  overruns 0  frame 0
-					TX packets 83  bytes 6698 (6.6 KB)
-					TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-			```
-			Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_A.
+		vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			  inet 10.100.0.18  netmask 255.255.255.254  broadcast 0.0.0.0
+			  inet6 fe80::27ff:fefd:18  prefixlen 64  scopeid 0x20<link>
+			  ether 02:00:27:fd:00:18  txqueuelen 1000  (Ethernet)
+			  RX packets 38  bytes 3260 (3.2 KB)
+			  RX errors 0  dropped 1  overruns 0  frame 0
+			  TX packets 50  bytes 4164 (4.1 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+		```
 		
-	- Verify firewall model:
-
-	  - Built-in(puccini) workflow OR Argo-Workflow
-
-		  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
-
-	- Verify nonrtric model:
-
-	  - Built-in(puccini) workflow
-
-	      To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state  on Bonap Server:
-		
-			```sh
-			$ kubectl get pods -n nonrtric
+		Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_B.
 			
-			ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
-			NAME                                       READY   STATUS    RESTARTS   AGE
-			db-5d6d996454-2r6js                        1/1     Running   0          4m25s
-			enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
-			policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
-			rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
-			a1-sim-std-0                               1/1     Running   0          4m25s
-			controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
-			a1-sim-osc-0                               1/1     Running   0          4m25s
-			a1-sim-std-1                               1/1     Running   0          2m54s
-			a1-sim-osc-1                               1/1     Running   0          2m50s
-			a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
-			```   
-	  - Argo-Workflow
+      - SSH SDWAN_Site_B VM and run the following command:
+			
+	    ```sh
+	    $ ifconfig -a
+			
+		ubuntu@ip-172-14-254-13:~$ ifconfig -a
+		ens5: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 9001
+			  inet 172.14.254.13  netmask 255.255.255.0  broadcast 0.0.0.0
+			  inet6 fe80::43f:10ff:fedf:b2b3  prefixlen 64  scopeid 0x20<link>
+			  ether 06:3f:10:df:b2:b3  txqueuelen 1000  (Ethernet)
+			  RX packets 322  bytes 38221 (38.2 KB)
+			  RX errors 0  dropped 0  overruns 0  frame 0
+			  TX packets 325  bytes 37083 (37.0 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
-		  To verify that nonrtric is deployed successfully, use the following command and check that all    pods are in running state  on nonrtric server:
+		lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+			inet 127.0.0.1  netmask 255.0.0.0
+			inet6 ::1  prefixlen 128  scopeid 0x10<host>
+			loop  txqueuelen 1000  (Local Loopback)
+			RX packets 255  bytes 21720 (21.7 KB)
+			RX errors 0  dropped 0  overruns 0  frame 0
+			TX packets 255  bytes 21720 (21.7 KB)
+			TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+		vpp1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+			  inet 172.14.1.152  netmask 255.255.255.0  broadcast 0.0.0.0
+			  inet6 fe80::4a3:43ff:fe0a:33eb  prefixlen 64  scopeid 0x20<link>
+			  ether 06:a3:43:0a:33:eb  txqueuelen 1000  (Ethernet)
+			  RX packets 6  bytes 252 (252.0 B)
+			  RX errors 0  dropped 0  overruns 0  frame 0
+			  TX packets 63  bytes 4530 (4.5 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+		vpp2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1350
+			  inet 10.100.0.19  netmask 255.255.255.254  broadcast 0.0.0.0
+			  inet6 fe80::27ff:fefd:19  prefixlen 64  scopeid 0x20<link>
+			  ether 02:00:27:fd:00:19  txqueuelen 1000  (Ethernet)
+			  RX packets 64  bytes 5380 (5.3 KB)
+			  RX errors 0  dropped 1  overruns 0  frame 0
+			  TX packets 83  bytes 6698 (6.6 KB)
+			  TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+		```
+			
+		Ping WAN Public IP, LAN Private IP(vpp1), and VxLAN IP(vpp2) of SDWAN_Site_A.
+		
+  - Verify firewall model:
+
+	- For Built-in(puccini) workflow and Argo-Workflow:
+
+	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
+
+  - Verify nonrtric model:
+
+	- For Built-in(puccini) workflow:
+
+	  To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state on Bonap Server:
+		
+	  ```sh
+	  $ kubectl get pods -n nonrtric
+			
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
+	  NAME                                       READY   STATUS    RESTARTS   AGE
+	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
+	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
+	  policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
+	  rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
+	  a1-sim-std-0                               1/1     Running   0          4m25s
+	  controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
+	  a1-sim-osc-0                               1/1     Running   0          4m25s
+	  a1-sim-std-1                               1/1     Running   0          2m54s
+	  a1-sim-osc-1                               1/1     Running   0          2m50s
+	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
+	  ```   
 	  
-			```sh
-			$ kubectl get pods -n nonrtric
+    - For Argo-Workflow:
+
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on nonrtric server:
+	  
+	  ```sh
+	  $ kubectl get pods -n nonrtric
 			
-			ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
-			NAME                                       READY   STATUS    RESTARTS   AGE
-			db-5d6d996454-2r6js                        1/1     Running   0          4m25s
-			enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
-			policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
-			rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
-			a1-sim-std-0                               1/1     Running   0          4m25s
-			controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
-			a1-sim-osc-0                               1/1     Running   0          4m25s
-			a1-sim-std-1                               1/1     Running   0          2m54s
-			a1-sim-osc-1                               1/1     Running   0          2m50s
-			a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
-			```     
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
+	  NAME                                       READY   STATUS    RESTARTS   AGE
+	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
+	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
+	  policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
+	  rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
+	  a1-sim-std-0                               1/1     Running   0          4m25s
+	  controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
+	  a1-sim-osc-0                               1/1     Running   0          4m25s
+	  a1-sim-std-1                               1/1     Running   0          2m54s
+	  a1-sim-osc-1                               1/1     Running   0          2m50s
+	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
+	  ```     
 
-	- Verify ric model:
+  - Verify ric model:
 
-		- Built-in(puccini) workflow
+    - For Built-in(puccini) workflow:
 	      
-		    To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state  on Bonap Server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 
-			```sh		
-				$ kubectl get pods -n ricplt
-				$ kubectl get pods -n ricinfra
-				$ kubectl get pods -n ricxapp 
+	  ```sh		
+	  $ kubectl get pods -n ricplt
+	  $ kubectl get pods -n ricinfra
+	  $ kubectl get pods -n ricxapp 
 
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
-				NAME                                                        READY   STATUS    RESTARTS   AGE
-				statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
-				deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
-				deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
-				deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
-				deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
-				deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
-				deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
-				deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
-				deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
-				r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
-				r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
-				r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
-				deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
-				deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
-				deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
+	  NAME                                                        READY   STATUS    RESTARTS   AGE
+	  statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
+	  deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
+	  deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
+	  deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
+	  deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
+	  deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
+	  deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
+	  deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
+	  deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
+	  r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
+	  r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
+	  r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
+	  deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
+	  deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
+	  deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
 				
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
-				NAME                                         READY   STATUS      RESTARTS   AGE
-				tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
-				deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
+	  NAME                                         READY   STATUS      RESTARTS   AGE
+	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
+	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
 				
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
-				No resources found.
-			```	
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
+	  No resources found.
+	  ```	
 
-		- Argo-Workflow
+    - For Argo-Workflow:
 		   
-		    To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state  on ric server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on ric server:
 	  
-			```sh		
-				$ kubectl get pods -n ricplt
-				$ kubectl get pods -n ricinfra
-				$ kubectl get pods -n ricxapp 
+	  ```sh		
+	  $ kubectl get pods -n ricplt
+	  $ kubectl get pods -n ricinfra
+	  $ kubectl get pods -n ricxapp 
 
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
-				NAME                                                        READY   STATUS    RESTARTS   AGE
-				statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
-				deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
-				deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
-				deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
-				deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
-				deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
-				deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
-				deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
-				deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
-				r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
-				r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
-				r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
-				deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
-				deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
-				deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
+	  NAME                                                        READY   STATUS    RESTARTS   AGE
+	  statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
+	  deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
+	  deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
+	  deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
+	  deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
+	  deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
+	  deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
+	  deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
+	  deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
+	  r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
+	  r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
+	  r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
+	  deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
+	  deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
+	  deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
 				
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
-				NAME                                         READY   STATUS      RESTARTS   AGE
-				tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
-				deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
+	  NAME                                         READY   STATUS      RESTARTS   AGE
+	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
+	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
 				
-				ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
-				No resources found.
-			```		
+	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
+	  No resources found.
+	  ```		
 
-	- Verify qp model:
-		- Built-in Workflow
+  - Verify qp model:
+	
+	- For Built-in Workflow:
 
-	       Login into 'Bonap Server' and run the following commands:
+	  Login into 'Bonap Server' and run the following commands:
 	  
-		    ```sh
-		     $ cat /tmp/xapp.log
+	  ```sh
+	  $ cat /tmp/xapp.log
 		
-		     # To check qp models deploy successfully, verify the following messages in /tmp/xapp.log.
-		     {"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+	  # To check qp models deploy successfully, verify the following messages in /tmp/xapp.log.
+	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+	  ```
 
-		- Argo-Workflow
+    - For Argo-Workflow:
 
-		  Login 'ONAP_OOM_DEMO' and run following commands:
+	  Login 'ONAP_OOM_DEMO' and run following commands:
 
-			```sh
-			$ cd ~/
-			$ argo list -n onap | grep qp
-			$ docker ps -a | grep {ID_OF_QP_ARGO}
-			$ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp_xapp.log
+	  ```sh
+	  $ cd ~/
+	  $ argo list -n onap | grep qp
+	  $ docker ps -a | grep {ID_OF_QP_ARGO}
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp_xapp.log
 			
-			# e.g. 
-			ubuntu@ip-172-31-27-243:~$ cd ~/
-			ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp
-			qp1pq8kc             Succeeded   1h    20s        1
+	  # e.g. 
+	  ubuntu@ip-172-31-27-243:~$ cd ~/
+	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp
+	  qp1pq8kc             Succeeded   1h    20s        1
 
-			ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp1pq8kc
-			f1bc78609f02        449444000066                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp1pq8kc_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
+	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp1pq8kc
+	  f1bc78609f02        449444000066                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp1pq8kc_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
 
-			docker cp f1bc78609f02:/tmp/xapp.log /home/ubunut/qp_xapp.log
+	  docker cp f1bc78609f02:/tmp/xapp.log /home/ubunut/qp_xapp.log
 			
-			# To check qp models deploy successfully, verify the following messages in /home/ubunut/qp_xapp.log.
-			*         ric       ric       ric        
-			Found RIC_HOST = 18.118.55.192
-			% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+	  # To check qp models deploy successfully, verify the following messages in /home/ubunut/qp_xapp.log.
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 											Dload  Upload   Total   Spent    Left  Speed
 
-			0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-			100   529  100    28  100   501    142   2543 --:--:-- --:--:-- --:--:--  2685
-			{
-				"status": "Created"
-			}
-			*         ric       ric       ric        
-			Found RIC_HOST = 18.118.55.192
-			% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-											Dload  Upload   Total   Spent    Left  Speed
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100   529  100    28  100   501    142   2543 --:--:-- --:--:-- --:--:--  2685
+		{
+			"status": "Created"
+		}
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+										Dload  Upload   Total   Spent    Left  Speed
 
-			0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-			100    18    0     0  100    18      0     90 --:--:-- --:--:-- --:--:--    89
-			100    18    0     0  100    18      0     14  0:00:01  0:00:01 --:--:--    14
-			100    85  100    67  100    18     45     12  0:00:01  0:00:01 --:--:--    57
-			{"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100    18    0     0  100    18      0     90 --:--:-- --:--:-- --:--:--    89
+		100    18    0     0  100    18      0     14  0:00:01  0:00:01 --:--:--    14
+		100    85  100    67  100    18     45     12  0:00:01  0:00:01 --:--:--    57
+		{"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+      ```
 		  
 
-	- Verify qp-driver model:
+  - Verify qp-driver model:
 
-		- Built-in(puccini) workflow
+	- For Built-in(puccini) workflow:
 
-	      Login into 'Bonap Server' and run the following commands:
+	  Login into 'Bonap Server' and run the following commands:
 
-		   ```sh
-				$ cat /tmp/xapp.log
+	  ```sh
+	  $ cat /tmp/xapp.log
 				
-				# To check qp-driver models deploy successfully, verify the following messages in /tmp/xapp.log.
-				{"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
-
-		- Argo-Workflow  
-
-	  	  Login 'ONAP_OOM_DEMO' and run following commands:
-
-			```sh
-			$ cd ~/
-			$ argo list -n onap | grep qp-driver
-			$ docker ps -a | grep {ID_OF_QP-deriver_ARGO}
-			$ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
-			
-			# e.g. 
-			ubuntu@ip-172-31-27-243:~$ cd ~/
-			ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp-driver
-			qp-deriver4rq2ws             Succeeded   1h    30m        1
-
-			ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp-deriver4rq2ws
-			u1ft76609r05        689546000088                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp-deriver4rq2ws_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
-
-			docker cp u1ft76609r05:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
-			
-			# To check qp-driver models deploy successfully, verify the following messages in /home/ubunut/qp-driver_xapp.log.
-			*         ric       ric       ric        
-			Found RIC_HOST = 18.118.55.192
-			% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-											Dload  Upload   Total   Spent    Left  Speed
-
-			0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-			100  1160  100    28  100  1132    147   5957 --:--:-- --:--:-- --:--:--  6105
-			{
-				"status": "Created"
-			}
-			*         ric       ric       ric        
-			Found RIC_HOST = 18.118.55.192
-			% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-											Dload  Upload   Total   Spent    Left  Speed
-											
-			0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-			100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
-			100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
-			{"instances":null,"name":"qpdriver","status":"deployed","version":"1.0"}
-		    ``` 
-
-	- Verify ts model:
-
-		- Built-in(puccini) workflow
-
-	  	  Login into 'Bonap Server' and run the following commands:
+	  # To check qp-driver models deploy successfully, verify the following messages in /tmp/xapp.log.
+		{"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
+      ```
 	  
-	       ```sh
-			$ cat /tmp/xapp.log
+    - For Argo-Workflow:  
+
+	  Login 'ONAP_OOM_DEMO' and run following commands:
+
+	  ```sh
+	  $ cd ~/
+	  $ argo list -n onap | grep qp-driver
+	  $ docker ps -a | grep {ID_OF_QP-deriver_ARGO}
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
+			
+	  # e.g. 
+	  ubuntu@ip-172-31-27-243:~$ cd ~/
+	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp-driver
+	  qp-deriver4rq2ws             Succeeded   1h    30m        1
+
+	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp-deriver4rq2ws
+	  u1ft76609r05        689546000088                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp-deriver4rq2ws_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
+
+	  docker cp u1ft76609r05:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
+			
+	  # To check qp-driver models deploy successfully, verify the following messages in /home/ubunut/qp-driver_xapp.log.
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+										Dload  Upload   Total   Spent    Left  Speed
+
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100  1160  100    28  100  1132    147   5957 --:--:-- --:--:-- --:--:--  6105
+		{
+			"status": "Created"
+		}
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+										Dload  Upload   Total   Spent    Left  Speed
+											
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
+		100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
+		{"instances":null,"name":"qpdriver","status":"deployed","version":"1.0"}
+      ``` 
+
+  - Verify ts model:
+
+    - For Built-in(puccini) workflow:
+
+	  Login into 'Bonap Server' and run the following commands:
+	  
+	  ```sh
+	  $ cat /tmp/xapp.log
 				
-			# To check ts models deploy successfully, verify the following messages in /tmp/xapp.log.
-			{"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
+	  # To check ts models deploy successfully, verify the following messages in /tmp/xapp.log.
+	  {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
+      ``` 
+		
+	- For Argo-Workflow: 
 
-		  ``` 
-		- Argo-Workflow 
+	  Login 'ONAP_OOM_DEMO' and run following commands:
 
-		  Login 'ONAP_OOM_DEMO' and run following commands:
-
-				```sh
-				$ cd ~/
-				$ argo list -n onap | grep ts
-				$ docker ps -a | grep {ID_OF_TS_ARGO}
-				$ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/ts_xapp.log
+	  ```sh
+	  $ cd ~/
+	  $ argo list -n onap | grep ts
+	  $ docker ps -a | grep {ID_OF_TS_ARGO}
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/ts_xapp.log
 				
-				# e.g. 
-				ubuntu@ip-172-31-27-243:~$ cd ~/
-				ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep ts
-				ts9dt4xz             Succeeded   2h    40s        1
+	  # e.g. 
+	  ubuntu@ip-172-31-27-243:~$ cd ~/
+	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep ts
+	  ts9dt4xz             Succeeded   2h    40s        1
 
-				ubuntu@ip-172-31-27-243:~$ docker ps -a | grep ts9dt4xz
-				b1bd76609t06        689546000088                                       "/var/run/argo/argoe…"    About an two ago   Exited (0) About an hour ago    k8s_main_ts9dt4xz_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
+	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep ts9dt4xz
+	  b1bd76609t06        689546000088                                       "/var/run/argo/argoe…"    About an two ago   Exited (0) About an hour ago    k8s_main_ts9dt4xz_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
 
-				docker cp b1bd76609t06:/tmp/xapp.log /home/ubunut/ts_xapp.log
+	  docker cp b1bd76609t06:/tmp/xapp.log /home/ubunut/ts_xapp.log
 				
-				# To check ts models deploy successfully, verify the following messages in /home/ubunut/ts_xapp.log.
-				*         ric       ric       ric        
-				Found RIC_HOST = 18.118.55.192
-				% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-												Dload  Upload   Total   Spent    Left  Speed
+	  # To check ts models deploy successfully, verify the following messages in /home/ubunut/ts_xapp.log.
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+										Dload  Upload   Total   Spent    Left  Speed
 
-				0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-				100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
-				100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
-				{
-					"status": "Created"
-				}
-				*         ric       ric       ric        
-				Found RIC_HOST = 18.118.55.192
-				% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-													Dload  Upload   Total   Spent    Left  Speed
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
+		100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
+		{
+			"status": "Created"
+		}
+		*         ric       ric       ric        
+		Found RIC_HOST = 18.118.55.192
+		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+										Dload  Upload   Total   Spent    Left  Speed
 
-				0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-				100    27    0     0  100    27      0     22  0:00:01  0:00:01 --:--:--    22
-				100   103  100    76  100    27     63     22  0:00:01  0:00:01 --:--:--    85
-				{"instances":null,"name":"trafficxapp","status":"deployed","version":"1.0"}
-				```
+		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+		100    27    0     0  100    27      0     22  0:00:01  0:00:01 --:--:--    22
+		100   103  100    76  100    27     63     22  0:00:01  0:00:01 --:--:--    85
+		{"instances":null,"name":"trafficxapp","status":"deployed","version":"1.0"}
+      ```
