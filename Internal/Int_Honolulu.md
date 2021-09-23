@@ -599,50 +599,50 @@
   
 ## ONAP OOM testing
    
-   Use the following steps in ONAP OOM Environment.
+  Use the following steps in ONAP OOM Environment.
 	
-   - One time steps for initialization/configuration of the environment:
+  - One time steps for initialization/configuration of the environment:
 	  
-	 - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
+	- Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
 	  
-	   ```sh
-	   https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
-	   ```
+	  ```sh
+	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  ```
 	  
-	   ```sh
-	   Virtual Licence Model creation
-	   Open the SDC application, click on the 'ONBOARD' tab.
-	   Click 'CREATE NEW VLM' (Licence Model)
-	   Use 'cci' as Vendor Name, and enter a description
-	   Click 'CREATE'
-	   Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields.
-	   Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields.
-	   Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-	   Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups.
-	   Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
-	   Features Groups, drag the feature group created previously.
-	   Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
-	   ```
+	  ```sh
+	  Virtual Licence Model creation
+	  Open the SDC application, click on the 'ONBOARD' tab.
+	  Click 'CREATE NEW VLM' (Licence Model)
+	  Use 'cci' as Vendor Name, and enter a description
+	  Click 'CREATE'
+	  Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields.
+	  Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields.
+	  Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
+	  Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups.
+	  Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
+	  Features Groups, drag the feature group created previously.
+	  Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
+	  ```
 	  
-     - Update AAI with the following REST requests using POSTMAN.
+    - Update AAI with the following REST requests using POSTMAN.
 	  
-	   Use the following headers in a POSTMAN request
+	  Use the following headers in a POSTMAN request
 	  
-       ```sh
-       headers :
-       Content-Type:application/json
-       X-FromAppId:AAI
-       Accept:application/json
-       X-TransactionId:get_aai_subscr
-       Cache-Control:no-cache
-       Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
-       ```
+      ```sh
+      headers :
+      Content-Type:application/json
+      X-FromAppId:AAI
+      Accept:application/json
+      X-TransactionId:get_aai_subscr
+      Cache-Control:no-cache
+      Postman-Token:9f71f570-043c-ec79-6685-d0d599fb2c6f
+      ```
 		
-       - Create 'NCalifornia' region: 
+      - Create 'NCalifornia' region: 
 		
-	     ```sh
-	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
-		  {
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/cloud-infrastructure/cloud-regions/cloud-region/aws/NCalifornia
+		{
 			"cloud-owner": "aws",
 			"cloud-region-id": "NCalifornia",
 			"tenants": {
@@ -653,14 +653,14 @@
 			   }
 			  ]
 			}
-		  }
-	     ```
+		 }
+	    ```
 		  
-       - Create customer:   
+      - Create customer:   
 		  
-         ```sh
-	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
-		  {
+        ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/business/customers/customer/CCIDemonstration	
+		{
 		   "global-customer-id": "CCIDemonstration",
 		   "subscriber-name": "CCIDemonstration",
 		   "subscriber-type": "INFRA",
@@ -759,30 +759,30 @@
 			}				
 		   ]}
 		  }
-         ```
+        ```
 		
-         For new CCI models add a new service type in the service-subscription list of create customer REST API.
+        For new CCI models add a new service type in the service-subscription list of create customer REST API.
 		
-       - Create a dummy service:
+      - Create a dummy service:
 		
-	     ```sh
-	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
-	     {
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/service-design-and-creation/services/service/e8cb8968-5411-478b-906a-f28747de72cd
+	    {
 	       "service-id": "e8cb8968-5411-478b-906a-f28747de72cd",
 	       "service-description": "CCI"
-	     }
-	     ```
+	    }
+	    ```
 		  
-       - Create zone:
+      - Create zone:
 		  
-	     ```sh
-	     PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
-	     {
+	    ```sh
+	    PUT https://aai.api.sparky.simpledemo.onap.org:30233/aai/v19/network/zones/zone/4334ws43
+	    {
 	       "zone-name": "cci",
 	       "design-type":"abcd",
 	       "zone-context":"abcd"
-	     }
-	     ```
+	    }
+	    ```
 		
     - Update VID with the following REST API requests using POSTMAN
 	  
