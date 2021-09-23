@@ -577,7 +577,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	     
 		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
 		
-		https://github.com/rajeshvkothari3003/oom/blob/master/GIN_README_2508.md#ORAN-Servers
+		https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers
 	  
 	  - Argo-workflow:
 	    
@@ -652,7 +652,6 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
         ```		
 		
 		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
-		
 		In argo workflow, there are two ways for executing argo templates.
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
@@ -885,7 +884,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 - **ORAN Servers**
     ------------
-  These servers need to be created only if oran model(s) are to be deployed.
+  These servers need to be created only if oran models are to be deployed.
   
   - Create three AWS VMs in the Ohio region with names as follows:
     
@@ -1717,7 +1716,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
     - For argo-workflow:
 
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on nonrtric server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the nonrtric server:
 	  
 	  ```sh
 	  $ kubectl get pods -n nonrtric
