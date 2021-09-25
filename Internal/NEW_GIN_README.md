@@ -424,7 +424,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 		  ```
 			
-	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models.(TBD) 
+	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
 			
           Note2: {IP_ADDR_OF_DaaP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
 	  
@@ -579,7 +579,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
       - Built-in(puccini) workflow:
 	     
-		To create oran setup for built-in(puccini) workflow use this [GIN_README](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)(TBD)
+		To create oran setup for built-in(puccini) workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
 	  
 	  - Argo-workflow:
 	    
@@ -1479,7 +1479,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
 	    ```
 		
-		After sending succesfully request it gives "201 Created" status in POSTMAN.(TBD)
+		After sending a request check whether it returns the "201 Created" status code in POSTMAN.
 		
     - Update VID with the following REST API requests using POSTMAN
 	  
@@ -1530,7 +1530,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
         ```
 		
-		After sending successfully request it gives "200 OK" in POSTMAN and return msg as follows:(TBD)
+		After sending a request check whether it return the "200 OK" status code in POSTMAN and msg as follows:
 		
 		```sh
 		{
