@@ -189,6 +189,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
   - **Tosca images**
       ------------
+	  
       GIN consists of the following components:
 	  
       - TOSCA_SO -  service orchestrator    
@@ -319,6 +320,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
       - **Using pre built images**
           ----------------------
+		  
         To use pre-build images make sure puccini/docker-compose.yaml looks as follows:
 	    
 	    ```sh
@@ -409,6 +411,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
       - **Deploying images**
 	      ----------------
+		  
 	    - Modify ~/puccini/dvol/config/application.cfg as follows:
 
 		  ```sh
@@ -421,7 +424,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 		  ```
 			
-	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
+	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models.(TBD) 
 			
           Note2: {IP_ADDR_OF_DaaP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
 	  
@@ -459,7 +462,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
           68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
           344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
           634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
-		          ```
+		  ```
+		  
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
   
@@ -575,9 +579,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
       - Built-in(puccini) workflow:
 	     
-		To create oran setup for built-in(puccini) workflow use the GIN_README as follows:
-		
-		https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers
+		To create oran setup for built-in(puccini) workflow use this [GIN_README](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)(TBD)
 	  
 	  - Argo-workflow:
 	    
@@ -880,10 +882,12 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
 	  ```
+	  
 	- Copy latest models csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
 	
 - **ORAN Servers**
     ------------
+	
   These servers need to be created only if oran models are to be deployed.
   
   - Create three AWS VMs in the Ohio region with names as follows:
@@ -1066,6 +1070,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
  
 - **Docker container based testing**
     ------------------------------ 
+	
   Login into Demo Server and fire the following commands to copy csars:
   
   ```sh
@@ -1302,7 +1307,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    ```
 	  
 	  	```sh
-	 	 Virtual Licence Model creation
+	 	Virtual Licence Model creation
 		Open the SDC application, click on the 'ONBOARD' tab.
 		Click 'CREATE NEW VLM' (Licence Model)
 		Use 'cci' as Vendor Name, and enter a description
@@ -1591,7 +1596,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
   - Verify the sdwan model:
   
-	- For built-in(puccini) workflow and argo-workflow:
+	- For built-in(puccini) workflow or argo-workflow:
 		
 	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
 
@@ -1687,15 +1692,15 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		
   - Verify firewall model:
 
-	- For built-in(puccini) workflow and argo-workflow:
+	- For built-in(puccini) workflow or argo-workflow:
 
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 
   - Verify nonrtric model:
 
-	- For Built-in(puccini) workflow:
+	- For built-in(puccini) workflow:
 
-	  To verify that nonrtric is deployed successfully, use the following command and check that all  pods are in running state on Bonap Server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 		
 	  ```sh
 	  $ kubectl get pods -n nonrtric
@@ -1719,9 +1724,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the nonrtric server:
 	  
 	  ```sh
-	  $ kubectl get pods -n nonrtric
+	  $ sudo kubectl get pods -n nonrtric
 			
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
+	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n nonrtric
 	  NAME                                       READY   STATUS    RESTARTS   AGE
 	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
 	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
@@ -1778,11 +1783,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on ric server:
 	  
 	  ```sh		
-	  $ kubectl get pods -n ricplt
-	  $ kubectl get pods -n ricinfra
-	  $ kubectl get pods -n ricxapp 
+	  $ sudo kubectl get pods -n ricplt
+	  $ sudo kubectl get pods -n ricinfra
+	  $ sudo kubectl get pods -n ricxapp 
 
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
+	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricplt
 	  NAME                                                        READY   STATUS    RESTARTS   AGE
 	  statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
 	  deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
@@ -1800,12 +1805,12 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
 	  deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
 				
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
+	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricinfra
 	  NAME                                         READY   STATUS      RESTARTS   AGE
 	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
 	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
 				
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
+	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricxapp
 	  No resources found.
 	  ```		
 
@@ -1824,7 +1829,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
     - For argo-workflow:
 
-	  Login 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'ONAP_OOM_DEMO' and run following commands:
 
 	  ```sh
 	  $ cd ~/
@@ -1881,7 +1886,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
     - For argo-workflow:  
 
-	  Login 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'ONAP_OOM_DEMO' and run following commands:
 
 	  ```sh
 	  $ cd ~/
@@ -1936,7 +1941,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		
 	- For argo-workflow: 
 
-	  Login 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'ONAP_OOM_DEMO' and run following commands:
 
 	  ```sh
 	  $ cd ~/
