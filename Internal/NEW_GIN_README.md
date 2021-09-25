@@ -1300,7 +1300,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
     - One time steps for initialization/configuration of the environment:
 	  
-      - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps: 
+      - Login into the ONAP portal using designer (cs0008/demo123456!) and follow the steps as follows: 
 	  
 	    ```sh
 	    https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
@@ -1309,15 +1309,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  	```sh
 	 	Virtual Licence Model creation
 		Open the SDC application, click on the 'ONBOARD' tab.
-		Click 'CREATE NEW VLM' (Licence Model)
+		Click on 'CREATE NEW VLM' (Licence Model)
 		Use 'cci' as Vendor Name, and enter a description
-		Click 'CREATE'
-		Click 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields.
-		Click 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields.
-		Click 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields. Also, under the Entitlement 
-		Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups.
-		Click Licence Agreements and 'ADD LICENCE AGREEMENT', then fill in the required fields. Under the tab 
-		Features Groups, drag the feature group created previously.
+		Click on 'CREATE'
+		Click on 'Licence Key Groups' and 'ADD LICENCE KEY GROUP', then fill in the required fields such as Name='cci', Type='Universal', Manufacturer Reference Number='1000'.
+		Click on 'Entitlements Pools' and 'ADD ENTITLEMENTS POOL', then fill in the required fields such as Name='cci', Type='Universal', Manufacturer Reference Number='1000'.
+		Click on 'Feature Groups' and 'ADD FEATURE GROUP', then fill in the required fields such as Name='cci', Part Number='1000'. Also, under the Entitlement Pools tab,  drag the created entitlement pool to the left. Same for the License Key Groups.
+		Click on 'Licence Agreements' and 'ADD LICENCE AGREEMENT', then fill in the required fields such as Name='cci', License Term='Unlimited'. Under the tab Features Groups, drag the feature group created previously.
 		Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
 	 	```
 	  
@@ -1481,6 +1479,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
 	    ```
 		
+		After sending succesfully request it gives "201 Created" status in POSTMAN.(TBD)
+		
     - Update VID with the following REST API requests using POSTMAN
 	  
       Use the following headers in the POSTMAN request
@@ -1530,21 +1530,32 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
         ```
 		
+		After sending successfully request it gives "200 OK" in POSTMAN and return msg as follows:(TBD)
+		
+		```sh
+		{
+          "errors": []
+        }
+		```
+		
   - Create and distribute CCI models in SDC:
 	  
     - Vendor Software Product(VSP) onboarding/creation:
 	    
-	  Login into the portal using designer (cs0008/demo123456!)
+	  Login into the portal using designer (cs0008/demo123456!) and follow the steps as follows:
 	  
 	  ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
+	  ```
+	  
+	  ```sh
 	  Open the SDC application, click on the OnBoard tab.
-      Click 'CREATE NEW VSP'
+      Click on 'CREATE NEW VSP'
       Give the name to VSP, i.e.  cci_ric_vsp. 
-      Select the Vendor and the Category as 'Network Service (Generic)' and give it a description then click on 'CREATE'.
+      Select the Vendor and the Category as 'Network Service (Generic)' also select ONBOARDING PROCEDURE as 'Network Package' and give it a description then click on 'CREATE'.
       In the 'Software Product Details' box click on the License Agreement as 'Internal' and select 'Licensing Version',
-      'License Agreement' and 'Feature Groups'.
-      Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload nonrtric/ric/qp/qp-driver/ts based on your requirement.
+      'License Agreement' and 'Feature Groups' under the LICENSES.
+      Goto 'Overview'. In the 'Software Product Attachments' box click on 'SELECT File' and upload sdwan/firewall/nonrtric/ric/qp/qp-driver/ts csar based on your requirement.
       Click on Submit and enter commit comment then click on 'COMMIT & SUBMIT'.
 	  ```
 	  
@@ -1554,8 +1565,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  Go to SDC home. Click on the top-right icon with the orange arrow.
 	  Select your VSP and click on 'IMPORT VSP'.
 	  Click on 'Create' 
-	  Click on 'Check-in' and enter a comment then Press OK.
-	  Click on 'Certify' and enter a comment then Press OK.
+	  Click on 'Check-in' and enter a comment then press OK.
+	  Click on 'Certify' and enter a comment then press OK.
 	  ```
 	  
 	- Service creation/distribution:
@@ -1564,11 +1575,11 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  Go to SDC home. From the 'Add' box click on 'ADD SERVICE'
 	  Enter Name and then select 'Category' as 'Network Service'. Enter the description and click on Create.
 	  Click on the 'Composition' left tab
-	  In the search bar, Search your VSP and Drag it
+	  In the search bar, Search your VSP and Drag it.
 	  Click on 'Check-in' and enter a comment then Press OK.
-	  Click on Certify and enter a comment then Press OK.
+	  Click on 'Certify' and enter a comment then Press OK.
 	  Click on Distribute.
-	  Wait for two minutes and go to the 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'
+	  Wait for 2-3 minutes and then go to the 'Distribution' tab of service. You should see 'DISTRIBUTION_COMPLETE_OK'.
 	  ```
 	  
   - Create service instance and VNF from VID:
@@ -1587,8 +1598,20 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    
       ```sh
 	  Click 'Browse SDC Service Models'
-      Check that all distributed models are there.
+      Select a service and click on Deploy.
+      Complete the fields indicated by the red star and click Confirm.
+      Wait for few minutes and it will return a success message.
+      A service object is created in Puccini-SO.
+      Click Close 
       ```
+	  
+    - Instantiate a VNF
+		
+      ```sh
+	  Click on “Add node instance” and select the VNF available.
+      Complete the fields indicated by the red star and click Confirm.
+      Wait for 7-8 minutes and a success message will display.
+	  ```
   
 ## Post Deployment Verification Steps
 
