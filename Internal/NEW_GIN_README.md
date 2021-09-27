@@ -764,7 +764,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  - Argo-workflow:
 	  
-        To create oran setup for argo-workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
+        To create oran setup for argo-workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#Argo-workflow)
 	  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
