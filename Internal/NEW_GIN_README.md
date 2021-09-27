@@ -759,7 +759,7 @@ in third.
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	  
-	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
+	   Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
             Enter.
  
     - Make changes in ~/onap-oom-integ/cci/application.cfg as per the workflow type to be used: 
@@ -767,18 +767,18 @@ in third.
 	  - For built-in(puccini) workflow:
 	    
 		```sh
-		[remote]
-		remoteHost={IP_ADDR_OF_SERVER}
-		remotePort=22
-		remoteUser=ubuntu
-		remotePubKey=/opt/app/config/cciPrivateKey
-		workflowType=puccini-workflow
+		 [remote]
+		 remoteHost={IP_ADDR_OF_SERVER}
+		 remotePort=22
+		 remoteUser=ubuntu
+		 remotePubKey=/opt/app/config/cciPrivateKey
+		 workflowType=puccini-workflow
 		
-		[reposure]
-		pushCsarToReposure=false
+		 [reposure]
+		 pushCsarToReposure=false
 		```
 		
-		Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		 Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it  should be set to {IP_ADDR_OF_BONAP_SERVER}.
 				
       - For argo-workflow:
 
