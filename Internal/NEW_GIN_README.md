@@ -1875,7 +1875,7 @@ in third.
 	  $ cd ~/
 	  $ argo list -n onap | grep qp
 	  $ docker ps -a | grep {ID_OF_QP_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp_xapp.log
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/qp_xapp.log
 			
 	  # e.g. 
 	  ubuntu@ip-172-31-27-243:~$ cd ~/
@@ -1885,9 +1885,9 @@ in third.
 	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp1pq8kc
 	  f1bc78609f02        449444000066                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp1pq8kc_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
 
-	  docker cp f1bc78609f02:/tmp/xapp.log /home/ubunut/qp_xapp.log
+	  docker cp f1bc78609f02:/tmp/xapp.log /home/ubuntu/qp_xapp.log
 			
-	  # To check qp models deploy successfully, verify the following messages in /home/ubunut/qp_xapp.log.
+	  # To check qp models deploy successfully, verify the following messages in /home/ubuntu/qp_xapp.log.
 		*         ric       ric       ric        
 		Found RIC_HOST = 18.118.55.192
 		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -1932,7 +1932,7 @@ in third.
 	  $ cd ~/
 	  $ argo list -n onap | grep qp-driver
 	  $ docker ps -a | grep {ID_OF_QP-deriver_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/qp-driver_xapp.log
 			
 	  # e.g. 
 	  ubuntu@ip-172-31-27-243:~$ cd ~/
@@ -1942,9 +1942,9 @@ in third.
 	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp-deriver4rq2ws
 	  u1ft76609r05        689546000088                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp-deriver4rq2ws_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
 
-	  docker cp u1ft76609r05:/tmp/xapp.log /home/ubunut/qp-driver_xapp.log
+	  docker cp u1ft76609r05:/tmp/xapp.log /home/ubuntu/qp-driver_xapp.log
 			
-	  # To check qp-driver models deploy successfully, verify the following messages in /home/ubunut/qp-driver_xapp.log.
+	  # To check qp-driver models deploy successfully, verify the following messages in /home/ubuntu/qp-driver_xapp.log.
 		*         ric       ric       ric        
 		Found RIC_HOST = 18.118.55.192
 		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -1987,7 +1987,7 @@ in third.
 	  $ cd ~/
 	  $ argo list -n onap | grep ts
 	  $ docker ps -a | grep {ID_OF_TS_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubunut/ts_xapp.log
+	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/ts_xapp.log
 				
 	  # e.g. 
 	  ubuntu@ip-172-31-27-243:~$ cd ~/
@@ -1997,9 +1997,9 @@ in third.
 	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep ts9dt4xz
 	  b1bd76609t06        689546000088                                       "/var/run/argo/argoe…"    About an two ago   Exited (0) About an hour ago    k8s_main_ts9dt4xz_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
 
-	  docker cp b1bd76609t06:/tmp/xapp.log /home/ubunut/ts_xapp.log
+	  docker cp b1bd76609t06:/tmp/xapp.log /home/ubuntu/ts_xapp.log
 				
-	  # To check ts models deploy successfully, verify the following messages in /home/ubunut/ts_xapp.log.
+	  # To check ts models deploy successfully, verify the following messages in /home/ubuntu/ts_xapp.log.
 		*         ric       ric       ric        
 		Found RIC_HOST = 18.118.55.192
 		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
