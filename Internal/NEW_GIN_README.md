@@ -762,7 +762,7 @@ in third.
 	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
             Enter.
  
-    - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
+    - Make changes in ~/onap-oom-integ/cci/application.cfg as per the workflow type to be used: 
 	  
 	  - For built-in(puccini) workflow:
 	    
