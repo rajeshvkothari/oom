@@ -778,7 +778,7 @@ in third.
 		 pushCsarToReposure=false
 		```
 		
-		 Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it  should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		  Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it  should be set to {IP_ADDR_OF_BONAP_SERVER}.
 				
       - For argo-workflow:
 
@@ -797,8 +797,8 @@ in third.
 		argoTemplateType=containerSet | DAG
         ```		
 		
-		Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
-		In argo workflow, there are two ways for executing argo templates.
+		  Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
+		        In argo workflow, there are two ways for executing argo templates.
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
 				
