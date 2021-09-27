@@ -114,7 +114,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
          $ cp cciPrivateKey onap-oom-integ/cci
          ```	  
     
-        - Login into ric Server and nonrtric Server and run the following commands:
+     - Login into ric Server and nonrtric Server and run the following commands:
 	
 	     ```sh
 	     $ sudo apt update
@@ -131,7 +131,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	      ```
 	
-        - Login into Bonap Server and run the following commands to check clustering setup:
+     - Login into Bonap Server and run the following commands to check clustering setup:
 	
 			- Verify 'ric' and 'default' contexts are setup:  
 		
