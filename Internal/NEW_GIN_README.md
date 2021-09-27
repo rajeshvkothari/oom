@@ -1586,7 +1586,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
     - Access to VID portal:
 	    
-      Login into the portal using demo/demo123456! credentials.
+      Login into the portal using (demo/demo123456!) credentials.
 	  
       ```sh
 	  https://portal.api.simpledemo.onap.org:30225/ONAPPORTAL/login.htm
