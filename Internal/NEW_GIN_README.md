@@ -34,10 +34,10 @@ Follow/complete only those sections which are relevant to the type of models/dep
 
 [ORAN Servers](#ORAN-Servers) should be completed only if ORAN models are to be deployed.
 
-"Creating Environment for Docker containers" should be completed only if deployment is
+[Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing) should be completed only if deployment is
 to be tested in docker container environment. This is not required for ONAP OOM based deployment.
 
-"Creating Environment for OOM" should be completed for ONAP OOM based deployment.
+[Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing) should be completed for ONAP OOM based deployment.
 
 So, for example, to deploy SDWAN in ONAP OOM, ignore first two and only perform steps given
 in third.
