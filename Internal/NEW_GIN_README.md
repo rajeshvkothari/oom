@@ -184,8 +184,6 @@ in third.
 			  
   - **Argo-workflow**
       -------------  
-  
-  	To create oran setup for argo-workflow use the steps as follows:
 	
 	 - Create two AWS VMs in the Ohio region with names as follows:
 		
@@ -232,7 +230,8 @@ in third.
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	
-	Docker-container-based-testing only support Built-in(puccini) workflow
+	Only built-in workflow engine is supported for docker container based deployment.
+    Argo workflow engine can only be used in ONAP OOM based deployment.
     
   - **DMaaP Server**
       ------------
