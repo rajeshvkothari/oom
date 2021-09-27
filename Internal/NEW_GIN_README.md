@@ -4,6 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
+     * [ORAN Servers](#ORAN-Servers)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -13,7 +14,6 @@ Table of contents
 		 * [Deploying images](#Deploying-images)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
-     * [ORAN Servers](#ORAN-Servers)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
