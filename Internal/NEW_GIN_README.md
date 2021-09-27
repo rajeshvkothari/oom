@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
-	   * [Built-in(puccini) workflow] (#Built-in(puccini) workflow)
+	   * [Built-in(puccini) workflow](#Built-in(puccini) workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -34,7 +34,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ------------
 	These servers need to be created only if oran models are to be deployed. There are two ways to deploye oran servers one is Built-in(puccini) workflow and other is Argo-workflow.
 	
-  - **For Built-in(puccini) workflow**:
+  - **For Built-in(puccini) workflow**
+      ------------------------------
 
 	 - Create three AWS VMs in the Ohio region with names as follows:
     
