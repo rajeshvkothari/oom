@@ -159,7 +159,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  ```
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
-	Docker-container-based-testing only support built-in (puccini) workflow
+	Docker-container-based-testing only supported built-in(puccini) workflow
     
   - **DMaaP Server**
       ------------
