@@ -44,7 +44,9 @@ in third.
 
 - **ORAN Servers**
     ------------
-	These servers need to be created only if oran models are to be deployed. There are two ways to deploye oran servers one is Built-in(puccini) workflow and other is Argo-workflow.
+	These servers are required for deploying ORAN models. They need to be setup in
+    different ways based on whether built-in workflow or argo-workflow mechanism
+    is to be used.
 	
   - **Builtin-workflow**
       ----------------
