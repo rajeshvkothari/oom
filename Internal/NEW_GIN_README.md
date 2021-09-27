@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
-       * [Builtin workflow](#Built-in_workflow)
+       * [Built-in workflow](#Built-in_workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
