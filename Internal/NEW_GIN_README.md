@@ -767,22 +767,9 @@ in third.
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	  
-	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &" this command we have to press enter and go ahead.
-	
-    - Create oran setup(optional):
-	  
-	  Create oran setup when need to deploy oran models otherwise no need to set up them for sdwan and firewall models.
-	  
-	  GIN can deploy the tosca models using two ways.
-	  
-      - Built-in(puccini) workflow:
-	     
-		To create oran setup for built-in(puccini) workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
-	  
-	  - Argo-workflow:
-	  
-        To create oran setup for argo-workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#Argo-workflow)
-	  
+	  Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
+            Enter.
+ 
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
 	  - For built-in(puccini) workflow:
