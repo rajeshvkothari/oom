@@ -128,7 +128,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
                  - "http://172.31.27.186:5000"
 	
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
-
+		 ```
 		**IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
 
 		  To know more about valid YAML format use the follwoing link: 
@@ -170,7 +170,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
   	To create oran setup for argo-workflow use the steps as follows:
 	
-	 - Create two AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
+	 - Create two AWS VMs in the Ohio region with names as follows. use the following specifications and SSH it using putty by using cciPrivateKey:
 		
 	 	  ```sh
 		  VM1 Name: ric Server
