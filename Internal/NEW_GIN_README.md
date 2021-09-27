@@ -393,11 +393,11 @@ in third.
 	  
       GIN consists of the following components:
 	  
-      - TOSCA_SO -  service orchestrator    
-      - TOSCA_COMPILER - puccini tosca compiler
-      - TOSCA_WORKFLOW - built-in workflow microservice
-      - TOSCA_POLICY - policy microservice
-      - TOSCA_GAWP - argo based workflow microservice
+	  - TOSCA_SO - service orchestrator.
+	  - TOSCA_COMPILER - puccini tosca compiler
+	  - TOSCA_WORKFLOW - built-in workflow microservice
+	  - TOSCA_GAWP - argo workflow microservice
+	  - TOSCA_POLICY - policy microservice
 	  
 	  There are two ways to use tosca images:
 	  
