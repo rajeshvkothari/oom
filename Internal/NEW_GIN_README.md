@@ -1601,7 +1601,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       Select a service and click on Deploy.
       Complete the fields indicated by the red star and click Confirm.
       Wait for few minutes and it will return a success message.
-      A service object is created in Puccini-SO.
+      A service object is created in Puccini-so.
       Click Close 
       ```
 	  
@@ -1803,7 +1803,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
     - For argo-workflow:
 		   
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on ric server:
+	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on ric server:
 	  
 	  ```sh		
 	  $ sudo kubectl get pods -n ricplt
