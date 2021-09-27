@@ -1530,7 +1530,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	    }
         ```
 		
-		After sending a request check whether it return the "200 OK" status code in POSTMAN and msg as follows:
+		After sending a request check whether it returns the "200 OK" status code in POSTMAN and msg as follows:
 		
 		```sh
 		{
