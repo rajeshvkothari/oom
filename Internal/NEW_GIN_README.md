@@ -769,11 +769,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		```sh
 		[remote]
 		remoteHost={IP_ADDR_OF_SERVER}
-		reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
 		remotePort=22
 		remoteUser=ubuntu
 		remotePubKey=/opt/app/config/cciPrivateKey
 		workflowType=puccini-workflow
+		
+		[reposure]
+		pushCsarToReposure=false
 		```
 		
 		Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
@@ -781,11 +783,17 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       - For argo-workflow:
 
 		```sh
+		[remote]
 		remoteHost={IP_ADDR_OF_ONAP_OOM_DEMO}
+		workflowType=argo-workflow
+
+		[reposure]
 		reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
+		pushCsarToReposure=true
+
+		[argoWorkflow]
 		ricServerIP={IP_ADDR_OF_RIC}
 		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
-		workflowType=argo-workflow
 		argoTemplateType=containerSet | DAG
         ```		
 		
