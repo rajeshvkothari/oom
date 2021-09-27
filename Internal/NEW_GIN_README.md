@@ -401,17 +401,16 @@ in third.
 	  
 	- GIN images can either be built from sources or their pre-built versions
 	  can be used directly from CCI_REPO.
-
-	- In both cases, puccini needs to cloned by logging into Demo server and
+      In both cases, puccini needs to cloned by logging into Demo server and
 	  running following command 
 	  
-	- Login into the Demo Server and perform steps as follows:
+	  - Login into the Demo Server and perform steps as follows:
 	
-      - clone puccini:
+        - clone puccini:
   
-        ```sh
-        $ git clone https://github.com/customercaresolutions/puccini
-        ```
+         ```sh
+         $ git clone https://github.com/customercaresolutions/puccini
+         ```
     
 	  - **Building images**
 	      ---------------
