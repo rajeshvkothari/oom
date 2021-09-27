@@ -31,39 +31,38 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 - **ORAN Servers**
     ------------
-  - For Built-in(puccini) workflow
+  -For Built-in(puccini) workflow
+   These servers need to be created only if oran models are to be deployed.
   
-     These servers need to be created only if oran models are to be deployed.
-  
-  	 - Create three AWS VMs in the Ohio region with names as follows:
+	 - Create three AWS VMs in the Ohio region with names as follows:
     
- 	 ```sh
-	 VM1 Name: Bonap Server 
-         VM2 Name: ric Server
-         VM3 Name: nonrtric Server
-         ```
+	  ```sh
+	   VM1 Name: Bonap Server 
+       VM2 Name: ric Server
+       VM3 Name: nonrtric Server
+      ```
 	
-	  And use the following specifications and SSH it using putty by using cciPrivateKey:
+	 And use the following specifications and SSH it using putty by using cciPrivateKey:
 	
   	 ```sh
-         Image: ubuntu-18.04
-         Instance Type: t2.2xlarge
-         KeyPair : cciPublicKey
-         Disk: 80GB
+     Image: ubuntu-18.04
+     Instance Type: t2.2xlarge
+     KeyPair : cciPublicKey
+     Disk: 80GB
 	 Security group: launch-wizard-19
 	 ```
 	
-   - Login into Bonap Server and perform steps as follows:
+	 - Login into Bonap Server and perform steps as follows:
 	
-	 - Setup kubernetes
+	   - Setup kubernetes
 	   
-	   ```sh
-	   $ cd /home/ubuntu
-       $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
-       $ sudo chmod +x ./kubectl
-       $ sudo mv ./kubectl /usr/local/bin/kubectl
-       $ grep -E --color 'vmx|svm' /proc/cpuinfo
-	   ```
+	     ```sh
+	     $ cd /home/ubuntu
+         $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.9/bin/linux/amd64/kubectl
+         $ sudo chmod +x ./kubectl
+         $ sudo mv ./kubectl /usr/local/bin/kubectl
+         $ grep -E --color 'vmx|svm' /proc/cpuinfo
+	     ```
 	  
 	 - Copy cciPrivateKey into $HOME/.ssh
 	  
