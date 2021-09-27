@@ -6,6 +6,7 @@ Table of contents
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
        * [Built-in workflow](#Builtin-workflow)
+       * [Argo-workflow](#Argo-workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -161,7 +162,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		 kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 		 ```
 			  
-  - For Argo-workflow:
+  - **Argo-workflow**
+      -------------  
   
   	To create oran setup for argo-workflow use the steps as follows:
 	
