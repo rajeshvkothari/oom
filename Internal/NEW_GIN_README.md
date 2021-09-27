@@ -157,6 +157,49 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
       kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
       kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 	  ```
+		To create oran setup for argo-workflow use the steps as follows:
+	  
+	    - Create two AWS VMs in the Ohio region with names as follows:
+		
+		  ```sh
+		  VM1 Name: ric Server
+		  VM2 Name: nonrtric Server
+		  ```
+				
+	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
+		  
+		  ```sh
+		  Image: ubuntu-18.04
+		  InstanceTye: t2.2xlarge
+		  KeyPair : cciPublicKey
+		  Disk: 80GB
+		  Security group: launch-wizard-19
+		  ```
+				   
+	    - Login into ric server and nonrtric server and run the following commands:
+		  
+		  ```sh
+		  $ sudo apt update
+		  $ sudo apt install jq
+		  $ sudo apt install socat
+		  $ sudo mkdir -p /etc/rancher/k3s
+          $ sudo chmod -R 777 /etc/rancher/k3s
+		
+		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+		  mirrors:
+             "172.31.27.186:5000":
+                endpoint:
+                   - "http://172.31.27.186:5000"
+		  ```
+		  
+		  **IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
+
+		  To know more about valid YAML format use the follwoing link: 
+
+		  ```sh
+		  https://jsonformatter.org/yaml-validator
+		  ```
+		  
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	Docker-container-based-testing only support built-in (puccini) workflow
@@ -712,49 +755,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  - Argo-workflow:
 	    
-		To create oran setup for argo-workflow use the steps as follows:
-	  
-	    - Create two AWS VMs in the Ohio region with names as follows:
-		
-		  ```sh
-		  VM1 Name: ric Server
-		  VM2 Name: nonrtric Server
-		  ```
-				
-	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
-		  
-		  ```sh
-		  Image: ubuntu-18.04
-		  InstanceTye: t2.2xlarge
-		  KeyPair : cciPublicKey
-		  Disk: 80GB
-		  Security group: launch-wizard-19
-		  ```
-				   
-	    - Login into ric server and nonrtric server and run the following commands:
-		  
-		  ```sh
-		  $ sudo apt update
-		  $ sudo apt install jq
-		  $ sudo apt install socat
-		  $ sudo mkdir -p /etc/rancher/k3s
-          $ sudo chmod -R 777 /etc/rancher/k3s
-		
-		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
-		  mirrors:
-             "172.31.27.186:5000":
-                endpoint:
-                   - "http://172.31.27.186:5000"
-		  ```
-		  
-		  **IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
 
-		  To know more about valid YAML format use the follwoing link: 
-
-		  ```sh
-		  https://jsonformatter.org/yaml-validator
-		  ```
-		  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
 	  - For built-in(puccini) workflow:
