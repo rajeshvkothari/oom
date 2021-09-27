@@ -145,8 +145,6 @@ in third.
 		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
           Use following link to verify correctness of YAML:**
 
-		  To know more about valid YAML format use the follwoing link: 
-
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
 		
@@ -212,8 +210,6 @@ in third.
 		  
 		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
           Use following link to verify correctness of YAML:**
-
-		  To know more about valid YAML format use the follwoing link: 
 
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
