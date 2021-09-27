@@ -133,43 +133,43 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
         - Login into Bonap Server and run the following commands to check clustering setup:
 	
-    	- Verify 'ric' and 'default' contexts are setup:  
-	
-	     ```sh
-	     $ kubectl config get-contexts
-	  
-	     ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
-         CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
-            default   default   default
-         *         ric       ric       ric
-	     ```
-	  
-	    - Run the following command to get all pods:
-	
-	     ```sh
-	     $ kubectl get pods --all-namespaces
-	  
-	     ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
-         NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
-         kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
-         kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
-         kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
-         kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
-         kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
-         kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
-	     ```
-		  To create oran setup for argo-workflow use the steps as follows:
+			- Verify 'ric' and 'default' contexts are setup:  
+		
+			 ```sh
+			 $ kubectl config get-contexts
 		  
+			 ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
+			 CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+				default   default   default
+			 *         ric       ric       ric
+			 ```
+		  
+			- Run the following command to get all pods:
+		
+			 ```sh
+			 $ kubectl get pods --all-namespaces
+		  
+			 ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
+			 NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+			 kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
+			 kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
+			 kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
+			 kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
+			 kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
+			 kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
+			 ```
+			  To create oran setup for argo-workflow use the steps as follows:
+			  
   - For Argo-workflow:
   
-	    - Create two AWS VMs in the Ohio region with names as follows:
+	 - Create two AWS VMs in the Ohio region with names as follows:
 		
 	 	  ```sh
 		  VM1 Name: ric Server
 		  VM2 Name: nonrtric Server
 		  ```
 				
-	    - And use the following specifications and SSH it using putty by using cciPrivateKey:
+	 - And use the following specifications and SSH it using putty by using cciPrivateKey:
 		  
 		  ```sh
 		  Image: ubuntu-18.04
@@ -179,7 +179,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  Security group: launch-wizard-19
 		  ```
 				   
-	    - Login into ric server and nonrtric server and run the following commands:
+	 - Login into ric server and nonrtric server and run the following commands:
 		  
 		  ```sh
 		  $ sudo apt update
@@ -188,14 +188,14 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  $ sudo mkdir -p /etc/rancher/k3s
           $ sudo chmod -R 777 /etc/rancher/k3s
 		
-		  # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+		# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
 		  mirrors:
              "172.31.27.186:5000":
                 endpoint:
                    - "http://172.31.27.186:5000"
 		  ```
 		  
-		  **IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
+		**IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
 
 		  To know more about valid YAML format use the follwoing link: 
 
