@@ -33,9 +33,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     ------------
   - For Built-in(puccini) workflow
   
-   These servers need to be created only if oran models are to be deployed.
+     These servers need to be created only if oran models are to be deployed.
   
-    - Create three AWS VMs in the Ohio region with names as follows:
+  	 - Create three AWS VMs in the Ohio region with names as follows:
     
  	 ```sh
 	 VM1 Name: Bonap Server 
