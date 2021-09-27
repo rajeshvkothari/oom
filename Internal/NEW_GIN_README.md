@@ -391,7 +391,7 @@ in third.
 	  - TOSCA_GAWP - argo workflow microservice
 	  - TOSCA_POLICY - policy microservice
 	  
-	GIN images can either be built from sources or their pre-built versions
+	  GIN images can either be built from sources or their pre-built versions
 	  can be used directly from CCI_REPO.
 	  
     - In both cases, puccini needs to cloned by logging into Demo server and
