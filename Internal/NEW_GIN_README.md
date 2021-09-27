@@ -316,7 +316,7 @@ in third.
 	  $ curl -X GET "http://{IP_ADDR_OF_DMAAP_SERVER}:3904/topics"
       ```
 	  
-	  Note: {IP_ADDR_OF_DMaaP_SERVER} is the public IP address of 'DMaaP Server'.
+	  Note: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
 	  
       The above command return output as follows:
 	  
