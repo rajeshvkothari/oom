@@ -32,7 +32,7 @@ Table of contents
 There are three sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-(#ORAN-Servers) should be completed only if ORAN models are to be deployed.
+* [ORAN Servers](#ORAN-Servers) should be completed only if ORAN models are to be deployed.
 
 "Creating Environment for Docker containers" should be completed only if deployment is
 to be tested in docker container environment. This is not required for ONAP OOM based deployment.
