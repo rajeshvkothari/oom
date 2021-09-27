@@ -621,7 +621,8 @@ in third.
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 		  ```
 			
-	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
+	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall.
+          For deploying oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 			
           Note2: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
 		   
