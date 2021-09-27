@@ -146,7 +146,14 @@ in third.
 	
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	      ```
-	
+		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
+          Use following link to verify correctness of YAML:**
+
+		  To know more about valid YAML format use the follwoing link: 
+
+		  ```sh
+		  https://jsonformatter.org/yaml-validator
+		
      - Login into Bonap Server and run the following commands to check clustering setup:
 	
 	   - Verify 'ric' and 'default' contexts are setup:  
@@ -213,7 +220,8 @@ in third.
                   - "http://172.31.27.186:5000"
 		  ```
 		  
-		**IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
+		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
+          Use following link to verify correctness of YAML:**
 
 		  To know more about valid YAML format use the follwoing link: 
 
