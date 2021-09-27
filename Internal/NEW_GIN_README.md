@@ -5,6 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
+	   * [Built-in(puccini) workflow] (#Built-in(puccini) workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -124,9 +125,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     
 	    # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
           mirrors:
-            "172.31.27.186:5000":
-               endpoint:
-                 - "http://172.31.27.186:5000"
+           "172.31.27.186:5000":
+              endpoint:
+                - "http://172.31.27.186:5000"
 	
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	      ```
@@ -191,9 +192,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		
 		# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
 		   mirrors:
-             "172.31.27.186:5000":
-                endpoint:
-                  - "http://172.31.27.186:5000"
+              "172.31.27.186:5000":
+                 endpoint:
+                   - "http://172.31.27.186:5000"
 		  ```
 		  
 		**IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
