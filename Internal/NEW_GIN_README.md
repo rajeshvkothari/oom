@@ -127,9 +127,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
     
 	    # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
           mirrors:
-          "172.31.27.186:5000":
-             endpoint:
-               - "http://172.31.27.186:5000"
+            "172.31.27.186:5000":
+               endpoint:
+                 - "http://172.31.27.186:5000"
 	
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	      ```
@@ -194,10 +194,10 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
           $ sudo chmod -R 777 /etc/rancher/k3s
 		
 		# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
-		   mirrors:
-              "172.31.27.186:5000":
-                 endpoint:
-                   - "http://172.31.27.186:5000"
+	          mirrors:
+                    "172.31.27.186:5000":
+                       endpoint:
+                         - "http://172.31.27.186:5000"
 		  ```
 		  
 		**IMP Note: Above YAML must be in a valid format. check whether proper indentation is used.**
