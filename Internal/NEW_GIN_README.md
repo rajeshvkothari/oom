@@ -38,17 +38,13 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   - **Builtin-workflow**
       ----------------
 
-	 - Create three AWS VMs in the Ohio region with names as follows:
+	 - Create three AWS VMs in the Ohio region with names as follows. use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	    ```sh
 	     VM1 Name: Bonap Server 
          VM2 Name: ric Server
          VM3 Name: nonrtric Server
-        ```
-	
-	   And use the following specifications and SSH it using putty by using cciPrivateKey:
-	
-  	    ```sh
+
          Image: ubuntu-18.04
          Instance Type: t2.2xlarge
          KeyPair : cciPublicKey
@@ -174,16 +170,12 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
   
   	To create oran setup for argo-workflow use the steps as follows:
 	
-	 - Create two AWS VMs in the Ohio region with names as follows:
+	 - Create two AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
 		
 	 	  ```sh
 		  VM1 Name: ric Server
 		  VM2 Name: nonrtric Server
-		  ```
-				
-	 - And use the following specifications and SSH it using putty by using cciPrivateKey:
 		  
-		  ```sh
 		  Image: ubuntu-18.04
 		  InstanceTye: t2.2xlarge
 		  KeyPair : cciPublicKey
