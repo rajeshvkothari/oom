@@ -893,7 +893,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  This step requires around 35-40 min to deploy ONAP.
 	  
-	Note:Sometimes AAI pods takes 60-80 minutes to deploy due to this SDC service distribution fails. To overcome this issue and distribute service successfully from SDC do the step as follows:
+	Note : Sometimes AAI pods takes 60-80 minutes to deploy due to this SDC service distribution fails. To overcome this issue and distribute service successfully from SDC do the step as follows:
 
 	- Login into onap-aai-traversal pod and run following commands:
 		
