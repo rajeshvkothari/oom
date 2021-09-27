@@ -222,7 +222,6 @@ in third.
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	IMPORTANT NOTE:
-	
 	   Only built-in workflow engine is supported for docker container based deployment.
        Argo workflow engine can only be used in ONAP OOM based deployment.
     
