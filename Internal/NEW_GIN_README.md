@@ -31,10 +31,10 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 - **ORAN Servers**
     ------------
+	These servers need to be created only if oran models are to be deployed. There are two ways to deploye oran servers one is Built-in(puccini) workflow and other is Argo-workflow.
+	
   - For Built-in(puccini) workflow:
-  
-     These servers need to be created only if oran models are to be deployed.
-  
+
 	 - Create three AWS VMs in the Ohio region with names as follows:
     
 	    ```sh
@@ -133,35 +133,36 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
      - Login into Bonap Server and run the following commands to check clustering setup:
 	
-			- Verify 'ric' and 'default' contexts are setup:  
+	   - Verify 'ric' and 'default' contexts are setup:  
 		
-			 ```sh
-			 $ kubectl config get-contexts
+		 ```sh
+		 $ kubectl config get-contexts
 		  
-			 ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
-			 CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
-				default   default   default
-			 *         ric       ric       ric
-			 ```
+		 ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
+		 CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+			default   default   default
+		 *         ric       ric       ric
+		 ```
 		  
-			- Run the following command to get all pods:
+	   - Run the following command to get all pods:
 		
-			 ```sh
-			 $ kubectl get pods --all-namespaces
+		 ```sh
+		 $ kubectl get pods --all-namespaces
 		  
-			 ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
-			 NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
-			 kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
-			 kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
-			 kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
-			 kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
-			 kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
-			 kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
-			 ```
-			  To create oran setup for argo-workflow use the steps as follows:
+		 ubuntu@ip-172-31-18-160:~$ kubectl get pods --all-namespaces
+		 NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+		 kube-system   local-path-provisioner-64d457c485-zn4pb   1/1     Running     0          25m
+		 kube-system   metrics-server-7b4f8b595-t9kcw            1/1     Running     0          25m
+		 kube-system   helm-install-traefik-xzpkg                0/1     Completed   0          25m
+		 kube-system   svclb-traefik-qxk6k                       2/2     Running     0          24m
+		 kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
+		 kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
+		 ```
 			  
   - For Argo-workflow:
   
+  	To create oran setup for argo-workflow use the steps as follows:
+	
 	 - Create two AWS VMs in the Ohio region with names as follows:
 		
 	 	  ```sh
@@ -205,7 +206,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		  
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
-	Docker-container-based-testing only support built-in (puccini) workflow
+	
+	Docker-container-based-testing only support Built-in(puccini) workflow
     
   - **DMaaP Server**
       ------------
@@ -601,8 +603,8 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 			
 	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} (created in 'Pre Deployment Steps') for deploying sdwan, firewall and In case of oran models set to {IP_ADDR_OF_BONAP_SERVER} (created in oran servers 'Pre Deployment Steps') for deploying oran models. 
 			
-          Note2: {IP_ADDR_OF_DaaP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
-	  
+          Note2: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
+		   
         - Copy files as given follows:
 	  
 	      ```sh
@@ -758,7 +760,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
 	  - Argo-workflow:
 	  
-        To create oran setup for built-in(puccini) workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
+        To create oran setup for argo-workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
 	  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
