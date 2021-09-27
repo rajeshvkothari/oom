@@ -399,11 +399,11 @@ in third.
 	  - TOSCA_GAWP - argo workflow microservice
 	  - TOSCA_POLICY - policy microservice
 	  
-	  There are two ways to use tosca images:
-	  
-      - **Building images** - built from a scratch repository
-	  
-	  - **Using pre built images** - use pre-build version of the images from CCI_REPO
+	  GIN images can either be built from sources or their pre-built versions
+	  can be used directly from CCI_REPO.
+
+	  In both cases, puccini needs to cloned by logging into Demo server and
+	  running following command 
 	  
 	  Login into the Demo Server and perform steps as follows:
 	
