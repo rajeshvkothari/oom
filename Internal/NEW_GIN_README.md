@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
-       * [Built-in(puccini) workflow](#Built-in(puccini) workflow)
+       * [Built-in(puccini) workflow](#Built-in(puccini)-workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
