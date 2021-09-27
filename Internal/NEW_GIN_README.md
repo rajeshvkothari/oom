@@ -757,8 +757,9 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 		To create oran setup for built-in(puccini) workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
 	  
 	  - Argo-workflow:
-	    
-
+	  
+        To create oran setup for built-in(puccini) workflow [click here](https://github.com/rajeshvkothari3003/oom/blob/master/Internal/NEW_GIN_README.md#ORAN-Servers)
+	  
     - Make the changes as per the requirement in the ~/onap-oom-integ/cci/application.cfg: 
 	  
 	  - For built-in(puccini) workflow:
