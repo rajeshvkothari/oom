@@ -1725,7 +1725,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 	- For built-in(puccini) workflow:
 
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on BONAP Server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 		
 	  ```sh
 	  $ kubectl get pods -n nonrtric
@@ -1746,7 +1746,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	  
     - For argo-workflow:
 
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the NONRTRIC Server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the Nonrtric Server:
 	  
 	  ```sh
 	  $ sudo kubectl get pods -n nonrtric
@@ -1769,7 +1769,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
     - For built-in(puccini) workflow:
 	      
-	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on BONAP Server:
+	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 
 	  ```sh		
 	  $ kubectl get pods -n ricplt
@@ -1805,7 +1805,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
     - For argo-workflow:
 		   
-	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on RIC server:
+	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Ric Server:
 	  
 	  ```sh		
 	  $ sudo kubectl get pods -n ricplt
@@ -1843,7 +1843,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 	
 	- For built-in workflow:
 
-	  Login into 'BONAP Server' and run the following commands:
+	  Login into 'Bonap Server' and run the following commands:
 	  
 	  ```sh
 	  $ cat /tmp/xapp.log
@@ -1900,7 +1900,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
 	- For built-in(puccini) workflow:
 
-	  Login into 'BONAP Server' and run the following commands:
+	  Login into 'Bonap Server' and run the following commands:
 
 	  ```sh
 	  $ cat /tmp/xapp.log
@@ -1955,7 +1955,7 @@ There are two ways of deploying models for testing GIN functionality, one is Doc
 
     - For built-in(puccini) workflow:
 
-	  Login into 'BONAP Server' and run the following commands:
+	  Login into 'Bonap Server' and run the following commands:
 	  
 	  ```sh
 	  $ cat /tmp/xapp.log
