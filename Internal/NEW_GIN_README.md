@@ -905,8 +905,8 @@ in third.
 	  - Login into onap-aai-traversal pod and run following commands:
 		
 		```sh
-          cd /opt/app/aai-traversal/bin/install 
-	      ./updateQueryData.sh aaiadmin
+        $  cd /opt/app/aai-traversal/bin/install 
+	    $  ./updateQueryData.sh aaiadmin
 		```
 	
 	    Expected output:
@@ -918,7 +918,7 @@ in third.
 		 End putTool for widget action-data-1.0.json
 		 Begin putTool for widget allotted-resource-1.0.json
 		```
-		 
+
 	- To verify that ONAP is deployed successfully, use the following command and check that all pods are in running state:
 
       ```sh
