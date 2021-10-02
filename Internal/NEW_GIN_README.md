@@ -5,8 +5,6 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
-       * [Built-in workflow](#Builtin-workflow)
-       * [Argo-workflow](#Argo-workflow)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -44,12 +42,10 @@ in third.
 
 - **ORAN Servers**
     ------------
-	These servers are required for deploying ORAN models. They need to be setup in
-    different ways based on whether built-in workflow or argo-workflow mechanism
-    is to be used.
+	These servers are required for deploying ORAN models. 
 	
-  - **Builtin-workflow**
-      ----------------
+	Note : All three AWS VMs(Bonap Server, ric Server and nonrtric Server) will be used in build-workflow run and only 'ric Server'
+	and 'nonrtric Server' will be used in argo-workflow run.
 
 	 - Create three AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -175,45 +171,7 @@ in third.
 		 kube-system   coredns-5d69dc75db-pmc79                  1/1     Running     0          25m
 		 kube-system   traefik-5dd496474-bhwtb                   1/1     Running     0          24m
 		 ```
-			  
-  - **Argo-workflow**
-      -------------  
-	
-	 - Create two AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
-		
-	 	  ```sh
-		  VM1 Name: ric Server
-		  VM2 Name: nonrtric Server
 
-		  Image: ubuntu-18.04
-		  InstanceTye: t2.2xlarge
-		  KeyPair : cciPublicKey
-		  Disk: 80GB
-		  Security group: launch-wizard-19
-		  ```
-				   
-	 - Login into ric server and nonrtric server and run the following commands:
-		  
-		  ```sh
-		  $ sudo apt update
-		  $ sudo apt install jq
-		  $ sudo apt install socat
-		  $ sudo mkdir -p /etc/rancher/k3s
-          $ sudo chmod -R 777 /etc/rancher/k3s
-		
-		# Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
-		   mirrors:
-             "172.31.27.186:5000":
-                endpoint:
-                  - "http://172.31.27.186:5000"
-		  ```
-		  
-		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
-          Use following link to verify correctness of YAML:**
-
-		  ```sh
-		  https://jsonformatter.org/yaml-validator
-		  ```
 		  
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
@@ -758,29 +716,12 @@ in third.
 	   Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
             Enter.
  
-    - Make changes in ~/onap-oom-integ/cci/application.cfg as per the workflow type to be used: 
+    - Make changes in ~/onap-oom-integ/cci/application.cfg: 
 	  
-	  - For built-in(puccini) workflow:
-	    
-		```sh
-		 [remote]
-		 remoteHost={IP_ADDR_OF_SERVER}
-		 remotePort=22
-		 remoteUser=ubuntu
-		 remotePubKey=/opt/app/config/cciPrivateKey
-		 workflowType=puccini-workflow
-		
-		 [reposure]
-		 pushCsarToReposure=false
-		```
-		
-		  Note: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it  should be set to {IP_ADDR_OF_BONAP_SERVER}.
-				
-      - For argo-workflow:
 
 		```sh
 		[remote]
-		remoteHost={IP_ADDR_OF_ONAP_OOM_DEMO}
+		remoteHost={IP_ADDR_OF_BONAP_SERVER}
 		workflowType=argo-workflow
 
 		[reposure]
@@ -792,9 +733,12 @@ in third.
 		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
 		argoTemplateType=containerSet | DAG
         ```		
-		
-		  Note: To deploy a firewall and sdwan models only add {IP_ADDR_OF_ONAP_OOM_DEMO} and for oran, models add all IPs.
-		        In argo workflow, there are two ways for executing argo templates.
+		  Note : Following are the description of servers.
+		         IP_ADDR_OF_BONAP_SERVER - IP address of Bonap Server created in ORAN Servers - Pre Deployment Steps.
+			 IP_ADDR_OF_RIC - IP address of ric Server created in ORAN Servers - Pre Deployment Steps.
+			 IP_ADDR_OF_NONRTRIC - IP address of nonrtric Server created in ORAN Servers - Pre Deployment Steps.
+		  Note : In argo workflow, there are two ways for executing argo templates.
+		        
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
 				
@@ -1062,6 +1006,14 @@ in third.
   $ sudo chmod 777 -R tosca-models 
   ```
   
+  Note: By default, GIN uses 'argo-workflow' engine to deploy model. To use 'puccini-workflow' engine while deployment
+        add workflow_engine_type type in 'metadata' section of main service template of model.
+	E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in 
+	      /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml
+	      
+	      metadata:
+		workflow_engine_type : puccini-workflow
+	
   Run following commands to build model csar.
 	
   - SDWAN:
