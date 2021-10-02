@@ -3,16 +3,16 @@ Table of contents
 =================
 <!--ts-->
   * [Create docker images of onap componants](#Create-docker-images-of-onap-componants)
-    * [VID Componant](#VID-Componant)
-    * [AAI-Babel Componant](#AAI-Babel-Componant)
-    * [SDC Componant](#SDC-Componant)
-    * [SO Componant](#SO-Componant)
+    * [VID](#VID)
+    * [AAI-Babel](#AAI-Babel)
+    * [SDC](#SDC)
+    * [SO](#SO)
   * [Re deploy onap-componants with our builded docker image](#Re-deploy-onap-componants-with-our-builded-docker-image)
-    * [ONAP AAI](#ONAP-AAI)
-    * [ONAP SO](#ONAP-SO)
-    * [ONAP VID](#ONAP-VID)
-    * [ONAP TOSCA](#ONAP-TOSCA)
-    * [ONAP SDC](#ONAP-SDC)
+    * [AAI](#AAI)
+    * [SO](#SO)
+    * [VID](#VID)
+    * [TOSCA](#TOSCA)
+    * [SDC](#SDC)
 <!--te-->
 
 ## Create docker images of onap componants:
@@ -25,7 +25,7 @@ Table of contents
    Region: N. Virginia
    ```
 	
- - **VID Componant**
+ - **VID**
      -------------
 	 
 	Follow the following steps:
@@ -120,7 +120,7 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
- - **AAI-Babel Componant**
+ - **AAI-Babel**
 	 ------------------- 
 	 
 	Follow the following steps:
@@ -228,7 +228,7 @@ Table of contents
 	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -P docker
 	   ```
 		
- - **SDC Componant**
+ - **SDC**
 	 -------------
 	 
 	 Follow the following steps:
@@ -325,7 +325,7 @@ Table of contents
 
      - fire docker images command and add output here
    
- - **SO Componant**
+ - **SO**
      ------------
 	 
 	Follow the following steps:
@@ -436,7 +436,7 @@ Table of contents
 		   ```
 ## Re-deploy onap-componants with our builded docker image:
     
- - **ONAP-AAI**
+ - **AAI**
      --------
 	 
 	Follow the following steps:
@@ -466,7 +466,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
- - **ONAP-SO**
+ - **SO**
 	 -------
 	 
 	Follow the following steps:
@@ -496,7 +496,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```			
 	
- - **ONAP-VID**
+ - **VID**
 	 --------
 	 
 	 Follow the following steps:
@@ -526,7 +526,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 		
- - **ONAP-TOSCA**
+ - **TOSCA**
 	 ----------
 	 
 	Follow the following steps:
@@ -556,7 +556,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
- - **ONAP-SDC**
+ - **SDC**
      --------
 	 
 	 Follow the following steps:
