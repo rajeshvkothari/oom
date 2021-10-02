@@ -297,7 +297,7 @@ Table of contents
 	 - Replace sdc-tosca-1.6.5.jar at following location:
 	   
 	   ```sh
-	   $ ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	   ```	   	
 		
 	 - Build images
