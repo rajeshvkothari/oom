@@ -216,11 +216,6 @@ Table of contents
 		  <!-- Dependency Versions -->
 		  <mvn.jaxb2.version>0.14.0</mvn.jaxb2.version>
 		  ```
-		  
-	 - Replace sdc-tosca-1.6.5.jar at following location:
-	   ```sh
-       $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5$
-	   ```
 	   
      - Build images:
 	
@@ -302,7 +297,7 @@ Table of contents
 	 - Replace sdc-tosca-1.6.5.jar at following location:
 	   
 	   ```sh
-	   $ cd home/ubuntu/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   $ ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	   ```	   	
 		
 	 - Build images
@@ -386,11 +381,11 @@ Table of contents
 	   $ cd /home/ubuntu
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
 	   ```  
-	   
+   
 	 - Replace sdc-tosca-1.6.5.jar at following location:
 	   
 	   ```sh
-	   $ cd home/ubuntu/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	   ```	 	   
 	 
 	 - Build images
