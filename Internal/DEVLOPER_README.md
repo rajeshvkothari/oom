@@ -287,12 +287,12 @@ Table of contents
 	   export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 	   export PATH=$JAVA_HOME/bin:$PATH
 	   ```
-		
-	 - Replace so-tosca-1.6.5.jar at following location:
+
+	 - Replace sdc-tosca-1.6.5.jar at following location:
 	   
 	   ```sh
-	   cd home/ubuntu/.m2/repository/org/onap/so/so-tosca/so-tosca/1.6.5
-	   ```	
+	   $ cd home/ubuntu/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   ```	   	
 		
 	 - Build images
 	 
@@ -374,13 +374,13 @@ Table of contents
 	   ```sh
 	   $ cd /home/ubuntu
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
-	   ```
+	   ```  
 	   
-	 - Replace sdc-tosca-1.6.5.jar at following location:
+	 - Replace so-tosca-1.6.5.jar at following location:
 	   
 	   ```sh
-	   cd home/ubuntu/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
-	   ```
+	   $ cd home/ubuntu/.m2/repository/org/onap/so/so-tosca/so-tosca/1.6.5
+	   ```	   
 	   
 	 - Build images
 	    
