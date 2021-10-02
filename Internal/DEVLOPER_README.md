@@ -1,19 +1,18 @@
-# GIN 
+# DEVLOPER README
 Table of contents
 =================
 <!--ts-->
-   * [Introduction](#Introduction)
    * [Create docker images of onap componants](#Create-docker-images-of-onap-componants)
-	 *[VID Componant](#VID-Componant)
-	 *[AAI Babel Componant](#AAI-Babel-Componant)
-	 *[SDC Componant](#SDC-Componant)
-	 *[SO Componant](#SO-Componant)
+     *[VID Componant](#VID-Componant)
+     *[AAI Babel Componant](#AAI-Babel-Componant)
+     *[SDC Componant](#SDC-Componant)
+     *[SO Componant](#SO-Componant)
    * [Re deploy onap-componants with our builded docker image] (#Re-deploy-onap-componants-with-our-builded-docker-image)
      *[ONAP AAI](#ONAP-AAI)
-	 *[ONAP SO](#ONAP-SO)
-	 *[ONAP VID](#ONAP-VID)
-	 *[ONAP TOSCA](#ONAP-TOSCA)
-	 *[ONAP SDC](#ONAP-SCD)
+     *[ONAP SO](#ONAP-SO)
+     *[ONAP VID](#ONAP-VID)
+     *[ONAP TOSCA](#ONAP-TOSCA)
+     *[ONAP SDC](#ONAP-SCD)
 <!--te-->
 
 ## Create docker images of onap componants:
