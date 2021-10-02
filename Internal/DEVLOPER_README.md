@@ -112,7 +112,7 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
-	- **AAI-Babel**
+ - **AAI-Babel**
 	    --------- 
 	 - Java 11:
 	 
@@ -142,9 +142,9 @@ Table of contents
 		 $ docker ps
 		 ```
 		
-		**Note : If above steps not worked refer**
+    	  **Note : If above steps not worked refer**
 		
-		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		    https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		
 	 - Maven:
 	
@@ -217,8 +217,8 @@ Table of contents
 	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -P docker
 	   ```
 		
-	- **SDC Componant**
-	    -------------
+ - **SDC Componant**
+	 -------------
 	
 	 - jdk 11
 		
@@ -306,7 +306,7 @@ Table of contents
 
      - fire docker images command and add output here
    
-	- **So Componant**:
+ - **So Componant**
 	
 	 - jdk8:
 
@@ -411,7 +411,8 @@ Table of contents
 
 	Redploye ONAP Componants:
     
-	- **ONAP-AAI**
+ - **ONAP-AAI**
+     --------
 	
 	    ```sh
 	    $ cd ~/onap-oom-integ/kubernetes
@@ -438,7 +439,9 @@ Table of contents
 	    $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	    ```	
 	
-    - **ONAP-SO**
+ - **ONAP-SO**
+	 -------
+	 
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE so; make SKIP_LINT=TRUE onap
@@ -464,7 +467,9 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```			
 	
-    - **ONAP-VID**
+ - **ONAP-VID**
+	 --------
+ 
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE vid; make SKIP_LINT=TRUE onap
@@ -490,7 +495,9 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 		
-    - **ONAP-TOSCA**
+ - **ONAP-TOSCA**
+	 ----------
+ 
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE tosca; make SKIP_LINT=TRUE onap
@@ -504,8 +511,8 @@ Table of contents
 	 # Delete release
 	 $ helm uninstall onap-tosca -n onap
 		
-	#Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-tosca			
+     #Wait till all pods are goes off from Terminating state
+     $ kubectl get pods -n onap | grep onap-tosca			
 	
 	 $ sudo rm -rf /dockerdata-nfs/onap/tosca
 	 $ kubectl get pv,pvc | grep onap-tosca
@@ -516,8 +523,10 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
-    - **ONAP-SDC**
-	```sh
+ - **ONAP-SDC**
+     --------
+ 
+     ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE sdc; make SKIP_LINT=TRUE onap
 		  
@@ -530,7 +539,7 @@ Table of contents
 	 # Delete release
 	 $ helm uninstall onap-sdc -n onap
 		
-	#Wait till all pods are goes off from Terminating state
+	 #Wait till all pods are goes off from Terminating state
 	 $ kubectl get pods -n onap | grep onap-sdc			
 	
 	 $ sudo rm -rf /dockerdata-nfs/onap/sdc
@@ -540,4 +549,4 @@ Table of contents
 		
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	```	
+	 ```	
