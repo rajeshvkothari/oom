@@ -528,6 +528,8 @@ Table of contents
 		
  - **ONAP-TOSCA**
 	 ----------
+	 
+	Follow the following steps:
  
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
