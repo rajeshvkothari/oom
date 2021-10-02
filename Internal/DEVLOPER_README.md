@@ -12,7 +12,7 @@ Table of contents
     * [ONAP SO](#ONAP-SO)
     * [ONAP VID](#ONAP-VID)
     * [ONAP TOSCA](#ONAP-TOSCA)
-    * [ONAP SDC](#ONAP-SCD)
+    * [ONAP SDC](#ONAP-SDC)
 <!--te-->
 
 ## Create docker images of onap componants:
