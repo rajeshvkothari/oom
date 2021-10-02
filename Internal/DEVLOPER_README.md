@@ -385,8 +385,14 @@ Table of contents
 	   ```sh
 	   $ cd /home/ubuntu
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
-	   ```     
+	   ```  
 	   
+	 - Replace sdc-tosca-1.6.5.jar at following location:
+	   
+	   ```sh
+	   $ cd home/ubuntu/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   ```	 	   
+	 
 	 - Build images
 	    
 	   ```sh
