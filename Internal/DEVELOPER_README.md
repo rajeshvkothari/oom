@@ -26,7 +26,7 @@ Table of contents
    ```
 	
  - **VID**
-     -------------
+     ---
 	 
 	Follow the following steps:
 	
