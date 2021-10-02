@@ -374,13 +374,7 @@ Table of contents
 	   ```sh
 	   $ cd /home/ubuntu
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
-	   ```  
-	   
-	 - Replace so-tosca-1.6.5.jar at following location:
-	   
-	   ```sh
-	   $ cd home/ubuntu/.m2/repository/org/onap/so/so-tosca/so-tosca/1.6.5
-	   ```	   
+	   ```     
 	   
 	 - Build images
 	    
