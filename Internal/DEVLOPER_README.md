@@ -28,6 +28,8 @@ Table of contents
  - **VID Componant**
      -------------
 	 
+	Follow the following steps:
+	
      - Jdk8:
 	 
        ```sh
@@ -119,7 +121,9 @@ Table of contents
 	   ```
 	   
  - **AAI-Babel Componant**
-	 --------- 
+	 ------------------- 
+	 
+	Follow the following steps:
 	 
 	 - Jdk 11:
 	 
@@ -226,6 +230,8 @@ Table of contents
 		
  - **SDC Componant**
 	 -------------
+	 
+	 Follow the following steps:
 	
 	 - jdk 11
 		
@@ -321,6 +327,8 @@ Table of contents
    
  - **SO Componant**
      ------------
+	 
+	Follow the following steps:
 	
 	 - jdk8:
 
@@ -430,6 +438,8 @@ Table of contents
     
  - **ONAP-AAI**
      --------
+	 
+	Follow the following steps:
 	
 	 ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
@@ -459,6 +469,8 @@ Table of contents
  - **ONAP-SO**
 	 -------
 	 
+	Follow the following steps:
+	 
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE so; make SKIP_LINT=TRUE onap
@@ -486,6 +498,8 @@ Table of contents
 	
  - **ONAP-VID**
 	 --------
+	 
+	 Follow the following steps:
  
 	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
@@ -542,6 +556,8 @@ Table of contents
 	
  - **ONAP-SDC**
      --------
+	 
+	 Follow the following steps:
  
      ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
