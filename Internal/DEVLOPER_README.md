@@ -118,7 +118,7 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
- - **AAI-Babel**
+ - **AAI-Babel Componant**
 	 --------- 
 	 
 	 - Jdk 11:
