@@ -83,7 +83,7 @@ Table of contents
 	    ```sh
 	    $ mvn
 	    ```
-		It will return error but fine.
+		Note : It will return error.
 		
 	 - Git clone:
 	 
@@ -181,7 +181,7 @@ Table of contents
 		 ```sh
 		 $ mvn  
 		 ```
-		It will return error but fine.
+		Note : It will return error.
 
 	 - Modify following file to add debug port:
 
@@ -278,8 +278,8 @@ Table of contents
 	
 	    ```sh
         $ mvn
-		#It will return error but fine.
 	    ```
+		Note : It will return error.
 			
      - Run following command to build sdc projects:
 		
@@ -361,7 +361,7 @@ Table of contents
 	   ```sh
 	   $ mvn  
 	   ```
-	   It will return error but fine.		
+	   Note : It will return error.		
 		
 	 - Clone git:
         
