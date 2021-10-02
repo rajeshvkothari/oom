@@ -1060,7 +1060,9 @@ in third.
  
 - **Docker container based testing**
     ------------------------------ 
-	
+  Note :
+     For now, in a 'Docker container based testing' - only 'puccini-workflow' engine type support. So make sure 'workflow_engine_type : puccini-workflow' should be in metadata section of main service template of model.
+     
   Login into Demo Server and fire the following commands to copy csars:
   
   ```sh
