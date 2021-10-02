@@ -97,6 +97,12 @@ Table of contents
 	   $ cd ~/vid/vid-ext-services-simulator
 	   $ mvn clean package
 	   ```
+
+	 - Replace sdc-tosca-1.6.5.jar at following location:
+	   
+	   ```sh
+	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
+	   ```
 	   
 	 - Build images:
 	 
@@ -209,8 +215,13 @@ Table of contents
 	   After:
 		  <!-- Dependency Versions -->
 		  <mvn.jaxb2.version>0.14.0</mvn.jaxb2.version>
+		  ```
+		  
+	 - Replace sdc-tosca-1.6.5.jar at following location:
+	   ```sh
+       $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5$
 	   ```
-
+	   
      - Build images:
 	
 	   ```sh
