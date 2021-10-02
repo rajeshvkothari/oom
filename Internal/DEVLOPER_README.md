@@ -278,8 +278,8 @@ Table of contents
 	
 	    ```sh
         $ mvn
+		#It will return error but fine.
 	    ```
-		It will return error but fine.
 			
      - Run following command to build sdc projects:
 		
