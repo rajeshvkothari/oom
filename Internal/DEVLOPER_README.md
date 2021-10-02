@@ -2,41 +2,41 @@
 Table of contents
 =================
 <!--ts-->
-   * [Create docker images of onap componants](#Create-docker-images-of-onap-componants)
-     *[VID Componant](#VID-Componant)
-     *[AAI Babel Componant](#AAI-Babel-Componant)
-     *[SDC Componant](#SDC-Componant)
-     *[SO Componant](#SO-Componant)
-   * [Re deploy onap-componants with our builded docker image] (#Re-deploy-onap-componants-with-our-builded-docker-image)
-     *[ONAP AAI](#ONAP-AAI)
-     *[ONAP SO](#ONAP-SO)
-     *[ONAP VID](#ONAP-VID)
-     *[ONAP TOSCA](#ONAP-TOSCA)
-     *[ONAP SDC](#ONAP-SCD)
+  * [Create docker images of onap componants](#Create-docker-images-of-onap-componants)
+    *[VID Componant](#VID-Componant)
+    *[AAI-Babel Componant](#AAI-Babel-Componant)
+    *[SDC Componant](#SDC-Componant)
+    *[SO Componant](#SO-Componant)
+  * [Re deploy onap-componants with our builded docker image] (#Re-deploy-onap-componants-with-our-builded-docker-image)
+    *[ONAP AAI](#ONAP-AAI)
+    *[ONAP SO](#ONAP-SO)
+    *[ONAP VID](#ONAP-VID)
+    *[ONAP TOSCA](#ONAP-TOSCA)
+    *[ONAP SDC](#ONAP-SCD)
 <!--te-->
 
 ## Create docker images of onap componants:
 
-   - Create aws ubuntu 18.04 VM with following specifications:
+ - Create aws ubuntu 18.04 VM with following specifications:
    
-    ```sh
-	 InstanceType: t2.xlarge
-	 Disk: 80 GB
-	 Region: N. Virginia
-	```
+   ```sh
+   InstanceType: t2.xlarge
+   Disk: 80 GB
+   Region: N. Virginia
+   ```
 	
-    - **VID Componant**
-		-------------
- 
-	  - Jdk8:
+ - **VID Componant**
+     -------------
 	 
-	    ```sh
-	    $ sudo apt-get update
-        $ sudo apt-get install openjdk-8-jdk
-	    $ java -version
-	    $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-	    $ export PATH=$JAVA_HOME/bin:$PATH
-	    ```
+     - Jdk8:
+	 
+       ```sh
+       $ sudo apt-get update
+       $ sudo apt-get install openjdk-8-jdk
+       $ java -version
+       $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+       $ export PATH=$JAVA_HOME/bin:$PATH
+       ```
 	  - Docker:
 	 
 		```sh
@@ -544,5 +544,3 @@ Table of contents
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
-
-
