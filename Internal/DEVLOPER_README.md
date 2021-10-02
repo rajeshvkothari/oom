@@ -7,7 +7,7 @@ Table of contents
     * [AAI-Babel Componant](#AAI-Babel-Componant)
     * [SDC Componant](#SDC-Componant)
     * [SO Componant](#SO-Componant)
-  * [Re deploy onap-componants with our builded docker image] (#Re-deploy-onap-componants-with-our-builded-docker-image)
+  * [Re deploy onap-componants with our builded docker image](#Re-deploy-onap-componants-with-our-builded-docker-image)
     * [ONAP AAI](#ONAP-AAI)
     * [ONAP SO](#ONAP-SO)
     * [ONAP VID](#ONAP-VID)
