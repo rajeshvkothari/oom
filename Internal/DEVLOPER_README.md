@@ -376,39 +376,37 @@ Table of contents
 	   mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 		
-     - PROBLEMS & SOLUTION
-       -------------------
+       - PROBLEMS & SOLUTION
 
-
-	   - Issue:
+	     - Issue:
 			
-	     [INFO] mso-infrastructure-bpmn ............................ FAILURE [ 35.124 s]
-		 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (test-compile) on project mso-infrastructure-bpmn: Compilation failure: Compilation failure:
-		 [ERROR] /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test/java/org/onap/so/bpmn/vcpe/DoCreateAllottedResourceTXCRollbackIT.java:[21,29] package org.onap.so.bpmn.mock does not exist
+	       [INFO] mso-infrastructure-bpmn ............................ FAILURE [ 35.124 s]
+		   [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (test-compile) on project mso-infrastructure-bpmn: Compilation failure: Compilation failure:
+		   [ERROR] /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test/java/org/onap/so/bpmn/vcpe/DoCreateAllottedResourceTXCRollbackIT.java:[21,29] package org.onap.so.bpmn.mock does not exist
 
-	   - Solution:
+	     - Solution:
 				
-	 	 ```sh
-		 $ sudo rm -R /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test
-			``` 
+	 	   ```sh
+		   $ sudo rm -R /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test
+		   ``` 
 				
-	   - For temparory purpose we deleted /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test folder from our workspace
+	       - For temparory purpose we deleted /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test folder from our workspace
  
-    	 - Run following command to restart build from where it was stop:  
+           - Run following command to restart build from where it was stop:  
 	    
-		   ```sh
-		   $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker -rf :mso-infrastructure-bpmn
-		   ```
+		     ```sh
+		     $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker -rf :mso-infrastructure-bpmn
+		     ```
 
-	   - Issue:
+	     - Issue:
 			
-	     File 'C:\SO_CODE_FOR_CHECKIN\testforjava8\so-Java-11-upgrade1212master\common\src\main\java\org\onap\so\client\aai\AAIClient.java' has not been previously formatted. Please format file and commit before running validation! -
+	       File 'C:\SO_CODE_FOR_CHECKIN\testforjava8\so-Java-11-upgrade1212master\common\src\main\java\org\onap\so\client\aai\AAIClient.java' has not been previously formatted. Please format file and commit before running validation! -
 	
-       - Solution:
+         - Solution:
 			  
-		 ```sh
-	     $ mvn process-sources -P format -e
-		 ```
+		   ```sh
+	       $ mvn process-sources -P format -e
+		   ```
 ## Re-deploy onap-componants with our builded docker image:
     
  - **ONAP-AAI**
