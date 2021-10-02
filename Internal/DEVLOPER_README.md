@@ -1,4 +1,4 @@
-# DEVLOPER README
+# DEVELOPER README
 Table of contents
 =================
 <!--ts-->
