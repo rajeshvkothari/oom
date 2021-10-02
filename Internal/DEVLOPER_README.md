@@ -307,7 +307,7 @@ Table of contents
 
      - fire docker images command and add output here
    
- - **So Componant**
+ - **SO Componant**
 	
 	 - jdk8:
 
@@ -355,7 +355,7 @@ Table of contents
 	 - Copy settings.xml from ~/.m2 directory local machine to ~/.m2 of aws ubuntu machine:
 		 
 	  		 
-	   **IMPORTANT NOTE: If .m2 directory is not available, then follows:
+	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
 	
 	   ```sh
 	   $ mvn  
