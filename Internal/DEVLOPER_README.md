@@ -413,30 +413,30 @@ Table of contents
     
 	- **ONAP-AAI**
 	
-	  ```sh
-	  $ cd ~/onap-oom-integ/kubernetes
-	  $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
+	    ```sh
+	    $ cd ~/onap-oom-integ/kubernetes
+	    $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
 		  
-      #Using make command chart for aai gets build.
+        #Using make command chart for aai gets build.
 
-	  $ helm ls --all-namespaces
+	    $ helm ls --all-namespaces
 		 #OR
-      $ helm ls -A
+        $ helm ls -A
 		
-	 # Delete release
-	 $ helm uninstall onap-aai -n onap
+        # Delete release
+	    $ helm uninstall onap-aai -n onap
 		
-	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-aai			
+	    #Wait till all pods are goes off from Terminating state
+	    $ kubectl get pods -n onap | grep onap-aai			
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/aai
-	 $ kubectl get pv,pvc | grep onap-aai
+	    $ sudo rm -rf /dockerdata-nfs/onap/aai
+	    $ kubectl get pv,pvc | grep onap-aai
 
-	 $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	    $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	 ```	
+	    $ cd ~/onap-oom-integ/kubernetes
+	    $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	    ```	
 	
     - **ONAP-SO**
 	```sh
