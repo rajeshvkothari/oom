@@ -263,11 +263,11 @@ Table of contents
 		$ docker ps
 		```
 		
-	     **Note : If above steps are not worked refer**
+	     **Note : If above steps are not worked refer:**
 		
 		   ```sh
-		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
-		   ```
+            https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+           ```
 			
 	 - Maven:
 	 
