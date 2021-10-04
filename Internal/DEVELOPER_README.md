@@ -106,7 +106,7 @@ Table of contents
 	 - Build images:
 	 
 	   ```sh
-	   $ cd ~/nap-vid-integ
+	   $ cd ~/onap-vid-integ
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
