@@ -20,7 +20,7 @@ Table of contents
  - Create aws ubuntu 18.04 VM with following specifications:
    
    ```sh
-   InstanceType: t2.xlarge
+   Instance type: t2.xlarge
    Disk: 80 GB
    Region: N. Virginia
    ```
@@ -52,13 +52,13 @@ Table of contents
 	   $ docker --version
 	   ```
 		
-	   - Verify docker is running:
+	   - Verify docker is in running:
 	     
          ```sh
          $ docker ps
          ```	
 		
-	     If above steps not worked refer:
+	    **Note : If above steps are not worked refer**
 		
 		 ```sh
 		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
@@ -85,7 +85,7 @@ Table of contents
 	    ```sh
 	    $ mvn
 	    ```
-		Note : It will return error.
+		**Note : It will return error.**
 		
 	 - Git clone:
 	 
@@ -153,7 +153,7 @@ Table of contents
 		 $ docker ps
 		 ```
 		
-    	  **Note : If above steps not worked refer**
+    	  **Note : If above steps are not worked refer**
 		
 		    https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		
@@ -191,7 +191,7 @@ Table of contents
 		 ```sh
 		 $ mvn  
 		 ```
-		Note : It will return error.
+		**Note : It will return error.**
 
 	 - Modify following file to add debug port:
 
@@ -260,7 +260,7 @@ Table of contents
 		```sh
 		$ docker ps
 		```
-		If above steps not worked refer:
+		**Note: If above steps not are worked refer:**
 			
 		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 			
@@ -291,7 +291,7 @@ Table of contents
 	    ```sh
         $ mvn
 	    ```
-		Note : It will return error.
+		**Note : It will return error.**
 			
      - Run following command to build sdc projects:
 		
@@ -358,6 +358,9 @@ Table of contents
 		 ```sh 
 		 $ docker ps
 		 ```
+		**Note: If above steps not are worked refer:**
+			
+		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		 
 	 - maven:
 		
@@ -381,7 +384,7 @@ Table of contents
 	   ```sh
 	   $ mvn  
 	   ```
-	   Note : It will return error.		
+	   **Note : It will return error.**		
 		
 	 - Clone git:
         
