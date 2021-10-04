@@ -67,10 +67,10 @@ Table of contents
 	
 	 -  Setup maven:
 	    
-	   ```sh
-	   $ sudo apt install maven
-	   $ mvn -version
-	   ```
+	    ```sh
+	    $ sudo apt install maven
+	    $ mvn -version
+	    ```
 		
 	 - Setup yarn:
 	   
