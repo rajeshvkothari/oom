@@ -67,10 +67,10 @@ Table of contents
 	
 	 -  Setup maven:
 	    
-	    ```sh
-	    $ sudo apt install maven
-	    $ mvn -version
-	    ```
+	   ```sh
+	   $ sudo apt install maven
+	   $ mvn -version
+	   ```
 		
 	 - Setup yarn:
 	   
@@ -84,6 +84,7 @@ Table of contents
 	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
 	
 	    ```sh
+		$ cd /home/ubuntu/
 	    $ mvn
 	    ```
 		**Note : It will return error.**
@@ -91,13 +92,14 @@ Table of contents
 	 - Git clone:
 	 
 	   ```sh
-	   $ https://github.com/onap/vid --branch honolulu
+	   $ cd /home/ubuntu/
+	   $ git clone https://github.com/customercaresolutions/onap-vid-integ -b honolulu
 	   ```
 	
 	 - Maven build JAR:
 	 
 	   ```sh
-	   $ cd ~/vid/vid-ext-services-simulator
+	   $ cd ~/nap-vid-integ/vid-ext-services-simulator
 	   $ mvn clean package
 	   ```
 
@@ -110,7 +112,7 @@ Table of contents
 	 - Build images:
 	 
 	   ```sh
-	   $ cd ~/vid
+	   $ cd ~/nap-vid-integ
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
@@ -334,7 +336,7 @@ Table of contents
  - **SO**
      ------------
 	 
-	Follow the following steps:
+	To create SO images follow steps as follows:
 	
 	 - Setup jdk8:
 
@@ -391,6 +393,7 @@ Table of contents
 	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
 	
 	   ```sh
+	   $ cd /home/ubuntu/
 	   $ mvn  
 	   ```
 	   **Note : It will return error.**		
