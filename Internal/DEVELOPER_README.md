@@ -99,7 +99,7 @@ Table of contents
 	 - Maven build JAR:
 	 
 	   ```sh
-	   $ cd ~/nap-vid-integ/vid-ext-services-simulator
+	   $ cd ~/onap-vid-integ/vid-ext-services-simulator
 	   $ mvn clean package
 	   ```
 	   
