@@ -265,9 +265,9 @@ Table of contents
 		
 	     **Note : If above steps are not worked refer:**
 		
-		   ```sh
-            https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
-           ```
+		  ```sh
+           https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+          ```
 			
 	 - Maven:
 	 
