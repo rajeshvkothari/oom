@@ -722,7 +722,6 @@ in third.
 		```sh
 		[remote]
 		remoteHost={IP_ADDR_OF_SERVER}
-		workflowType=argo-workflow
 
 		[reposure]
 		reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
