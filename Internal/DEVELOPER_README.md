@@ -58,11 +58,11 @@ Table of contents
          $ docker ps
          ```	
 		
-	    **Note : If above steps are not worked refer**
+	     **Note : If above steps are not worked refer**
 		
-		 ```sh
-		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
-		 ```
+		   ```sh
+		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		   ```
 	
 	 - Maven:
 	    
@@ -153,9 +153,11 @@ Table of contents
 		 $ docker ps
 		 ```
 		
-    	  **Note : If above steps are not worked refer**
+	     **Note : If above steps are not worked refer**
 		
-		    https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		   ```sh
+		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		   ```
 		
 	 - Maven:
 	
@@ -260,9 +262,11 @@ Table of contents
 		```sh
 		$ docker ps
 		```
-		**Note: If above steps not are worked refer:**
-			
-		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+	     **Note : If above steps are not worked refer**
+		
+		   ```sh
+		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		   ```
 			
 	 - Maven:
 	 
@@ -358,10 +362,13 @@ Table of contents
 		 ```sh 
 		 $ docker ps
 		 ```
-		**Note: If above steps not are worked refer:**
-			
-		 https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		 
+	     **Note : If above steps are not worked refer**
+		
+		   ```sh
+		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+		   ```	  
+	
 	 - maven:
 		
 	   ```sh
