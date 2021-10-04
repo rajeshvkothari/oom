@@ -67,10 +67,10 @@ Table of contents
 	
 	 -  Setup maven:
 	    
-	   ```sh
-	   $ sudo apt install maven
-	   $ mvn -version
-	   ```
+	    ```sh
+	    $ sudo apt install maven
+	    $ mvn -version
+	    ```
 		
 	 - Setup yarn:
 	   
@@ -99,7 +99,7 @@ Table of contents
 	 - Maven build JAR:
 	 
 	   ```sh
-	   $ cd ~/nap-vid-integ/vid-ext-services-simulator
+	   $ cd ~/onap-vid-integ/vid-ext-services-simulator
 	   $ mvn clean package
 	   ```
 
@@ -112,7 +112,7 @@ Table of contents
 	 - Build images:
 	 
 	   ```sh
-	   $ cd ~/nap-vid-integ
+	   $ cd ~/onap-vid-integ
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
