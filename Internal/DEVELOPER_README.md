@@ -110,11 +110,11 @@ Table of contents
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
-	 - Replace sdc-tosca-1.6.5.jar at following location:
+	 - Replace sdc-tosca-1.6.0.jar at following location:
 	   
 	   ```sh
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
-	   ```	  
+	   ```	    
 	  
 	 - Docker compose:
 	 
