@@ -728,8 +728,8 @@ in third.
 		pushCsarToReposure=true
 
 		[argoWorkflow]
-		ricServerIP={IP_ADDR_OF_RIC}
-		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
+		ricServerIP={Private_IP_ADDR_OF_RIC}
+		nonrtricServerIP={Private_IP_ADDR_OF_NONRTRIC}
 		argoTemplateType=containerSet | DAG
         ```		
 	  Note : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it                          should be set to {IP_ADDR_OF_BONAP_SERVER}.
