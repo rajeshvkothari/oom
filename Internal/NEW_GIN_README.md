@@ -721,7 +721,7 @@ in third.
 
 		```sh
 		[remote]
-		remoteHost={IP_ADDR_OF_BONAP_SERVER}
+		remoteHost={IP_ADDR_OF_SERVER}
 		workflowType=argo-workflow
 
 		[reposure]
@@ -733,10 +733,8 @@ in third.
 		nonrtricServerIP={IP_ADDR_OF_NONRTRIC}
 		argoTemplateType=containerSet | DAG
         ```		
-		  Note : Following are the description of servers.
-		         IP_ADDR_OF_BONAP_SERVER - IP address of Bonap Server created in ORAN Servers - Pre Deployment Steps.
-			 IP_ADDR_OF_RIC - IP address of ric Server created in ORAN Servers - Pre Deployment Steps.
-			 IP_ADDR_OF_NONRTRIC - IP address of nonrtric Server created in ORAN Servers - Pre Deployment Steps.
+		  Note : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it                          should be set to {IP_ADDR_OF_BONAP_SERVER}.
+
 		  Note : In argo workflow, there are two ways for executing argo templates.
 		        
 		
