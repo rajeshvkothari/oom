@@ -23,6 +23,7 @@ Table of contents
    Instance type: t2.xlarge
    Disk: 80 GB
    Region: N. Virginia
+   Security group: launch-wizard-19
    ```
 	
  - **VID**
@@ -30,7 +31,7 @@ Table of contents
 	 
 	Follow the following steps:
 	
-     - Jdk8:
+     - Setup jdk8:
 	 
        ```sh
        $ sudo apt-get update
@@ -39,7 +40,7 @@ Table of contents
        $ export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
        $ export PATH=$JAVA_HOME/bin:$PATH
        ```
-	 - Docker:
+	 - Setup docker:
 	 
 	   ```sh
 	   $ sudo apt update
@@ -52,7 +53,7 @@ Table of contents
 	   $ docker --version
 	   ```
 		
-	   - Verify docker is in running:
+	   - Verify that docker is installed properly:
 	     
          ```sh
          $ docker ps
@@ -64,14 +65,14 @@ Table of contents
 		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		   ```
 	
-	 - Maven:
+	 -  Setup maven:
 	    
 	   ```sh
 	   $ sudo apt install maven
 	   $ mvn -version
 	   ```
 		
-	 - Yarn:
+	 - Setup yarn:
 	   
 	   ```sh
 	   $ sudo apt install npm
@@ -125,7 +126,7 @@ Table of contents
 	 
 	Follow the following steps:
 	 
-	 - Jdk 11:
+	 - Setup jdk 11:
 	 
 	   ```sh
 	   $ sudo apt-get update
@@ -135,7 +136,7 @@ Table of contents
 	   $ export PATH=$JAVA_HOME/bin:$PATH
 	   ```
 		
-	 - Docker:
+	 - Setup docker:
 	 
 	   ```sh	
 	   $ sudo apt update
@@ -147,7 +148,7 @@ Table of contents
 	   $ docker --version
 	   ``` 
 		
-	   - Verify docker is in running:
+	   - Verify that docker is installed properly:
 	
 		 ```sh
 		 $ docker ps
@@ -159,14 +160,14 @@ Table of contents
 		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		   ```
 		
-	 - Maven:
+	 - Setup maven:
 	
 	   ```sh
 	   $ sudo apt install maven
 	   $ mvn -version
 	   ```
 		
-	 - npm:
+	 - Setup npm:
 	 
 	   ```sh
 	   $ sudo apt install npm
@@ -235,7 +236,7 @@ Table of contents
 	 
 	 Follow the following steps:
 	
-	 - jdk 11
+	 - Setup jdk 11
 		
 	   ```sh
 	   $ sudo apt-get update
@@ -245,7 +246,7 @@ Table of contents
 	   $ export PATH=$JAVA_HOME/bin:$PATH
 	   ```
 		
-	 - Docker
+	 - Setup docker
 		
 	   ```sh
 	   $ sudo apt update
@@ -257,7 +258,7 @@ Table of contents
 	   $ docker --version
 	   ```
 		
-	   - Verify docker is running:
+	   - Verify that docker is installed properly:
 			
 		```sh
 		$ docker ps
@@ -269,13 +270,13 @@ Table of contents
            https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
           ```
 			
-	 - Maven:
+	 - Setup maven:
 	 
 	   ```sh
 	   $ sudo apt install maven
 	   $ mvn -version
 	   ```
-	 - npm:
+	 - Setup npm:
 		
 	   ```sh
 	   $ sudo apt install npm		
@@ -335,7 +336,7 @@ Table of contents
 	 
 	Follow the following steps:
 	
-	 - jdk8:
+	 - Setup jdk8:
 
 	   ```sh
 	   $ sudo apt-get update
@@ -345,7 +346,7 @@ Table of contents
 	   $ export PATH=$JAVA_HOME/bin:$PATH
 	   ```
 		
-	 - Docker:
+	 - Setup docker:
 		
 	   ```sh
 	   $ sudo apt update
@@ -358,7 +359,7 @@ Table of contents
 	   $ docker --version
 	   ```
 		
-	   - Verify docker is running:
+	   - Verify that docker is installed properly:
 		 
 		 ```sh 
 		 $ docker ps
@@ -370,14 +371,14 @@ Table of contents
 		   https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
 		   ```	  
 	
-	 - maven:
+	 - Setup maven:
 		
 	   ```sh
 	   $ sudo apt install maven
 	   $ mvn -version
 	   ```
 		
-	 - yarn:
+	 - Setup yarn:
 		
 	   ```sh
 	   $ sudo apt install npm
