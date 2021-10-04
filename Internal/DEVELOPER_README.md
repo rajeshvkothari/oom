@@ -9,10 +9,10 @@ Table of contents
     * [SO](#SO)
   * [Re deploy onap-componants with our builded docker image](#Re-deploy-onap-componants-with-our-builded-docker-image)
     * [ONAP-AAI](#ONAP-AAI)
-    * [SO](#SO)
-    * [VID](#VID)
-    * [TOSCA](#TOSCA)
-    * [SDC](#SDC)
+    * [ONAP-SO](#ONAP-SO)
+    * [ONAP-VID](#ONAP-VID)
+    * [ONAP-TOSCA](#ONAP-TOSCA)
+    * [ONAP-SDC](#ONAP-SDC)
 <!--te-->
 
 ## Create docker images of onap componants:
@@ -481,7 +481,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
- - **SO**
+ - **ONAP SO**
 	 -------
 	 
 	Follow the following steps:
@@ -511,7 +511,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```			
 	
- - **VID**
+ - **ONAP VID**
 	 --------
 	 
 	 Follow the following steps:
@@ -541,7 +541,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 		
- - **TOSCA**
+ - **ONAP TOSCA**
 	 ----------
 	 
 	Follow the following steps:
@@ -571,7 +571,7 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
- - **SDC**
+ - **ONAP SDC**
      --------
 	 
 	 Follow the following steps:
