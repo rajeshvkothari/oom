@@ -8,7 +8,7 @@ Table of contents
     * [SDC](#SDC)
     * [SO](#SO)
   * [Re deploy onap-componants with our builded docker image](#Re-deploy-onap-componants-with-our-builded-docker-image)
-    * [AAI](#AAI)
+    * [ONAP-AAI](#ONAP-AAI)
     * [SO](#SO)
     * [VID](#VID)
     * [TOSCA](#TOSCA)
@@ -451,7 +451,7 @@ Table of contents
 		   ```
 ## Re-deploy onap-componants with our builded docker image:
     
- - **AAI**
+ - **ONAP AAI**
      --------
 	 
 	Follow the following steps:
