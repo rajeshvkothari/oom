@@ -67,10 +67,10 @@ Table of contents
 	
 	 -  Setup maven:
 	    
-	    ```sh
-	    $ sudo apt install maven
-	    $ mvn -version
-	    ```
+	   ```sh
+	   $ sudo apt install maven
+	   $ mvn -version
+	   ```
 		
 	 - Setup yarn:
 	   
@@ -99,27 +99,27 @@ Table of contents
 	 - Maven build JAR:
 	 
 	   ```sh
-	   $ cd ~/onap-vid-integ/vid-ext-services-simulator
+	   $ cd ~/nap-vid-integ/vid-ext-services-simulator
 	   $ mvn clean package
-	   ```
-
-	 - Replace sdc-tosca-1.6.5.jar at following location:
-	   
-	   ```sh
-	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
 	   ```
 	   
 	 - Build images:
 	 
 	   ```sh
-	   $ cd ~/onap-vid-integ
+	   $ cd ~/nap-vid-integ
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
+	 - Replace sdc-tosca-1.6.5.jar at following location:
+	   
+	   ```sh
+	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
+	   ```	  
+	  
 	 - Docker compose:
 	 
 	   ```sh
-	   $ cd /home/ubuntu/vid/deliveries/src/main/docker/docker-files
+	   $ cd /home/ubuntu/onap-vid-integ/deliveries/src/main/docker/docker-files
 	   $ docker-compose up -d
 	   ```
 	   
