@@ -110,11 +110,17 @@ Table of contents
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
-	 - Replace sdc-tosca-1.6.0.jar at following location:
+	 - Replace sdc-tosca-1.6.0.jar at following location and re-run build image command at cd ~/onap-vid-integ location :
 	   
 	   ```sh
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
 	   ```	    
+	   
+	   **NOTE : if we dose not replace sdc-tosca-1.6.0 then we can facing following error **
+	   
+	   ```sh
+	   Failed to get service models from SDC.
+	   ```
 	  
 	 - Docker compose:
 	 
