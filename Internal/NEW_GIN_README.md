@@ -44,8 +44,9 @@ in third.
     ------------
 	These servers are required for deploying ORAN models. 
 	
-	Note : All three AWS VMs(Bonap Server, ric Server and nonrtric Server) will be used in build-workflow run and only 'ric Server'
-	and 'nonrtric Server' will be used in argo-workflow run.
+	Note : 
+	  All three AWS VMs(Bonap Server, ric Server and nonrtric Server) will be used in the deployment of model with 'puccini-workflow' engine. Only 'ric Server'
+	and 'nonrtric Server' will be used in the deployment of model with 'argo-workflow' engine.
 
 	 - Create three AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -1058,7 +1059,7 @@ in third.
 - **Docker container based testing**
     ------------------------------ 
   Note :
-     For now, in a 'Docker container based testing' - only 'puccini-workflow' engine type support. So make sure 'workflow_engine_type : puccini-workflow' should be in metadata section of main service template of model.
+     For now, in a 'Docker container based testing' - only 'puccini-workflow' engine type support. So make sure 'workflow_engine_type : puccini-workflow' should be in the metadata section of main service template of model.
      
   Login into Demo Server and fire the following commands to copy csars:
   
