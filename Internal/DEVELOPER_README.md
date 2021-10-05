@@ -116,7 +116,7 @@ Table of contents
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
 	   ```	    
 	   
-	   **NOTE : if we dose not replace sdc-tosca-1.6.0 then we can facing following error **
+	   **NOTE : if we dose not replace sdc-tosca-1.6.0 then we can facing following error in VID portal**
 	   
 	   ```sh
 	   Failed to get service models from SDC.
