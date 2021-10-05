@@ -44,9 +44,7 @@ in third.
     ------------
 	These servers are required for deploying ORAN models. 
 	
-	Note : 
-	  All three AWS VMs(Bonap Server, ric Server and nonrtric Server) will be used in the deployment of model with 'puccini-workflow' engine. Only 'ric Server'
-	and 'nonrtric Server' will be used in the deployment of model with 'argo-workflow' engine.
+	**IMPORTANT NOTE : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
 
 	 - Create three AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -139,8 +137,9 @@ in third.
 	
 	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	      ```
-		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.
-          Use following link to verify correctness of YAML:**
+		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.**
+		
+          Use following link to verify correctness of YAML:
 
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
@@ -176,6 +175,7 @@ in third.
 		  
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
+	
 	IMPORTANT NOTE:
 	   Only built-in workflow engine is supported for docker container based deployment.
        Argo workflow engine can only be used in ONAP OOM based deployment.
@@ -1004,13 +1004,14 @@ in third.
   $ sudo chmod 777 -R tosca-models 
   ```
   
-  Note: By default, GIN uses 'argo-workflow' engine to deploy model. To use 'puccini-workflow' engine while deployment
-        add workflow_engine_type type in 'metadata' section of main service template of model.
-	E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in 
-	      /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml
-	      
-	      metadata:
-		workflow_engine_type : puccini-workflow
+  IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.
+       
+  E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml
+  
+  ```sh
+  metadata:
+  workflow_engine_type : puccini-workflow
+  ```
 	
   Run following commands to build model csar.
 	
@@ -1058,8 +1059,9 @@ in third.
  
 - **Docker container based testing**
     ------------------------------ 
-  Note :
-     For now, in a 'Docker container based testing' - only 'puccini-workflow' engine type support. So make sure 'workflow_engine_type : puccini-workflow' should be in the metadata section of main service template of model.
+	
+  IMPORTANT NOTE : Currently, in 'Docker container based testing', only 'puccini-workflow' engine type is supported. 
+     So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to 'Building Tosca Model Csars' for more details.
      
   Login into Demo Server and fire the following commands to copy csars:
   
