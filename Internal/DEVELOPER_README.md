@@ -116,10 +116,10 @@ Table of contents
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
 	   ```	    
 	   
-	   **NOTE : If we do not replace the sdc-tosca-1.6.0 then we face the following error in the VID portal**
+	   **NOTE : If we do not replace the sdc-tosca-1.6.0 then we face the following error in the VID portal :**
 	   
 	   ```sh
-	   Failed to get service models from SDC.
+	   Error : Failed to get service models from SDC.
 	   ```
 	  
 	 - Docker compose:
