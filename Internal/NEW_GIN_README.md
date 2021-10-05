@@ -1000,6 +1000,8 @@ in third.
        
   **E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml**
   
+  Login into Demo Server or OOM VM and run the following commands:
+  
   ```sh
   $ cd /home/ubuntu
   $ git clone https://github.com/customercaresolutions/tosca-models
