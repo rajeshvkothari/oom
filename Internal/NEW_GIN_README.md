@@ -1000,17 +1000,17 @@ in third.
        
   **E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml**
   
+  ```sh
+  metadata:
+   workflow_engine_type : puccini-workflow
+  ```
+  
   Login into Demo Server or OOM VM and run the following commands:
   
   ```sh
   $ cd /home/ubuntu
   $ git clone https://github.com/customercaresolutions/tosca-models
   $ sudo chmod 777 -R tosca-models 
-  ```
-  
-  ```sh
-  metadata:
-   workflow_engine_type : puccini-workflow
   ```
 	
   Run following commands to build model csar.
