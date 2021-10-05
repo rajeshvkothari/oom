@@ -129,7 +129,7 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
-	  **verify : Open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page**
+	  **Verify : open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page**
 	   
  - **AAI-Babel**
 	 ------------------- 
