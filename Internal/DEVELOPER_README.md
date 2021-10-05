@@ -116,7 +116,7 @@ Table of contents
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
 	   ```	    
 	   
-	   **NOTE : If we do not replace the sdc-tosca-1.6.0 then we face the following error in the VID portal :**
+	   **NOTE : If we do not replace the sdc-tosca-1.6.0.jar then we face the following error in the VID portal :**
 	   
 	   ```sh
 	   Error : Failed to get service models from SDC.
@@ -129,7 +129,7 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
-	 - Open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page 
+	 **Open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page**
 	   
  - **AAI-Babel**
 	 ------------------- 
