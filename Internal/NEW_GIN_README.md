@@ -176,9 +176,7 @@ in third.
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	
-	IMPORTANT NOTE:
-	   Only built-in workflow engine is supported for docker container based deployment.
-       Argo workflow engine can only be used in ONAP OOM based deployment.
+	**IMPORTANT NOTE: Only built-in workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
     
   - **DMaaP Server**
       ------------
@@ -568,10 +566,10 @@ in third.
 		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 		  ```
 			
-	      Note1: {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall.
+	      Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall.
           For deploying oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 			
-          Note2: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
+          Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').  
 		   
         - Copy files as given follows:
 	  
@@ -651,7 +649,7 @@ in third.
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	  
-	  Note: 172.31.27.186 is the private IP address of CCI_REPO VM.
+	  Note : 172.31.27.186 is the private IP address of CCI_REPO VM.
 		
     - Setup kubectl:
 	  
@@ -714,7 +712,7 @@ in third.
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	  
-	   Note: After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
+	   Note : After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
             Enter.
  
     - Make changes in ~/onap-oom-integ/cci/application.cfg: 
@@ -733,9 +731,9 @@ in third.
 		nonrtricServerIP={Private_IP_ADDR_OF_NONRTRIC}
 		argoTemplateType=containerSet | DAG
         ```		
-	  Note : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it                          should be set to {IP_ADDR_OF_BONAP_SERVER}.
+	  Note : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 
-         Note : In argo workflow, there are two ways for executing argo templates.
+      Note : In argo workflow, there are two ways for executing argo templates.
 		        
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
@@ -842,7 +840,7 @@ in third.
 	  
 	  This step requires around 35-40 min to deploy ONAP.
 	  
-	  IMPORTANT NOTE : Sometimes AAI pods takes 60-80 minutes to deploy due to this SDC service distribution fails. To overcome this issue and distribute service successfully from SDC use following steps:
+	  **IMPORTANT NOTE : Sometimes AAI pods takes 60-80 minutes to deploy due to this SDC service distribution fails. To overcome this issue and distribute service successfully from SDC use following steps:**
 
 	  - Login into onap-aai-traversal pod and run following commands:
 		
@@ -995,16 +993,6 @@ in third.
 
 		  
 ## Building Tosca Model Csars
-    
-  Login into Demo Server or OOM VM and run the following commands.
-	
-  ```sh
-  $ cd /home/ubuntu
-  $ git clone https://github.com/customercaresolutions/tosca-models
-  $ sudo chmod 777 -R tosca-models 
-  ```
-  
-  IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.
        
   E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml
   
@@ -1060,8 +1048,8 @@ in third.
 - **Docker container based testing**
     ------------------------------ 
 	
-  IMPORTANT NOTE : Currently, in 'Docker container based testing', only 'puccini-workflow' engine type is supported. 
-     So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to 'Building Tosca Model Csars' for more details.
+  **IMPORTANT NOTE : Currently, in 'Docker container based testing', only 'puccini-workflow' engine type is supported. 
+  So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to 'Building Tosca Model Csars' for more details.**
      
   Login into Demo Server and fire the following commands to copy csars:
   
