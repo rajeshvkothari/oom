@@ -129,20 +129,22 @@ in third.
          $ sudo apt install socat
          $ sudo chmod -R 777 /etc/rancher/k3s
     
-	    # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+	     # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
           mirrors:
             "172.31.27.186:5000":
                endpoint:
                  - "http://172.31.27.186:5000"
 	
-	      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
-	      ```
-		**IMPORTANT NOTE: Above YAML must be in valid format and proper indentation must be used.**
+	     $ sudo systemctl daemon-reload && sudo systemctl restart k3s
+	     ```
+		 
+		**IMPORTANT NOTE : Above YAML must be in valid format and proper indentation must be used.**
 		
           Use following link to verify correctness of YAML:
 
 		  ```sh
 		  https://jsonformatter.org/yaml-validator
+		  ```
 		
      - Login into Bonap Server and run the following commands to check clustering setup:
 	
@@ -151,10 +153,10 @@ in third.
 		 ```sh
 		 $ kubectl config get-contexts
 		  
-		 ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
-		 CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
+		   ubuntu@ip-172-31-18-160:~$ kubectl config get-contexts
+		   CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
 			default   default   default
-		 *         ric       ric       ric
+		   *         ric       ric       ric
 		 ```
 		  
 	   - Run the following command to get all pods:
@@ -176,7 +178,7 @@ in third.
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	
-	**IMPORTANT NOTE: Only built-in workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
+	**IMPORTANT NOTE : Only built-in workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
     
   - **DMaaP Server**
       ------------
@@ -192,7 +194,7 @@ in third.
 	  Security group: launch-wizard-19
       ```
 	  
-	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
+	  Note : cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
 	  
     - Setup Docker on DMaaP Server:
 	
@@ -209,7 +211,7 @@ in third.
       $ sudo chmod 777 /var/run/docker.sock
       ```
 	  
-	  Note: 172.31.27.186 is the private IP address of CCI_REPO VM.
+	  Note : 172.31.27.186 is the private IP address of CCI_REPO VM.
 	  
       Make sure Docker is installed properly by running the following command:
 	  
@@ -225,7 +227,7 @@ in third.
       $ cd ~/
       $ mkdir ~/local-dmaap
 	  $ cd local-dmaap
-      $git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch honolulu
+      $ git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch honolulu
       ```
 	
 	  Replace the Docker image in docker-compose.yml (located in /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose)
@@ -269,7 +271,7 @@ in third.
 	  $ curl -X GET "http://{IP_ADDR_OF_DMAAP_SERVER}:3904/topics"
       ```
 	  
-	  Note: {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
+	  Note : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
 	  
       The above command return output as follows:
 	  
@@ -993,12 +995,14 @@ in third.
 
 		  
 ## Building Tosca Model Csars
+
+  **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.**
        
-  E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml
+  **E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml**
   
   ```sh
   metadata:
-  workflow_engine_type : puccini-workflow
+   workflow_engine_type : puccini-workflow
   ```
 	
   Run following commands to build model csar.
@@ -1049,7 +1053,7 @@ in third.
     ------------------------------ 
 	
   **IMPORTANT NOTE : Currently, in 'Docker container based testing', only 'puccini-workflow' engine type is supported. 
-  So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to 'Building Tosca Model Csars' for more details.**
+  So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to [Building Tosca Model Csars](#Building-Tosca-Model-Csars) for more details.**
      
   Login into Demo Server and fire the following commands to copy csars:
   
