@@ -698,7 +698,7 @@ in third.
 	  $ sudo mkdir ~/.local/share/helm
 	  $ sudo cp -R ~/onap-oom-integ/kubernetes/helm/plugins/ ~/.local/share/helm/plugins
 	  $ sudo chmod -R 777 /home/ubuntu/.local
-	  $ helm plugin install https://github.com/chartmuseum/helm-push.git
+	  $ helm plugin install https://github.com/chartmuseum/helm-push.git --version v0.9.0
       ```
 	  
 	- Setup chartmuseum:
