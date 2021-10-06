@@ -733,9 +733,12 @@ in third.
 		nonrtricServerIP={Private_IP_ADDR_OF_NONRTRIC}
 		argoTemplateType=containerSet | DAG
         ```		
-	  Note : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		
+	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 
-      Note : In argo workflow, there are two ways for executing argo templates.
+      Note2 : In argo workflow, there are two ways for executing argo templates.
+	  
+	  Note3 : In case, if we does not create Bonap server then keep the ricServerIP, nonrtricServerIP value as it is.
 		        
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
