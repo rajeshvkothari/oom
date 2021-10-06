@@ -330,7 +330,7 @@ Table of contents
 	   $ mvn clean install -U -P docker,fast-build -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
 	   ```
 	   
-	   **Note: If a "Build Failure" error occurs, re-run the build image Step again**
+	   **Note: when we run the build image command sometimes we got an error. to overcome that error we have to re-run build image steps**
 		
 	 - Start Docker container
 	 
