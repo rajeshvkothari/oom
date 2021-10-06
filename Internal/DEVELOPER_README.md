@@ -130,6 +130,7 @@ Table of contents
 	   ```
 	   
 	  **Verify : open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page**
+	  
 	  	- Login and password you can find in a 'fn_user' table inited by vid/epsdk-app-onap/src/main/resources/db.changelog-01.sql script.
 	  
 	  ```sh
