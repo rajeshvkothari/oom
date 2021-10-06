@@ -484,10 +484,10 @@ in third.
 		    ports:
 		      - "10000:10000"
 		    volumes:
-	          -  ../dvol/config:/opt/app/config
-	          -  ../dvol/models:/opt/app/models
-	          -  ../dvol/data:/opt/app/data
-	          -  ../dvol/log:/opt/app/log
+	          -  ./dvol/config:/opt/app/config
+	          -  ./dvol/models:/opt/app/models
+	          -  ./dvol/data:/opt/app/data
+	          -  ./dvol/log:/opt/app/log
 		    networks:
 		      - cciso-ntwk
             depends_on:
@@ -498,10 +498,10 @@ in third.
 		    ports:
               - "10010:10010"
 		    volumes:
-              -  ../dvol/config:/opt/app/config
-              -  ../dvol/models:/opt/app/models
-              -  ../dvol/data:/opt/app/data
-              -  ../dvol/log:/opt/app/log
+              -  ./dvol/config:/opt/app/config
+              -  ./dvol/models:/opt/app/models
+              -  ./dvol/data:/opt/app/data
+              -  ./dvol/log:/opt/app/log
 		    networks:
               - cciso-ntwk
 		    depends_on:
@@ -512,10 +512,10 @@ in third.
             ports:
               - "10020:10020"
             volumes:
-              -  ../dvol/config:/opt/app/config
-              -  ../dvol/models:/opt/app/models
-              -  ../dvol/data:/opt/app/data
-              -  ../dvol/log:/opt/app/log
+              -  ./dvol/config:/opt/app/config
+              -  ./dvol/models:/opt/app/models
+              -  ./dvol/data:/opt/app/data
+              -  ./dvol/log:/opt/app/log
             networks:
               - cciso-ntwk
             depends_on:
@@ -526,10 +526,10 @@ in third.
             ports:
               - "10030:10030"
             volumes:
-              -  ../dvol/config:/opt/app/config
-              -  ../dvol/models:/opt/app/models
-              -  ../dvol/data:/opt/app/data
-              -  ../dvol/log:/opt/app/log
+              -  ./dvol/config:/opt/app/config
+              -  ./dvol/models:/opt/app/models
+              -  ./dvol/data:/opt/app/data
+              -  ./dvol/log:/opt/app/log
             networks:
               - cciso-ntwk
             depends_on:
@@ -539,10 +539,10 @@ in third.
             ports:
               - "10040:10040"
             volumes:
-              -  ../dvol/config:/opt/app/config
-              -  ../dvol/models:/opt/app/models
-              -  ../dvol/data:/opt/app/data
-              -  ../dvol/log:/opt/app/log
+              -  ./dvol/config:/opt/app/config
+              -  ./dvol/models:/opt/app/models
+              -  ./dvol/data:/opt/app/data
+              -  ./dvol/log:/opt/app/log
             networks:
               - cciso-ntwk
             depends_on:
@@ -1310,6 +1310,8 @@ in third.
 		Click on 'Licence Agreements' and 'ADD LICENCE AGREEMENT', then fill in the required fields such as Name='cci', License Term='Unlimited'. Under the tab Features Groups, drag the feature group created previously.
 		Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
 	 	```
+		
+		Note : when we click on any application like SDC, VNF, etc then it returns an error msg as follows "It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address." to overcome this issue we have to open that link in a new tab then it will work.
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	  
