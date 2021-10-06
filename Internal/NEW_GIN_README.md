@@ -1311,7 +1311,11 @@ in third.
 		Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
 	 	```
 		
-		Note : when we click on any application like SDC, VNF, etc then it returns an error msg as follows "It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address." to overcome this issue we have to open that link in a new tab then it will work.
+		Note : when we click on any application like SDC, VID, etc then it returns an error msg as follows
+		
+		"It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address." 
+		
+		To overcome this issue we have to open that link in a new tab of a browser then it will work.
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	  
@@ -1615,7 +1619,7 @@ in third.
   
 	- For puccini-workflow or argo-workflow:
 		
-	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
+	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should be created on AWS N.California region.
 
 	  - SSH SDWAN_Site_A VM and run the following command:
 			
