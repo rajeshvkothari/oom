@@ -307,8 +307,8 @@ Table of contents
 	   $ git clone https://github.com/customercaresolutions/onap-sdc-integ --branch honolulu
        ```
 
-     - Copy setting.xml from /.m2 directory local machine to /.m2 of aws ubuntu machine
-
+     - Copy settings.xml from https://git.onap.org/oparent/plain/settings.xml to ~/.m2 directory
+	 
 	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
 	
 	    ```sh
@@ -321,13 +321,7 @@ Table of contents
 	   ```sh
 	   export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 	   export PATH=$JAVA_HOME/bin:$PATH
-	   ```
-
-	 - Replace sdc-tosca-1.6.5.jar at following location:
-	   
-	   ```sh
-	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
-	   ```	   	
+	   ```  	
 		
 	 - Build images
 	 
@@ -335,6 +329,8 @@ Table of contents
 	   $ cd ~/onap-sdc-integ
 	   $ mvn clean install -U -P docker,fast-build -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
 	   ```
+	   
+	   **Note: If a "Build Failure" error occurs, re-run the build image Step again**
 		
 	 - Start Docker container
 	 
@@ -346,7 +342,6 @@ Table of contents
 	 
 	   http://{IP_OF_VM}:8285/login
 
-     - fire docker images command and add output here
    
  - **SO**
      ------------
