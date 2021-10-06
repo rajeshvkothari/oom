@@ -130,13 +130,13 @@ Table of contents
 	   ```
 	   
 	  **Verify : open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page**
-	  
+
 	  	- Login and password you can find in a 'fn_user' table inited by vid/epsdk-app-onap/src/main/resources/db.changelog-01.sql script.
 	  
-	  ```sh
-	  User name: demo
-	  Password: Kp8bJ4SXszM0WX
-	  ```
+	    ```sh
+	    User name: demo
+	    Password: Kp8bJ4SXszM0WX
+	    ```
 	   
  - **AAI-Babel**
 	 ------------------- 
@@ -614,4 +614,4 @@ Table of contents
 		
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	 ```
+	 ```	
