@@ -738,7 +738,7 @@ in third.
 
       Note2 : In argo workflow, there are two ways for executing argo templates.
 	  
-	  Note3 : In case, if we does not create Bonap server then keep the ricServerIP, nonrtricServerIP value as it is.
+	  Note3 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is.
 		        
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
@@ -1314,11 +1314,9 @@ in third.
 		Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
 	 	```
 		
-		Note : when we click on any application like SDC, VID, etc then it returns an error msg as follows
-		
-		"It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address." 
-		
-		To overcome this issue we have to open that link in a new tab of a browser then it will work.
+		Note : If any ONAP componants returns a error message as follows, eg.(SDC, VID) then open the link in a new tab of windows Browser. 
+
+		"It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address."
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	  
