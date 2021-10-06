@@ -23,7 +23,7 @@ Table of contents
 
 ## Introduction
 
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using built-in workflow or argo-workflow. It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using puccini-workflow or argo-workflow. It also describes steps for building csars for various models currently available.
   
 ## Pre Deployment Steps
 
@@ -178,7 +178,7 @@ in third.
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
 	
-	**IMPORTANT NOTE : Only built-in workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
+	**IMPORTANT NOTE : Only puccini-workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
     
   - **DMaaP Server**
       ------------
@@ -342,7 +342,7 @@ in third.
 	  
 	  - TOSCA_SO - service orchestrator.
 	  - TOSCA_COMPILER - puccini tosca compiler
-	  - TOSCA_WORKFLOW - built-in workflow microservice
+	  - TOSCA_WORKFLOW - puccini-workflow microservice
 	  - TOSCA_GAWP - argo workflow microservice
 	  - TOSCA_POLICY - policy microservice
 	  
@@ -359,7 +359,7 @@ in third.
 	  - **Building images**
 	      ---------------
        
-	    To build the images make sure puccini/docker-compose.yaml looks as follows: 
+	    To build the images make sure puccini/docker-compose.yml looks as follows: 
 		
 	    ```sh
 	    version: '3'
@@ -465,7 +465,7 @@ in third.
       - **Using pre built images**
           ----------------------
 		  
-        To use pre-build images make sure puccini/docker-compose.yaml looks as follows:
+        To use pre-build images make sure puccini/docker-compose.yml looks as follows:
 	    
 	    ```sh
 	    version: '3'
@@ -809,7 +809,7 @@ in third.
 	  $ argo version
 	  ```
 		  
-	- To deploy only sdwan and firewall model with built-in(puccini) workflow do some additional installation on ONAP_OOM_DEMO  VM as follows:
+	- To deploy only sdwan and firewall model with puccini-workflow do some additional installation on ONAP_OOM_DEMO  VM as follows:
 	  
 	  ```sh
 	  $ sudo apt-get update
@@ -1611,7 +1611,7 @@ in third.
   
   - Verify the sdwan model:
   
-	- For built-in(puccini) workflow or argo-workflow:
+	- For puccini-workflow or argo-workflow:
 		
 	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should   be created on AWS N.California region.
 
@@ -1707,13 +1707,13 @@ in third.
 		
   - Verify firewall model:
 
-	- For built-in(puccini) workflow or argo-workflow:
+	- For puccini-workflow or argo-workflow:
 
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 
   - Verify nonrtric model:
 
-	- For built-in(puccini) workflow:
+	- For puccini-workflow:
 
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 		
@@ -1757,7 +1757,7 @@ in third.
 
   - Verify ric model:
 
-    - For built-in(puccini) workflow:
+    - For puccini-workflow:
 	      
 	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
 
@@ -1831,7 +1831,7 @@ in third.
 
   - Verify qp model:
 	
-	- For built-in workflow:
+	- For puccini-workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 	  
@@ -1888,7 +1888,7 @@ in third.
 
   - Verify qp-driver model:
 
-	- For built-in(puccini) workflow:
+	- For puccini-workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 
@@ -1943,7 +1943,7 @@ in third.
 
   - Verify ts model:
 
-    - For built-in(puccini) workflow:
+    - For puccini-workflow:
 
 	  Login into 'Bonap Server' and run the following commands:
 	  
