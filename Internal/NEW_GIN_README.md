@@ -736,9 +736,9 @@ in third.
 		
 	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
 
-      Note2 : In argo workflow, there are two ways for executing argo templates.
+      Note2 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is.
 	  
-	  Note3 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is.
+	  Note3 : In argo workflow, there are two ways for executing argo templates.
 		        
 		
         - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
@@ -1314,7 +1314,7 @@ in third.
 		Click on 'SUBMIT' and add comment then click on 'COMMIT & SUBMIT'.
 	 	```
 		
-		Note : If any ONAP components return a error message as follows, eg. (SDC, VID) then open the link in a new tab of windows Browser. 
+		Note : Note : If any ONAP components(e.g SDC, VID) return a error message as follows, then open the link in a new tab of windows Browser. 
 
 		"It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address."
 	  
