@@ -26,20 +26,20 @@
       <td colspan="2">Policy</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
-	  <td>Pending(FW=,Sdwan=,Ric=)</td>
+	  <td>Pending</td>
     </tr>
 	<tr>
       <td rowspan="2">Argo</td>
 	  <td>DAG</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Ok(FW=,Sdwan=,Ric=)</td>
+	  <td>Ok(issue in sdwan)</td>
     </tr>
 	<tr>
 	  <td>CS</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Ok(FW=,Sdwan=,Ric=)</td>
+	  <td>Ok(issue in firewall)</td>
     </tr>
   </tbody>
 </table>
