@@ -1607,8 +1607,6 @@ in third.
 	  Click Close
       ```
 	  
-	  If the instance name is large than 6 chars then the firewall argo template json file size goes above 40 kb and it seems that there is an issue in argo setup for argo template with more than 40 kb size.
-	  
     - Instantiate a VNF
 		
       ```sh
