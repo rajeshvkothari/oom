@@ -1597,14 +1597,15 @@ in third.
 	    
       ```sh
 	  Click 'Browse SDC Service Models'
-      Select a service and click on Deploy.
-      Complete the fields indicated by the red star and click Confirm.
-      Wait for few minutes and it will return a success message.
-      A service object is created in Puccini-SO.
-      Click Close 
+	  Select a service and click on Deploy.
+	  Complete the fields indicated by the red star and click Confirm.
+
+	  **IMPORTANT NOTE : In order to work around argo issue with template file size, while deploying firewall model with argo-workflow engine, service instance name must be restricted to maximum of 6 characters (eg. fw_1, fw_101, etc).**
+
+	  Wait for few minutes and it will return a success message.
+	  A service object is created in Puccini-SO.
+	  Click Close
       ```
-	  
-	  Note : To Instantiate service for firewall model with 'argo-workflow' type, use small service instance name with maximum 6 chars(eg. fw_1, fw_101).
 	  
 	  If the instance name is large than 6 chars then the firewall argo template json file size goes above 40 kb and it seems that there is an issue in argo setup for argo template with more than 40 kb size.
 	  
@@ -1618,33 +1619,32 @@ in third.
   
 ## Post Deployment Verification Steps
 
-  
-- Verify/Monitor models with the argo-workflow engine are deployed successfully or not using ARGO GUI.
-	  
-  - Use following command to get an external port of argo-server GUI.
+- When using 'argo-workflow', argo GUI can be used to verify and monitor deployment as follows:
+ 
+  - Use following commands on ONAP OOM VM to get external port of argo-server GUI:
     
-	```sh
-	$ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
-	   service/argo-server patched
-		 
-	$ kubectl get svc argo-server -n onap
-	    NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-		argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
-	```
-			  
-	Note : 31325 is the external port of argo-server in above case.
-			  
-  - Use following URL to open Argo GUI in a browser of a local machine.
+    ```sh	
+    $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
+        service/argo-server patched
+
+    $ kubectl get svc argo-server -n onap
+        NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+        argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+    ```
 	
-	```sh
+	Here, 31325 is the external port of argo-server.
+ 
+  - Use following URL to open Argo GUI in local machine browser:
+       
+    ```sh
 	https://{IP_ADDR_OF_ONAP_OOM_DEMO}:{EXTERNAL_PORT_OF_ARGO_SERVER}
 
-	# e.g: https://3.142.145.230:31325
+    # e.g: https://3.142.145.230:31325
 	```
 
-    After open ARGO GUI, use our 'service instance' name given in 'Create service instance and VNF from VID' section of 'ONAP OOM testing' and find out 'workflow' start with our 'service instance' name.
+    After opening argo GUI, Click on the 'workflow' with name starting with the 'service instance' name provided in 'Create service instance and VNF from VID' section of 'ONAP OOM testing'.
 	
-	Click on 'workflow' and our model workflow steps will be shown in Tree Format. If our model deployed successfully then it's will show 'right tick' symbol with green background.
+    This will display workflow steps in Tree Format. If the model is deployed successfully, then it will show a 'right tick' symbol with green background.
 
 - Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
