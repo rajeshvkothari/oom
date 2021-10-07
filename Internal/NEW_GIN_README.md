@@ -1621,27 +1621,30 @@ in third.
   
   - Verify/Monitor models with the argo-workflow engine are deployed successfully or not using ARGO GUI.
 	  
-    - Use following command to get an external port of argo-server GUI.
+  - Use following command to get an external port of argo-server GUI.
     
-	  ```sh
-	  $ kubectl get svc argo-server -n onap
-	      NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-		  argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
-	  ```
+	```sh
+	$ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
+	   service/argo-server patched
+		 
+	$ kubectl get svc argo-server -n onap
+	    NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+		argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+	```
 			  
-	  Note : 31325 is the external port of argo-server in above case.
+	Note : 31325 is the external port of argo-server in above case.
 			  
-    - Use following URL to open Argo GUI in a browser of a local machine.
+  - Use following URL to open Argo GUI in a browser of a local machine.
 	
-	  ```sh
-	  https://{IP_ADDR_OF_ONAP_OOM_DEMO}:{EXTERNAL_PORT_OF_ARGO_SERVER}
+	```sh
+	https://{IP_ADDR_OF_ONAP_OOM_DEMO}:{EXTERNAL_PORT_OF_ARGO_SERVER}
 
-	  # e.g: https://3.142.145.230:31325
-	  ```
+	# e.g: https://3.142.145.230:31325
+	```
 
-      After open ARGO GUI, use our 'service instance' name given in 'Create service instance and VNF from VID' section of 'ONAP OOM testing' and find out 'workflow' start with our 'service instance' name.
+    After open ARGO GUI, use our 'service instance' name given in 'Create service instance and VNF from VID' section of 'ONAP OOM testing' and find out 'workflow' start with our 'service instance' name.
 	
-	  Click on 'workflow' and our model workflow steps will be shown in Tree Format. If our model deployed successfully then it's will show 'right tick' symbol with green background.
+	Click on 'workflow' and our model workflow steps will be shown in Tree Format. If our model deployed successfully then it's will show 'right tick' symbol with green background.
 
   Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
