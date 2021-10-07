@@ -1600,7 +1600,7 @@ in third.
 	  Select a service and click on Deploy.
 	  Complete the fields indicated by the red star and click Confirm.
 
-	  **IMPORTANT NOTE : In order to work around argo issue with template file size, while deploying firewall model with argo-workflow engine, service instance name must be restricted to maximum of 6 characters (eg. fw_1, fw_101, etc).**
+	  # IMPORTANT NOTE : In order to work around argo issue with template file size, while deploying firewall model with argo-workflow engine, service instance name must be restricted to maximum of 6 characters (eg. fw_1, fw_101, etc).
 
 	  Wait for few minutes and it will return a success message.
 	  A service object is created in Puccini-SO.
