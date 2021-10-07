@@ -1615,7 +1615,7 @@ in third.
       Click Close 
       ```
 	  
-	  Note : To Instantiate firewall model use service instance small name(eg. fw_1).
+	  Note : To Instantiate firewall model use small service instance name(eg. fw_1).
 	  
     - Instantiate a VNF
 		
