@@ -1646,7 +1646,7 @@ in third.
 	
 	Click on 'workflow' and our model workflow steps will be shown in Tree Format. If our model deployed successfully then it's will show 'right tick' symbol with green background.
 
-  Use the following steps to verify sdwan or firewall models are deployed successfully. 
+- Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
   - Verify the sdwan model:
   
