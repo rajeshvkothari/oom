@@ -811,8 +811,19 @@ in third.
 	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
 	  $ argo version
 	  ```
+	  
+	  Use the following steps to enable argo UI:
+  
+	  ```sh  
+	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
+		  service/argo-server patched
+		   
+	  $  kubectl get svc argo-server -n onap
+		   NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+		   argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+	  ```
 		  
-	- To deploy only sdwan and firewall model with puccini-workflow do some additional installation on ONAP_OOM_DEMO  VM as follows:
+	- To deploy only sdwan and firewall model with puccini-workflow do some additional installation on      ONAP_OOM_DEMO  VM as follows:
 	  
 	  ```sh
 	  $ sudo apt-get update
@@ -1604,6 +1615,8 @@ in third.
       Click Close 
       ```
 	  
+	  Note : To Instantiate firewall model use service instance small name(eg. fw_1).
+	  
     - Instantiate a VNF
 		
       ```sh
@@ -1614,17 +1627,6 @@ in third.
   
 ## Post Deployment Verification Steps
 
-  Use the following steps to enable argo UI:
-  
-  ```sh  
-  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
-	  service/argo-server patched
-	   
-  $  kubectl get svc argo-server -n onap
-	   NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-	   argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
-  ```
-  
   To access argo UI from local machine use following link:
   
   ```sh
