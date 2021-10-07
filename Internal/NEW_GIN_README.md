@@ -811,17 +811,6 @@ in third.
 	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
 	  $ argo version
 	  ```
-	  
-	  Use the following steps to enable argo UI:
-  
-	  ```sh  
-	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
-		  service/argo-server patched
-		   
-	  $  kubectl get svc argo-server -n onap
-		   NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-		   argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
-	  ```
 		  
 	- To deploy only sdwan and firewall model with puccini-workflow do some additional installation on      ONAP_OOM_DEMO  VM as follows:
 	  
@@ -1615,7 +1604,9 @@ in third.
       Click Close 
       ```
 	  
-	  Note : To Instantiate firewall model use small service instance name(eg. fw_1).
+	  Note : To Instantiate service for firewall model with 'argo-workflow' type, use small service instance name with maximum 6 chars(eg. fw_1, fw_101).
+	  
+	  If the instance name is large than 6 chars then the firewall argo template json file size goes above 40 kb and it seems that there is an issue in argo setup for argo template with more than 40 kb size.
 	  
     - Instantiate a VNF
 		
@@ -1627,12 +1618,30 @@ in third.
   
 ## Post Deployment Verification Steps
 
-  To access argo UI from local machine use following link:
   
-  ```sh
-  https://{IP_OF_ARGO_VM}:{PORT}
-  # e.g. https://18.117.157.180:31325
-  ```
+  - Verify/Monitor models with the argo-workflow engine are deployed successfully or not using ARGO GUI.
+	  
+    - Use following command to get an external port of argo-server GUI.
+    
+	  ```sh
+	  $ kubectl get svc argo-server -n onap
+	      NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+		  argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+	  ```
+			  
+	  Note : 31325 is the external port of argo-server in above case.
+			  
+    - Use following URL to open Argo GUI in a browser of a local machine.
+	
+	  ```sh
+	  https://{IP_ADDR_OF_ONAP_OOM_DEMO}:{EXTERNAL_PORT_OF_ARGO_SERVER}
+
+	  # e.g: https://3.142.145.230:31325
+	  ```
+
+      After open ARGO GUI, use our 'service instance' name given in 'Create service instance and VNF from VID' section of 'ONAP OOM testing' and find out 'workflow' start with our 'service instance' name.
+	
+	  Click on 'workflow' and our model workflow steps will be shown in Tree Format. If our model deployed successfully then it's will show 'right tick' symbol with green background.
 
   Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
