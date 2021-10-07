@@ -1619,7 +1619,7 @@ in third.
 ## Post Deployment Verification Steps
 
   
-  - Verify/Monitor models with the argo-workflow engine are deployed successfully or not using ARGO GUI.
+- Verify/Monitor models with the argo-workflow engine are deployed successfully or not using ARGO GUI.
 	  
   - Use following command to get an external port of argo-server GUI.
     
