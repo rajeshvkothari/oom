@@ -1614,6 +1614,24 @@ in third.
   
 ## Post Deployment Verification Steps
 
+  Use the following steps to enable argo UI:
+  
+  ```sh  
+  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
+	  service/argo-server patched
+	   
+  $  kubectl get svc argo-server -n onap
+	   NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+	   argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+  ```
+  
+  To access argo UI from local machine use following link:
+  
+  ```sh
+  https://{IP_OF_ARGO_VM}:{PORT}
+  # e.g. https://18.117.157.180:31325
+  ```
+
   Use the following steps to verify sdwan or firewall models are deployed successfully. 
   
   - Verify the sdwan model:
