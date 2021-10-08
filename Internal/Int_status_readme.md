@@ -123,8 +123,8 @@
 	  <td>Not Supported</td>
     <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Issue</td>
-    <td>Pending</td>
+	  <td>Ok</td>
+    <td>Ok</td>
     <td>Pending</td>
     <td>Pending</td>
     <td>Pending</td>
@@ -226,8 +226,8 @@
 	  <td>Not Supported</td>
     <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Issue</td>
-    <td>Pending</td>
+	  <td>Ok</td>
+    <td>Ok</td>
     <td>Pending</td>
     </tr>
 	<tr>
@@ -391,13 +391,13 @@
       <td>Sdwan</td>
       <td>Not Supported</td>
       <td>Not Supported</td>
-      <td>Issue</td>
+      <td>Ok</td>
     </tr>
     <tr>
       <td>Firewall</td>
       <td>Not Supported</td>
       <td>Not Supported</td>
-      <td>Pending</td>
+      <td>Ok</td>
     </tr>
     <tr>
       <td>Nonrtric</td>
@@ -550,13 +550,13 @@
       <td>Sdwan</td>
       <td>Not Supported</td>
       <td>Not Supported</td>
-      <td>Issue</td>
+      <td>Ok</td>
     </tr>
     <tr>
       <td>Firewall</td>
       <td>Not Supported</td>
       <td>Not Supported</td>
-      <td>Pending</td>
+      <td>Ok</td>
     </tr>
     <tr>
       <td>Oran</td>
@@ -619,13 +619,13 @@
 	  <td>DAG</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Ok(issue in sdwan)</td>
+	  <td>Ok(Oran model pending)</td>
     </tr>
 	<tr>
 	  <td>CS</td>
 	  <td>Not Supported</td>
 	  <td>Not Supported</td>
-	  <td>Ok(issue in firewall)</td>
+	  <td>Ok</td>
     </tr>
   </tbody>
 </table>
