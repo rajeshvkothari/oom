@@ -12,7 +12,6 @@
   <tbody>
     <tr>
       <td>Models</td>
-      <td></td>
       <td>Sdwan</td>
       <td>Firewall</td>
       <td>Nonrtric</td>
@@ -172,7 +171,6 @@
   <tbody>
     <tr>
       <td>Models</td>
-      <td></td>
       <td>Sdwan</td>
       <td>Firewall</td>
       <td>Oran</td>
