@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>Models</td>
+      <td colspan="2">Models</td>
       <td>Sdwan</td>
       <td>Firewall</td>
       <td>Nonrtric</td>
@@ -170,7 +170,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>Models</td>
+      <td colspan="2">Models</td>
       <td>Sdwan</td>
       <td>Firewall</td>
       <td>Oran</td>
