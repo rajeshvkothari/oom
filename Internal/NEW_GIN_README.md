@@ -1619,7 +1619,7 @@ in third.
 
 - When using 'argo-workflow', argo GUI can be used to verify and monitor deployment as follows:
  
-  - Use following commands on ONAP OOM VM to get external port of argo-server GUI:
+  - Use following commands on ONAP_OOM_DEMO VM to get external port of argo-server GUI:
     
     ```sh	
     $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
