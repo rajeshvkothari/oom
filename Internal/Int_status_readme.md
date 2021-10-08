@@ -6,7 +6,7 @@
       <th colspan="2">Environment</th>
       <th colspan="7">Standalone Puccini</th>
       <th colspan="7">Tosca Docker containers</th>
-	    <th colspan="7">Honolulu</th>
+      <th colspan="7">Honolulu</th>
     </tr>
   </thead>
   <tbody>
