@@ -59,7 +59,7 @@
 	    <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2">Workflow(Builtin)</td>
+      <td colspan="2">Puccini-workflow</td>
 	  <td>Ok</td>
       <td>Ok</td>
 	    <td>Ok</td>
@@ -194,7 +194,7 @@
 	    <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2">Workflow(Builtin)</td>
+      <td colspan="2">Puccini-workflow</td>
 	    <td>Ok</td>
       <td>Ok</td>
 	    <td>Ok</td>
@@ -300,7 +300,7 @@
       <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2" rowspan="7">Workflow(Builtin)</td>
+      <td colspan="2" rowspan="7">Puccini-workflow)</td>
       <td>Sdwan</td>
       <td>Ok</td>
       <td>Ok</td>
@@ -507,7 +507,7 @@
       <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2" rowspan="3">Workflow(Builtin)</td>
+      <td colspan="2" rowspan="3">Puccini-workflow</td>
       <td>Sdwan</td>
       <td>Ok</td>
       <td>Ok</td>
@@ -603,7 +603,7 @@
 	  <td>Ok</td>
     </tr>
     <tr>
-      <td colspan="2">Workflow(Builtin)</td>
+      <td colspan="2">Puccini-workflow</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
 	  <td>Ok</td>
