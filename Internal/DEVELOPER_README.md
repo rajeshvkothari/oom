@@ -742,27 +742,27 @@ Table of contents
 		  
       #Using make command chart for so gets build.
 
-	    $ helm ls --all-namespaces
-		 #OR
-	    $ helm ls -A
+	  $ helm ls --all-namespaces
+      #OR
+	  $ helm ls -A
 		
-	    # Delete release
-	    $ helm uninstall onap-so -n onap
+	  # Delete release
+	  $ helm uninstall onap-so -n onap
 		
-	    #Wait till all pods are goes off from Terminating state
-	    $ kubectl get pods -n onap | grep onap-so	
+	  #Wait till all pods are goes off from Terminating state
+	  $ kubectl get pods -n onap | grep onap-so	
 
-	    #If persistentvolume is not delete, fire following patch command
-	    $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
+	  #If persistentvolume is not delete, fire following patch command
+	  $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
 	
-	    $ sudo rm -rf /dockerdata-nfs/onap/so
-	    $ kubectl get pv,pvc | grep onap-so
+	  $ sudo rm -rf /dockerdata-nfs/onap/so
+	  $ kubectl get pv,pvc | grep onap-so
 
-	    $ kubectl patch pv onap-so-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	  $ kubectl patch pv onap-so-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
-	    $ cd ~/onap-oom-integ/kubernetes
-	    $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	    ```			
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	  ```			
 	
  - **ONAP AAI**
      --------
