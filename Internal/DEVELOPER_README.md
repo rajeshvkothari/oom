@@ -491,8 +491,6 @@ Table of contents
 		 $ docker push rajeshvkothari/catalog-db-adapter:0910_666_ori
 		 
 		 ```
-
-	$ vim deployment
 	
  - **AAI-Babel**
 	 ------------------- 
