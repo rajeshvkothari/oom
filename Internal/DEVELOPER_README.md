@@ -118,7 +118,7 @@ Table of contents
        $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 	   
-	 - Replace sdc-tosca-1.6.0.jar at the following location and re-run the Build images step:
+	 - Replace sdc-tosca-1.6.0.jar at the following location and re-run the "Build images" step:
 	   
 	   ```sh
 	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.0/
@@ -316,14 +316,14 @@ Table of contents
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
 	   ```  	 	   
 	 
-	 - Build images
+	 - Build images:
 	    
 	   ```sh
 	   cd ~/onap-so-integ
 	   mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 		
-     - PROBLEMS & SOLUTION
+     - PROBLEMS & SOLUTION :
 
 	   - Issue:
 	   
@@ -344,7 +344,7 @@ Table of contents
 	       $ mvn process-sources -P format -e
 		   ```
 		   
-		   **Note: This command return "Build Success" message. In case, it fails re-run build images section steps**	
+		   **Note: This command return "Build Success" message. In case, it fails re-run Build images command**	
 	   
 
 	   - Issue:
@@ -357,13 +357,11 @@ Table of contents
 			
 		 - Solution:
 		 
-		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location :
+		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location and re-run the Build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
 			 ```
-			 
-		     **Note: re-run Build images section steps**
 			 
 	   - Issue:
 	   
@@ -374,13 +372,11 @@ Table of contents
 
 	     - Solution :
 			
-		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location:
+		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location and re-run the Build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
-			 ```
-			
-		     **Note: re-run build images section steps**	
+			 ```	
 			
 	   - Issue:
 			
@@ -412,12 +408,11 @@ Table of contents
 	       $ mvn process-sources -P format -e
 		   ```
 		   
-	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the Build images step:
+	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the Build images command:
 	   
 	    ```sh
 	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	    ```	    
-	    **Note: re-run build images section steps**
 		
 	  - Verify images is build or not:
 	  
