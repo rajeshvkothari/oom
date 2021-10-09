@@ -682,7 +682,7 @@ Table of contents
 	
 	   - Repalce images in following files:
 	
-	     - onap-oom-integ/kubernetes/so/templates/deployment.yaml
+	   - onap-oom-integ/kubernetes/so/templates/deployment.yaml
 
 	     ```sh
 		 $ cd /onap-oom-integ/kubernetes/so/templates/ 
