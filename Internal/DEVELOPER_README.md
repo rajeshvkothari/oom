@@ -678,28 +678,26 @@ Table of contents
  - **ONAP SO**
 	 -------
 	 
-  **Loging into oom vm and re-deploye following component**
+     **Loging into oom server and re-deploye following component**
 	
-	- Repalce images in following files:
+	   - Repalce images in following files:
 	
-	  - onap-oom-integ/kubernetes/so/templates/deployment.yaml
-	  
-	  
-	    ```sh
+	     - onap-oom-integ/kubernetes/so/templates/deployment.yaml
+
+	     ```sh
+		 $ cd /onap-oom-integ/kubernetes/so/templates/ 
+		 $ vim deployment
 		
-		$ cd /onap-oom-integ/kubernetes/so/templates/ 
-		$ vim deployment
-		
-		Befor:
+		 Befor:
 		   containers:
 		   - name: {{ include "common.name" . }}
 	       image: 172.31.27.186:5000/onap/so/api-handler-infra:0.3
 					
-		After:
+		 After:
 		   containers:
 		   - name: {{ include "common.name" . }}
 		   image: rajeshvkothari/api-handler-infra:0910_666_ori 
-		```
+		 ```
 		
 			
 	  - onap-oom-integ/kubernetes/so/components/so-catalog-db/deployment.yaml
