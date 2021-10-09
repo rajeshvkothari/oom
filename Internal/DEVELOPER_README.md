@@ -356,43 +356,44 @@ Table of contents
 
 	   - Issue:
 	   
-        	[INFO] ------------------------------------------------------------------------
-			[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project asdc-controller: Compilation failure
-			[ERROR] /home/ubuntu/onap-so-integ/asdc-controller/src/main/java/org/onap/so/asdc/client/ASDCController.java:[628,40] error: cannot find symbol
-			[ERROR]   symbol:   method getOriginalCsarUUID()
-			[ERROR]   location: variable iNotif of type INotificationData
+          [INFO] ------------------------------------------------------------------------
+		  [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project asdc-controller: Compilation failure
+		  [ERROR] /home/ubuntu/onap-so-integ/asdc-controller/src/main/java/org/onap/so/asdc/client/ASDCController.java:[628,40] error: cannot find symbol
+		  [ERROR]   symbol:   method getOriginalCsarUUID()
+		  [ERROR]   location: variable iNotif of type INotificationData
 			
 		 - Solution:
 		 
 		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location :
 			
 			 ```sh
-            $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
+             $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
 			 ```
 			 
-		    **Note: re-run Build images section steps**
+		     **Note: re-run Build images section steps**
 			 
 	   - Issue:
 	   
-			[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project asdc-controller: Compilation failure
-			[ERROR] /home/ubuntu/onap-so-integ/asdc-controller/src/main/java/org/onap/so/asdc/client/ASDCController.java:[66,24] error: cannot find symbol
-			[ERROR]   symbol:   class DistributionClientFactory
-			[ERROR]   location: package org.onap.sdc.impl
+		  [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project asdc-controller: Compilation failure
+		  [ERROR] /home/ubuntu/onap-so-integ/asdc-controller/src/main/java/org/onap/so/asdc/client/ASDCController.java:[66,24] error: cannot find symbol
+		  [ERROR]   symbol:   class DistributionClientFactory
+		  [ERROR]   location: package org.onap.sdc.impl
 
 	     - Solution :
 			
-			Rename sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar copy at following location:
+			Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar copy at following location:
 			
-			 ```sh
+			```sh
             $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
-			 ```			
+			```
+			
 		    **Note:re-run Build images section steps**	
 			
 	   - Issue:
 			
-	        [INFO] mso-infrastructure-bpmn ............................ FAILURE [ 35.124 s]
-		    [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (test-compile) on project mso-infrastructure-bpmn: Compilation failure: Compilation failure:
-		    [ERROR] /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test/java/org/onap/so/bpmn/vcpe/DoCreateAllottedResourceTXCRollbackIT.java:[21,29] package org.onap.so.bpmn.mock does not exist
+	      [INFO] mso-infrastructure-bpmn ............................ FAILURE [ 35.124 s]
+		  [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.6.1:testCompile (test-compile) on project mso-infrastructure-bpmn: Compilation failure: Compilation failure:
+		  [ERROR] /home/ubuntu/onap-so-integ/bpmn/mso-infrastructure-bpmn/src/test/java/org/onap/so/bpmn/vcpe/DoCreateAllottedResourceTXCRollbackIT.java:[21,29] package org.onap.so.bpmn.mock does not exist
 
 	     - Solution:
 				
@@ -420,10 +421,10 @@ Table of contents
 		   
 	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the Build images step:
 	   
-	   ```sh
-	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
-	   ```	    
-	   **Note: re-run Build images section steps**
+	    ```sh
+	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	    ```	    
+	    **Note: re-run Build images section steps**
 	
  - **AAI-Babel**
 	 ------------------- 
