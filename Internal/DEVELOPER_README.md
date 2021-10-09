@@ -208,18 +208,14 @@ Table of contents
 	 - Copy settings.xml to ~/.m2 directory
 	 
 	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
 	   $ cd ~/.m2
 	   #copy settings.xml from following link:
 	   https://git.onap.org/oparent/plain/settings.xml
 	   $ vim settings.xml
 	   ```
-	 
-	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
-	
-	    ```sh
-        $ mvn
-	    ```
-		**Note : It will return error.**
 			
      - Run following command to build sdc projects:
 		
@@ -300,22 +296,18 @@ Table of contents
 	   $ sudo apt install npm
 	   $ sudo npm install --global yarn@1.7.0
 	   ```
-		
+
 	 - Copy settings.xml to ~/.m2 directory
 	 
 	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
 	   $ cd ~/.m2
 	   #copy settings.xml from following link:
 	   https://git.onap.org/oparent/plain/settings.xml
 	   $ vim settings.xml
-	   ```	
-	   
-	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
-	
-	    ```sh
-        $ mvn
-	    ```
-		**Note : It will return error.**
+	   ```
 	   
 	 - Clone git:
         
@@ -331,7 +323,7 @@ Table of contents
 	   mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker
 	   ```
 		
-       - PROBLEMS & SOLUTION
+     - PROBLEMS & SOLUTION
 
 	   - Issue:
 	   
@@ -352,7 +344,7 @@ Table of contents
 	       $ mvn process-sources -P format -e
 		   ```
 		   
-		   **Note This command return BUILD SUCCESS massage but images is not created then overcome this issue re-run Build images section steps**	
+		   **Note: This command return "Build Success" message. In case, it fails re-run build images section steps**	
 	   
 
 	   - Issue:
@@ -388,7 +380,7 @@ Table of contents
             $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
 			```
 			
-		    **Note:re-run Build images section steps**	
+		    **Note: re-run build images section steps**	
 			
 	   - Issue:
 			
@@ -425,15 +417,15 @@ Table of contents
 	    ```sh
 	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	    ```	    
-	    **Note: re-run Build images section steps**
+	    **Note: re-run build images section steps**
 		
-	  - Check images is build or not:
+	  - Verify images is build or not:
 	  
 	    ```sh
 		$cd /home/ubuntu
 		$ docker images
 		
-		OutPut:
+		Output:
 		
 		ubuntu@ip-172-31-46-163:~/onap-so-integ$ docker images
 		REPOSITORY                                     TAG                            IMAGE ID       CREATED          SIZE
@@ -498,7 +490,13 @@ Table of contents
 	   
 	     ```sh
 	     $ docker tag onap/so/api-handler-infra:latest rajeshvkothari/api-handler-infra:0910_666_ori
-	     $ docker push rajeshvkothari/api-handler-infra:0910_666_ori  
+	     $ docker push rajeshvkothari/api-handler-infra:0910_666_ori 
+		 
+		 $ docker tag onap/so/sdc-controller:latest rajeshvkothari/sdc-controller:0910_666_ori
+	     $ docker push rajeshvkothari/sdc-controller:0910_666_ori
+
+		 $ docker tag onap/so/catalog-db-adapter:latest rajeshvkothari/catalog-db-adapter:0910_666_ori
+		 $ docker push rajeshvkothari/catalog-db-adapter:0910_666_ori
 		 ```
 	
  - **AAI-Babel**
