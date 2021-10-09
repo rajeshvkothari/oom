@@ -489,7 +489,14 @@ Table of contents
 
 		 $ docker tag onap/so/catalog-db-adapter:latest rajeshvkothari/catalog-db-adapter:0910_666_ori
 		 $ docker push rajeshvkothari/catalog-db-adapter:0910_666_ori
+		 
 		 ```
+	- Repalce the images in oom vm:
+	
+	  - onap-oom-integ/kubernetes/so/templates
+	
+	$ cd /onap-oom-integ/kubernetes/so/templates
+	$ vim deployment
 	
  - **AAI-Babel**
 	 ------------------- 
@@ -607,46 +614,76 @@ Table of contents
 	   $ cd ~/aai-babel
 	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -P docker
 	   ```
-		
-
    
 ## Re-deploy onap-components with our builded docker image:
 
  - **Login into OOM server to re-dploye following component**
-    
- - **ONAP AAI**
-     --------
+
+ - **ONAP VID**
+	 --------
 	 
-	Follow the following steps:
-	
-	 ```sh
+	 Follow the following steps:
+ 
+	```sh
 	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
+	 $ make SKIP_LINT=TRUE vid; make SKIP_LINT=TRUE onap
 		  
-     #Using make command chart for aai gets build.
+     #Using make command chart for vid gets build.
 
 	 $ helm ls --all-namespaces
-	 #OR
-     $ helm ls -A
+		 #OR
+	 $ helm ls -A
 		
-     # Delete release
-	 $ helm uninstall onap-aai -n onap
+	 # Delete release
+	 $ helm uninstall onap-vid -n onap
 		
 	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-aai			
+	 $ kubectl get pods -n onap | grep onap-vid			
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/aai
-	 $ kubectl get pv,pvc | grep onap-aai
+	 $ sudo rm -rf /dockerdata-nfs/onap/vid
+	 $ kubectl get pv,pvc | grep onap-vid
 
-	 $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	 $ kubectl patch pv onap-vid-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
+
+ - **ONAP SDC**
+     --------
+	 
+	 Follow the following steps:
+ 
+     ```sh
+	 $ cd ~/onap-oom-integ/kubernetes
+	 $ make SKIP_LINT=TRUE sdc; make SKIP_LINT=TRUE onap
+		  
+     #Using make command chart for sdc gets build.
+
+	 $ helm ls --all-namespaces
+		 #OR
+	 $ helm ls -A
+		
+	 # Delete release
+	 $ helm uninstall onap-sdc -n onap
+		
+	 #Wait till all pods are goes off from Terminating state
+	 $ kubectl get pods -n onap | grep onap-sdc			
 	
+	 $ sudo rm -rf /dockerdata-nfs/onap/sdc
+	 $ kubectl get pv,pvc | grep onap-sdc
+
+	 $ kubectl patch pv onap-sdc-elasticsearch -p '{"metadata":{"finalizers":null}}'
+		
+	 $ cd ~/onap-oom-integ/kubernetes
+	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	 ```	
+	 
  - **ONAP SO**
 	 -------
 	 
+	**Loging into oom vm and re-deploye following component**
+	
 	Follow the following steps:
 	 
 	```sh
@@ -677,36 +714,36 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```			
 	
- - **ONAP VID**
-	 --------
+ - **ONAP AAI**
+     --------
 	 
-	 Follow the following steps:
- 
-	```sh
+	Follow the following steps:
+	
+	 ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE vid; make SKIP_LINT=TRUE onap
+	 $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
 		  
-     #Using make command chart for vid gets build.
+     #Using make command chart for aai gets build.
 
 	 $ helm ls --all-namespaces
-		 #OR
-	 $ helm ls -A
+	 #OR
+     $ helm ls -A
 		
-	 # Delete release
-	 $ helm uninstall onap-vid -n onap
+     # Delete release
+	 $ helm uninstall onap-aai -n onap
 		
 	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-vid			
+	 $ kubectl get pods -n onap | grep onap-aai			
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/vid
-	 $ kubectl get pv,pvc | grep onap-vid
+	 $ sudo rm -rf /dockerdata-nfs/onap/aai
+	 $ kubectl get pv,pvc | grep onap-aai
 
-	 $ kubectl patch pv onap-vid-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	 $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
-		
+	
  - **ONAP TOSCA**
 	 ----------
 	 
@@ -736,33 +773,3 @@ Table of contents
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
-	
- - **ONAP SDC**
-     --------
-	 
-	 Follow the following steps:
- 
-     ```sh
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE sdc; make SKIP_LINT=TRUE onap
-		  
-     #Using make command chart for sdc gets build.
-
-	 $ helm ls --all-namespaces
-		 #OR
-	 $ helm ls -A
-		
-	 # Delete release
-	 $ helm uninstall onap-sdc -n onap
-		
-	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-sdc			
-	
-	 $ sudo rm -rf /dockerdata-nfs/onap/sdc
-	 $ kubectl get pv,pvc | grep onap-sdc
-
-	 $ kubectl patch pv onap-sdc-elasticsearch -p '{"metadata":{"finalizers":null}}'
-		
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	 ```	
