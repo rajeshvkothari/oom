@@ -292,6 +292,12 @@ in third.
       KeyPair: cciPublicKey
 	  Security group: launch-wizard-19
       ```
+	 
+	- Clone puccini: 
+  
+      ```sh
+      $ git clone https://github.com/customercaresolutions/puccini
+      ```
     
     - Setup Docker on Demo Server:
 	
@@ -438,13 +444,6 @@ in third.
 	  
 	  GIN images can either be built from sources or their pre-built versions
 	  can be used directly from CCI_REPO.
-	  
-    - In both cases, puccini needs to cloned by logging into Demo server and
-	  running following command 
-  
-      ```sh
-      $ git clone https://github.com/customercaresolutions/puccini
-      ```
     
 	  - **Building images**
 	      ---------------
