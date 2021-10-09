@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td colspan="2">Setup(Pre-deployment)</td>
-      <td style="color:green";>Ok</td>
+      <td><font color="green">Ok</font></td>
       <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
