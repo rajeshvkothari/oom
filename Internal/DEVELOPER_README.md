@@ -349,7 +349,7 @@ Table of contents
 			  
 		   ```sh
 	       $ mvn process-sources -P format -e
-		   ``
+		   ```
 		   
 		   **Note This command return BUILD SUCCESS massage but images is not created then overcome this issue re-run Build images section steps**	
 	   
