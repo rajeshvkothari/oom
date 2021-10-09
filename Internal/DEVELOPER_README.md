@@ -725,7 +725,9 @@ Table of contents
 	    ```sh
 	    $ cd /onap-oom-integ/kubernetes/so/components/so-sdc-controller/
 		$ vim deployment.yaml
-		  
+		```
+
+		```sh
 		Befor:
 		   containers:
 		   - name: {{ include "common.name" . }}
