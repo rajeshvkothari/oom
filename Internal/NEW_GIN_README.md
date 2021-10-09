@@ -405,41 +405,6 @@ in third.
 	  ```
 	  
 	  Here, 31325 is the external port of argo-server.
-	  
-    - Modify ~/puccini/dvol/config/application.cfg as follows:
-      
-	  ```sh
-	  [dgraph]
-	  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
-
-	  [remote]
-	  remoteHost={IP_ADDR_OF_SERVER}
-	  remotePort=22
-	  remoteUser=ubuntu
-	  remotePubKey=/opt/app/config/cciPrivateKey
-
-	  [messageBus]
-      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
-
-	  [reposure]
-	  reposureHost={IP_ADDR_OF_DEMO_SERVER} 
-	  pushCsarToReposure=true
-
-	  [argoWorkflow]
-	  argoHost={IP_ADDR_OF_DEMO_SERVER} 
-	  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER} 
-
-	  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
-	  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-      ```
-
-	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. For deploying oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
-
-	  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
-
-	  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer [Setup ARGO](#Setup-ARGO) section.
-
-	  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer created in Pre Deployment Steps'.
 
 	- To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
@@ -477,9 +442,43 @@ in third.
     - In both cases, puccini needs to cloned by logging into Demo server and
 	  running following command 
   
-        ```sh
-        $ git clone https://github.com/customercaresolutions/puccini
-        ```
+      ```sh
+      $ git clone https://github.com/customercaresolutions/puccini
+      ```
+	- Modify ~/puccini/dvol/config/application.cfg as follows:
+      
+	  ```sh
+	  [dgraph]
+	  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
+
+	  [remote]
+	  remoteHost={IP_ADDR_OF_SERVER}
+	  remotePort=22
+	  remoteUser=ubuntu
+	  remotePubKey=/opt/app/config/cciPrivateKey
+
+	  [messageBus]
+      msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
+
+	  [reposure]
+	  reposureHost={IP_ADDR_OF_DEMO_SERVER} 
+	  pushCsarToReposure=true
+
+	  [argoWorkflow]
+	  argoHost={IP_ADDR_OF_DEMO_SERVER} 
+	  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER} 
+
+	  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
+	  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+      ```
+
+	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. For deploying oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+
+	  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
+
+	  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer [Setup ARGO](#Setup-ARGO) section.
+
+	  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer created in Pre Deployment Steps'.
     
 	  - **Building images**
 	      ---------------
