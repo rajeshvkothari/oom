@@ -1,10 +1,5 @@
 # Testing
 
-<html>
-<head>
-<title></title>
-</head>
-<body>
 <table>
   <thead>
     <tr>
@@ -90,5 +85,3 @@
     </tr>
   </tbody>
 </table>
-</body>
-</html>
