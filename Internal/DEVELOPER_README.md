@@ -374,13 +374,13 @@ Table of contents
 
 	     - Solution :
 			
-			Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location:
+		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location:
 			
-			```sh
-            $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
-			```
+			 ```sh
+             $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
+			 ```
 			
-		    **Note: re-run build images section steps**	
+		     **Note: re-run build images section steps**	
 			
 	   - Issue:
 			
@@ -619,6 +619,8 @@ Table of contents
 
    
 ## Re-deploy onap-componants with our builded docker image:
+
+ - **Login into OOM server to redploye following componants**
     
  - **ONAP AAI**
      --------
@@ -669,7 +671,10 @@ Table of contents
 	 $ helm uninstall onap-so -n onap
 		
 	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-so			
+	 $ kubectl get pods -n onap | grep onap-so	
+
+	 #If persistentvolume is not delete, fire following patch command
+	 $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
 	
 	 $ sudo rm -rf /dockerdata-nfs/onap/so
 	 $ kubectl get pv,pvc | grep onap-so
