@@ -25,26 +25,26 @@
     <tr>
       <td colspan="2">Setup(Pre-deployment)</td>
       <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
-      <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
-      <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
     </tr>
     <tr>
       <td colspan="2">Puccini-workflow</td>
-	    <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
-      <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
-      <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
-	    <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
+      <td style="color:green";>Ok</td>
     </tr>
 	  <tr>
       <td rowspan="2">Argo</td>
