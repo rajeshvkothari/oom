@@ -1,5 +1,6 @@
 # Testing
 
+<span style="color: red;">text</span>
 <table>
   <thead>
     <tr>
@@ -24,7 +25,7 @@
     </tr>
     <tr>
       <td colspan="2">Setup(Pre-deployment)</td>
-      <td style="color:green";><span style="color: red;">text</span></td>
+      <td style="color:green";>Ok</td>
 	    <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
 	    <td style="color:green";>Ok</td>
