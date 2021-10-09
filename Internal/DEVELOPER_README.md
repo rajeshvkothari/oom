@@ -491,11 +491,7 @@ Table of contents
 		 $ docker push rajeshvkothari/catalog-db-adapter:0910_666_ori
 		 
 		 ```
-	- Repalce the images in oom vm:
-	
-	  - onap-oom-integ/kubernetes/so/templates
-	
-	$ cd /onap-oom-integ/kubernetes/so/templates
+
 	$ vim deployment
 	
  - **AAI-Babel**
@@ -653,7 +649,59 @@ Table of contents
      --------
 	 
 	 Follow the following steps:
- 
+	 
+	- Login into oom server and repalce images in following files:
+	
+	  - onap-oom-integ/kubernetes/so/templates/deployment.yaml
+	  
+	  
+		```sh
+		
+		$ cd /onap-oom-integ/kubernetes/so/templates $ vim deployment
+		
+		Befor:
+		 containers:
+		 - name: {{ include "common.name" . }}
+	     image: 172.31.27.186:5000/onap/so/api-handler-infra:0.3
+					
+		After:
+		 containers:
+		 - name: {{ include "common.name" . }}
+		 image: rajeshvkothari/api-handler-infra:0910_666_ori 
+		```
+		
+			
+	  - onap-oom-integ/kubernetes/so/components/so-catalog-db/deployment.yaml
+	   
+	    ```sh
+	    $ cd /onap-oom-integ/kubernetes/so/templates $ vim deployment
+		
+		Befor:
+		  containers:
+		  - name: {{ include "common.name" . }}
+			image: 172.31.27.186:5000/onap/so/catalog-db-adapter:0.3
+					
+		After:
+		 containers:
+		 - name: {{ include "common.name" . }}
+		 image: rajeshvkothari/catalog-db-adapter:0910_666_ori		 
+		```
+
+	  - onap-oom-integ/kubernetes/so/components/so-sdc-controller/deployment.yaml
+	   
+	    ```sh
+	    $ cd /onap-oom-integ/kubernetes/so/ $ vim deployment
+		Befor:
+		  containers:
+		  - name: {{ include "common.name" . }}
+			image: 172.31.27.186:5000/onap/so/sdc-controller:0.3
+					
+		After:
+		 containers:
+		 - name: {{ include "common.name" . }}
+		 image: rajeshvkothari/sdc-controller:0910_666_ori		 
+		```		
+	 
      ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ make SKIP_LINT=TRUE sdc; make SKIP_LINT=TRUE onap
