@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <td colspan="2">Setup(Pre-deployment)</td>
-      <td style="color:green";>*Ok*</td>
+      <td style="color:green";>Ok</td>
 	    <td style="color:green";>Ok</td>
       <td style="color:green";>Ok</td>
 	    <td style="color:green";>Ok</td>
@@ -57,7 +57,7 @@
 	    <td style="color:blue";>NS</td>
 	    <td style="color:green";>Ok</td>
 	    <td style="color:green";>Ok</td>
-      <td>Pending</td>
+      <td>Ok</td>
     </tr>
 	  <tr>
 	    <td>CS</td>
