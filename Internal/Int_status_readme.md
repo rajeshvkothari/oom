@@ -1,5 +1,12 @@
 # Testing
 
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+@@ text in purple (and bold)@@
+```
 <span style="color:red">some *blue* text</span>
 <table>
   <thead>
