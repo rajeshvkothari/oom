@@ -364,7 +364,7 @@ Table of contents
 			
 		 - Solution:
 		 
-		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location and re-run the build images command:
+		     Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location and re-run the build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
@@ -379,7 +379,7 @@ Table of contents
 
 	     - Solution :
 			
-		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location and re-run the build images command:
+		     Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location and re-run the build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
