@@ -8,11 +8,11 @@ Table of contents
     * [SO](#SO)
     * [AAI-Babel](#AAI-Babel)
   * [Re deploy onap-components with our builded docker image](#Re-deploy-onap-components-with-our-builded-docker-image)
-    * [VID](#-VID)
-	* [SDC](#-SDC)
-	* [SO](#-SO)
-	* [AAI](#-AAI)
-    * [TOSCA](#-TOSCA)
+    * [ONAP-VID](#ONAP-VID)
+	* [ONAP-SDC](#ONAP-SDC)
+	* [ONAP-SO](#ONAP-SO)
+	* [ONAP-AAI](#ONAP-AAI)
+    * [ONAP-TOSCA](#ONAP-TOSCA)
     
 <!--te-->
 
@@ -614,7 +614,7 @@ Table of contents
 
  - **Login into OOM server to re-dploye following component**
     
- - ** -AAI**
+ - **ONAP AAI**
      --------
 	 
 	Follow the following steps:
