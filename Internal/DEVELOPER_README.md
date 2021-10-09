@@ -686,8 +686,9 @@ Table of contents
 
 	     ```sh
 		 $ cd /onap-oom-integ/kubernetes/so/templates/ 
-		 $ vim deployment
-		
+		 $ vim deployment.yaml
+		 ```
+		 
 		 Befor:
 		   containers:
 		   - name: {{ include "common.name" . }}
@@ -696,8 +697,7 @@ Table of contents
 		 After:
 		   containers:
 		   - name: {{ include "common.name" . }}
-		   image: rajeshvkothari/api-handler-infra:0910_666_ori 
-		 ```
+		   image: rajeshvkothari/api-handler-infra:0910_666_ori
 		
 			
 	  - onap-oom-integ/kubernetes/so/components/so-catalog-db/deployment.yaml
@@ -705,6 +705,7 @@ Table of contents
 	    ```sh
 	    $ cd /onap-oom-integ/kubernetes/so/components/so-catalog-db/
 		$ vim deployment.yaml
+		```
 		
 		Befor:
 		   containers:
@@ -714,8 +715,7 @@ Table of contents
 		After:
 		   containers:
 		   - name: {{ include "common.name" . }}
-		   image: rajeshvkothari/catalog-db-adapter:0910_666_ori		 
-		```
+		   image: rajeshvkothari/catalog-db-adapter:0910_666_ori
 
 	  - onap-oom-integ/kubernetes/so/components/so-sdc-controller/deployment.yaml
 	   
