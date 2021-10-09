@@ -309,19 +309,20 @@ Table of contents
 	   https://git.onap.org/oparent/plain/settings.xml
 	   $ vim settings.xml
 	   ```	
-		
+	   
+	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
+	
+	    ```sh
+        $ mvn
+	    ```
+		**Note : It will return error.**
+	   
 	 - Clone git:
         
 	   ```sh
 	   $ cd /home/ubuntu
 	   $ git clone https://github.com/customercaresolutions/onap-so-integ --branch honolulu
-	   ```  
-   
-	 - Replace sdc-tosca-1.6.5.jar at following location:
-	   
-	   ```sh
-	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
-	   ```	 	   
+	   ```  	 	   
 	 
 	 - Build images
 	    
@@ -381,7 +382,7 @@ Table of contents
 
 	     - Solution :
 			
-			Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar copy at following location:
+			Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location:
 			
 			```sh
             $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
@@ -425,6 +426,69 @@ Table of contents
 	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
 	    ```	    
 	    **Note: re-run Build images section steps**
+		
+	  - Check images build or not 
+	  
+	    ```sh
+		$cd /home/ubuntu
+		$ docker images
+		
+		OutPut:
+		
+		ubuntu@ip-172-31-46-163:~/onap-so-integ$ docker images
+		REPOSITORY                                     TAG                            IMAGE ID       CREATED          SIZE
+		onap/so/so-simulator                           1.8.0-SNAPSHOT                 f272290e322f   4 minutes ago    514MB
+		onap/so/so-simulator                           1.8.0-SNAPSHOT-20211009T0521   f272290e322f   4 minutes ago    514MB
+		onap/so/so-simulator                           1.8.0-SNAPSHOT-latest          f272290e322f   4 minutes ago    514MB
+		onap/so/so-simulator                           latest                         f272290e322f   4 minutes ago    514MB
+		onap/so/api-handler-infra                      1.8.0-SNAPSHOT                 a787778add25   5 minutes ago    550MB
+		onap/so/api-handler-infra                      1.8.0-SNAPSHOT-20211009T0521   a787778add25   5 minutes ago    550MB
+		onap/so/api-handler-infra                      1.8.0-SNAPSHOT-latest          a787778add25   5 minutes ago    550MB
+		onap/so/api-handler-infra                      latest                         a787778add25   5 minutes ago    550MB
+		onap/so/bpmn-infra                             1.8.0-SNAPSHOT                 47557f5b2e26   5 minutes ago    662MB
+		onap/so/bpmn-infra                             1.8.0-SNAPSHOT-20211009T0521   47557f5b2e26   5 minutes ago    662MB
+		onap/so/bpmn-infra                             1.8.0-SNAPSHOT-latest          47557f5b2e26   5 minutes ago    662MB
+		onap/so/bpmn-infra                             latest                         47557f5b2e26   5 minutes ago    662MB
+		onap/so/sdc-controller                         1.8.0-SNAPSHOT                 4cd4a2349c96   6 minutes ago    505MB
+		onap/so/sdc-controller                         1.8.0-SNAPSHOT-20211009T0521   4cd4a2349c96   6 minutes ago    505MB
+		onap/so/sdc-controller                         1.8.0-SNAPSHOT-latest          4cd4a2349c96   6 minutes ago    505MB
+		onap/so/sdc-controller                         latest                         4cd4a2349c96   6 minutes ago    505MB
+		onap/so/so-appc-orchestrator                   1.8.0-SNAPSHOT                 fb1184346c7c   7 minutes ago    604MB
+		onap/so/so-appc-orchestrator                   1.8.0-SNAPSHOT-20211009T0521   fb1184346c7c   7 minutes ago    604MB
+		onap/so/so-appc-orchestrator                   1.8.0-SNAPSHOT-latest          fb1184346c7c   7 minutes ago    604MB
+		onap/so/so-appc-orchestrator                   latest                         fb1184346c7c   7 minutes ago    604MB
+		onap/so/openstack-adapter                      1.8.0-SNAPSHOT                 397bdee0f55c   7 minutes ago    543MB
+		onap/so/openstack-adapter                      1.8.0-SNAPSHOT-20211009T0521   397bdee0f55c   7 minutes ago    543MB
+		onap/so/openstack-adapter                      1.8.0-SNAPSHOT-latest          397bdee0f55c   7 minutes ago    543MB
+		onap/so/openstack-adapter                      latest                         397bdee0f55c   7 minutes ago    543MB
+		onap/so/sdnc-adapter                           1.8.0-SNAPSHOT                 ab7ddc76aded   8 minutes ago    534MB
+		onap/so/sdnc-adapter                           1.8.0-SNAPSHOT-20211009T0521   ab7ddc76aded   8 minutes ago    534MB
+		onap/so/sdnc-adapter                           1.8.0-SNAPSHOT-latest          ab7ddc76aded   8 minutes ago    534MB
+		onap/so/sdnc-adapter                           latest                         ab7ddc76aded   8 minutes ago    534MB
+		onap/so/request-db-adapter                     1.8.0-SNAPSHOT                 abcaacb08606   9 minutes ago    526MB
+		onap/so/request-db-adapter                     1.8.0-SNAPSHOT-20211009T0521   abcaacb08606   9 minutes ago    526MB
+		onap/so/request-db-adapter                     1.8.0-SNAPSHOT-latest          abcaacb08606   9 minutes ago    526MB
+		onap/so/request-db-adapter                     latest                         abcaacb08606   9 minutes ago    526MB
+		onap/so/catalog-db-adapter                     1.8.0-SNAPSHOT                 688752fa41b9   9 minutes ago    523MB
+		onap/so/catalog-db-adapter                     1.8.0-SNAPSHOT-20211009T0521   688752fa41b9   9 minutes ago    523MB
+		onap/so/catalog-db-adapter                     1.8.0-SNAPSHOT-latest          688752fa41b9   9 minutes ago    523MB
+		onap/so/catalog-db-adapter                     latest                         688752fa41b9   9 minutes ago    523MB
+		onap/so/so-simulator                           1.8.0-SNAPSHOT-20211009T0508   b80c68b8a541   17 minutes ago   514MB
+		onap/so/api-handler-infra                      1.8.0-SNAPSHOT-20211009T0508   126449565323   18 minutes ago   550MB
+		onap/so/bpmn-infra                             1.8.0-SNAPSHOT-20211009T0508   a14fdd3f7930   18 minutes ago   662MB
+		onap/so/sdc-controller                         1.8.0-SNAPSHOT-20211009T0508   5df5aa6e3dbe   19 minutes ago   505MB
+		onap/so/so-appc-orchestrator                   1.8.0-SNAPSHOT-20211009T0508   2433b2a0bd2a   20 minutes ago   604MB
+		onap/so/openstack-adapter                      1.8.0-SNAPSHOT-20211009T0508   90a47c59265e   21 minutes ago   543MB
+		onap/so/sdnc-adapter                           1.8.0-SNAPSHOT-20211009T0508   fa98dc57e08e   21 minutes ago   534MB
+		onap/so/request-db-adapter                     1.8.0-SNAPSHOT-20211009T0508   c06d046dc49a   22 minutes ago   526MB
+		onap/so/catalog-db-adapter                     1.8.0-SNAPSHOT-20211009T0508   e102ada994b2   23 minutes ago   523MB
+		onap/so/base-image                             1.0                            c7e9e86d103a   23 minutes ago   159MB
+		adoptopenjdk/openjdk11                         jre-11.0.8_10-alpine           0507f9330a60   11 months ago    149MB
+		nexus3.onap.org:10001/adoptopenjdk/openjdk11   jre-11.0.8_10-alpine           0507f9330a60   11 months ago    149MB
+		ubuntu@ip-172-31-46-163:~/onap-so-integ$
+		```
+
+		
 	
  - **AAI-Babel**
 	 ------------------- 
