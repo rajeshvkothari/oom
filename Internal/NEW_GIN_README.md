@@ -393,7 +393,18 @@ in third.
 	  $ chmod +x argo-linux-amd64
 	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
 	  $ argo version
+	  
+	  # Use following commands on Demo Server VM to get external port of argo-server:
+    	
+      $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
+        service/argo-server patched
+
+      $ kubectl get svc argo-server -n onap
+        NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+        argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
 	  ```
+	  
+	  Here, 31325 is the external port of argo-server.
 	  
     - Modify ~/puccini/dvol/config/application.cfg as follows:
       
@@ -426,7 +437,7 @@ in third.
 
 	  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
 
-	  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer [Setup ARGO](#Setup-ARGO)section.
+	  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer [Setup ARGO](#Setup-ARGO) section.
 
 	  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer created in Pre Deployment Steps'.
 
