@@ -394,7 +394,7 @@ in third.
 	  $ argo version
 	  ```
 	  
-	- Modify ~/puccini/dvol/config/application.cfg as follows:
+    - Modify ~/puccini/dvol/config/application.cfg as follows:
       
 	  ```sh
 	  [dgraph]
@@ -425,11 +425,11 @@ in third.
 
 	  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
 
-	  Note3 : Use 'kubectl get svc argo-server -n onap command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer 'Setup ARGO' section.
+	  Note3 : Use 'kubectl get svc argo-server -n onap command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer [Setup ARGO](#Setup-ARGO) section.
 
-	  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is.
+	  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer created in Pre Deployment Steps'.
 
-	  To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
+	- To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
 	  ```sh
 	  $ sudo apt-get update
