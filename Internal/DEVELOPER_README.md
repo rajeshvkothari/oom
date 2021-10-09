@@ -337,6 +337,12 @@ Table of contents
 		   [ERROR]
 		   [ERROR] After correcting the problems, you can resume the build with the command
 		   [ERROR]   mvn <goals> -rf :common
+		   
+		   **OR**
+		   
+	   - Issue:
+	       File 'C:\SO_CODE_FOR_CHECKIN\testforjava8\so-Java-11-upgrade1212master\common\src\main\java\org\onap\so\client\aai\AAIClient.java' has not been previously formatted. Please format file and commit before running validation! -
+	
 		 		 
 		 - Solution:
 			  
@@ -344,7 +350,7 @@ Table of contents
 	       $ mvn process-sources -P format -e
 		   ```
 		   
-		   **Note: This command return "Build Success" message. In case, it fails re-run Build images command**	
+		   **Note: This command return "Build Success" message. In case, it fails re-run build images command**	
 	   
 
 	   - Issue:
@@ -372,7 +378,7 @@ Table of contents
 
 	     - Solution :
 			
-		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location and re-run the Build images command:
+		   - Re-name sdc-distribution-client-1.4.2-SNAPSHOT.jar with sdc-distribution-client-1.4.1.jar and copy at following location and re-run the build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
@@ -398,16 +404,6 @@ Table of contents
 		     $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker -rf :mso-infrastructure-bpmn
 		     ```
 
-	     - Issue:
-			
-	       File 'C:\SO_CODE_FOR_CHECKIN\testforjava8\so-Java-11-upgrade1212master\common\src\main\java\org\onap\so\client\aai\AAIClient.java' has not been previously formatted. Please format file and commit before running validation! -
-	
-         - Solution:
-			  
-		   ```sh
-	       $ mvn process-sources -P format -e
-		   ```
-		   
 	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the Build images command:
 	   
 	    ```sh
