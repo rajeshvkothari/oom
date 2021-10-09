@@ -678,11 +678,11 @@ Table of contents
  - **ONAP SO**
 	 -------
 	 
-     **Loging into oom server and re-deploye following component**
+    **Loging into oom server and re-deploye following component**
 	
-	   - Repalce images in following files:
+	  - Repalce images in following files:
 	
-	   - onap-oom-integ/kubernetes/so/templates/deployment.yaml
+	  - onap-oom-integ/kubernetes/so/templates/deployment.yaml
 
 	     ```sh
 		 $ cd /onap-oom-integ/kubernetes/so/templates/ 
