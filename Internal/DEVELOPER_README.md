@@ -427,7 +427,7 @@ Table of contents
 	    ```	    
 	    **Note: re-run Build images section steps**
 		
-	  - Check images build or not 
+	  - Check images is build or not:
 	  
 	    ```sh
 		$cd /home/ubuntu
@@ -487,8 +487,19 @@ Table of contents
 		nexus3.onap.org:10001/adoptopenjdk/openjdk11   jre-11.0.8_10-alpine           0507f9330a60   11 months ago    149MB
 		ubuntu@ip-172-31-46-163:~/onap-so-integ$
 		```
-
+	 - Push and tag following images to cci-repository:
 		
+	   ```sh
+	   onap/so/api-handler-infra:latest
+	   onap/so/sdc-controller:latest
+	   onap/so/catalog-db-adapter:latest
+	   ```
+	   - Example :
+	   
+	     ```sh
+	     $ docker tag onap/so/api-handler-infra:latest rajeshvkothari/api-handler-infra:0910_666_ori
+	     $ docker push rajeshvkothari/api-handler-infra:0910_666_ori  
+		 ```
 	
  - **AAI-Babel**
 	 ------------------- 
