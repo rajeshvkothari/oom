@@ -389,7 +389,7 @@ in third.
 	  $ kubectl create ns onap
 	  
 	  # For containerSet use following command:
-	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
+	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
 	  
 	  # For DAG use the following command:
 	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
