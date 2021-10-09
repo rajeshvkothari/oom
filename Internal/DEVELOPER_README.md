@@ -2,12 +2,12 @@
 Table of contents
 =================
 <!--ts-->
-  * [Create docker images of onap componants](#Create-docker-images-of-onap-componants)
+  * [Create docker images of onap components](#Create-docker-images-of-onap-components)
     * [VID](#VID)
 	* [SDC](#SDC)
     * [SO](#SO)
     * [AAI-Babel](#AAI-Babel)
-  * [Re deploy onap-componants with our builded docker image](#Re-deploy-onap-componants-with-our-builded-docker-image)
+  * [Re deploy onap-components with our builded docker image](#Re-deploy-onap-components-with-our-builded-docker-image)
     * [ONAP-VID](#ONAP-VID)
 	* [ONAP-SDC](#ONAP-SDC)
 	* [ONAP-SO](#ONAP-SO)
@@ -16,7 +16,7 @@ Table of contents
     
 <!--te-->
 
-## Create docker images of onap componants:
+## Create docker images of onap components:
 
  - Create aws ubuntu 18.04 VM with following specifications:
    
@@ -618,9 +618,9 @@ Table of contents
 		
 
    
-## Re-deploy onap-componants with our builded docker image:
+## Re-deploy onap-components with our builded docker image:
 
- - **Login into OOM server to redploye following componants**
+ - **Login into OOM server to re-dploye following component**
     
  - **ONAP AAI**
      --------
