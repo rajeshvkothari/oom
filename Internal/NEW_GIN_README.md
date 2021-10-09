@@ -316,6 +316,84 @@ in third.
 	  $
       ```
 	  
+	- Setup kubectl:
+	  
+	  ```sh
+	  $ cd /home/ubuntu/
+	  $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.9/bin/linux/amd64/kubectl
+	  $ sudo chmod +x ./kubectl
+	  $ sudo mv ./kubectl /usr/local/bin/kubectl
+	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
+      ```
+	  
+    - Setup minikube:
+	
+	  ```sh
+	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	  $ sudo chmod +x minikube
+	  $ sudo mv ./minikube /usr/local/bin/minikube
+	  $ sudo apt-get install conntrack
+	  $ sudo minikube start --driver=none --kubernetes-version 1.19.9
+	  $ sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
+	  $ sudo chown -R $USER $HOME/.kube $HOME/.minikube
+	  $ kubectl get pods -n onap -o=wide
+	  ```
+	  
+	- Install golang:
+	  
+	  ```sh
+	  $ cd /home/ubuntu
+	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
+	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
+	  $ sudo mv go /usr/local
+	  
+      # Add following paths in .profile file: 
+      $ sudo vi ~/.profile
+		  export GOPATH=$HOME/go
+		  export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+	  $ source ~/.profile
+	  $ go version
+      ```
+
+    - Setup reposure:
+	
+	  ```sh
+	  $ cd /home/ubuntu
+	  $ git clone https://github.com/tliron/reposure -b v0.1.6
+	
+	  $ vi reposure/reposure/commands/registry-create.go	
+	  # for insecure installation, commented out the section in reposure/reposure/commands/registry-create.go, as follows:
+		if authenticationSecret == "" {
+		//authenticationSecret = "reposure-simple-authentication"
+		}
+
+	  $ cd reposure/scripts
+	  $ ./build
+	  $ cd /home/ubuntu
+	  $ reposure operator install --wait	
+	  $ reposure simple install --wait
+	  $ reposure registry create default  --provider=simple --wait -v
+	  ```	
+
+	- Setup ARGO:
+	  
+	  ```sh
+	  $ kubectl create ns onap
+	  
+	  # For containerSet use following command:
+	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
+	  
+	  # For DAG use the following command:
+	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
+	  
+	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
+	  $ gunzip argo-linux-amd64.gz
+	  $ chmod +x argo-linux-amd64
+	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
+	  $ argo version
+	  ```
+
 	  To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
 	  ```sh
