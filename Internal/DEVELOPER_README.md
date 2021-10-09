@@ -8,11 +8,11 @@ Table of contents
     * [SO](#SO)
     * [AAI-Babel](#AAI-Babel)
   * [Re deploy onap-components with our builded docker image](#Re-deploy-onap-components-with-our-builded-docker-image)
-    * [ONAP-VID](#ONAP-VID)
-	* [ONAP-SDC](#ONAP-SDC)
-	* [ONAP-SO](#ONAP-SO)
-	* [ONAP-AAI](#ONAP-AAI)
-    * [ONAP-TOSCA](#ONAP-TOSCA)
+    * [VID](#-VID)
+	* [SDC](#-SDC)
+	* [SO](#-SO)
+	* [AAI](#-AAI)
+    * [TOSCA](#-TOSCA)
     
 <!--te-->
 
@@ -338,9 +338,10 @@ Table of contents
 		   [ERROR] After correcting the problems, you can resume the build with the command
 		   [ERROR]   mvn <goals> -rf :common
 		   
-		   **OR**
+	       **OR**
 		   
 	   - Issue:
+	   
 	       File 'C:\SO_CODE_FOR_CHECKIN\testforjava8\so-Java-11-upgrade1212master\common\src\main\java\org\onap\so\client\aai\AAIClient.java' has not been previously formatted. Please format file and commit before running validation! -
 	
 		 		 
@@ -363,7 +364,7 @@ Table of contents
 			
 		 - Solution:
 		 
-		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location and re-run the Build images command:
+		   - Remove old sdc-distribution-client-1.4.1.jar and replace new sdc-distribution-client-1.4.1.jar at following location and re-run the build images command:
 			
 			 ```sh
              $ cd ~/.m2/repository/org/onap/sdc/sdc-distribution-client/sdc-distribution-client/1.4.1 
@@ -404,7 +405,7 @@ Table of contents
 		     $ mvn clean install -U -DskipTests=true -Dmaven.test.skip=true -Dmaven.javadoc.skip=true -Dadditionalparam=-Xdoclint:none -P docker -rf :mso-infrastructure-bpmn
 		     ```
 
-	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the Build images command:
+	  - Replace sdc-tosca-1.6.5.jar at the following location and re-run the build images command:
 	   
 	    ```sh
 	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
@@ -613,7 +614,7 @@ Table of contents
 
  - **Login into OOM server to re-dploye following component**
     
- - **ONAP AAI**
+ - ** -AAI**
      --------
 	 
 	Follow the following steps:
