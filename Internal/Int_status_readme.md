@@ -1,6 +1,6 @@
 # Testing
 
-<span style="color: red;">text</span>
+<span style="color:blue">some *blue* text</span>
 <table>
   <thead>
     <tr>
