@@ -678,9 +678,9 @@ Table of contents
  - **ONAP SO**
 	 -------
 	 
-    **Loging into oom server and re-deploye following component**
+    **Loging into oom server**
 	
-	  - Repalce images in following files:
+	- Repalce the images in following files:
 	
 	  - onap-oom-integ/kubernetes/so/templates/deployment.yaml
 
@@ -733,34 +733,36 @@ Table of contents
 		   - name: {{ include "common.name" . }}
 		   image: rajeshvkothari/sdc-controller:0910_666_ori		 
 		```
-	 
-	```sh
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE so; make SKIP_LINT=TRUE onap
+	  
+	- Re-deploy Steps:
+	  
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ make SKIP_LINT=TRUE so; make SKIP_LINT=TRUE onap
 		  
-     #Using make command chart for so gets build.
+      #Using make command chart for so gets build.
 
-	 $ helm ls --all-namespaces
+	    $ helm ls --all-namespaces
 		 #OR
-	 $ helm ls -A
+	    $ helm ls -A
 		
-	 # Delete release
-	 $ helm uninstall onap-so -n onap
+	    # Delete release
+	    $ helm uninstall onap-so -n onap
 		
-	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-so	
+	    #Wait till all pods are goes off from Terminating state
+	    $ kubectl get pods -n onap | grep onap-so	
 
-	 #If persistentvolume is not delete, fire following patch command
-	 $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
+	    #If persistentvolume is not delete, fire following patch command
+	    $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/so
-	 $ kubectl get pv,pvc | grep onap-so
+	    $ sudo rm -rf /dockerdata-nfs/onap/so
+	    $ kubectl get pv,pvc | grep onap-so
 
-	 $ kubectl patch pv onap-so-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	    $ kubectl patch pv onap-so-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	```			
+	    $ cd ~/onap-oom-integ/kubernetes
+	    $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	    ```			
 	
  - **ONAP AAI**
      --------
