@@ -132,6 +132,19 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
+	   ```sh
+	   
+	   Output:
+	   
+	   ubuntu@ip-172-31-45-155:~$ docker ps
+		CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS          PORTS                                                                                  NAMES
+		51a29265be03   onap/vid:latest             "/tmp/vid/localize.sh"   16 seconds ago   Up 11 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp                                              dockerfiles_vid-server_1
+		91a434567604   mariadb:10                  "docker-entrypoint.s…"   16 seconds ago   Up 12 seconds   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp                                              dockerfiles_vid-mariadb_1
+		92a6b4deccf4   onap/vid-simulator:latest   "catalina.sh run"        16 seconds ago   Up 9 seconds    0.0.0.0:1080->1080/tcp, :::1080->1080/tcp, 0.0.0.0:9080->8080/tcp, :::9080->8080/tcp   dockerfiles_vid-simulator_1
+		ubuntu@ip-172-31-45-155:~$
+
+	   ```
+	   
 	  - Verify that images are successfully build or not:
 	  
 	    ```sh
