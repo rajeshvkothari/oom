@@ -410,7 +410,7 @@ in third.
         argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
 	  ```
 	  
-	  Here, 31325 is the external port of argo-server.
+	  Note : 31325 is the external port of argo-server.
 
 	- To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
