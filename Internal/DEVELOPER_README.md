@@ -17,7 +17,7 @@ Table of contents
     * [sdc-tosca](#sdc-tosca)
 	* [sdc-distribution-client](#sdc-distribution-client)
   * [List Information of CCI Repositories](#List-Information-of-CCI-Repositories)
-    * [anil](#anil)
+    
     
 <!--te-->
 
