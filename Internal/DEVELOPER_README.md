@@ -135,7 +135,7 @@ Table of contents
 	  - Verify images is build or not:
 	  
 	    ```sh
-		$cd /home/ubuntu
+		$ cd /home/ubuntu
 		$ docker images
 		
 		Output:
@@ -270,13 +270,14 @@ Table of contents
 	 - Start Docker container
 	 
 	   ```sh
-	   mvn install -U -P start-sdc -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -e -X
+	   $ cd ~/onap-sdc-integ
+	   $ mvn install -U -P start-sdc -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -e -X
 	   ```
 
 	 - Verify images is build or not:
 	 
 	   ```sh
-	   $cd /home/ubuntu
+	   $ cd /home/ubuntu
 	   $ docker images
 		
        Output:
@@ -514,7 +515,7 @@ Table of contents
 	  - Verify images is build or not:
 	  
 	    ```sh
-		$cd /home/ubuntu
+		$ cd /home/ubuntu
 		$ docker images
 		
 		Output:
