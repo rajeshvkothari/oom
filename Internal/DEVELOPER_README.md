@@ -83,19 +83,14 @@ Table of contents
 	 - Copy settings.xml to ~/.m2 directory
 	 
 	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
 	   $ cd ~/.m2
 	   #copy settings.xml from following link:
 	   https://git.onap.org/oparent/plain/settings.xml
 	   $ vim settings.xml
 	   ```
-	  		 
-	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
-	
-	    ```sh
-		$ cd /home/ubuntu/
-	    $ mvn
-	    ```
-		**Note : It will return error.**
 		
 	 - Git clone:
 	 
@@ -137,6 +132,44 @@ Table of contents
 	   $ docker-compose up -d
 	   ```
 	   
+	  - Verify images is build or not:
+	  
+	    ```sh
+		$cd /home/ubuntu
+		$ docker images
+		
+		Output:
+		
+			ubuntu@ip-172-31-40-197:~$ docker images
+			REPOSITORY                      TAG                               IMAGE ID       CREATED              SIZE
+			onap/vid                        7.0-STAGING-latest                ab59bd50284a   About a minute ago   719MB
+			onap/vid                        8.0.2-SNAPSHOT                    ab59bd50284a   About a minute ago   719MB
+			onap/vid                        8.0.2-SNAPSHOT-20211011T045636Z   ab59bd50284a   About a minute ago   719MB
+			onap/vid                        8.0.2-SNAPSHOT-latest             ab59bd50284a   About a minute ago   719MB
+			onap/vid                        latest                            ab59bd50284a   About a minute ago   719MB
+			<none>                          <none>                            948eab334a57   About a minute ago   776MB
+			onap/vid-simulator              1.0.0                             fb4f6857c866   7 minutes ago        171MB
+			onap/vid-simulator              latest                            fb4f6857c866   7 minutes ago        171MB
+			tomcat                          9-jdk11-openjdk-slim              e62678f8caf5   4 days ago           449MB
+			openjdk                         11-jdk-slim                       068459f10b1e   12 days ago          429MB
+			nexus3.onap.org:10001/openjdk   11-jdk-slim                       068459f10b1e   12 days ago          429MB
+			tomcat                          jre8-alpine                       8b8b1eb786b5   2 years ago          106MB
+			nexus3.onap.org:10001/tomcat    jre8-alpine                       8b8b1eb786b5   2 years ago          106MB
+		```
+	
+     - Push and tag following images to cci-repository:
+		
+	   ```sh
+	   onap/vid:latest 
+	   ```
+	   - Example :
+	   
+	     ```sh
+	     $ docker tag onap/vid:latest rajeshvkothari/vid:0110_1544
+	     $ docker push rajeshvkothari/vid:0110_1544 
+		 ```
+	
+		
 	 - Verify : open a web browser and go to the http://{IP_OF_VM}:8080/vid/login.htm page
 
 	   NOTE : Login and password you can find in a 'fn_user' table inited by vid/epsdk-app-onap/src/main/resources/db.changelog-01.sql script.
@@ -220,8 +253,9 @@ Table of contents
      - Run following command to build sdc projects:
 		
 	   ```sh
-	   export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-	   export PATH=$JAVA_HOME/bin:$PATH
+	   $ cd /home/ubuntu/
+	   $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+	   $ export PATH=$JAVA_HOME/bin:$PATH
 	   ```  	
 		
 	 - Build images
@@ -239,6 +273,67 @@ Table of contents
 	   mvn install -U -P start-sdc -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -e -X
 	   ```
 
+	 - Verify images is build or not:
+	 
+	   ```sh
+	   $cd /home/ubuntu
+	   $ docker images
+		
+       Output:
+		
+	    ubuntu@ip-172-31-44-134:~$ docker images
+		REPOSITORY                                          TAG                    IMAGE ID       CREATED          SIZE
+		onap/sdc-simulator                                  1.8-20211011T052025Z   2ea2fe78299b   18 minutes ago   574MB
+		onap/sdc-simulator                                  1.8-STAGING-latest     2ea2fe78299b   18 minutes ago   574MB
+		onap/sdc-simulator                                  latest                 2ea2fe78299b   18 minutes ago   574MB
+		onap/sdc-cassandra                                  1.8-20211011T052025Z   6eff85587c48   19 minutes ago   553MB
+		onap/sdc-cassandra                                  1.8-STAGING-latest     6eff85587c48   19 minutes ago   553MB
+		onap/sdc-cassandra                                  latest                 6eff85587c48   19 minutes ago   553MB
+		onap/sdc-frontend                                   1.8-20211011T052025Z   e06ef9c017f5   19 minutes ago   626MB
+		onap/sdc-frontend                                   1.8-STAGING-latest     e06ef9c017f5   19 minutes ago   626MB
+		onap/sdc-frontend                                   latest                 e06ef9c017f5   19 minutes ago   626MB
+		onap/sdc-cassandra-init                             1.8-20211011T052025Z   88affae8f250   22 minutes ago   1.42GB
+		onap/sdc-cassandra-init                             1.8-STAGING-latest     88affae8f250   22 minutes ago   1.42GB
+		onap/sdc-cassandra-init                             latest                 88affae8f250   22 minutes ago   1.42GB
+		onap/sdc-backend-all-plugins                        1.8-20211011T052025Z   f2dbf1c4e8cf   23 minutes ago   680MB
+		onap/sdc-backend-all-plugins                        1.8-STAGING-latest     f2dbf1c4e8cf   23 minutes ago   680MB
+		onap/sdc-backend-all-plugins                        latest                 f2dbf1c4e8cf   23 minutes ago   680MB
+		onap/sdc-backend-init                               1.8-20211011T052025Z   c3ffe666c0bb   23 minutes ago   196MB
+		onap/sdc-backend-init                               1.8-STAGING-latest     c3ffe666c0bb   23 minutes ago   196MB
+		onap/sdc-backend-init                               latest                 c3ffe666c0bb   23 minutes ago   196MB
+		onap/sdc-backend                                    1.8-20211011T052025Z   1012ea78f57e   23 minutes ago   680MB
+		onap/sdc-backend                                    1.8-STAGING-latest     1012ea78f57e   23 minutes ago   680MB
+		onap/sdc-backend                                    latest                 1012ea78f57e   23 minutes ago   680MB
+		onap/sdc-onboard-cassandra-init                     1.8-20211011T052025Z   1f3ecabef499   29 minutes ago   1.25GB
+		onap/sdc-onboard-cassandra-init                     1.8-STAGING-latest     1f3ecabef499   29 minutes ago   1.25GB
+		onap/sdc-onboard-cassandra-init                     latest                 1f3ecabef499   29 minutes ago   1.25GB
+		onap/sdc-onboard-backend                            1.8-20211011T052025Z   78815ede825e   35 minutes ago   660MB
+		onap/sdc-onboard-backend                            1.8-STAGING-latest     78815ede825e   35 minutes ago   660MB
+		onap/sdc-onboard-backend                            latest                 78815ede825e   35 minutes ago   660MB
+		selenium/standalone-firefox                         86.0                   cc7325d080c6   6 months ago     993MB
+		nexus3.onap.org:10001/selenium/standalone-firefox   86.0                   cc7325d080c6   6 months ago     993MB
+		jetty                                               9.4.31-jre11-slim      8541efe07686   13 months ago    217MB
+		nexus3.onap.org:10001/jetty                         9.4.31-jre11-slim      8541efe07686   13 months ago    217MB
+		onap/base_sdc-python                                1.7.0                  072878963db3   15 months ago    195MB
+		nexus3.onap.org:10001/onap/base_sdc-python          1.7.0                  072878963db3   15 months ago    195MB
+		onap/base_sdc-cassandra                             1.7.0                  7ae1d2a9db1d   15 months ago    553MB
+		nexus3.onap.org:10001/onap/base_sdc-cassandra       1.7.0                  7ae1d2a9db1d   15 months ago    553MB
+		onap/policy-jdk-debian                              2.0.1                  0853158c0e58   19 months ago    718MB
+		nexus3.onap.org:10001/onap/policy-jdk-debian        2.0.1                  0853158c0e58   19 months ago    718MB
+	   ```
+	   
+     - Push and tag following images to cci-repository:
+		
+	   ```sh
+	   onap/sdc-simulator:latest
+	   ```
+	   - Example :
+	   
+	     ```sh
+	     $ docker tag onap/sdc-simulator:latest rajeshvkothari/sdc-simulator:1110_1215
+	     $ docker push rajeshvkothari/sdc-simulator:1110_1215 
+		 ```	   
+	   
      - You can now open the SDC UI locally:
 	 
 	   http://{IP_OF_VM}:8285/login
@@ -561,18 +656,14 @@ Table of contents
 	 - Copy settings.xml to ~/.m2 directory
 	 
 	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
 	   $ cd ~/.m2
 	   #copy settings.xml from following link:
 	   https://git.onap.org/oparent/plain/settings.xml
 	   $ vim settings.xml
 	   ```
-		   		 
-	   **IMPORTANT NOTE: If .m2 directory is not available, then follows**
-	
-		 ```sh
-		 $ mvn  
-		 ```
-		**Note : It will return error.**
 
 	 - Modify following file to add debug port:
 
