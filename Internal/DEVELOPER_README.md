@@ -1058,7 +1058,10 @@ Table of contents
 	  $ helm uninstall onap-aai -n onap
 		
 	  #Wait till all pods are goes off from Terminating state
-	  $ kubectl get pods -n onap | grep onap-aai			
+	  $ kubectl get pods -n onap | grep onap-aai	
+
+	  #If persistentvolume is not delete, fire following patch command
+	  $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'	  
 	
 	  $ sudo rm -rf /dockerdata-nfs/onap/aai
 	  $ kubectl get pv,pvc | grep onap-aai
@@ -1088,7 +1091,11 @@ Table of contents
 	 $ helm uninstall onap-tosca -n onap
 		
      #Wait till all pods are goes off from Terminating state
-     $ kubectl get pods -n onap | grep onap-tosca			
+     $ kubectl get pods -n onap | grep onap-tosca
+
+	 #If persistentvolume is not delete, fire following patch command
+	 $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
+		 
 	
 	 $ sudo rm -rf /dockerdata-nfs/onap/tosca
 	 $ kubectl get pv,pvc | grep onap-tosca
