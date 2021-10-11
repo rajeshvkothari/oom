@@ -273,7 +273,19 @@ Table of contents
 	   $ cd ~/onap-sdc-integ
 	   $ mvn install -U -P start-sdc -DskipTests -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -e -X
 	   ```
-
+	   
+	 - Replace sdc-tosca-1.6.5.jar at the following location and re-run the build images step:
+	   
+	   ```sh
+	   $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.6.5/
+	   ```	    
+	   
+	   **NOTE : If we do not replace the sdc-tosca-1.6.5.jar then we face the following error in the sdc portal :**
+	   
+	   ```sh
+	   Error : Distribution Complate Error.
+	   ```
+	   
 	 - Verify that images are successfully build or not:
 	 
 	   ```sh
