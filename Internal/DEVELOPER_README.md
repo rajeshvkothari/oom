@@ -283,7 +283,7 @@ Table of contents
 	   **NOTE : If we do not replace the sdc-tosca-1.6.5.jar then we face the following error in the sdc portal :**
 	   
 	   ```sh
-	   Error : Distribution Complate Error.
+	   Error : DISTRIBUTION_COMPLETE_ERROR.
 	   ```
 	   
 	 - Verify that images are successfully build or not:
