@@ -3,7 +3,7 @@ Table of contents
 =================
 <!--ts-->
   * [Create docker images of onap components](#Create-docker-images-of-onap-components)
-    * [VID](#VID)
+    * [ONAP_ID](#ONAP_VID)
 	* [SDC](#SDC)
     * [SO](#SO)
     * [AAI-Babel](#AAI-Babel)
@@ -27,7 +27,7 @@ Table of contents
    Security group: launch-wizard-19
    ```
 	
- - **VID**
+ - **ONAP_VID**
      ---
 	 
 	Follow the following steps:
