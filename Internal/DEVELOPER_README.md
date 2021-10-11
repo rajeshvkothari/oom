@@ -325,13 +325,18 @@ Table of contents
      - Push and tag following images to cci-repository:
 		
 	   ```sh
-	   onap/sdc-simulator:latest
+	   onap/sdc-onboard-backend:latest
+	   onap/sdc-backend-all-plugins:latest
 	   ```
 	   - Example :
 	   
 	     ```sh
-	     $ docker tag onap/sdc-simulator:latest rajeshvkothari/sdc-simulator:1110_1215
-	     $ docker push rajeshvkothari/sdc-simulator:1110_1215 
+		  
+		  docker tag onap/sdc-onboard-backend:latest rajeshvkothari/sdc-onboard-backend:100921_415
+		  docker push rajeshvkothari/sdc-onboard-backend:100921_415			  
+  
+		  docker tag onap/sdc-backend-all-plugins:latest rajeshvkothari/sdc-backend-all-plugins:100921_415
+		  docker push rajeshvkothari/sdc-backend-all-plugins:100921_415
 		 ```	   
 	   
      - You can now open the SDC UI locally:
@@ -702,42 +707,105 @@ Table of contents
    
 ## Re-deploy onap-components with our builded docker image:
 
- - **Login into OOM server to re-dploye following component**
-
  - **ONAP VID**
 	 --------
 	 
-	 Follow the following steps:
- 
-	```sh
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE vid; make SKIP_LINT=TRUE onap
-		  
-     #Using make command chart for vid gets build.
-
-	 $ helm ls --all-namespaces
-		 #OR
-	 $ helm ls -A
-		
-	 # Delete release
-	 $ helm uninstall onap-vid -n onap
-		
-	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-vid			
+    **Loging into oom server**
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/vid
-	 $ kubectl get pv,pvc | grep onap-vid
+	- Repalce the images in following files:
+	
+	  - onap-oom-integ/kubernetes/vid/templates/deployment.yaml
 
-	 $ kubectl patch pv onap-vid-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	    ```sh
+		$ cd /onap-oom-integ/kubernetes/vid/templates/ 
+		$ vim deployment.yaml
+		```
+		 
+		```sh
+		 Befor:
+          containers:
+           - name: {{ include "common.name" . }}
+            image: 172.31.27.186:5000/onap/vid:0.3
+					
+		 After:
+		   containers:
+		   - name: {{ include "common.name" . }}
+		   image: rajeshvkothari/vid:0110_1544
+		```	 
+	 
+	- Re-deploy Steps:
+ 
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ make SKIP_LINT=TRUE vid; make SKIP_LINT=TRUE onap
+		  
+      #Using make command chart for vid gets build.
+
+	  $ helm ls --all-namespaces
+		 #OR
+	  $ helm ls -A
 		
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	```	
+	  # Delete release
+	  $ helm uninstall onap-vid -n onap
+		
+	  #Wait till all pods are goes off from Terminating state
+	  $ kubectl get pods -n onap | grep onap-vid			
+	
+	  $ sudo rm -rf /dockerdata-nfs/onap/vid
+	  $ kubectl get pv,pvc | grep onap-vid
+
+	  $ kubectl patch pv onap-vid-elasticsearch -p '{"metadata":{"finalizers":null}}'
+		
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	  ```	
 
  - **ONAP SDC**
      --------
 	 
-	 Follow the following steps:
+    **Loging into oom server**
+	
+	- Repalce the images in following files:
+	
+	  - onap-oom-integ/kubernetes/sdc/components/sdc-be/templates/deployment.yaml
+
+	    ```sh
+		$ cd /onap-oom-integ/kubernetes/sdc/components/sdc-be/templates/ 
+		$ vim deployment.yaml
+		```
+		 
+		```sh
+		 Befor:
+          containers:
+           - name: {{ include "common.name" . }}
+            image: 172.31.27.186:5000/onap/sdc-backend-all-plugins:0.3
+					
+		 After:
+		   containers:
+		   - name: {{ include "common.name" . }}
+		   image: rajeshvkothari/sdc-backend-all-plugins:100921_415
+		```	
+
+	  - onap-oom-integ/kubernetes/sdc/components/sdc-onboarding-be/templates/deployment.yaml
+
+	    ```sh
+		$ cd /onap-oom-integ/kubernetes/sdc/components/sdc-onboarding-be/templates/ 
+		$ vim deployment.yaml
+		```
+		 
+		```sh
+		 Befor:
+          containers:
+           - name: {{ include "common.name" . }}
+            image: 172.31.27.186:5000/onap/sdc-onboard-backend:0.3
+					
+		 After:
+		   containers:
+		   - name: {{ include "common.name" . }}
+		   image: rajeshvkothari/sdc-onboard-backend:100921_415
+		```
+		
+	- Re-deploy Steps:	
 	 	 
      ```sh
 	 $ cd ~/onap-oom-integ/kubernetes
