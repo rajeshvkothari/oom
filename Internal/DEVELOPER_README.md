@@ -13,9 +13,10 @@ Table of contents
 	* [ONAP-SO](#ONAP-SO)
 	* [ONAP-AAI](#ONAP-AAI)
     * [ONAP-TOSCA](#ONAP-TOSCA)
-  * [Jar files](#Jar-files)
+  * [Create jar files required for onap components](#Create-jar-files-required-for-onap-components)
     * [sdc-tosca](#sdc-tosca)
 	* [sdc-distribution-client](#sdc-distribution-client)
+  * [List/Information of CCI Repositories](#List/Information-of-CCI-Repositories)
     
 <!--te-->
 
@@ -1106,10 +1107,13 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
-## Jar-files
+## Create jar files required for onap components
 
  - **sdc-tosca**
  
  
  
  - **sdc-distribution-client**
+ 
+ 
+## List/Information of CCI Repositories
