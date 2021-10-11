@@ -677,7 +677,7 @@ in third.
 
 		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
 
-		  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer created in Pre Deployment Steps'.
+		  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
 		   
         - Copy files as given follows:
 	  
