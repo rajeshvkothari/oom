@@ -1,20 +1,5 @@
 #Testing
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <title>Testing Status</title>
-  </head>
-  <body>
-  <div class="container-fluid">
-  <h2>Testing Status</h2>
   <table class="table table-bordered">
   <thead>
     <tr style="background-color:lightgray;">
@@ -104,5 +89,3 @@
 	<h6>NS : Not Support</h6>
 	<h6>NS1 : Deploy models with argo-workflow do not support in standalone puccini as in tosca-compiler/tosca-gawp, there is a reference of scp command to copy Kubernetes file(.kube, .minikube files) from where reposure is installed. so scp command will not run in standalone puccini exes(tosca-compiler, tosca-gawp).</h6>
 </div>
-</body>
-</html>
