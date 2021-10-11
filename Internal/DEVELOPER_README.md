@@ -13,6 +13,9 @@ Table of contents
 	* [ONAP-SO](#ONAP-SO)
 	* [ONAP-AAI](#ONAP-AAI)
     * [ONAP-TOSCA](#ONAP-TOSCA)
+  * [Jar files](#Jar-files)
+    * [sdc-tosca](#sdc-tosca)
+	* [sdc-distribution-client](#sdc-distribution-client)
     
 <!--te-->
 
@@ -170,7 +173,7 @@ Table of contents
 			nexus3.onap.org:10001/tomcat    jre8-alpine                       8b8b1eb786b5   2 years ago          106MB
 		```
 	
-     - Push and tag following images to cci-repository:
+     - Push and tag following images to rajeshvkothari-repository:
 		
 	   ```sh
 	   onap/vid:latest 
@@ -348,7 +351,7 @@ Table of contents
 		nexus3.onap.org:10001/onap/policy-jdk-debian        2.0.1                  0853158c0e58   19 months ago    718MB
 	   ```
 	   
-     - Push and tag following images to cci-repository:
+     - Push and tag following images to rajeshvkothari-repository:
 		
 	   ```sh
 	   onap/sdc-onboard-backend:latest
@@ -597,7 +600,7 @@ Table of contents
 		nexus3.onap.org:10001/adoptopenjdk/openjdk11   jre-11.0.8_10-alpine           0507f9330a60   11 months ago    149MB
 		ubuntu@ip-172-31-46-163:~/onap-so-integ$
 		```
-	 - Push and tag following images to cci-repository:
+	 - Push and tag following images to rajeshvkothari-repository:
 		
 	   ```sh
 	   onap/so/api-handler-infra:latest
@@ -774,7 +777,19 @@ Table of contents
 		onap/aai-common-alpine                         1.8.1                          f979edc649cb   8 months ago     167MB
 		nexus3.onap.org:10001/onap/aai-common-alpine   1.8.1                          f979edc649cb   8 months ago     167MB
 		```
-   
+	 - Push and tag following images to rajeshvkothari-repository:
+		
+	   ```sh
+	   nexus3.onap.org:10003/onap/babel:latest
+	   ```
+	   - Example :
+	   
+	     ```sh
+	     $ docker tag nexus3.onap.org:10003/onap/babel:latest rajeshvkothari/aai-babel:0910_666_ori
+	     $ docker push rajeshvkothari/aai-babel:0910_666_ori 
+		 
+		 ```
+		
 ## Re-deploy onap-components with our builded docker image:
 
  - **ONAP VID**
@@ -1004,33 +1019,55 @@ Table of contents
 	
  - **ONAP AAI**
      --------
+    **Loging into oom server**
+	
+	- Repalce the images in following files:
+	
+	  -  onap-oom-integ/kubernetes/aai/components/aai-babel/templates/deployment.yaml
+
+	    ```sh
+		$ onap-oom-integ/kubernetes/aai/components/aai-babel/templates
+		$ vim deployment.yaml
+		```
+		 
+		```sh
+		 Befor:
+          containers:
+           - name: {{ include "common.name" . }}
+           image: 172.31.27.186:5000/onap/aai-babel:0.3
+					
+		 After:
+		   containers:
+		   - name: {{ include "common.name" . }}
+		   image: rajeshvkothari/aai-babel:0910_666_ori 
+		```
 	 
-	Follow the following steps:
+    - Re-deploy steps
 	
-	 ```sh
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
+	  ```sh
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ make SKIP_LINT=TRUE aai; make SKIP_LINT=TRUE onap
 		  
-     #Using make command chart for aai gets build.
+      #Using make command chart for aai gets build.
 
-	 $ helm ls --all-namespaces
-	 #OR
-     $ helm ls -A
+	  $ helm ls --all-namespaces
+	  #OR
+      $ helm ls -A
 		
-     # Delete release
-	 $ helm uninstall onap-aai -n onap
+      # Delete release
+	  $ helm uninstall onap-aai -n onap
 		
-	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-aai			
+	  #Wait till all pods are goes off from Terminating state
+	  $ kubectl get pods -n onap | grep onap-aai			
 	
-	 $ sudo rm -rf /dockerdata-nfs/onap/aai
-	 $ kubectl get pv,pvc | grep onap-aai
+	  $ sudo rm -rf /dockerdata-nfs/onap/aai
+	  $ kubectl get pv,pvc | grep onap-aai
 
-	 $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
+	  $ kubectl patch pv onap-aai-elasticsearch -p '{"metadata":{"finalizers":null}}'
 		
-	 $ cd ~/onap-oom-integ/kubernetes
-	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
-	```	
+	  $ cd ~/onap-oom-integ/kubernetes
+	  $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
+	  ```	
 	
  - **ONAP TOSCA**
 	 ----------
@@ -1062,4 +1099,10 @@ Table of contents
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
 	
-## Jar files:
+## Jar-files
+
+ - **sdc-tosca**
+ 
+ 
+ 
+ - **sdc-distribution-client**
