@@ -1118,5 +1118,4 @@ Table of contents
  
  
 ## List Information of CCI Repositories
- 
- - **anil**
+
