@@ -133,7 +133,7 @@ Table of contents
 	   ```
 	   
 	   ```sh
-	   
+	   $ docker ps
 	   Output:
 	   
 	   ubuntu@ip-172-31-45-155:~$ docker ps
@@ -711,18 +711,6 @@ Table of contents
 	   PROPS="-DAPP_HOME=${APP_HOME}"
 	   PROPS="${PROPS} -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 -Dcom.sun.management.jmxremote.rmi.port=8001 -Dlogging.level.org.springframework=TRACE -Dlogging.level.org.onap.so=TRACE"
 	   ```
-		
-     - Change the following mvn.jaxb2.version in aai-babel/pom.xml file:
-	    
-	   ```sh
-	   Befor:
-		  <!-- Dependency Versions -->
-		  <mvn.jaxb2.version>0.13.3</mvn.jaxb2.version>   
-			
-	   After:
-		  <!-- Dependency Versions -->
-		  <mvn.jaxb2.version>0.14.0</mvn.jaxb2.version>
-		  ```
 	   
      - Build images:
 	
@@ -730,6 +718,62 @@ Table of contents
 	   $ cd ~/aai-babel
 	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip -P docker
 	   ```
+	 - PROBLEMS AND SOLUTION
+	 
+	   - Issue: 
+	   
+		 [INFO] Sources are not up-to-date, XJC will be executed.
+		 [INFO] ------------------------------------------------------------------------
+		 [INFO] BUILD FAILURE
+		 [INFO] ------------------------------------------------------------------------
+		 [INFO] Total time:  57.080 s
+		 [INFO] Finished at: 2021-10-11T12:00:08Z
+		 [INFO] ------------------------------------------------------------------------
+		 [ERROR] Failed to execute goal org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.13.3:generate (default) on project babel: Execution  default of goal org.jvnet.jaxb2.maven2:maven-jaxb2-plugin:0.13.3:generate failed: Prefix '' is already bound to '' -> [Help 1]
+		 [ERROR]
+		 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+		 [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+		 [ERROR]
+		 [ERROR] For more information about the errors and possible solutions, please read the following articles:
+		 [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginExecutionException
+		 ubuntu@ip-172-31-43-87:~/aai-babel$
+     
+	 
+         - SOLUTION : 
+	   
+	       Change the following mvn.jaxb2.version in aai-babel/pom.xml file and re-run build image command
+	      
+	       ```sh
+	        Befor:
+		     <!-- Dependency Versions -->
+		     <mvn.jaxb2.version>0.13.3</mvn.jaxb2.version>   
+			
+	        After:
+		     <!-- Dependency Versions -->
+		     <mvn.jaxb2.version>0.14.0</mvn.jaxb2.version>
+			 ```
+	 - Replace sdc-tosca-1.5.1.jar at the following location and re-run the build images command:
+	   
+	    ```sh
+	    $ cd ~/.m2/repository/org/onap/sdc/sdc-tosca/sdc-tosca/1.5.1/
+	    ```	
+		
+	 - Verify that images are successfully build or not:
+	  
+	    ```sh
+		$ cd /home/ubuntu
+		$ docker images
+		
+		Output:
+
+	    ubuntu@ip-172-31-43-87:~$ docker images
+		REPOSITORY                                     TAG                            IMAGE ID       CREATED          SIZE
+		nexus3.onap.org:10003/onap/babel               1.8-STAGING-20211011T120657Z   6a4c08a3534a   26 minutes ago   215MB
+		nexus3.onap.org:10003/onap/babel               1.8-STAGING-latest             6a4c08a3534a   26 minutes ago   215MB
+		nexus3.onap.org:10003/onap/babel               latest                         6a4c08a3534a   26 minutes ago   215MB
+		onap/aai-common-alpine                         1.8.1                          f979edc649cb   8 months ago     167MB
+		nexus3.onap.org:10001/onap/aai-common-alpine   1.8.1                          f979edc649cb   8 months ago     167MB
+		```
    
 ## Re-deploy onap-components with our builded docker image:
 
@@ -1017,3 +1061,5 @@ Table of contents
 	 $ cd ~/onap-oom-integ/kubernetes
 	 $ helm deploy onap local/onap --namespace onap --create-namespace --set global.masterPassword=myAwesomePasswordThatINeedToChange -f onap/resources/overrides/onap-all.yaml -f onap/resources/overrides/environment.yaml -f onap/resources/overrides/openstack.yaml -f onap/resources/overrides/overrides.yaml --timeout 1500s
 	```	
+	
+## Jar files:
