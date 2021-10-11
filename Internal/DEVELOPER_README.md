@@ -763,7 +763,10 @@ Table of contents
 		
 	  #Wait till all pods are goes off from Terminating state
 	  $ kubectl get pods -n onap | grep onap-vid			
-	
+	 
+	  #If persistentvolume is not delete, fire following patch command
+	  $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
+	 	
 	  $ sudo rm -rf /dockerdata-nfs/onap/vid
 	  $ kubectl get pv,pvc | grep onap-vid
 
@@ -834,8 +837,11 @@ Table of contents
 	 $ helm uninstall onap-sdc -n onap
 		
 	 #Wait till all pods are goes off from Terminating state
-	 $ kubectl get pods -n onap | grep onap-sdc			
-	
+	 $ kubectl get pods -n onap | grep onap-sdc	
+	 
+	 #If persistentvolume is not delete, fire following patch command
+	 $ kubectl patch pv onap-so-sdc-controller-cci-so-sdc-csars -p '{"metadata":{"finalizers":null}}'
+	 
 	 $ sudo rm -rf /dockerdata-nfs/onap/sdc
 	 $ kubectl get pv,pvc | grep onap-sdc
 
