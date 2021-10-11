@@ -16,7 +16,7 @@ Table of contents
   * [Create jar files required for onap components](#Create-jar-files-required-for-onap-components)
     * [sdc-tosca](#sdc-tosca)
 	* [sdc-distribution-client](#sdc-distribution-client)
-  * [List/Information of CCI Repositories](#List/Information-of-CCI-Repositories)
+  * [List/Information of CCI Repositories](#List-Information-of-CCI-Repositories)
     
 <!--te-->
 
