@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Testing Status</title>
+  </head>
+  <body>
+  <div class="container-fluid">
+  <h2>Testing Status</h2>
+  <table class="table table-bordered">
+  <thead>
+    <tr style="background-color:lightgray;">
+      <th colspan="2">Environment</th>
+		  <th colspan="3">Standalone Puccini</th>
+		  <th colspan="3">Tosca Docker containers</th>
+			<th colspan="3">Honolulu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+		  <td colspan="2" style="font-weight: bold">Models</td>
+		  <td style="font-weight: bold">Sdwan</td>
+		  <td style="font-weight: bold">Firewall</td>
+		  <td style="font-weight: bold">Oran</td>
+		  <td style="font-weight: bold">Sdwan</td>
+		  <td style="font-weight: bold">Firewall</td>
+		  <td style="font-weight: bold">Oran</td>
+		  <td style="font-weight: bold">Sdwan</td>
+		  <td style="font-weight: bold">Firewall</td>
+		  <td style="font-weight: bold">Oran</td>
+		</tr>
+		<tr>
+		  <td colspan="2" style="font-weight: bold">Setup(Pre-deployment)</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		</tr>
+		<tr>
+		  <td colspan="2" style="font-weight: bold">Puccini-workflow</td>
+			<td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		</tr>
+		  <tr>
+		  <td rowspan="2" style="font-weight: bold">Argo</td>
+			<td style="font-weight: bold">DAG</td>
+			<td style="color:blue";>NS1</td>
+			<td style="color:blue";>NS1</td>
+		  <td style="color:blue";>NS1</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+		</tr>
+		  <tr>
+			<td style="font-weight: bold">CS</td>
+			<td style="color:blue";>NS1</td>
+			<td style="color:blue";>NS1</td>
+		  <td style="color:blue";>NS1</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:green";>Ok</td>
+		</tr>
+		<tr>
+		  <td colspan="2" style="font-weight: bold">Policy</td>
+			<td style="color:blue";>NS</td>
+			<td style="color:green";>Ok</td>
+		  <td style="color:blue";>NS</td>
+			<td style="color:blue";>NS</td>
+		  <td style="color:green";>Ok</td>
+			<td style="color:blue";>NS</td>
+			<td style="color:blue";>NS</td>
+		  <td style="color:black";>Pending</td>
+		  <td style="color:blue";>NS</td>
+		</tr>
+	</tbody>
+	</table>
+	<br>
+	<h6>NS : Not Support</h6>
+	<h6>NS1 : Deploy models with argo-workflow do not support in standalone puccini as in tosca-compiler/tosca-gawp, there is a reference of scp command to copy Kubernetes file(.kube, .minikube files) from where reposure is installed. so scp command will not run in standalone puccini exes(tosca-compiler, tosca-gawp).</h6>
+</div>
+</body>
+</html>
