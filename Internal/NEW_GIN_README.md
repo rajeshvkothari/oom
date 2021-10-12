@@ -814,50 +814,9 @@ in third.
 	  $ sudo chmod 777 /var/run/docker.sock
 	  ```
 	  
-	   Note : After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press
-            Enter.
- 
-    - Make changes in ~/onap-oom-integ/cci/application.cfg: 
-	  
-
-		```sh
-		[remote]
-		remoteHost={IP_ADDR_OF_SERVER}
-
-		[reposure]
-		reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
-		pushCsarToReposure=true
-
-		[argoWorkflow]
-		ricServerIP={Private_IP_ADDR_OF_RIC}
-		nonrtricServerIP={Private_IP_ADDR_OF_NONRTRIC}
-		argoTemplateType=containerSet | DAG
-        ```		
-		
-	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
-
-      Note2 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is.
-	  
-	  Note3 : In argo workflow, there are two ways for executing argo templates.
-		        
-		
-        - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
-				
-	      For using containerSet based argo template use as follows:
-	    
-		  ```sh
-		  argoTemplateType=containerSet
-		  ```
-			
-        - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
-				
-	      For using DAG-based argo template use as follows:
-		
-		  ```sh	
-		  argoTemplateType=DAG
-		  ```
-		
-    - Install golang:
+	   Note : After running "chartmuseum --storage local --storage-local-rootdir ~/helm3-storage -port 8879 &", press Enter.
+	   
+	- Install golang:
 	  
 	  ```sh
 	  $ cd /home/ubuntu
@@ -910,7 +869,58 @@ in third.
 	  $ chmod +x argo-linux-amd64
 	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
 	  $ argo version
+	  
+	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
+        service/argo-server patched
+
+      $ kubectl get svc argo-server -n onap
+        NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+        argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
 	  ```
+	  
+	  Note : 31325 is the external port of argo-server.
+ 
+    - Make changes in ~/onap-oom-integ/cci/application.cfg: 
+	  
+	  ```sh
+	  [remote]
+	  remoteHost={IP_ADDR_OF_SERVER}
+
+	  [reposure]
+	  reposureHost={IP_ADDR_OF_ONAP_OOM_DEMO}
+	  pushCsarToReposure=true
+
+	  [argoWorkflow]
+	  argoHost={IP_ADDR_OF_ONAP_OOM_DEMO}
+	  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER}
+	  ricServerIP={Private_IP_ADDR_OF_RIC}
+	  nonrtricServerIP={Private_IP_ADDR_OF_NONRTRIC}
+	  argoTemplateType=containerSet | DAG
+      ```		
+		
+	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+
+      Note2 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
+	  
+	  Note3 : In argo workflow, there are two ways for executing argo templates.
+	  
+	  Note4 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.        
+		
+        - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
+				
+	      For using containerSet based argo template use as follows:
+	    
+		  ```sh
+		  argoTemplateType=containerSet
+		  ```
+			
+        - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
+				
+	      For using DAG-based argo template use as follows:
+		
+		  ```sh	
+		  argoTemplateType=DAG
+		  ```
 		  
 	- To deploy only sdwan and firewall model with puccini-workflow do some additional installation on      ONAP_OOM_DEMO  VM as follows:
 	  
@@ -1718,20 +1728,7 @@ in third.
 ## Post Deployment Verification Steps
 
 - When using 'argo-workflow', argo GUI can be used to verify and monitor deployment as follows:
- 
-  - Use following commands on ONAP_OOM_DEMO VM to get external port of argo-server GUI:
-    
-    ```sh	
-    $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
-        service/argo-server patched
-
-    $ kubectl get svc argo-server -n onap
-        NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-        argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
-    ```
-	
-	Here, 31325 is the external port of argo-server.
- 
+  
   - Use following URL to open Argo GUI in local machine browser:
        
     ```sh
