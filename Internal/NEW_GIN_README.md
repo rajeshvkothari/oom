@@ -136,10 +136,9 @@ in third.
                endpoint:
                  - "http://172.31.27.186:5000"
 				 
-		#Use following command in case of bonap server.
-	
-	     $ sudo systemctl daemon-reload && sudo systemctl restart k3s
-	     ```
+		#Use following command in case of bonap server has been created.
+	    $ sudo systemctl daemon-reload && sudo systemctl restart k3s
+	    ```
 		 
 		**IMPORTANT NOTE : Above YAML must be in valid format and proper indentation must be used.**
 		
