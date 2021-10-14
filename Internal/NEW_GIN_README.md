@@ -127,6 +127,7 @@ in third.
 	     $ sudo apt update
          $ sudo apt install jq
          $ sudo apt install socat
+		 $ sudo mkdir -p /etc/rancher/k3s
          $ sudo chmod -R 777 /etc/rancher/k3s
     
 	     # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
@@ -134,6 +135,8 @@ in third.
             "172.31.27.186:5000":
                endpoint:
                  - "http://172.31.27.186:5000"
+				 
+		#Use following command when bonap server is use.
 	
 	     $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	     ```
