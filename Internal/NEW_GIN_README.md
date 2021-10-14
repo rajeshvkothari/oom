@@ -136,7 +136,7 @@ in third.
                endpoint:
                  - "http://172.31.27.186:5000"
 				 
-		#Use following command when bonap server is use.
+		#Use following command in case of bonap server.
 	
 	     $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	     ```
@@ -668,7 +668,7 @@ in third.
 		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
 		  ```
 
-		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall, oran model with argo workflow. For deploying oran models with puccini-workflow, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
 
 		  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
 
@@ -901,7 +901,7 @@ in third.
 	  argoTemplateType=containerSet | DAG
       ```		
 		
-	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall, oran model with argo workflow. In the case of oran models with puccini-workflow, it should be set to {IP_ADDR_OF_BONAP_SERVER}.
+	  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} for deploying sdwan, firewall. In the case of oran models, it should be set to {IP_ADDR_OF_ONAP_OOM_DEMO} with argo workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
 
       Note2 : If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
 	  
