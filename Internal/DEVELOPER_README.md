@@ -17,7 +17,6 @@ Table of contents
     * [sdc-tosca](#sdc-tosca)
 	* [sdc-distribution-client](#sdc-distribution-client)
   * [List Information of CCI Repositories](#List-Information-of-CCI-Repositories)
-    * [anil](#anil)
     
 <!--te-->
 
@@ -1110,7 +1109,8 @@ Table of contents
 	
 ## Create jar files required for onap components
 
- - **sdc-tosca**
+ - **sdc tosca**
+     ---------
  
      - Create aws ubuntu 18.04 VM with following specifications:
    
@@ -1173,61 +1173,55 @@ Table of contents
 	   $ vim settings.xml
 	   ```
 	   
-     - Clone sdc-tosca versions project which you want to build .jar  :
+     - Clone sdc-tosca versions which you want to build .jar  :
      
-	 ```sh   
-     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.5
-     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.0
-     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.5.1
-	 ```
+	   ```sh   
+       $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.5
+       $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.0
+       $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.5.1
+	   ```
 
      - Commented out following code in sdc-sdc-tosca/src/main/java/org/onap/sdc/tosca/parser/impl/SdcToscaParserFactory.java
 
        ```sh
-	    Before:
-  	     //Criticals
-	     int criticalsCount = criticalExceptions.size();
-	     if (criticalsCount > 0) {
-		  log.error("####################################################################################################");
-		  log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
-		  for (JToscaValidationIssue info : criticalExceptions) {
-			  log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
-		    }
-		  throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
-	     }
+	   Before:
+  	      //Criticals
+	       int criticalsCount = criticalExceptions.size();
+	       if (criticalsCount > 0) {
+		     log.error("####################################################################################################");
+		     log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
+		      for (JToscaValidationIssue info : criticalExceptions) {
+			    log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
+		      }
+		     throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
+	        }
 	  
-	    After:
-
+	   After:
   	     /* 
-	     Criticals
-	     int criticalsCount = criticalExceptions.size();
-	     if (criticalsCount > 0) {
-		  log.error("####################################################################################################");
-		  log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
-		  for (JToscaValidationIssue info : criticalExceptions) {
-			  log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
-		  }
-		  throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
-	    } */
+  	      //Criticals
+	       int criticalsCount = criticalExceptions.size();
+	       if (criticalsCount > 0) {
+		     log.error("####################################################################################################");
+		     log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
+		      for (JToscaValidationIssue info : criticalExceptions) {
+			    log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
+		      }
+		     throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
+	        } */
 
 	
-     - build sdc-tosca project
+     - Build sdc-tosca .jar :
 	 
 	   ```sh
-	 
-	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
+	    $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
 	   ```
-     - Then replace jar in .m2 directory while building onap components.	
-   
-       C:\Users\Administrator\.m2\repository\org\onap\sdc\sdc-tosca\sdc-tosca\1.6.5\sdc-tosca-1.6.5.jar
   
-     - Note :
-       do same things for different version of sdc-tosca jar 
+     - **Note : do same things for different version of sdc-tosca jar** 
 	
 	
 	
   - **sdc-distribution client
-    - need to clone sdc-distribution client github project and replace following
+     - need to clone sdc-distribution client github project and replace following
       files with our files(INotificationData.java and NotificationDataImpl are available in SO)
 
 
