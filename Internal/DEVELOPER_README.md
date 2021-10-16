@@ -1221,6 +1221,7 @@ Table of contents
 	
 	
  - **sdc distribution client**
+     -----------------------
   
      - Create aws ubuntu 18.04 VM with following specifications:
    
@@ -1316,7 +1317,7 @@ Table of contents
 	      } 
 	   ```
 		
-     - Build sdc-tosca .jar :
+     - Build sdc-distribution-client .jar :
 	 
 	   ```sh
 	    $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
