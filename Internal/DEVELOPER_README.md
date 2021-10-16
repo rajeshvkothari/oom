@@ -1220,25 +1220,111 @@ Table of contents
 	
 	
 	
-  - **sdc-distribution client
-     - need to clone sdc-distribution client github project and replace following
-      files with our files(INotificationData.java and NotificationDataImpl are available in SO)
+ - **sdc distribution client**
+  
+     - Create aws ubuntu 18.04 VM with following specifications:
+   
+       ```sh
+       Instance type: t2.xlarge
+       Disk: 80 GB
+       Region: ohio
+       Security group: launch-wizard-19
+       ```
+	 - Setup jdk 11
+		
+	   ```sh
+	   $ sudo apt-get update
+	   $ sudo apt-get install openjdk-11-jdk
+	   $ java -version
+	   $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+	   $ export PATH=$JAVA_HOME/bin:$PATH
+	   ```
+		
+	 - Setup docker
+		
+	   ```sh
+	   $ sudo apt update
+	   $ sudo apt-get remove docker docker-engine docker.io
+	   $ sudo apt install docker.io
+	   $ sudo systemctl start docker
+	   $ sudo systemctl enable docker
+	   $ sudo chmod 777 /var/run/docker.sock
+	   $ docker --version
+	   ```
+		
+	   - Verify that docker is installed properly:
+			
+		```sh
+		$ docker ps
+		```
+		
+	     **Note : If above steps are not worked refer:**
+		
+		  ```sh
+           https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+          ```
+			
+	 - Setup maven:
+	 
+	   ```sh
+	   $ sudo apt install maven
+	   $ mvn -version
+	   ```
 
+	 - Copy settings.xml to ~/.m2 directory
+	 
+	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
+	   $ cd ~/.m2
+	   #copy settings.xml from following link:
+	   https://git.onap.org/oparent/plain/settings.xml
+	   $ vim settings.xml
+	   ```
+	   
+     - Clone sdc-distribution-client versions which you want to build .jar  :
+  
+	   ```sh
+	   git clone https://github.com/onap/sdc-sdc-distribution-client --branch 1.4.0
+	   git clone https://github.com/onap/sdc-sdc-distribution-client --branch 1.4.1
+	   git clone https://github.com/onap/sdc-sdc-distribution-client --branch 1.4.2
+	   ```
+  
+     - Add following code in /home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/api/notification/INotificationData.java 
+	 
+       ```sh
+	    String getOriginalCsarUUID();
+	   
+        void setOriginalCsarUUID(String originalCsarUUID);
+	   ```
 
-	  /home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/api/notification/INotificationData.java
+     - Add following code in/home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/impl/NotificationDataImpl.java
 
-
-	  /home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/impl/NotificationDataImpl.java
-
-    - build using maven and replace in .m2 while building onap components
-
+	   ```sh
 	
+	    private String serviceInvariantUUID;
+	   
+	    @Override
+           public String getOriginalCsarUUID() {
+		     return originalCsarUUID;
+	       }
 
-
-
- 
- 
- - **sdc-distribution-client**
+        @Override
+	      public void setOriginalCsarUUID(String originalCsarUUID) {
+		    this.originalCsarUUID = originalCsarUUID;
+	      } 
+	   ```
+		
+     - Build sdc-tosca .jar :
+	 
+	   ```sh
+	    $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
+	   ```
+  
+     - **Note : do same things for different version of sdc-distribution-client .jar** 
+	
+	
  
  
 ## List Information of CCI Repositories
