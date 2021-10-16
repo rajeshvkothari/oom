@@ -16,8 +16,8 @@ Table of contents
   * [Create jar files required for onap components](#Create-jar-files-required-for-onap-components)
     * [sdc-tosca](#sdc-tosca)
 	* [sdc-distribution-client](#sdc-distribution-client)
-  * [List/Information of CCI Repositories](#List/Information-of-CCI-Repositories)
-    
+  * [List Information of CCI Repositories](#List-Information-of-CCI-Repositories)
+    * [anil](#anil)
     
 <!--te-->
 
@@ -749,7 +749,7 @@ Table of contents
 	       Change the following mvn.jaxb2.version in aai-babel/pom.xml file and re-run build image command
 	      
 	       ```sh
-	        Befor:
+	        Before:
 		     <!-- Dependency Versions -->
 		     <mvn.jaxb2.version>0.13.3</mvn.jaxb2.version>   
 			
@@ -809,7 +809,7 @@ Table of contents
 		```
 		 
 		```sh
-		 Befor:
+		 Before:
           containers:
            - name: {{ include "common.name" . }}
             image: 172.31.27.186:5000/onap/vid:0.3
@@ -865,7 +865,7 @@ Table of contents
 		```
 		 
 		```sh
-		 Befor:
+		 Before:
           containers:
            - name: {{ include "common.name" . }}
             image: 172.31.27.186:5000/onap/sdc-backend-all-plugins:0.3
@@ -884,7 +884,7 @@ Table of contents
 		```
 		 
 		```sh
-		 Befor:
+		 Before:
           containers:
            - name: {{ include "common.name" . }}
             image: 172.31.27.186:5000/onap/sdc-onboard-backend:0.3
@@ -940,7 +940,7 @@ Table of contents
 		```
 		 
 		```sh
-		 Befor:
+		 Before:
 		   containers:
 		   - name: {{ include "common.name" . }}
 	       image: 172.31.27.186:5000/onap/so/api-handler-infra:0.3
@@ -959,7 +959,7 @@ Table of contents
 		```
 		
 		```sh
-		Befor:
+		Before:
 		   containers:
 		     - name: {{ include "common.name" . }}
 			 image: 172.31.27.186:5000/onap/so/catalog-db-adapter:0.3
@@ -978,7 +978,7 @@ Table of contents
 		```
 
 		```sh
-		Befor:
+		Before:
 		   containers:
 		   - name: {{ include "common.name" . }}
 		   image: 172.31.27.186:5000/onap/so/sdc-controller:0.3
@@ -1033,7 +1033,7 @@ Table of contents
 		```
 		 
 		```sh
-		 Befor:
+		 Before:
           containers:
            - name: {{ include "common.name" . }}
            image: 172.31.27.186:5000/onap/aai-babel:0.3
@@ -1112,10 +1112,139 @@ Table of contents
 
  - **sdc-tosca**
  
+     - Create aws ubuntu 18.04 VM with following specifications:
+   
+       ```sh
+       Instance type: t2.xlarge
+       Disk: 80 GB
+       Region: ohio
+       Security group: launch-wizard-19
+       ```
+	 - Setup jdk 11
+		
+	   ```sh
+	   $ sudo apt-get update
+	   $ sudo apt-get install openjdk-11-jdk
+	   $ java -version
+	   $ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+	   $ export PATH=$JAVA_HOME/bin:$PATH
+	   ```
+		
+	 - Setup docker
+		
+	   ```sh
+	   $ sudo apt update
+	   $ sudo apt-get remove docker docker-engine docker.io
+	   $ sudo apt install docker.io
+	   $ sudo systemctl start docker
+	   $ sudo systemctl enable docker
+	   $ sudo chmod 777 /var/run/docker.sock
+	   $ docker --version
+	   ```
+		
+	   - Verify that docker is installed properly:
+			
+		```sh
+		$ docker ps
+		```
+		
+	     **Note : If above steps are not worked refer:**
+		
+		  ```sh
+           https://dzone.com/articles/how-to-install-docker-on-ubuntu1804
+          ```
+			
+	 - Setup maven:
+	 
+	   ```sh
+	   $ sudo apt install maven
+	   $ mvn -version
+	   ```
+
+	 - Copy settings.xml to ~/.m2 directory
+	 
+	   ```sh
+	   $ cd /home/ubuntu/
+	   $ sudo mkdir .m2	
+       $ sudo chmod -R 777 .m2
+	   $ cd ~/.m2
+	   #copy settings.xml from following link:
+	   https://git.onap.org/oparent/plain/settings.xml
+	   $ vim settings.xml
+	   ```
+	   
+     - Clone sdc-tosca versions project which you want to build .jar  :
+     
+	 ```sh   
+     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.5
+     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.6.0
+     $ git clone https://github.com/onap/sdc-sdc-tosca --branch 1.5.1
+	 ```
+
+     - Commented out following code in sdc-sdc-tosca/src/main/java/org/onap/sdc/tosca/parser/impl/SdcToscaParserFactory.java
+
+       ```sh
+	    Before:
+  	     //Criticals
+	     int criticalsCount = criticalExceptions.size();
+	     if (criticalsCount > 0) {
+		  log.error("####################################################################################################");
+		  log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
+		  for (JToscaValidationIssue info : criticalExceptions) {
+			  log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
+		    }
+		  throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
+	     }
+	  
+	    After:
+
+  	     /* 
+	     Criticals
+	     int criticalsCount = criticalExceptions.size();
+	     if (criticalsCount > 0) {
+		  log.error("####################################################################################################");
+		  log.error("ToscaTemplate - verifyTemplate - {} Parsing Critical{} occurred...", criticalsCount, (criticalsCount > 1 ? "s" : ""));
+		  for (JToscaValidationIssue info : criticalExceptions) {
+			  log.error("JTosca Exception [{}]: {}. CSAR name - {}", info.getCode(),info.getMessage(), inputPath);
+		  }
+		  throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
+	    } */
+
+	
+     - build sdc-tosca project
+	 
+	   ```sh
+	 
+	   $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
+	   ```
+     - Then replace jar in .m2 directory while building onap components.	
+   
+       C:\Users\Administrator\.m2\repository\org\onap\sdc\sdc-tosca\sdc-tosca\1.6.5\sdc-tosca-1.6.5.jar
+  
+     - Note :
+       do same things for different version of sdc-tosca jar 
+	
+	
+	
+  - **sdc-distribution client
+    - need to clone sdc-distribution client github project and replace following
+      files with our files(INotificationData.java and NotificationDataImpl are available in SO)
+
+
+	  /home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/api/notification/INotificationData.java
+
+
+	  /home/ubuntu/sdc-sdc-distribution-client/sdc-distribution-client/src/main/java/org/onap/sdc/impl/NotificationDataImpl.java
+
+    - build using maven and replace in .m2 while building onap components
+
+	
+
+
+
  
  
  - **sdc-distribution-client**
  
  
-## List/Information of CCI Repositories
-
+## List Information of CCI Repositories
