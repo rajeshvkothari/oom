@@ -1208,7 +1208,6 @@ Table of contents
 		      }
 		     throw new JToscaException(String.format("CSAR Validation Failed. CSAR name - {}. Please check logs for details.", inputPath), JToscaErrorCodes.CSAR_TOSCA_VALIDATION_ERROR.getValue());
 	        } */
-
 	
      - Build sdc-tosca .jar :
 	 
@@ -1217,8 +1216,6 @@ Table of contents
 	   ```
   
      - **Note : do same things for different version of sdc-tosca jar** 
-	
-	
 	
  - **sdc distribution client**
      -----------------------
