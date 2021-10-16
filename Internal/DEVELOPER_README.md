@@ -378,7 +378,7 @@ Table of contents
 	 
 	To create SO images follow steps as follows:
 	
-	 - Setup jdk8:
+	 - Setup jdk 11:
 
 	   ```sh
 	   $ sudo apt-get update
@@ -1212,6 +1212,7 @@ Table of contents
      - Build sdc-tosca .jar :
 	 
 	   ```sh
+	    $ cd /home/ubuntu
 	    $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
 	   ```
   
@@ -1301,7 +1302,7 @@ Table of contents
 
 	   ```sh
 	
-	    private String serviceInvariantUUID;
+	    private String originalCsarUUID;
 	   
 	    @Override
            public String getOriginalCsarUUID() {
@@ -1317,12 +1318,10 @@ Table of contents
      - Build sdc-distribution-client .jar :
 	 
 	   ```sh
+	    $ cd /home/ubuntu
 	    $ mvn clean install -U -DskipTests=true -DskipUICleanup=true -Djacoco.skip=true -DskipPMD -Dmaven.test.skip=true -Dcheckstyle.skip
 	   ```
   
      - **Note : do same things for different version of sdc-distribution-client .jar** 
-	
-	
- 
- 
+
 ## List Information of CCI Repositories
