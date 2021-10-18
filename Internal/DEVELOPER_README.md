@@ -1323,9 +1323,9 @@ Table of contents
 		
 	   ```
 
-	  -  **Note : when we try to build jar of sdc-sdc-distribution-client-1.4.1 version then in case  created name of jar sdc-sdc-distribution-client-1.4.0.jar . so rename this sdc-sdc-distribution-client-1.4.0.jar with sdc-sdc-distribution-client-1.4.0.jar**
+	  -  **Note : While building jar of sdc-sdc-distribution-client-1.4.1 version it will create jar file with   sdc-sdc-distribution-client-1.4.0.jar this version and name. so rename this sdc-sdc-distribution-client-1.4.0.jar file with sdc-sdc-distribution-client-1.4.1.jar.**
  
-     - **Note : do same things for different version of sdc-distribution-client .jar** 
+      - **Note : do same things for different version of sdc-distribution-client .jar** 
 
 ## List Information of CCI Repositories
 
