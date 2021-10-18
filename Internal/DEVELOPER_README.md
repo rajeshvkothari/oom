@@ -1354,14 +1354,14 @@ Table of contents
 	**Note : Not added '_not_in_use' in following repo as it's has reference in 
 	   frankurt in 'onap-oom-integ' repo** 
 		
-		```sh
-		https://github.com/customercaresolutions/onap-oom-aai-integ  
-		https://github.com/customercaresolutions/onap-oom-robot-integ 
-	    ```
+	```sh
+	https://github.com/customercaresolutions/onap-oom-aai-integ  
+	https://github.com/customercaresolutions/onap-oom-robot-integ 
+	```
 
 	**Note : Not added '_not_in_use' in following repo as not able rename**
 	
-		```sh
-		https://github.com/customercaresolutions/puccini-so
-		https://github.com/customercaresolutions/onap-integ
-		```
+	```sh
+	https://github.com/customercaresolutions/puccini-so
+	https://github.com/customercaresolutions/onap-integ
+	```
