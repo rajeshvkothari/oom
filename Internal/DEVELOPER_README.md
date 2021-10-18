@@ -1328,3 +1328,40 @@ Table of contents
      - **Note : do same things for different version of sdc-distribution-client .jar** 
 
 ## List Information of CCI Repositories
+
+  - Following repositories are working repositories:
+  
+	```sh
+	https://github.com/customercaresolutions/tosca-models
+	https://github.com/customercaresolutions/puccini
+	https://github.com/customercaresolutions/onap-oom-integ
+	https://github.com/customercaresolutions/onap-so-integ
+	https://github.com/customercaresolutions/onap-vid-integ
+	https://github.com/customercaresolutions/onap-sdc-integ
+	```
+
+  - Following repositories are outdated or not usable.
+	
+	```sh
+	https://github.com/customercaresolutions/onap-oom-ansible_not_in_use
+	https://github.com/customercaresolutions/onap-oom-aai-integ-2403_not_in_use	
+	https://github.com/customercaresolutions/onap-oom-aai-integ  
+	https://github.com/customercaresolutions/onap-oom-robot-integ  	
+	https://github.com/customercaresolutions/puccini-so	
+	https://github.com/customercaresolutions/onap-utils
+	https://github.com/customercaresolutions/onap-integ
+	```
+	**Note : Not added '_not_in_use' in following repo as it's has reference in 
+	   frankurt in 'onap-oom-integ' repo** 
+		
+		```sh
+		https://github.com/customercaresolutions/onap-oom-aai-integ  
+		https://github.com/customercaresolutions/onap-oom-robot-integ 
+	    ```
+
+	**Note : Not added '_not_in_use' in following repo as not able rename**
+	
+		```sh
+		https://github.com/customercaresolutions/puccini-so
+		https://github.com/customercaresolutions/onap-integ
+		```
