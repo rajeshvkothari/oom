@@ -1426,14 +1426,14 @@ in third.
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	
-	  **IMPORTANT NOTE : Disable/Off "SSL certificate verification" from setting option**
+	  **IMPORTANT NOTE : To avoid SSL errors disable/off "SSL certificate verification" option from setting**
 	
 	  Use following Basic Authorization in all requests
       
 	  ```sh
 	  Authorization Type: Basic Auth
 	  Username : AAI
-	  Password) : AAI
+	  Password : AAI
 	  ```
 	  
 	  Use the following headers in a POSTMAN requests
@@ -1598,12 +1598,12 @@ in third.
 		
     - Update VID with the following REST API requests using POSTMAN
 	
-	  Use following Basic Authorization in all requests.
+	  Use following Basic Authorization in all requests
       
 	  ```sh
 	  Authorization Type: Basic Auth
 	  Username : AAI
-	  Password) : AAI
+	  Password : AAI
 	  ```
 	  
       Use the following headers in the POSTMAN request
