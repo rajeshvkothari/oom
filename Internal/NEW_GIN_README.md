@@ -1427,7 +1427,7 @@ in third.
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	
-	  **IMPORTANT NOTE : To avoid SSL errors disable/off "SSL certificate verification" option from setting**
+	  **IMPORTANT NOTE : To avoid SSL errors, disable "SSL certificate verification" option from POSTMAN settings**
 	
 	  Use following Basic Authorization in all requests
       
