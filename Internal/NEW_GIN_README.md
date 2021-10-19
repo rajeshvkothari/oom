@@ -1432,7 +1432,7 @@ in third.
 	  Use following Basic Authorization in all requests
       
 	  ```sh
-	  Authorization Type: Basic Auth
+	  Authorization Type : Basic Auth
 	  Username : AAI
 	  Password : AAI
 	  ```
@@ -1602,7 +1602,7 @@ in third.
 	  Use following Basic Authorization in all requests
       
 	  ```sh
-	  Authorization Type: Basic Auth
+	  Authorization Type : Basic Auth
 	  Username : AAI
 	  Password : AAI
 	  ```
