@@ -680,8 +680,7 @@ in third.
 	      ```sh
 	      $ cd ~/
 	      $ cp cciPrivateKey puccini/dvol/config
-		  $ cd /home/ubuntu/puccini/config/
-		  $ cp TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
+		  $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
 	      ```
 
         - Build Docker images and start Docker containers:
