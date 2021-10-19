@@ -665,6 +665,8 @@ in third.
 
 		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
 		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+		  
+		  argoTemplateType=containerSet | DAG
 		  ```
 
 		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
