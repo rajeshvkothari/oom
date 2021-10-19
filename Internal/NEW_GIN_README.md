@@ -1425,8 +1425,18 @@ in third.
 		"It looks like the webpage at https://sdc.api.fe.simpledemo.onap.org:30207/sdc1/portal might be having issues, or it may have moved permanently to a new web address."
 	  
     - Update AAI with the following REST requests using POSTMAN.
+	
+	  **Note : Disable/Off "SSL certificate verification" from setting option**
+	
+	  Use following Basic Authorization in all requests
+      
+	  ```sh
+	  Authorization Type: Basic Auth
+	  Username : AAI
+	  Password) : AAI
+	  ```
 	  
-	  Use the following headers in a POSTMAN request
+	  Use the following headers in a POSTMAN requests
 	  
       ```sh
       headers :
@@ -1587,6 +1597,14 @@ in third.
 		After sending a request check whether it returns the "201 Created" status code in POSTMAN.
 		
     - Update VID with the following REST API requests using POSTMAN
+	
+	  **Note : Use following Basic Authorization in all requests.**
+      
+	  ```sh
+	  Authorization Type: Basic Auth
+	  Username : AAI
+	  Password) : AAI
+	  ```
 	  
       Use the following headers in the POSTMAN request
 	  
