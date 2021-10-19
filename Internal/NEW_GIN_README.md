@@ -1598,7 +1598,7 @@ in third.
 		
     - Update VID with the following REST API requests using POSTMAN
 	
-	  **Note : Use following Basic Authorization in all requests.**
+	  Use following Basic Authorization in all requests.
       
 	  ```sh
 	  Authorization Type: Basic Auth
