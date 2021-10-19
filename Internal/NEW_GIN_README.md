@@ -1426,7 +1426,7 @@ in third.
 	  
     - Update AAI with the following REST requests using POSTMAN.
 	
-	  **Note : Disable/Off "SSL certificate verification" from setting option**
+	  **IMPORTANT NOTE : Disable/Off "SSL certificate verification" from setting option**
 	
 	  Use following Basic Authorization in all requests
       
@@ -1653,7 +1653,7 @@ in third.
 	    }
         ```
 		
-		After sending a request check whether it returns the "200 OK" status code in POSTMAN and msg as follows:
+		After sending a request check whether it returns the "200 OK" status code in POSTMAN and message as follows:
 		
 		```sh
 		{
