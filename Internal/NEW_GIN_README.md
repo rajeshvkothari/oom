@@ -179,9 +179,7 @@ in third.
 		  
 - **Creating Environment for Docker container based testing**
     -------------------------------------------------------
-	
-	**IMPORTANT NOTE : Only puccini-workflow engine is supported for docker container based deployment. Argo workflow engine can only be used in ONAP OOM based deployment.**
-    
+
   - **DMaaP Server**
       ------------
       
@@ -858,13 +856,7 @@ in third.
 	  
 	  ```sh
 	  $ kubectl create ns onap
-	  
-	  # For containerSet use following command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
-	  
-	  # For DAG use the following command:
-	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
-	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
 	  $ gunzip argo-linux-amd64.gz
 	  $ chmod +x argo-linux-amd64
@@ -1105,9 +1097,7 @@ in third.
 	  ```
 	  
 	- Copy latest models csars to ~/onap-oom-integ/cci directory in ONAP_OOM_DEMO VM.
-	
-
-		  
+			  
 ## Building Tosca Model Csars
 
   **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.**
@@ -1173,10 +1163,7 @@ in third.
  
 - **Docker container based testing**
     ------------------------------ 
-	
-  **IMPORTANT NOTE : Currently, in 'Docker container based testing', only 'puccini-workflow' engine type is supported. 
-  So, 'workflow_engine_type' property in the metadata section of main service template of model MUST be set to puccini-workflow'. Refer to [Building Tosca Model Csars](#Building-Tosca-Model-Csars) for more details.**
-     
+   
   Login into Demo Server and fire the following commands to copy csars:
   
   ```sh
