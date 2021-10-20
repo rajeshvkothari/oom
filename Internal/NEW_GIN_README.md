@@ -665,8 +665,6 @@ in third.
 
 		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
 		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-		  
-		  argoTemplateType=containerSet | DAG
 		  ```
 
 		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
@@ -860,7 +858,13 @@ in third.
 	  
 	  ```sh
 	  $ kubectl create ns onap
+	  
+	  # For containerSet use following command:
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/onap-oom-integ/argo-config/workflow-controller-configmap.yaml 
+	  
+	  # For DAG use the following command:
+	  $ sudo kubectl apply -n onap -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/namespace-install.yaml 
+	  
 	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
 	  $ gunzip argo-linux-amd64.gz
 	  $ chmod +x argo-linux-amd64
@@ -1598,14 +1602,6 @@ in third.
 		After sending a request check whether it returns the "201 Created" status code in POSTMAN.
 		
     - Update VID with the following REST API requests using POSTMAN
-	
-	  Use following Basic Authorization in all requests
-      
-	  ```sh
-	  Authorization Type : Basic Auth
-	  Username : AAI
-	  Password : AAI
-	  ```
 	  
       Use the following headers in the POSTMAN request
 	  
