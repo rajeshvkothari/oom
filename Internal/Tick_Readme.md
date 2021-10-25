@@ -28,11 +28,10 @@ Table of contents
     ------------
 	These server is required for deploying tickclamp model. 
 
-	 - Create AWS VM in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
+	 - Create AWS VM in the Ohio region with name as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	    ```sh
-	    VM1 Name: Tickbonap Server 
-
+	    VM Name: Tickbonap Server 
         Image: ubuntu-18.04
         Instance Type: t2.large
         KeyPair : cciPublicKey
@@ -745,7 +744,7 @@ Table of contents
     # e.g: https://3.142.145.230:31325
 	```
 
-    After opening argo GUI, Click on the 'workflow' with name starting with the 'service instance' name provided in 'Create service instance and VNF from VID' section of 'ONAP OOM testing'.
+    After opening argo GUI, Click on the 'workflow' with name starting with the 'instance name' name provided in POSTMAN.
 	
     This will display workflow steps in Tree Format. If the model is deployed successfully, then it will show a 'right tick' symbol with green background.
 
