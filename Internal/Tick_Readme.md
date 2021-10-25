@@ -795,27 +795,36 @@ Table of contents
 	
 	- After login successfully following tabs are showing on Chronograf GUI :
 	  
-	  - Status
+	  - Status:
+	  
 	    It shows the status of all alerts, everyday events, etc.
 		
-	  - Explore
+	  - Explore:
+	  
 	    This tab helps to create a query, Dashboard as per requirements, and also helps in exploring the databases. 
 	  
-	  - Dashboard
+	  - Dashboard:
+	  
 	    This tab shows all the Dashboards which are pre-created or created while exploring.
 		
-	  - Altering
+	  - Altering:
+	  
 	    This tab, help to set alert's on different tag and fields.
 		
-	    - Manage Task
+	    - Manage Task:
+		
 		  Here, all alert's rule is created as per requirements. 
-	    - Alert History
+		  
+	    - Alert History:
+		
 		  Here, All rules alert history display rule by rule.
 		  
-	  - Log Viewer
+	  - Log Viewer:
 	  
-	  - InfuxDB Admin
+	  - InfuxDB Admin:
+	  
 	    This tab helps to create, manage databases and users. 
 	  
-	  - Configuration
+	  - Configuration:
+	  
 	    This tab helps to manage all Kapaciters and their connection.# TICKCLAMP 
