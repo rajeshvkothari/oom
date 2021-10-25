@@ -26,7 +26,7 @@ Table of contents
 
 - **Tickbonap Server**
     ------------
-	These server is required for deploying tickclamp model. 
+	This server is required for deploying the tickclamp model. 
 
 	 - Create AWS VM in the Ohio region with name as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -113,7 +113,7 @@ Table of contents
 	    $ sudo systemctl daemon-reload && sudo systemctl restart k3s
 	    ```
 		 
-		**IMPORTANT NOTE : Above YAML must be in valid format and proper indentation must be used.**
+		**IMPORTANT NOTE: Above YAML must be in a valid format and proper indentation must be used.**
 		
           Use following link to verify correctness of YAML:
 
@@ -127,12 +127,24 @@ Table of contents
 		
 		 ```sh
 		 $ kubectl config get-contexts
+		 
+		 ubuntu@ip-172-31-18-15:~$ kubectl config get-contexts
+		 CURRENT   NAME   CLUSTER   AUTHINFO   NAMESPACE
+		 *         tick   tick      tick
 		 ```
 		  
 	   - Run the following command to get all pods:
 		
 		 ```sh
 		 $ kubectl get pods --all-namespaces
+		 ubuntu@ip-172-31-18-15:~$ kubectl get pods --all-namespaces
+		 NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
+		 kube-system   local-path-provisioner-64d457c485-9rt7f   1/1     Running     0          4m22s
+		 kube-system   metrics-server-7b4f8b595-t4ffw            1/1     Running     0          4m22s
+		 kube-system   helm-install-traefik-9w6sx                0/1     Completed   0          4m22s
+		 kube-system   svclb-traefik-vd27f                       2/2     Running     0          4m8s
+		 kube-system   coredns-5d69dc75db-sjf4c                  1/1     Running     0          4m22s
+		 kube-system   traefik-5dd496474-4mxtd                   1/1     Running     0          4m8s
 		 ```
 		  
 - **Creating Environment for Docker container based testing**
@@ -152,7 +164,7 @@ Table of contents
 	  Security group: launch-wizard-19
       ```
 	  
-	  Note : cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
+	  Note: cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
 	  
     - Setup Docker on DMaaP Server:
 	
@@ -169,7 +181,7 @@ Table of contents
       $ sudo chmod 777 /var/run/docker.sock
       ```
 	  
-	  Note : 172.31.27.186 is the private IP address of CCI_REPO VM.
+	  Note: 172.31.27.186 is the private IP address of CCI_REPO VM.
 	  
       Make sure Docker is installed properly by running the following command:
 	  
@@ -361,7 +373,7 @@ Table of contents
         argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
 	  ```
 	  
-	  Note : 31325 is the external port of argo-server.
+	  Note: 31325 is the external port of argo-server.
 	  
   - **Tosca images**
       ------------
@@ -642,7 +654,7 @@ Table of contents
 			  
 ## Building Tosca Model Csars
 
-  **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.**
+  **IMPORTANT NOTE: By default, GIN uses the 'argo-workflow' engine to deploy models. To use the 'puccini-workflow' engine, add workflow_engine_type  in the 'metadata' section of the main service template of a model.**
        
   **E.g : To use 'puccini-workflow' engine for tick deployment, add following in /home/ubuntu/tosca-models/cci/tickclamp/clamp_service.yaml**
   
@@ -669,7 +681,7 @@ Table of contents
     $ ./build.sh
     ```  
    
-    Check whether tickclamp csar are created in /home/ubuntu/tosca-models/cci directory.
+    Check whether tickclamp csar is created in /home/ubuntu/tosca-models/cci directory.
     
 ## Deployment Steps
  
@@ -685,7 +697,7 @@ Table of contents
   $ cd ~/
   $ cd tosca-models/cci
   $ sudo chmod 777 -R /home/ubuntu/puccini/dvol/models
-  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+  $ cp tickclamp.csar /home/ubuntu/puccini/dvol/models
   ```
 
   - Use the following request to store the models in Dgraph:
@@ -739,7 +751,7 @@ Table of contents
   - Use following URL to open Argo GUI in local machine browser:
        
     ```sh
-	https://{IP_ADDR_OF_DEM_SERVER}:{EXTERNAL_PORT_OF_ARGO_SERVER}
+	https://{IP_ADDR_OF_DEMO_SERVER}:{EXTERNAL_PORT_OF_ARGO_SERVER}
 
     # e.g: https://3.142.145.230:31325
 	```
@@ -752,7 +764,58 @@ Table of contents
   
   - Verify the tickclamp model:
   
-	- For puccini-workflow:
+	```sh
+	$ kubectl get pods -n tick
 	
-    - For argo-workflow:
+	ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	NAME                                        READY   STATUS    RESTARTS   AGE
+	tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	tick-influx-influxdb-0                      1/1     Running   0          15s
+	tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	```
+
+- Use following URL to open Chronograf GUI in local machine browser:
+       
+    ```sh
+	http://{IP_ADDR_OF_TICKBONAP_VM}:30080
+
+    # e.g: https://3.142.145.230:30080
+	```
 	
+	- After opening Chronograf GUI, follow the below steps to login:
+	
+	  - Click on 'Get Start'.
+	  - Replace Connection URL "http://localhost:8086" with "http://tick-influx-influxdb:8086" and also give connection name to Influxdb.
+	  - Select the pre-created Dashboard e.g System, Docker.
+	  - Replace Kapaciter URL "http://tick-influx-influxdb:9092/" with "http://tick-kap-kapacitor:9092/" and give name to Kapaciter.
+	  - Then, click on 'Continue' and In the next step click on 'View all connection'.
+	
+	
+	- After login successfully following tabs are showing on Chronograf GUI :
+	  
+	  - Status
+	    It shows the status of all alerts, everyday events, etc.
+		
+	  - Explore
+	    This tab helps to create a query, Dashboard as per requirements, and also helps in exploring the databases. 
+	  
+	  - Dashboard
+	    This tab shows all the Dashboards which are pre-created or created while exploring.
+		
+	  - Altering
+	    This tab, help to set alert's on different tag and fields.
+		
+	    - Manage Task
+		  Here, all alert's rule is created as per requirements. 
+	    - Alert History
+		  Here, All rules alert history display rule by rule.
+		  
+	  - Log Viewer
+	  
+	  - InfuxDB Admin
+	    This tab helps to create, manage databases and users. 
+	  
+	  - Configuration
+	    This tab helps to manage all Kapaciters and their connection.# TICKCLAMP 
