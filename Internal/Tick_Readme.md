@@ -69,6 +69,7 @@ Table of contents
   	     $ sudo mkdir ~/.kube 
          $ sudo cp /home/ubuntu/kubeconfig .kube/config
          $ sudo chmod 777 .kube/config
+		 $ k3sup install --host {PRIVATE_IP_ADDR_OF_TICKBONAP_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context tick
 	     ```
 	  
 	    - Run the following commands to install python,jq, and AWS CLI:
@@ -79,8 +80,8 @@ Table of contents
          $ sudo apt-get install -y python3-dev python3-pip
          $ sudo pip3 install --upgrade pip
          $ sudo pip3 install simplejson
-         $ sudo apt-get install jq
-         $ sudo apt install awscli
+         $ sudo apt-get install -y jq
+         $ sudo apt install -y awscli
          $ sudo apt install python-pip
          $ pip2 install simplejson
          ```	
@@ -99,7 +100,6 @@ Table of contents
 	
 	     ```sh
 	     $ sudo apt update
-         $ sudo apt install jq
          $ sudo apt install socat
 		 $ sudo mkdir -p /etc/rancher/k3s
          $ sudo chmod -R 777 /etc/rancher/k3s
@@ -273,8 +273,8 @@ Table of contents
 	
       ```sh
       $ sudo apt update
-      $ sudo apt install docker.io
-      $ sudo apt install docker-compose
+      $ sudo apt install -y docker.io
+      $ sudo apt install -y docker-compose
 	  
 	  # Create a file named daemon.json in /etc/docker and add the following content to it.
          { "insecure-registries":["172.31.27.186:5000"] }
@@ -702,7 +702,7 @@ Table of contents
 
   - Use the following request to store the models in Dgraph:
 	  
-    For ric model use following:
+    For tickclamp model use following:
 	  
     ```sh
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
@@ -724,7 +724,7 @@ Table of contents
 
   - Create service instance with deployment:
 	
-	For tickclamp model:
+	For tickclamp model use following:
 	
 	```sh			
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
@@ -827,4 +827,4 @@ Table of contents
 	  
 	  - Configuration:
 	  
-	    This tab helps to manage all Kapaciters and their connection.# TICKCLAMP 
+	    This tab helps to manage all Kapaciters and their connection. 
