@@ -680,13 +680,13 @@ in third.
 		  argoTemplateType=containerSet | DAG
 		  ```
 
-		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow. In case of tickclamp model, it should be set to {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
+		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran and tickclmap models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
 
 		  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
 
 		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
 
-		  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
+		  Note4: If ORAN servers have not been created, then keep tickServerIP, ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of tickServerIP, ricServer and nonrtricServer(created in Pre Deployment Steps').
 
 		  Note5 : In argo workflow, there are two ways for executing argo templates.
 		
@@ -1933,9 +1933,25 @@ in third.
 	  
   - Verify tickclamp model:
     
-	- For puccini-workflow and argo-workflow:
+	- For puccini-workflow:
 	
       To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
+  
+	  ```sh
+	  $ kubectl get pods -n tick
+	
+	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	  NAME                                        READY   STATUS    RESTARTS   AGE
+	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	  tick-influx-influxdb-0                      1/1     Running   0          15s
+	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	  ```
+	  
+    - For argo-workflow:
+	
+      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Tickclamp Server:
   
 	  ```sh
 	  $ kubectl get pods -n tick
