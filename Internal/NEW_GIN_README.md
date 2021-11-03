@@ -1140,12 +1140,6 @@ in third.
   ```sh
   metadata:
    workflow_engine_type : puccini-workflow
-  
-  # For tickclamp model add metdata section in service.yaml 
-  metadata:
-   gwec-image: kuber_0.1
-   argowfsteps: single-wfc
-   workflow_engine_type : puccini-workflow
   ```
   
   Login into Demo Server or OOM VM and run the following commands:
@@ -1832,43 +1826,6 @@ in third.
 	  - Select the pre-created Dashboard e.g System, Docker.
 	  - Replace Kapaciter URL "http://tick-influx-influxdb:9092/" with "http://tick-kap-kapacitor:9092/" and give name to Kapaciter.
 	  - Then, click on 'Continue' and In the next step click on 'View all connection'.
-	
-	
-	- After login successfully following tabs are showing on Chronograf GUI :
-	  
-	  - Status:
-	  
-	    It shows the status of all alerts, everyday events, etc.
-		
-	  - Explore:
-	  
-	    This tab helps to create a query, Dashboard as per requirements, and also helps in exploring the databases. 
-	  
-	  - Dashboard:
-	  
-	    This tab shows all the Dashboards which are pre-created or created while exploring.
-		
-	  - Altering:
-	  
-	    This tab, help to set alert's on different tag and fields.
-		
-	    - Manage Task:
-		
-		  Here, all alert's rule is created as per requirements. 
-		  
-	    - Alert History:
-		
-		  Here, All rules alert history display rule by rule.
-		  
-	  - Log Viewer:
-	  
-	  - InfuxDB Admin:
-	  
-	    This tab helps to create, manage databases and users. 
-	  
-	  - Configuration:
-	  
-	    This tab helps to manage all Kapaciters and their connection. 
 		
 - Use the following steps to verify sdwan, firewall, tickclamp, oran models are deployed successfully. 
   
