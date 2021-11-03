@@ -1957,6 +1957,24 @@ in third.
 	- For puccini-workflow or argo-workflow:
 
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
+	  
+  - Verify tickclamp model:
+    
+	- For public-workflow:
+	
+      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
+  
+	  ```sh
+	  $ kubectl get pods -n tick
+	
+	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	  NAME                                        READY   STATUS    RESTARTS   AGE
+	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	  tick-influx-influxdb-0                      1/1     Running   0          15s
+	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	  ```
 
   - Verify nonrtric model:
 
@@ -2001,24 +2019,6 @@ in third.
 	  a1-sim-osc-1                               1/1     Running   0          2m50s
 	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
 	  ```     
-
-  - Verify tickclamp model:
-    
-	- For public-workflow:
-	
-      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
-  
-	  ```sh
-	  $ kubectl get pods -n tick
-	
-	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
-	  NAME                                        READY   STATUS    RESTARTS   AGE
-	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
-	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
-	  tick-influx-influxdb-0                      1/1     Running   0          15s
-	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
-	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
-	  ```
 	
   - Verify ric model:
 
