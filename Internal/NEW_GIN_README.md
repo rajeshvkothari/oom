@@ -4,8 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [ORAN Servers](#ORAN-Servers)
-	   * [Bonap Server](#Bonap-Server)
+     * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -41,7 +40,7 @@ to be tested in docker container environment. This is not required for ONAP OOM 
 So, for example, to deploy SDWAN in ONAP OOM, ignore first two and only perform steps given
 in third.
 
-- **ORAN Servers**
+- **ORAN and Tickclamp Servers**
     ------------
 	These servers are required for deploying ORAN models. 
 	
@@ -61,9 +60,6 @@ in third.
          Disk: 80GB
 	     Security group: launch-wizard-19
 	    ```
-	 
-	 -  **Bonap Server**
-	      ------------
 		  
 	 - Login into Bonap Server and perform steps as follows:
 	
