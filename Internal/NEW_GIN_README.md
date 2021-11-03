@@ -62,8 +62,9 @@ in third.
 	     Security group: launch-wizard-19
 	    ```
 	 
-	 **Bonap Servers**
-	   ------------
+	 -  **Bonap Server**
+	      ------------
+		  
 	 - Login into Bonap Server and perform steps as follows:
 	
 	    - Setup kubernetes
@@ -92,7 +93,7 @@ in third.
          $ sudo apt install jq
   	     $ k3sup install --ip {PRIVATE_IP_ADDR_OF__RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
 		 
-		 #For tickclamp 
+		 # For tickclamp 
 		 $ k3sup install --ip {PRIVATE_IP_ADDR_OF_TICKCLAMP_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context tick
 		 
   	     $ sudo mkdir ~/.kube 
@@ -104,7 +105,7 @@ in third.
          $ k3sup install --host {PRIVATE_IP_ADDR_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config  --merge --context default
          $ k3sup install --host {PRIVATE_IP_ADDR_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
 		 
-		 #For tickclamp
+		 # For tickclamp
 		 $ k3sup install --host {PRIVATE_IP_ADDR_OF_TICKCLAMP_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context tick
 	     ```
 	  
@@ -171,7 +172,7 @@ in third.
 			default   default   default
 		   *         ric       ric       ric
 		   
-		 #In case of tickclamp   
+		 # In case of tickclamp   
 		 $ ubuntu@ip-172-31-18-15:~$ kubectl config get-contexts
 		   CURRENT   NAME   CLUSTER   AUTHINFO   NAMESPACE
 		   *         tick   tick      tick
@@ -2002,18 +2003,22 @@ in third.
 	  ```     
 
   - Verify tickclamp model:
-  
-	```sh
-	$ kubectl get pods -n tick
+    
+	- For public-workflow:
 	
-	ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
-	NAME                                        READY   STATUS    RESTARTS   AGE
-	tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
-	tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
-	tick-influx-influxdb-0                      1/1     Running   0          15s
-	tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
-	tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
-	```
+      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
+  
+	  ```sh
+	  $ kubectl get pods -n tick
+	
+	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	  NAME                                        READY   STATUS    RESTARTS   AGE
+	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	  tick-influx-influxdb-0                      1/1     Running   0          15s
+	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	  ```
 	
   - Verify ric model:
 
