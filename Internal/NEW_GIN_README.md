@@ -5,6 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN Servers](#ORAN-Servers)
+	   * [Bonap Server](#Bonap-Server)
      * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
        * [DMaaP Server](#DMaaP-Server)
        * [Demo Server](#Demo-Server)
@@ -46,12 +47,13 @@ in third.
 	
 	**IMPORTANT NOTE : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
 
-	 - Create three AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
+	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	    ```sh
 	     VM1 Name: Bonap Server 
          VM2 Name: ric Server
          VM3 Name: nonrtric Server
+		 VM4 Name: tickclamp Server
 
          Image: ubuntu-18.04
          Instance Type: t2.2xlarge
@@ -59,7 +61,9 @@ in third.
          Disk: 80GB
 	     Security group: launch-wizard-19
 	    ```
-	
+	 
+	 **Bonap Servers**
+	   ------------
 	 - Login into Bonap Server and perform steps as follows:
 	
 	    - Setup kubernetes
@@ -87,6 +91,10 @@ in third.
          $ sudo apt-get install socat
          $ sudo apt install jq
   	     $ k3sup install --ip {PRIVATE_IP_ADDR_OF__RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context ric
+		 
+		 #For tickclamp 
+		 $ k3sup install --ip {PRIVATE_IP_ADDR_OF_TICKCLAMP_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --context tick
+		 
   	     $ sudo mkdir ~/.kube 
          $ sudo cp /home/ubuntu/kubeconfig .kube/config
          $ sudo chmod 777 .kube/config
@@ -95,6 +103,9 @@ in third.
     
          $ k3sup install --host {PRIVATE_IP_ADDR_OF_NONRTRIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config  --merge --context default
          $ k3sup install --host {PRIVATE_IP_ADDR_OF_RIC_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context ric
+		 
+		 #For tickclamp
+		 $ k3sup install --host {PRIVATE_IP_ADDR_OF_TICKCLAMP_VM} --user ubuntu --ssh-key $HOME/.ssh/cciPrivateKey --local-path ~/.kube/config --merge --context tick
 	     ```
 	  
 	    - Run the following commands to install python,jq, and AWS CLI:
@@ -121,7 +132,7 @@ in third.
          $ cp cciPrivateKey onap-oom-integ/cci
          ```	  
     
-     - Login into ric Server and nonrtric Server and run the following commands:
+     - Login into ric, nonrtric, tickclamp Servers and run the following commands:
 	
 	     ```sh
 	     $ sudo apt update
@@ -150,7 +161,7 @@ in third.
 		
      - Login into Bonap Server and run the following commands to check clustering setup:
 	
-	   - Verify 'ric' and 'default' contexts are setup:  
+	   - Verify 'ric', 'default' and 'tick' contexts are setup:  
 		
 		 ```sh
 		 $ kubectl config get-contexts
@@ -159,6 +170,11 @@ in third.
 		   CURRENT   NAME      CLUSTER   AUTHINFO   NAMESPACE
 			default   default   default
 		   *         ric       ric       ric
+		   
+		 #In case of tickclamp   
+		 $ ubuntu@ip-172-31-18-15:~$ kubectl config get-contexts
+		   CURRENT   NAME   CLUSTER   AUTHINFO   NAMESPACE
+		   *         tick   tick      tick
 		 ```
 		  
 	   - Run the following command to get all pods:
@@ -663,34 +679,15 @@ in third.
 
 		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
 		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-		  argoTemplateType=containerSet | DAG
 		  ```
 
-		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
+		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow. In case of tickclamp model, it should be set to {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
 
 		  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
 
 		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
 
 		  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
-		  
-		  Note5 : In argo workflow, there are two ways for executing argo templates.
-		
-           - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
-				
-	          For using containerSet based argo template use as follows:
-	    
-		     ```sh
-		     argoTemplateType=containerSet
-		     ```
-			
-           - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
-				
-	          For using DAG-based argo template use as follows:
-		
-		      ```sh	
-		      argoTemplateType=DAG
-		      ```
 		   
         - Copy files as given follows:
 	  
@@ -1126,6 +1123,12 @@ in third.
   ```sh
   metadata:
    workflow_engine_type : puccini-workflow
+  
+  # For tickclamp model add metdata section in service.yaml 
+  metadata:
+   gwec-image: kuber_0.1
+   argowfsteps: single-wfc
+   workflow_engine_type : puccini-workflow
   ```
   
   Login into Demo Server or OOM VM and run the following commands:
@@ -1172,6 +1175,11 @@ in third.
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/ts
     $ ./build.sh
+	```
+  - TICKCLAMP:
+    ```sh
+	$ cd /home/ubuntu/tosca-models/cci/tickclamp
+    $ ./build.sh  
     ```
    
     Check whether all csar are created in /home/ubuntu/tosca-models/cci directory.
@@ -1192,7 +1200,7 @@ in third.
   $ cd ~/
   $ cd tosca-models/cci
   $ sudo chmod 777 -R /home/ubuntu/puccini/dvol/models
-  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar /home/ubuntu/puccini/dvol/models
+  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar tickclamp.csar /home/ubuntu/puccini/dvol/models
   ```
 
   - Use the following request to store the models in Dgraph:
@@ -1232,6 +1240,26 @@ in third.
 	  "inputsUrl": ""
 	}
     ```
+	
+	For tickclamp model use following:
+	
+	```sh
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+	{
+	  "url": "/opt/app/models/tickclamp.csar",
+	  "resolve": true,
+	  "coerce": false,
+	  "quirks": [
+			"data_types.string.permissive"
+		],
+	  "output": "./tickclamp-dgraph-clout.json",
+	  "inputs": {
+		  "helm_version": "2.17.0",
+		  "k8scluster_name": "tick"
+	   },
+	  "inputsUrl": ""
+	}
+	```
 	  
   - Create service instance without deployment:
 	
@@ -1263,6 +1291,13 @@ in third.
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	  ```
+	  
+	  **Tickclamp:**
+	  ```sh
+	    "inputs":{"helm_version": "2.17.0", "k8scluster_name": "tick"},
+        "inputsUrl": "",
+        "service": "zip:/opt/app/models/tickclamp.csar!/clamp_service.yaml"
 	  ```
 	  
 	  **Ric:**
@@ -1330,6 +1365,13 @@ in third.
 	    "inputs":"",
 	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
 	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	  ```
+	  
+	  **Tickclamp:**
+	  ```sh
+	    "inputs":{"helm_version": "2.17.0", "k8scluster_name": "tick"},
+        "inputsUrl": "",
+        "service": "zip:/opt/app/models/tickclamp.csar!/clamp_service.yaml"
 	  ```
 	  
 	  **Ric:**
@@ -1758,7 +1800,60 @@ in third.
 	
     This will display workflow steps in Tree Format. If the model is deployed successfully, then it will show a 'right tick' symbol with green background.
 
-- Use the following steps to verify sdwan or firewall models are deployed successfully. 
+- Use following URL to open Chronograf GUI in local machine browser:
+       
+    ```sh
+	http://{IP_ADDR_OF_TICKBONAP_VM}:30080
+
+    # e.g: http://23.124.125.320:30080
+	```
+	
+	- After opening Chronograf GUI, follow the below steps to login:
+	
+	  - Click on 'Get Start'.
+	  - Replace Connection URL "http://localhost:8086" with "http://tick-influx-influxdb:8086" and also give connection name to Influxdb.
+	  - Select the pre-created Dashboard e.g System, Docker.
+	  - Replace Kapaciter URL "http://tick-influx-influxdb:9092/" with "http://tick-kap-kapacitor:9092/" and give name to Kapaciter.
+	  - Then, click on 'Continue' and In the next step click on 'View all connection'.
+	
+	
+	- After login successfully following tabs are showing on Chronograf GUI :
+	  
+	  - Status:
+	  
+	    It shows the status of all alerts, everyday events, etc.
+		
+	  - Explore:
+	  
+	    This tab helps to create a query, Dashboard as per requirements, and also helps in exploring the databases. 
+	  
+	  - Dashboard:
+	  
+	    This tab shows all the Dashboards which are pre-created or created while exploring.
+		
+	  - Altering:
+	  
+	    This tab, help to set alert's on different tag and fields.
+		
+	    - Manage Task:
+		
+		  Here, all alert's rule is created as per requirements. 
+		  
+	    - Alert History:
+		
+		  Here, All rules alert history display rule by rule.
+		  
+	  - Log Viewer:
+	  
+	  - InfuxDB Admin:
+	  
+	    This tab helps to create, manage databases and users. 
+	  
+	  - Configuration:
+	  
+	    This tab helps to manage all Kapaciters and their connection. 
+		
+- Use the following steps to verify sdwan, firewall, tickclamp, oran models are deployed successfully. 
   
   - Verify the sdwan model:
   
@@ -1906,6 +2001,20 @@ in third.
 	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
 	  ```     
 
+  - Verify tickclamp model:
+  
+	```sh
+	$ kubectl get pods -n tick
+	
+	ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	NAME                                        READY   STATUS    RESTARTS   AGE
+	tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	tick-influx-influxdb-0                      1/1     Running   0          15s
+	tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	```
+	
   - Verify ric model:
 
     - For puccini-workflow:
@@ -2036,7 +2145,6 @@ in third.
 		{"instances":null,"name":"qp","status":"deployed","version":"1.0"}
       ```
 		  
-
   - Verify qp-driver model:
 
 	- For puccini-workflow:
