@@ -676,6 +676,8 @@ in third.
 
 		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
 		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+
+		  argoTemplateType=containerSet | DAG
 		  ```
 
 		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow. In case of tickclamp model, it should be set to {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
@@ -685,7 +687,25 @@ in third.
 		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
 
 		  Note4: If ORAN servers have not been created, then keep ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of ricServer and nonrtricServer(created in Pre Deployment Steps').
-		   
+
+		  Note5 : In argo workflow, there are two ways for executing argo templates.
+		
+           - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
+				
+	          For using containerSet based argo template use as follows:
+	    
+		     ```sh
+		     argoTemplateType=containerSet
+		     ```
+			
+           - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
+				
+	          For using DAG-based argo template use as follows:
+		
+		      ```sh	
+		      argoTemplateType=DAG
+		      ```
+		
         - Copy files as given follows:
 	  
 	      ```sh
@@ -2145,6 +2165,7 @@ in third.
 		100    85  100    67  100    18     45     12  0:00:01  0:00:01 --:--:--    57
 		{"instances":null,"name":"qp","status":"deployed","version":"1.0"}
       ```
+	
 		  
   - Verify qp-driver model:
 
