@@ -1933,7 +1933,7 @@ in third.
 	  
   - Verify tickclamp model:
     
-	- For public-workflow:
+	- For puccini-workflow and argo-workflow:
 	
       To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
   
