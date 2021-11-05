@@ -42,9 +42,10 @@ in third.
 
 - **ORAN and Tickclamp Servers**
     ------------
-	These servers are required for deploying ORAN models. 
+	These servers are required for deploying ORAN models and tickclamp model. 
 	
-	**IMPORTANT NOTE : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
+	**IMPORTANT NOTE 1 : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
+	**IMPORTANT NOTE 2 : tickclamp server is required ONLY if tickclamp model need to deploy. ric and nonrtric server is required ONLY if oran models need to deploy.**
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -686,7 +687,7 @@ in third.
 
 		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
 
-		  Note4: If ORAN servers have not been created, then keep tickServerIP, ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of tickServerIP, ricServer and nonrtricServer(created in Pre Deployment Steps').
+		  Note4: If ORAN and Tick servers have not been created, then keep tickServerIP, ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of tickServerIP, ricServer and nonrtricServer(created in Pre Deployment Steps').
 
 		  Note5 : In argo workflow, there are two ways for executing argo templates.
 		
@@ -743,6 +744,8 @@ in third.
 		  
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
+	
+	**Currently tickclamp model deployment support only in docker based container testing Environment, not in an OOM Environment**
   
   - **OOM DEMO Server**
 	  ---------------
@@ -1811,7 +1814,7 @@ in third.
 	
     This will display workflow steps in Tree Format. If the model is deployed successfully, then it will show a 'right tick' symbol with green background.
 
-- Use following URL to open Chronograf GUI in local machine browser:
+- After, deploying tickclamp model use following URL to open Chronograf GUI in local machine browser:
        
     ```sh
 	http://{IP_ADDR_OF_TICKBONAP_VM}:30080
