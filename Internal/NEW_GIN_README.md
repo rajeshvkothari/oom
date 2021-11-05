@@ -746,7 +746,7 @@ in third.
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
 	
-	**Currently tickclamp model deployment support only in docker based container testing Environment, not in an OOM Environment**
+	**IMPORTANT NOTE : Currently tickclamp model deployment support only in docker based container testing Environment, not in an OOM Environment**
   
   - **OOM DEMO Server**
 	  ---------------
