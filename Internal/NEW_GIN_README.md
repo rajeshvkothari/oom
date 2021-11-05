@@ -677,7 +677,8 @@ in third.
 		  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER} 
 
 		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
-		  nonrtricServerIP={{PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+		  nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+		  tickServerIP={PRIVATE_IP_OF_TICKCLAMP_VM}
 
 		  argoTemplateType=containerSet | DAG
 		  ```
