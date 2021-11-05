@@ -45,6 +45,7 @@ in third.
 	These servers are required for deploying ORAN models and tickclamp model. 
 	
 	**IMPORTANT NOTE 1 : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
+	
 	**IMPORTANT NOTE 2 : tickclamp server is required ONLY if tickclamp model need to deploy. ric and nonrtric server is required ONLY if oran models need to deploy.**
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
