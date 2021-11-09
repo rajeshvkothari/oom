@@ -30,7 +30,7 @@ Table of contents
 There are three sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[ORAN Servers](#ORAN-Servers) should be completed only if ORAN models are to be deployed.
+[ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN models are to be deployed.
 
 [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing) should be completed only if deployment is
 to be tested in docker container environment. This is not required for ONAP OOM based deployment.
@@ -46,7 +46,7 @@ in third.
 	
 	**IMPORTANT NOTE 1 : Bonap server is required ONLY if puccini-workflow engine is used. Its NOT required for argo engine.**
 	
-	**IMPORTANT NOTE 2 : tickclamp server is required ONLY if tickclamp model need to deploy. ric and nonrtric server is required ONLY if oran models need to deploy.**
+	**IMPORTANT NOTE 2 : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
@@ -61,9 +61,10 @@ in third.
          KeyPair : cciPublicKey
          Disk: 80GB
 	     Security group: launch-wizard-19
+		 vpcId: vpc-9be007f3
 	    ```
 		  
-	 - Login into Bonap Server and perform steps as follows:
+	 - Login into Bonap Server(if created) and perform steps as follows:
 	
 	    - Setup kubernetes
 	   
@@ -140,7 +141,7 @@ in third.
 		 $ sudo mkdir -p /etc/rancher/k3s
          $ sudo chmod -R 777 /etc/rancher/k3s
     
-	     # Create a file named registries.yaml on this (/etc/rancher/k3s/) location and add the following content to it.
+	     # Create a file /etc/rancher/k3s/registries.yaml and add the following content to it.
           mirrors:
             "172.31.27.186:5000":
                endpoint:
@@ -158,7 +159,7 @@ in third.
 		  https://jsonformatter.org/yaml-validator
 		  ```
 		
-     - Login into Bonap Server and run the following commands to check clustering setup:
+     - Login into Bonap Server(if created) and run the following commands to check clustering setup:
 	
 	   - Verify 'ric', 'default' and 'tick' contexts are setup:  
 		
@@ -207,6 +208,7 @@ in third.
       Storage: 80GB
       KeyPair: cciPublicKey
 	  Security group: launch-wizard-19
+	  vpcId: vpc-9be007f3
       ```
 	  
 	  Note : cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
@@ -256,7 +258,7 @@ in third.
 	  New image:
 	  
       ```sh          
-      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
+      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.3
       ```
 	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
@@ -288,7 +290,7 @@ in third.
 	  
 	  Note : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
 	  
-      The above command return output as follows:
+      The above command should return output as follows:
 	  
       ```sh	  
 	  {"topics": []}
@@ -306,6 +308,7 @@ in third.
       Storage: 80GB
       KeyPair: cciPublicKey
 	  Security group: launch-wizard-19
+	  vpcId: vpc-9be007f3
       ```
 	 
 	- Clone puccini: 
@@ -763,6 +766,7 @@ in third.
 	  Storage: 100GB
 	  KeyPair : cciPublicKey
 	  Security group: launch-wizard-19
+	  vpcId: vpc-9be007f3
 	  ```
 	  
     - Setup Docker:
