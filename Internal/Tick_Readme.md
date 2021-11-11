@@ -16,6 +16,7 @@ Table of contents
    * [Deployment Steps](#Deployment-Steps)
      * [Docker container based testing](#Docker-container-based-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
+   * [To build gintelclient images](#To-build-gintelclient-images)
 <!--te-->
 
 ## Introduction
@@ -828,3 +829,62 @@ Table of contents
 	  - Configuration:
 	  
 	    This tab helps to manage all Kapaciters and their connection. 
+
+## To build gintelclient images
+
+- Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
+    
+  ```sh
+  Name: tick_Demo Server 	  
+  Image: ubuntu-18.04
+  Instance Type: t2.large
+  Storage: 30GB
+  KeyPair: cciPublicKey
+  Security group: launch-wizard-19
+  ```
+	 
+- Clone tel-client: 
+  
+  ```sh
+  $ git clone https://github.com/customercaresolutions/tel-client
+  ```
+    
+- Setup Docker on tick_Demo Server:
+	
+  ```sh
+  $ sudo apt update
+  $ sudo apt install -y docker.io
+  $ sudo apt install -y docker-compose
+	  
+  # Create a file named daemon.json in /etc/docker and add the following content to it.
+    { "insecure-registries":["172.31.27.186:5000"] }
+      
+  $ sudo systemctl stop docker.socket 
+  $ sudo systemctl start docker
+  $ sudo chmod 777 /var/run/docker.sock
+  ```
+
+  Make sure Docker is installed properly by running the following command:
+		
+  ```sh
+  $ docker ps 
+  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+  $
+  ```
+
+- Use following command to build images:
+  
+  ```sh
+  $ cd tel-client
+  $ docker-compose up -d
+  ```
+
+- Verify Docker containers are deployed and all containers should be up
+  
+  ```sh
+  $ docker ps -a
+  
+  ubuntu@ip-10-0-0-32:~$ docker ps -a
+	CONTAINER ID   IMAGE                     COMMAND               CREATED       STATUS       PORTS                                         NAMES
+	c1e469be51c9   cci/gintelclient:latest   "./tick-tel-client"   2 hours ago   Up 2 hours   0.0.0.0:8590->30085/tcp, :::8590->30085/tcp   telclient_tick-tel-client_1
+  ```
