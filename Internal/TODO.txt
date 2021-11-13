@@ -9,7 +9,7 @@ Dhananjay Gahiwade:
 	
   3.Make layout of rajeshvkhotari3003.
 
-	4.Test developer_redme.md created by anil.
+  4.Test developer_redme.md created by anil.
 
   5.Removed hard-coded value of "telURL" from start.sh and set from input
     variable.  
