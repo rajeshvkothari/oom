@@ -3,21 +3,16 @@ Ganesh Mane:
 Rupesh Shinde:
 
 Dhananjay Gahiwade:
-  1.Check the commit time to time.
-	
-  2.Update scripts files for honolulu.		
-	
+  1.Check the commit time to time.	
+  2.Update scripts files for honolulu.			
   3.Make layout of rajeshvkhotari3003.
-
   4.Test developer_redme.md created by anil.
-
   5.Removed hard-coded value of "telURL" from start.sh and set from input
     variable.  
       "telURL": "tick-tel-telegraf:8125"
 	  
 	  Expected :
 	   "telURL": $telURL
-   
   6.Clean up common folder from tel-client.
 
 Anil Amte:
