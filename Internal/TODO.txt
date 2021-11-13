@@ -16,3 +16,4 @@ Dhananjay Gahiwade:
   6.Clean up common folder from tel-client.
 
 Anil Amte:
+1)issue about Application.cfg file 
