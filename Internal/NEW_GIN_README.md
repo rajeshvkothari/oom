@@ -19,22 +19,22 @@ Table of contents
   
 ## Pre Deployment Steps
 
-There are three sub-sections within this section and they are not mandatory.
+There are two sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
 [RIC Server](#RIC-Server) should be completed only if RIC model are to be deployed.
 
 [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
-to be tested in docker container environment. This is not required for ONAP OOM based deployment.
+to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
 
 So, for example, to deploy SDWAN in ONAP OOM, ignore first and only perform steps given
 in second.
 
 - **RIC Server**
     ------------
-	These server are required for deploying RIC model. 
+	These server is required for deploying RIC model. 
 	
-	**IMPORTANT NOTE 1 : For deploying Nonrtric and Tickclamp model we does not required to setup cluster. It will gets deploy on same k8s cluster as GIN**
+	**IMPORTANT NOTE 1 : For deploying Nonrtric and Tickclamp model we are not required to setup cluster. It will gets deploy on same k8s cluster as GIN**
 	
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
