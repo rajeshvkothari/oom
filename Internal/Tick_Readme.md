@@ -83,7 +83,7 @@ Table of contents
          $ sudo pip3 install simplejson
          $ sudo apt-get install -y jq
          $ sudo apt install -y awscli
-         $ sudo apt install python-pip
+         $ sudo apt install -y python-pip
          $ pip2 install simplejson
          ```	
 	  
@@ -138,6 +138,7 @@ Table of contents
 		
 		 ```sh
 		 $ kubectl get pods --all-namespaces
+		 
 		 ubuntu@ip-172-31-18-15:~$ kubectl get pods --all-namespaces
 		 NAMESPACE     NAME                                      READY   STATUS      RESTARTS   AGE
 		 kube-system   local-path-provisioner-64d457c485-9rt7f   1/1     Running     0          4m22s
@@ -212,7 +213,7 @@ Table of contents
 	  New image:
 	  
       ```sh          
-      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.1
+      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.3
       ```
 	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
@@ -611,7 +612,11 @@ Table of contents
 
 		  [argoWorkflow]
 		  argoHost={IP_ADDR_OF_DEMO_SERVER} 
-		  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER} 
+		  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER}
+
+		  tickServerIP=Private_IP_OF_TICKCLAMP_VM
+		  
+		  argoTemplateType=containerSet | DAG
 		  ```
 
 		  Note1 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
