@@ -5,13 +5,8 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
-     * [Creating Environment for Docker container based testing](#Creating-Environment-for-Docker-container-based-testing)
-       * [DMaaP Server](#DMaaP-Server)
-       * [Demo Server](#Demo-Server)
-	   * [Tosca images](#Tosca-images)
-	     * [Building images](#Building-images)
-		 * [Using pre built images](#Using-pre-built-images)
-		 * [Deploying images](#Deploying-images)
+     * [Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing)
+       * [Non-ONAP Server](#Non-ONAP-Server)
      * [Creating Environment for ONAP OOM testing](#Creating-Environment-for-ONAP-OOM-testing)
        * [OOM DEMO Server](#OOM-DEMO-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -193,19 +188,19 @@ in third.
 		 ```
 
 		  
-- **Creating Environment for Docker container based testing**
+- **Creating Environment for Non-ONAP based testing**
     -------------------------------------------------------
 
-  - **DMaaP Server**
+  - **Non-ONAP Server**
       ------------
       
     - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
     
       ```sh
-	  Name: DMaaP Server
+	  Name: Non-ONAP Server
       Image: ubuntu-18.04
-      Instance Type: t2.large
-      Storage: 80GB
+      Instance Type: t2.2xlarge
+      Storage: 100GB
       KeyPair: cciPublicKey
 	  Security group: launch-wizard-19
 	  vpcId: vpc-9be007f3
@@ -213,539 +208,163 @@ in third.
 	  
 	  Note : cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
 	  
-    - Setup Docker on DMaaP Server:
+	  
+    - Clone gin-utils:
+	
+	  ```sh
+	  $ git clone https://github.com/customercaresolutions/gin-utils
+	  ```
+	
+	
+	- Setup k3s:
 	
       ```sh
       $ sudo apt update
-      $ sudo apt install docker.io
-      $ sudo apt install docker-compose
+      $ curl -sfL https://get.k3s.io | sh -
+      $ mkdir -p $HOME/.kube
+      $ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
+      $ sudo kubectl config set-context --current --namespace=default
+      $ sudo cp /etc/rancher/k3s/k3s.* $HOME/.kube/config
+      $ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 	  
-	  # Create a file named daemon.json in /etc/docker and add the following content to it.
-           { "insecure-registries":["172.31.27.186:5000"] }
-		
-      $ sudo systemctl stop docker.socket 
-      $ sudo systemctl start docker
-      $ sudo chmod 777 /var/run/docker.sock
+      $ kubectl get node
+      $ kubectl get pods --all-namespaces
+      $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml
+	
+      $ sudo systemctl daemon-reload && sudo systemctl restart k3s
+      $ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
       ```
 	  
-	  Note : 172.31.27.186 is the private IP address of CCI_REPO VM.
-	  
-      Make sure Docker is installed properly by running the following command:
-	  
-      ```sh
-      $ docker ps 
-	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-	  $
-      ```	 
-	  
-    - Clone the messageservice folder:
+  
+    - Made changes in ~/.kube/config file:
 	
       ```sh
-      $ cd ~/
-      $ mkdir ~/local-dmaap
-	  $ cd local-dmaap
-      $ git clone https://gerrit.onap.org/r/dmaap/messagerouter/messageservice --branch honolulu
+      Before:
+        server: https://127.0.0.1:6443
+
+      After:
+        server: https://{PRIVATE_IP_OF_Non_ONAP-VM}:6443
       ```
 	
-	  Replace the Docker image in docker-compose.yml (located in /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose)
 	
-      Image to be replaced:
-	  
-	  ```sh
-	  image: nexus3.onap.org:10001/onap/dmaap/dmaap-mr:latest
-	  ```
-	  
-	  New image:
-	  
-      ```sh          
-      image: {IP_ADDR_OF_CCI_REPO}:5000/dmaap:localadapt_0.3
+    - Setup helm:
+	
+      ```sh
+      $ wget https://get.helm.sh/helm-v3.5.2-linux-amd64.tar.gz
+      $ tar xvfz helm-v3.5.2-linux-amd64.tar.gz
+      $ sudo mv linux-amd64/helm /usr/local/bin/helm
       ```
+	
 	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
 	
-    - Start DMaaP Service:
+	
+	- Setup DMAAP:
+	
+	  ```sh
+      $ kubectl create ns onap
+	  
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace onap --generate-name
+	  
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/kafka-1.0.4.tar.gz -f /home/ubuntu/gin-utils/helm-charts/kafka-values.yaml --namespace onap --generate-name
+	  
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace onap --generate-name
+      ```
+	
+	
+	- Setup GIN:
 	
       ```sh
-      $ cd /home/ubuntu/local-dmaap/messageservice/src/main/resources/docker-compose
+      $ git clone https://github.com/customercaresolutions/puccini
       $ docker-compose up -d
       ```
 	  
-    - Verify DMaaP Service is properly deployed:
-  
-	  Run the following command and verify that all containers are up.
-	
-	  ```sh
-	  ubuntu@message_router:~/local-dmaap/messageservice/target/classes/docker-compose$ docker ps -a
-	  CONTAINER ID   IMAGE                                              COMMAND                  CREATED         STATUS         PORTS                                                           NAMES
-	  a234f9f984dd   dmaap:localadapt                                   "sh startup.sh"          6 seconds ago   Up 5 seconds   0.0.0.0:3904-3906->3904-3906/tcp, :::3904-3906->3904-3906/tcp   dockercompose_dmaap_1  
-	  8058f11e9f57   nexus3.onap.org:10001/onap/dmaap/kafka111:1.0.4    "/etc/confluent/dock…"   7 seconds ago   Up 6 seconds   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp, 9093/tcp             dockercompose_kafka_1
-	  a93fcf78bcb9   nexus3.onap.org:10001/onap/dmaap/zookeeper:6.0.3   "/etc/confluent/dock…"   9 seconds ago   Up 6 seconds   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp   dockercompose_zookeeper_1
-	  ```
-	
-	  Also, run the following command.
-	
+	  
+	  Setup config params in puccini/dvol/config/application.cfg
+	  
       ```sh
-	  $ curl -X GET "http://{IP_ADDR_OF_DMAAP_SERVER}:3904/topics"
-      ```
-	  
-	  Note : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'.
-	  
-      The above command should return output as follows:
-	  
-      ```sh	  
-	  {"topics": []}
-	  ```
+        [dgraph]
+        host=tosca-dgraph
+        schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 
-  - **Demo Server**
-      -----------
-      
-    - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
-    
-      ```sh
-      Name: Demo Server 	  
-      Image: ubuntu-18.04
-      Instance Type: t2.large
-      Storage: 80GB
-      KeyPair: cciPublicKey
-	  Security group: launch-wizard-19
-	  vpcId: vpc-9be007f3
+        [remote]
+        remoteHost={IP_ADDR_OF_SERVER}
+        remotePort=22
+        remoteUser=ubuntu
+        remotePubKey=/opt/app/config/cciPrivateKey
+
+        [messageBus]
+        msgBusURL=dmaap:3904
+
+        [reposure]
+        reposureHost={IP_ADDR_OF_Non_ORAN_SERVER} 
+        pushCsarToReposure=true
+
+        [argoWorkflow]
+        ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
+        nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
+        tickServerIP={PRIVATE_IP_OF_TICKCLAMP_VM}
+
+		argoTemplateType=containerSet | DAG
       ```
+	  
+	  
+	  Copy following files:
+	  
+      ```sh
+      $ cp cciPrivateKey puccini/dvol/config
+      $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
+      ```
+	  
+	  
+      Deploy gin through helm chart:
+	  
+	  ```sh
+	  $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
+	  ```
 	 
-	- Clone puccini: 
-  
-      ```sh
-      $ git clone https://github.com/customercaresolutions/puccini
-      ```
-    
-    - Setup Docker on Demo Server:
-	
-      ```sh
-      $ sudo apt update
-      $ sudo apt install docker.io
-      $ sudo apt install docker-compose
-	  
-	  # Create a file named daemon.json in /etc/docker and add the following content to it.
-         { "insecure-registries":["172.31.27.186:5000"] }
-      
-	  $ sudo systemctl stop docker.socket 
-      $ sudo systemctl start docker
-      $ sudo chmod 777 /var/run/docker.sock
-      ```
-
-      Make sure Docker is installed properly by running the following command:
-		
-      ```sh
-      $ docker ps 
-	  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-	  $
-      ```
-	  
-	- Setup kubectl:
-	  
-	  ```sh
-	  $ cd /home/ubuntu/
-	  $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.9/bin/linux/amd64/kubectl
-	  $ sudo chmod +x ./kubectl
-	  $ sudo mv ./kubectl /usr/local/bin/kubectl
-	  $ grep -E --color 'vmx|svm' /proc/cpuinfo
-      ```
-	  
-    - Setup minikube:
-	
-	  ```sh
-	  $ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-	  $ sudo chmod +x minikube
-	  $ sudo mv ./minikube /usr/local/bin/minikube
-	  $ sudo apt-get install conntrack
-	  $ sudo minikube start --driver=none --kubernetes-version 1.19.9
-	  $ sudo mv /home/ubuntu/.kube /home/ubuntu/.minikube $HOME
-	  $ sudo chown -R $USER $HOME/.kube $HOME/.minikube
-	  $ kubectl get pods -n onap -o=wide
-	  ```
-	  
-	- Install golang:
-	  
-	  ```sh
-	  $ cd /home/ubuntu
-	  $ sudo curl -O https://storage.googleapis.com/golang/go1.17.linux-amd64.tar.gz
-	  $ sudo tar -xvf go1.17.linux-amd64.tar.gz
-	  $ sudo mv go /usr/local
-	  
-      # Add following paths in .profile file: 
-      $ sudo vi ~/.profile
-		  export GOPATH=$HOME/go
-		  export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-
-	  $ source ~/.profile
-	  $ go version
-      ```
-
+	 
     - Setup reposure:
 	
 	  ```sh
-	  $ cd /home/ubuntu
-	  $ git clone https://github.com/tliron/reposure -b v0.1.6
-	
-	  $ vi reposure/reposure/commands/registry-create.go	
-	  # for insecure installation, commented out the section in reposure/reposure/commands/registry-create.go, as follows:
-		if authenticationSecret == "" {
-		//authenticationSecret = "reposure-simple-authentication"
-		}
-
-	  $ cd reposure/scripts
-	  $ ./build
-	  $ cd /home/ubuntu
-	  $ reposure operator install --wait	
+	  $ chmod +x gin-utils/reposure/reposure
+	  $ sudo cp gin-utils/reposure/reposure /usr/local/bin/reposure
+	  $ reposure operator install --wait
 	  $ reposure simple install --wait
-	  $ reposure registry create default  --provider=simple --wait -v
-	  ```	
-
-	- Setup ARGO:
-	  
-	  ```sh
-	  $ kubectl create ns onap
-	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
-	  $ curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.1.1/argo-linux-amd64.gz
-	  $ gunzip argo-linux-amd64.gz
-	  $ chmod +x argo-linux-amd64
-	  $ sudo mv ./argo-linux-amd64 /usr/local/bin/argo
-	  $ argo version
-	  
-	  # Use following commands on Demo Server VM to get external port of argo-server:
-    	
-      $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'        
-        service/argo-server patched
-
-      $ kubectl get svc argo-server -n onap
-        NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-        argo-server   LoadBalancer   10.103.17.134   <pending>     2746:31325/TCP   105m
+	  $ reposure registry create default --provider=simple --wait -v
 	  ```
 	  
-	  Note : 31325 is the external port of argo-server.
-
-	- To deploy only sdwan and firewall model do some additional installation on Demo Server as follows:
 	  
-	  ```sh
-	  $ sudo apt-get update
-      $ sudo apt-get install -y python
-      $ sudo apt-get install -y python3-dev python3-pip
-      $ sudo pip3 install --upgrade pip
-      $ sudo pip3 install simplejson
-      $ sudo apt-get install jq
-      $ sudo apt install awscli
-      $ sudo apt install python-pip
-      $ pip2 install simplejson
-	  $ cd /home/ubuntu
-      $ sudo mkdir onap-oom-integ
-      $ sudo mkdir onap-oom-integ/cci
-      $ sudo chmod -R 777 onap-oom-integ
-      $ cp cciPrivateKey onap-oom-integ/cci
-	  ```
-	  
-  - **Tosca images**
-      ------------
-	  
-    - GIN consists of the following components:
-	  
-	  - TOSCA_SO - service orchestrator.
-	  - TOSCA_COMPILER - puccini tosca compiler
-	  - TOSCA_WORKFLOW - puccini-workflow microservice
-	  - TOSCA_GAWP - argo workflow microservice
-	  - TOSCA_POLICY - policy microservice
-	  
-	  GIN images can either be built from sources or their pre-built versions
-	  can be used directly from CCI_REPO.
-    
-	  - **Building images**
-	      ---------------
-       
-	    To build the images make sure puccini/docker-compose.yml looks as follows: 
-		
-	    ```sh
-	    version: '3'
-		services:
-		  dgraphdb:
-		    image: dgraph/standalone:latest
-		    ports:
-              - "8000:8000"
-              - "8080:8080"
-              - "9080:9080"
-		    networks:
-              - cciso-ntwk
-
-		  orchestrator:
-		    build:
-              context: .
-              dockerfile: Dockerfile.so.multistage
-		    image: cci/tosca-so:latest
-		    ports:
-              - "10000:10000"
-		    volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-		    networks:
-              - cciso-ntwk
-		    depends_on:
-              - dgraphdb
-
-		  compiler:
-		    build:
-              context: .
-              dockerfile: Dockerfile.compiler.multistage
-		    image: cci/tosca-compiler:latest
-		    ports:
-              - "10010:10010"
-		    volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-		    networks:
-              - cciso-ntwk
-		    depends_on:
-              - dgraphdb
-
-		  workflow:
-            build:
-              context: .
-              dockerfile: Dockerfile.workflow.multistage
-            image: cci/tosca-workflow:latest
-            ports:
-              - "10020:10020"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-
-		  policy:
-            build:
-              context: .
-              dockerfile: Dockerfile.policy.multistage
-            image: cci/tosca-policy:latest
-            ports:
-              - "10030:10030"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-		  gawp:
-            build:
-              context: .
-              dockerfile: Dockerfile.gawp.multistage
-            image: cci/tosca-gawp:latest
-            ports:
-              - "10040:10040"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-		# custom bridge network
-		networks:
-		  cciso-ntwk:
-            driver: bridge  
-	    ```	
-
-      - **Using pre built images**
-          ----------------------
-		  
-        To use pre-build images make sure puccini/docker-compose.yml looks as follows:
-	    
-	    ```sh
-	    version: '3'
-		services:
-		  dgraphdb:
-		    image: dgraph/standalone:latest
-		    ports:
-		      - "8000:8000"
-		      - "8080:8080"
-		      - "9080:9080"
-		    networks:
-		      - cciso-ntwk
-
-		  orchestrator:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-so:0.1
-		    ports:
-		      - "10000:10000"
-		    volumes:
-	          -  ./dvol/config:/opt/app/config
-	          -  ./dvol/models:/opt/app/models
-	          -  ./dvol/data:/opt/app/data
-	          -  ./dvol/log:/opt/app/log
-		    networks:
-		      - cciso-ntwk
-            depends_on:
-              - dgraphdb
-
-		  compiler:
-		    image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-compiler:0.1
-		    ports:
-              - "10010:10010"
-		    volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-		    networks:
-              - cciso-ntwk
-		    depends_on:
-              - dgraphdb
-
-		  workflow:
-            image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-workflow:0.1
-            ports:
-              - "10020:10020"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-
-		  policy:
-            image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-policy:0.1
-            ports:
-              - "10030:10030"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-		  gawp:
-            image: {IP_ADDR_OF_CCI_REPO}:5000/tosca-gawp:0.1
-            ports:
-              - "10040:10040"
-            volumes:
-              -  ./dvol/config:/opt/app/config
-              -  ./dvol/models:/opt/app/models
-              -  ./dvol/data:/opt/app/data
-              -  ./dvol/log:/opt/app/log
-            networks:
-              - cciso-ntwk
-            depends_on:
-              - dgraphdb
-		# custom bridge network
-		networks:
-		  cciso-ntwk:
-            driver: bridge
-        ```	  
-
-      - **Deploying images**
-	      ----------------
-		  
-	    - Modify ~/puccini/dvol/config/application.cfg as follows:
-      
-		  ```sh
-		  [dgraph]
-		  schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
-
-		  [remote]
-		  remoteHost={IP_ADDR_OF_SERVER}
-		  remotePort=22
-		  remoteUser=ubuntu
-		  remotePubKey=/opt/app/config/cciPrivateKey
-
-		  [messageBus]
-		  msgBusURL={IP_OF_DMAAP_SERVER_ADDR}:3904
-
-		  [reposure]
-		  reposureHost={IP_ADDR_OF_DEMO_SERVER} 
-		  pushCsarToReposure=true
-
-		  [argoWorkflow]
-		  argoHost={IP_ADDR_OF_DEMO_SERVER} 
-		  argoPort={EXTERNAL_PORT_OF_ARGO_SERVER} 
-
-		  ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
-		  nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-		  tickServerIP={PRIVATE_IP_OF_TICKCLAMP_VM}
-
-		  argoTemplateType=containerSet | DAG
-		  ```
-
-		  Note1 : {IP_ADDR_OF_SERVER} should be set to {IP_ADDR_OF_DEMO_SERVER} for deploying sdwan, firewall. In case of oran and tickclmap models, it should be set to {IP_ADDR_OF_DEMO_SERVER} with argo-workflow and {IP_ADDR_OF_BONAP_SERVER} with puccini-workflow.
-
-		  Note2 : {IP_ADDR_OF_DMAAP_SERVER} is the public IP address of 'DMaaP Server'(created in 'Pre Deployment Steps').
-
-		  Note3 : Use 'kubectl get svc argo-server -n onap' command to get {EXTERNAL_PORT_OF_ARGO_SERVER}. Refer "Setup ARGO" section.
-
-		  Note4: If ORAN and Tick servers have not been created, then keep tickServerIP, ricServerIP and nonrtricServerIP values as is. Otherwise add private IP of tickServerIP, ricServer and nonrtricServer(created in Pre Deployment Steps').
-
-		  Note5 : In argo workflow, there are two ways for executing argo templates.
-		
-           - containerSet: A containerSet template is similar to a normal container or script template but allows you to specify multiple containers to run within a single pod.
-				
-	          For using containerSet based argo template use as follows:
-	    
-		     ```sh
-		     argoTemplateType=containerSet
-		     ```
-			
-           - DAG: DAG (Directed Acyclic Graph) contains a set of steps (nodes) and the dependencies (edges) between them.
-				
-	          For using DAG-based argo template use as follows:
-		
-		      ```sh	
-		      argoTemplateType=DAG
-		      ```
-		
-        - Copy files as given follows:
-	  
-	      ```sh
-	      $ cd ~/
-	      $ cp cciPrivateKey puccini/dvol/config
-		  $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
-	      ```
-
-        - Build Docker images and start Docker containers:
-		
-          ```sh
-          $ cd ~/puccini
-          $ docker-compose up -d
-          ```
-
-        - Verify images are created:
-		
-          ```sh
-          $ docker images -a
-          ```
+	- Setup Argo:
 	
-        - Verify Docker containers are deployed and all containers should be up.
-   
-          ```sh
-          e.g:
-          ubuntu@ip-172-31-24-235:~/puccini$ docker ps -a
-          CONTAINER ID   IMAGE                       COMMAND              CREATED          STATUS          PORTS                                                                                                                             NAMES
-          e0637ff71a78   cci/tosca-workflow:latest   "./tosca-workflow"   16 seconds ago   Up 14 seconds   0.0.0.0:10020->10020/tcp, :::10020->10020/tcp                                                                                     puccini_workflow_1
-          2ed33c7803be   cci/tosca-so:latest         "./tosca-so"         16 seconds ago   Up 13 seconds   0.0.0.0:10000->10000/tcp, :::10000->10000/tcp                                                                                     puccini_orchestrator_1
-          d6ba982d15e8   cci/tosca-policy:latest     "./tosca-policy"     16 seconds ago   Up 14 seconds   0.0.0.0:10030->10030/tcp, :::10030->10030/tcp                                                                                     puccini_policy_1
-          68c6fa1fe966   cci/tosca-compiler:latest   "./tosca-compiler"   16 seconds ago   Up 11 seconds   0.0.0.0:10010->10010/tcp, :::10010->10010/tcp                                                                                     puccini_compiler_1
-          344f5a9337e5   cci/tosca-gawp:latest       "./tosca-gawp"       16 seconds ago   Up 12 seconds   0.0.0.0:10040->10040/tcp, :::10040->10040/tcp                                                                                     puccini_gawp_1
-          634cb15f41fe   dgraph/standalone:latest    "/run.sh"            17 seconds ago   Up 16 seconds   0.0.0.0:8000->8000/tcp, :::8000->8000/tcp, 0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 0.0.0.0:9080->9080/tcp, :::9080->9080/tcp   puccini_dgraphdb_1
-		  ```
+	  ```sh
+	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
+	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
+	  $ kubectl get svc argo-server -n onap
+	  ```
+	  
+	  
+    - Following pods should in Running state:
+	
+      ```sh
+      $ kubectl get pods -n onap
+        NAME                                          READY   STATUS             RESTARTS   AGE
+        zookeeper-85fbfbb49f-ndbdx             1/1     Running     0          95m
+        kafka111-7746747c8d-588zp              1/1     Running     0          95m
+        dmaap-5bddfd7f4b-nx28g                 1/1     Running     0          95m
+        gin-tosca-dgraph-6cc598bcd7-zt4lt      2/2     Running     0          64m
+        gin-tosca-compiler-56f7cc696b-czh4b    2/2     Running     0          64m
+        gin-tosca-86f74c9646-f2hsk             2/2     Running     0          64m
+        gin-tosca-workflow-644cc88d44-p4t4d    2/2     Running     0          64m
+        gin-tosca-policy-856bcf876f-txq4p      2/2     Running     0          64m
+        minio-74d9d98bbb-g62rd                 1/1     Running     0          81m
+        argo-server-67dc857958-g8c87           1/1     Running     0          81m
+        workflow-controller-847654dd4d-qpg7r   1/1     Running     0          81m
+        postgres-77dc5db9d4-ghwrb              1/1     Running     0          81m
+        gin-tosca-gawp-65f587df75-2h9gb        2/2     Running     0          64m
+        svclb-argo-server-ttvzj                1/1     Running     0          63m
+	  ```
+	
 		  
 - **Creating Environment for ONAP OOM testing**
     -----------------------------------------
