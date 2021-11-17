@@ -185,9 +185,9 @@ in second.
         pushCsarToReposure=true
 
         [argoWorkflow]
-        ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
+        ricServerIP={PRIVATE_IP_ADDR_OF_Non_ONAP_VM}
         nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-        tickServerIP={PRIVATE_IP_OF_TICKCLAMP_VM}
+        tickServerIP={PRIVATE_IP_OF_Non_ONAP_VM}
 
 		argoTemplateType=containerSet | DAG
       ```
