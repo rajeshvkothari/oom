@@ -4,7 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [RIC Server](#RIC Server)
+     * [RIC Server](#RIC-Server)
      * [Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing)
        * [Non-ONAP Server](#Non-ONAP-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -22,7 +22,7 @@ Table of contents
 There are three sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[RIC Server](#RIC Server) should be completed only if RIC model are to be deployed.
+[RIC Server](#RIC-Server) should be completed only if RIC model are to be deployed.
 
 [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
 to be tested in docker container environment. This is not required for ONAP OOM based deployment.
