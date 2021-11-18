@@ -412,57 +412,57 @@ in second.
       **Firewall:**  
 	  ```sh
 	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
+	    "inputsUrl":"zip:/opt/app/config/firewall.csar!/firewall/inputs/aws.yaml",
+	    "service":"zip:/opt/app/config/firewall.csar!/firewall/firewall_service.yaml"
 	  ```
 	  
 	  **Sdwan:**
 	  ```sh
 	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
+	    "inputsUrl":"zip:/opt/app/config/sdwan.csar!/sdwan/inputs/aws.yaml",
+	    "service":"zip:/opt/app/config/sdwan.csar!/sdwan/sdwan_service.yaml"
 	  ```
 	  
 	  **Tickclamp:**
 	  ```sh
 	    "inputs":{"helm_version": "2.17.0", "k8scluster_name": "tick"},
         "inputsUrl": "",
-        "service": "zip:/opt/app/models/tickclamp.csar!/clamp_service.yaml"
+        "service": "zip:/opt/app/config/tickclamp.csar!/clamp_service.yaml"
 	  ```
 	  
 	  **Ric:**
 	  ```sh
 	    "inputs":{"helm_version":"2.17.0"},
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
+	    "service":"zip:/opt/app/config/ric.csar!/ric.yaml"
 	  ```	
 	  
 	  **Nonrtric:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
+	    "service":"zip:/opt/app/config/nonrtric.csar!/nonrtric.yaml"
 	  ```
 	  
 	  **Qp:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
+	    "service":"zip:/opt/app/config/qp.csar!/qp.yaml"
 	  ```
 	 
 	  **Qp-driver:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
+	    "service":"zip:/opt/app/config/qp-driver.csar!/qp-driver.yaml"
 	  ```
 	 
 	  **Ts:**
 	  ```sh
 	    "inputs":"",
 	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
+	    "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
 	  ```
 
   - To only list workflow steps of a model without executing/deploying them use the following:
@@ -706,135 +706,35 @@ in second.
 	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
 	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
 				
-	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricxapp
-	  No resources found.
 	  ```		
 
   - Verify qp model:
 
-	  Login into 'Non-ONAP-Server' and run following commands:
+	  To verify that qp is deployed successfully, use the following command and check that pod for qp is in running state on Ric Server:
 
 	  ```sh
-	  $ cd ~/
-	  $ argo list -n onap | grep qp
-	  $ docker ps -a | grep {ID_OF_QP_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/qp_xapp.log
-			
-	  # e.g. 
-	  ubuntu@ip-172-31-27-243:~$ cd ~/
-	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp
-	  qp1pq8kc             Succeeded   1h    20s        1
-
-	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp1pq8kc
-	  f1bc78609f02        449444000066                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp1pq8kc_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
-
-	  docker cp f1bc78609f02:/tmp/xapp.log /home/ubuntu/qp_xapp.log
-			
-	  # To check qp models deploy successfully, verify the following messages in /home/ubuntu/qp_xapp.log.
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-											Dload  Upload   Total   Spent    Left  Speed
-
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100   529  100    28  100   501    142   2543 --:--:-- --:--:-- --:--:--  2685
-		{
-			"status": "Created"
-		}
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-										Dload  Upload   Total   Spent    Left  Speed
-
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100    18    0     0  100    18      0     90 --:--:-- --:--:-- --:--:--    89
-		100    18    0     0  100    18      0     14  0:00:01  0:00:01 --:--:--    14
-		100    85  100    67  100    18     45     12  0:00:01  0:00:01 --:--:--    57
-		{"instances":null,"name":"qp","status":"deployed","version":"1.0"}
+	  $ sudo kubectl get pods -n ricxapp
+	    NAME                                   READY   STATUS    RESTARTS   AGE
+        ricxapp-qp-dd9965f84-k2hkk             1/1     Running   0          10m
       ```
 	
 		  
   - Verify qp-driver model:
 
-	  Login into 'Non-ONAP-Server' and run following commands:
+	  To verify that qp-driver is deployed successfully, use the following command and check that pod for qp-driver is in running state on Ric Server:
 
 	  ```sh
-	  $ cd ~/
-	  $ argo list -n onap | grep qp-driver
-	  $ docker ps -a | grep {ID_OF_QP-deriver_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/qp-driver_xapp.log
-			
-	  # e.g. 
-	  ubuntu@ip-172-31-27-243:~$ cd ~/
-	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep qp-driver
-	  qp-deriver4rq2ws             Succeeded   1h    30m        1
-
-	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep qp-deriver4rq2ws
-	  u1ft76609r05        689546000088                                       "/var/run/argo/argoe…"    About an hour ago   Exited (0) About an hour ago    k8s_main_qp-deriver4rq2ws_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
-
-	  docker cp u1ft76609r05:/tmp/xapp.log /home/ubuntu/qp-driver_xapp.log
-			
-	  # To check qp-driver models deploy successfully, verify the following messages in /home/ubuntu/qp-driver_xapp.log.
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-										Dload  Upload   Total   Spent    Left  Speed
-
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100  1160  100    28  100  1132    147   5957 --:--:-- --:--:-- --:--:--  6105
-		{
-			"status": "Created"
-		}
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-										Dload  Upload   Total   Spent    Left  Speed
-											
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
-		100    97  100    73  100    24    102     33 --:--:-- --:--:-- --:--:--   136
-		{"instances":null,"name":"qpdriver","status":"deployed","version":"1.0"}
+      $ sudo kubectl get pods -n ricxapp
+	    NAME                                   READY   STATUS    RESTARTS   AGE
+        ricxapp-qpdriver-67bbd4d8-p9bbh        1/1     Running   0          12m
       ``` 
 
   - Verify ts model:
 
-	  Login into 'Non-ONAP-Server' and run following commands:
+	  To verify that ts is deployed successfully, use the following command and check that pod for ts is in running state on Ric Server:
 
 	  ```sh
-	  $ cd ~/
-	  $ argo list -n onap | grep ts
-	  $ docker ps -a | grep {ID_OF_TS_ARGO}
-	  $ docker cp {DOCKER_ID_OF_MAIN_CONTAINER}:/tmp/xapp.log /home/ubuntu/ts_xapp.log
-				
-	  # e.g. 
-	  ubuntu@ip-172-31-27-243:~$ cd ~/
-	  ubuntu@ip-172-31-27-243:~$ argo list -n onap | grep ts
-	  ts9dt4xz             Succeeded   2h    40s        1
-
-	  ubuntu@ip-172-31-27-243:~$ docker ps -a | grep ts9dt4xz
-	  b1bd76609t06        689546000088                                       "/var/run/argo/argoe…"    About an two ago   Exited (0) About an hour ago    k8s_main_ts9dt4xz_onap_7a7109ed-af0a-4b4b-ac86-f5cbc36814d7_0
-
-	  docker cp b1bd76609t06:/tmp/xapp.log /home/ubuntu/ts_xapp.log
-				
-	  # To check ts models deploy successfully, verify the following messages in /home/ubuntu/ts_xapp.log.
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-										Dload  Upload   Total   Spent    Left  Speed
-
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
-		100   627  100    28  100   599    148   3169 --:--:-- --:--:-- --:--:--  3300
-		{
-			"status": "Created"
-		}
-		*         ric       ric       ric        
-		Found RIC_HOST = 18.118.55.192
-		% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-										Dload  Upload   Total   Spent    Left  Speed
-
-		0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-		100    27    0     0  100    27      0     22  0:00:01  0:00:01 --:--:--    22
-		100   103  100    76  100    27     63     22  0:00:01  0:00:01 --:--:--    85
-		{"instances":null,"name":"trafficxapp","status":"deployed","version":"1.0"}
+      $ sudo kubectl get pods -n ricxapp
+	    NAME                                   READY   STATUS    RESTARTS   AGE
+        ricxapp-trafficxapp-77449f7dbc-gknb8   1/1     Running   0          14m
       ```
