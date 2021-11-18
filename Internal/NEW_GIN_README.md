@@ -4,7 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [ORAN and Tickclamp Servers](#ORAN and Tickclamp Servers)
+     * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
      * [Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing)
        * [Non-ONAP Server](#Non-ONAP-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -22,7 +22,7 @@ Table of contents
 There are two sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[ORAN and Tickclamp Servers](#ORAN and Tickclamp Servers) should be completed only if RIC model are to be deployed.
+[ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if RIC model are to be deployed.
 
 [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
 to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
@@ -34,7 +34,7 @@ in second.
     ------------
 	These servers are required for deploying ORAN models and tickclamp model.
 	
-	**IMPORTANT NOTE 1 : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
+	**IMPORTANT NOTE : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
 	
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
@@ -272,16 +272,10 @@ in second.
 			  
 ## Building Tosca Model Csars
 
-  **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. To use 'puccini-workflow' engine, add workflow_engine_type  in 'metadata' section of main service template of model.**
-       
-  **E.g : To use 'puccini-workflow' engine for sdwan deployment, add following in /home/ubuntu/tosca-models/cci/sdwan/sdwan_service.yaml**
-  
-  ```sh
-  metadata:
-   workflow_engine_type : puccini-workflow
-  ```
-  
-  Login into Demo Server or OOM VM and run the following commands:
+  **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. **
+
+
+  Login into Non-ONAP-Server and run the following commands:
   
   ```sh
   $ cd /home/ubuntu
@@ -341,16 +335,12 @@ in second.
 - **Non-ONAP based testing**
     ------------------------------ 
    
-  Login into Demo Server and fire the following commands to copy csars:
+  Login into Non-ONAP-Server and run the following commands to copy csars:
   
   ```sh
   $ cd ~/
-  $ cd puccini/dvol/
-  $ mkdir models
-  $ cd ~/
   $ cd tosca-models/cci
-  $ sudo chmod 777 -R /home/ubuntu/puccini/dvol/models
-  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar tickclamp.csar /home/ubuntu/puccini/dvol/models
+  $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar tickclamp.csar /home/ubuntu/puccini/dvol/config
   ```
 
   - Use the following request to store the models in Dgraph:
@@ -360,7 +350,7 @@ in second.
     ```sh
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
     {
-	  "url": "/opt/app/models/{MODEL_NAME}.csar",
+	  "url": "/opt/app/config/{MODEL_NAME}.csar",
 	  "resolve": true,
 	  "coerce": false,
 	  "quirks": [
@@ -377,7 +367,7 @@ in second.
     ```sh
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
     {
-	  "url": "/opt/app/models/ric.csar",
+	  "url": "/opt/app/config/ric.csar",
 	  "resolve": true,
 	  "coerce": false,
 	  "quirks": [
@@ -396,7 +386,7 @@ in second.
 	```sh
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
 	{
-	  "url": "/opt/app/models/tickclamp.csar",
+	  "url": "/opt/app/config/tickclamp.csar",
 	  "resolve": true,
 	  "coerce": false,
 	  "quirks": [
@@ -411,83 +401,10 @@ in second.
 	}
 	```
 	  
-  - Create service instance without deployment:
-	
-	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
-	
-	```sh			
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
-	{
-		"name" : "{INSTANCE_NAME}",
-		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
-		"generate-workflow":true,
-		"execute-workflow":true,
-		"list-steps-only":true,
-		"execute-policy":false
-	}
-	```
-	  
-    Use following models-specific additional fields:
-	  
-      **Firewall:**  
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/firewall.csar!/firewall/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/firewall.csar!/firewall/firewall_service.yaml"
-	  ```
-	  
-	  **Sdwan:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"zip:/opt/app/models/sdwan.csar!/sdwan/inputs/aws.yaml",
-	    "service":"zip:/opt/app/models/sdwan.csar!/sdwan/sdwan_service.yaml"
-	  ```
-	  
-	  **Tickclamp:**
-	  ```sh
-	    "inputs":{"helm_version": "2.17.0", "k8scluster_name": "tick"},
-        "inputsUrl": "",
-        "service": "zip:/opt/app/models/tickclamp.csar!/clamp_service.yaml"
-	  ```
-	  
-	  **Ric:**
-	  ```sh
-	    "inputs":{"helm_version":"2.17.0"},
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ric.csar!/ric.yaml"
-	  ```	
-	  
-	  **Nonrtric:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/nonrtric.csar!/nonrtric.yaml"
-	  ```
-	  
-	  **Qp:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp.csar!/qp.yaml"
-	  ```
-	 
-	  **Qp-driver:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/qp-driver.csar!/qp-driver.yaml"
-	  ```
-	 
-	  **Ts:**
-	  ```sh
-	    "inputs":"",
-	    "inputsUrl":"",
-	    "service":"zip:/opt/app/models/ts.csar!/ts.yaml"
-	  ```
 
   - Create service instance with deployment:
 	
-	For sdwan, firewall, nonrtric, ric, qp, qp-driver, ts:
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts:
 	
 	```sh			
 	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
@@ -633,8 +550,6 @@ in second.
 - Use the following steps to verify sdwan, firewall, tickclamp, oran models are deployed successfully. 
   
   - Verify the sdwan model:
-  
-	- For puccini-workflow or argo-workflow:
 		
 	  Verify {SERVICE_INSTANCE_NAME}_SDWAN_Site_A and {SERVICE_INSTANCE_NAME}_SDWAN_Site_B VMs should be created on AWS N.California region.
 
@@ -730,29 +645,9 @@ in second.
 		
   - Verify firewall model:
 
-	- For puccini-workflow or argo-workflow:
-
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
 	  
   - Verify tickclamp model:
-    
-	- For puccini-workflow:
-	
-      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
-  
-	  ```sh
-	  $ kubectl get pods -n tick
-	
-	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
-	  NAME                                        READY   STATUS    RESTARTS   AGE
-	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
-	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
-	  tick-influx-influxdb-0                      1/1     Running   0          15s
-	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
-	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
-	  ```
-	  
-    - For argo-workflow:
 	
       To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Tickclamp Server:
   
@@ -769,29 +664,6 @@ in second.
 	  ```
 
   - Verify nonrtric model:
-
-	- For puccini-workflow:
-
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
-		
-	  ```sh
-	  $ kubectl get pods -n nonrtric
-			
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n nonrtric
-	  NAME                                       READY   STATUS    RESTARTS   AGE
-	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
-	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
-	  policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
-	  rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
-	  a1-sim-std-0                               1/1     Running   0          4m25s
-	  controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
-	  a1-sim-osc-0                               1/1     Running   0          4m25s
-	  a1-sim-std-1                               1/1     Running   0          2m54s
-	  a1-sim-osc-1                               1/1     Running   0          2m50s
-	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
-	  ```   
-	  
-    - For argo-workflow:
 
 	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the Nonrtric Server:
 	  
@@ -814,43 +686,6 @@ in second.
 	
   - Verify ric model:
 
-    - For puccini-workflow:
-	      
-	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Bonap Server:
-
-	  ```sh		
-	  $ kubectl get pods -n ricplt
-	  $ kubectl get pods -n ricinfra
-	  $ kubectl get pods -n ricxapp 
-
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricplt
-	  NAME                                                        READY   STATUS    RESTARTS   AGE
-	  statefulset-ricplt-dbaas-server-0                           1/1     Running   0          4m27s
-	  deployment-ricplt-xapp-onboarder-f564f96dd-tn9kg            2/2     Running   0          4m26s
-	  deployment-ricplt-jaegeradapter-5444d6668b-4gkk7            1/1     Running   0          4m19s
-	  deployment-ricplt-vespamgr-54d75fc6d6-9ljs4                 1/1     Running   0          4m20s
-	  deployment-ricplt-alarmmanager-5f656dd7f8-knj9s             1/1     Running   0          4m17s
-	  deployment-ricplt-submgr-5499794897-8rj9v                   1/1     Running   0          4m21s
-	  deployment-ricplt-e2mgr-7984fcdcb5-mlfh6                    1/1     Running   0          4m24s
-	  deployment-ricplt-o1mediator-7b4c8547bc-82kb8               1/1     Running   0          4m18s
-	  deployment-ricplt-a1mediator-68f8677df4-cvck9               1/1     Running   0          4m22s
-	  r4-infrastructure-prometheus-server-dfd5c6cbb-wrpp2         1/1     Running   0          4m28s
-	  r4-infrastructure-kong-b7cdbc9dd-g9qlc                      2/2     Running   1          4m28s
-	  r4-infrastructure-prometheus-alertmanager-98b79ccf7-pvfql   2/2     Running   0          4m28s
-	  deployment-ricplt-appmgr-5b94d9f97-mr7ld                    1/1     Running   0          2m16s
-	  deployment-ricplt-rtmgr-768655fc98-q6x28                    1/1     Running   2          4m25s
-	  deployment-ricplt-e2term-alpha-6c85bcf675-n6ckf             1/1     Running   0          4m23s
-				
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricinfra
-	  NAME                                         READY   STATUS      RESTARTS   AGE
-	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
-	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
-				
-	  ubuntu@ip-172-31-47-62:~$ kubectl get pods -n ricxapp
-	  No resources found.
-	  ```	
-
-    - For argo-workflow:
 		   
 	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Ric Server:
 	  
@@ -887,21 +722,8 @@ in second.
 	  ```		
 
   - Verify qp model:
-	
-	- For puccini-workflow:
 
-	  Login into 'Bonap Server' and run the following commands:
-	  
-	  ```sh
-	  $ cat /tmp/xapp.log
-		
-	  # To check qp models deploy successfully, verify the following messages in /tmp/xapp.log.
-	  {"instances":null,"name":"qp","status":"deployed","version":"1.0"}
-	  ```
-
-    - For argo-workflow:
-
-	  Login into 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'Non-ONAP-Server' and run following commands:
 
 	  ```sh
 	  $ cd ~/
@@ -945,20 +767,7 @@ in second.
 		  
   - Verify qp-driver model:
 
-	- For puccini-workflow:
-
-	  Login into 'Bonap Server' and run the following commands:
-
-	  ```sh
-	  $ cat /tmp/xapp.log
-				
-	  # To check qp-driver models deploy successfully, verify the following messages in /tmp/xapp.log.
-		{"instances":null,"name":"qp-driver","status":"deployed","version":"1.0"}
-      ```
-	  
-    - For argo-workflow:  
-
-	  Login into 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'Non-ONAP-Server' and run following commands:
 
 	  ```sh
 	  $ cd ~/
@@ -1000,20 +809,7 @@ in second.
 
   - Verify ts model:
 
-    - For puccini-workflow:
-
-	  Login into 'Bonap Server' and run the following commands:
-	  
-	  ```sh
-	  $ cat /tmp/xapp.log
-				
-	  # To check ts models deploy successfully, verify the following messages in /tmp/xapp.log.
-	  {"instances":”null,"name":"trafficxapp","status":"deployed","version":"1.0"}
-      ``` 
-		
-	- For argo-workflow: 
-
-	  Login into 'ONAP_OOM_DEMO' and run following commands:
+	  Login into 'Non-ONAP-Server' and run following commands:
 
 	  ```sh
 	  $ cd ~/
