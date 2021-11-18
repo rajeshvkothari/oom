@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
-     * [Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing)
+     * [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-based-testing)
        * [Non-ONAP Server](#Non-ONAP-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
@@ -24,7 +24,7 @@ Follow/complete only those sections which are relevant to the type of models/dep
 
 [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
 
-[Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
+[Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-based-testing) should be completed only if deployment is
 to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
 
 So, for example, to deploy SDWAN in ONAP OOM, ignore first and only perform steps given
