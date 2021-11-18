@@ -63,7 +63,7 @@ in second.
          $ sudo chmod -R 777 /etc/rancher/k3s
     
 	     $ git clone https://github.com/customercaresolutions/gin-utils
-				 
+		 $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml	 
 	    ```
 		 
 		  
