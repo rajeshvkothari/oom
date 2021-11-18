@@ -15,7 +15,7 @@ Table of contents
 
 ## Introduction
 
-  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using puccini-workflow or argo-workflow. It also describes steps for building csars for various models currently available.
+  This page describes steps that need to be followed to create the necessary environment for deploying tosca models using argo-workflow. It also describes steps for building csars for various models currently available.
   
 ## Pre Deployment Steps
 
@@ -272,7 +272,7 @@ in second.
 			  
 ## Building Tosca Model Csars
 
-  **IMPORTANT NOTE : By default, GIN uses 'argo-workflow' engine to deploy models. **
+  **IMPORTANT NOTE : By default GIN uses 'argo-workflow' engine to deploy models.**
 
 
   Login into Non-ONAP-Server and run the following commands:
