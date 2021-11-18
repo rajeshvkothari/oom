@@ -22,7 +22,7 @@ Table of contents
 There are two sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if RIC model are to be deployed.
+[ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
 
 [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
 to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
@@ -45,7 +45,7 @@ in second.
          VM3 Name: tickclamp Server
 
          Image: ubuntu-18.04
-         Instance Type: t2.2xlarge
+         Instance Type: t2.large
          KeyPair : cciPublicKey
          Disk: 80GB
 	     Security group: launch-wizard-19
@@ -62,15 +62,10 @@ in second.
 		 $ sudo mkdir -p /etc/rancher/k3s
          $ sudo chmod -R 777 /etc/rancher/k3s
     
-	     # Create a file /etc/rancher/k3s/registries.yaml and add the following content to it.
-          mirrors:
-            "172.31.27.186:5000":
-               endpoint:
-                 - "http://172.31.27.186:5000"
+	     $ git clone https://github.com/customercaresolutions/gin-utils
 				 
 	    ```
 		 
-
 		  
 - **Creating Environment for Non-ONAP based testing**
     -------------------------------------------------------
@@ -187,9 +182,9 @@ in second.
         pushCsarToReposure=true
 
         [argoWorkflow]
-        ricServerIP={PRIVATE_IP_ADDR_OF_Non_ONAP_VM}
+        ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
         nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-        tickServerIP={PRIVATE_IP_OF_Non_ONAP_VM}
+        tickServerIP={PRIVATE_IP_OF_TICK_VM}
 
 		argoTemplateType=containerSet | DAG
       ```
@@ -264,8 +259,7 @@ in second.
 	  $ sudo apt install python-pip
 	  $ pip2 install simplejson
 	  $ cd /home/ubuntu
-	  $ sudo mkdir onap-oom-integ
-	  $ sudo mkdir onap-oom-integ/cci
+	  $ sudo mkdir -p onap-oom-integ/cci
 	  $ sudo chmod -R 777 onap-oom-integ
 	  $ cp cciPrivateKey onap-oom-integ/cci
 	  ```
