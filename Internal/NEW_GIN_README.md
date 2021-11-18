@@ -24,7 +24,7 @@ Follow/complete only those sections which are relevant to the type of models/dep
 
 [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
 
-[Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
+[Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
 to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
 
 So, for example, to deploy SDWAN in ONAP OOM, ignore first and only perform steps given
@@ -45,7 +45,7 @@ in second.
          VM3 Name: tickclamp Server
 
          Image: ubuntu-18.04
-         Instance Type: t2.large
+         Instance Type: t2.xlarge
          KeyPair : cciPublicKey
          Disk: 80GB
 	     Security group: launch-wizard-19
@@ -113,8 +113,6 @@ in second.
       $ sudo systemctl daemon-reload && sudo systemctl restart k3s
       $ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
 	  
-      $ sudo apt install jq
-      $ sudo apt install socat
       ```
 	  
   
@@ -169,9 +167,7 @@ in second.
         schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 
         [remote]
-        remoteHost={IP_ADDR_OF_SERVER}
-        remotePort=22
-        remoteUser=ubuntu
+        remoteHost={IP_ADDR_OF_Non_ORAN_SERVER}
         remotePubKey=/opt/app/config/cciPrivateKey
 
         [messageBus]
@@ -258,10 +254,9 @@ in second.
 	  $ sudo apt install awscli
 	  $ sudo apt install python-pip
 	  $ pip2 install simplejson
-	  $ cd /home/ubuntu
-	  $ sudo mkdir -p onap-oom-integ/cci
-	  $ sudo chmod -R 777 onap-oom-integ
-	  $ cp cciPrivateKey onap-oom-integ/cci
+	  $ sudo mkdir -p ~/onap-oom-integ/cci
+	  $ sudo chmod -R 777 ~/onap-oom-integ
+	  $ cp cciPrivateKey ~/onap-oom-integ/cci
 	  ```
 			  
 ## Building Tosca Model Csars
@@ -342,7 +337,7 @@ in second.
 	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
     
     ```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/{MODEL_NAME}.csar",
 	  "resolve": true,
@@ -359,7 +354,7 @@ in second.
     For ric model use following:
 	  
     ```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/ric.csar",
 	  "resolve": true,
@@ -378,7 +373,7 @@ in second.
 	For tickclamp model use following:
 	
 	```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10010/compiler/model/db/save
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
 	{
 	  "url": "/opt/app/config/tickclamp.csar",
 	  "resolve": true,
@@ -401,7 +396,7 @@ in second.
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts:
 	
 	```sh			
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/createInstance
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/createInstance
 	{
 		"name" : "{INSTANCE_NAME}",
 		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
@@ -473,7 +468,7 @@ in second.
   - To only list workflow steps of a model without executing/deploying them use the following:
 	  
 	```sh
-    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
 	   "list-steps-only": true,
 	   "execute-policy": false
@@ -483,7 +478,7 @@ in second.
   - To Execute Workflow steps of a model which has already been saved in the database:
 	   
 	```sh	
-    POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+    POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -493,19 +488,19 @@ in second.
   - Execute Policy(This is valid only for the firewall model): 
 	  
 	```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is valid only for the firewall model):
          
 	```sh
-	DELETE http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	DELETE http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is valid only for the firewall model):
          
 	```sh
-	GET http://{IP_ADDR_OF_DEMO_SERVER}:10000/bonap/templates/{INSTANCE_NAME}/policies
+	GET http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policies
 	```
 
   
