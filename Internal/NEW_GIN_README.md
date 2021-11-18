@@ -4,7 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [RIC Server](#RIC-Server)
+     * [ORAN and Tickclamp Servers](#ORAN and Tickclamp Servers)
      * [Creating Environment for Non-ONAP testing](#Creating-Environment-for-Non-ONAP-testing)
        * [Non-ONAP Server](#Non-ONAP-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -22,7 +22,7 @@ Table of contents
 There are two sub-sections within this section and they are not mandatory.
 Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[RIC Server](#RIC-Server) should be completed only if RIC model are to be deployed.
+[ORAN and Tickclamp Servers](#ORAN and Tickclamp Servers) should be completed only if RIC model are to be deployed.
 
 [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-testing) should be completed only if deployment is
 to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
@@ -30,17 +30,19 @@ to be tested in Non ONAP based environment. This is not required for ONAP OOM ba
 So, for example, to deploy SDWAN in ONAP OOM, ignore first and only perform steps given
 in second.
 
-- **RIC Server**
+- **ORAN and Tickclamp Servers**
     ------------
-	These server is required for deploying RIC model. 
+	These servers are required for deploying ORAN models and tickclamp model.
 	
-	**IMPORTANT NOTE 1 : For deploying Nonrtric and Tickclamp model we are not required to setup cluster. It will gets deploy on same k8s cluster as GIN**
+	**IMPORTANT NOTE 1 : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
 	
 
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	    ```sh
-         VM Name: ric Server
+         VM1 Name: ric Server
+		 VM2 Name: nonrtric Server
+         VM3 Name: tickclamp Server
 
          Image: ubuntu-18.04
          Instance Type: t2.2xlarge
@@ -51,7 +53,7 @@ in second.
 	    ```
 		  
 
-     - Login into ric server and run following commands:
+     - Login into ric, nonrtric, tickclamp Servers and run following commands:
 	
 	     ```sh
 	     $ sudo apt update
@@ -249,6 +251,24 @@ in second.
         svclb-argo-server-ttvzj                1/1     Running     0          63m
 	  ```
 	
+	- To deploy only sdwan and firewall model do some additional installation on Non-ONAP-Server as follows:
+	
+      ```sh
+	  $ sudo apt-get update
+	  $ sudo apt-get install -y python
+	  $ sudo apt-get install -y python3-dev python3-pip
+	  $ sudo pip3 install --upgrade pip
+	  $ sudo pip3 install simplejson
+	  $ sudo apt-get install jq
+	  $ sudo apt install awscli
+	  $ sudo apt install python-pip
+	  $ pip2 install simplejson
+	  $ cd /home/ubuntu
+	  $ sudo mkdir onap-oom-integ
+	  $ sudo mkdir onap-oom-integ/cci
+	  $ sudo chmod -R 777 onap-oom-integ
+	  $ cp cciPrivateKey onap-oom-integ/cci
+	  ```
 			  
 ## Building Tosca Model Csars
 
