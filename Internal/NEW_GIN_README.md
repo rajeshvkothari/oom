@@ -5,11 +5,11 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
-     * [Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-based-testing)
-       * [Non-ONAP Server](#Non-ONAP-Server)
+     * [Creating Environment for NON ONAP based testing](#Creating-Environment-for-NON-ONAP-based-testing)
+       * [NON ONAP Server](#NON-ONAP-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
-     * [Non-ONAP based testing](#Non-ONAP-based-testing)
+     * [NON ONAP based testing](#NON-ONAP-based-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -19,64 +19,57 @@ Table of contents
   
 ## Pre Deployment Steps
 
-There are two sub-sections within this section and they are not mandatory.
-Follow/complete only those sections which are relevant to the type of models/deployment.
+There are two sub-sections within this section and they are not mandatory. Follow/complete only those sections which are relevant to the type of models/deployment.
 
 [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
 
-[Creating Environment for Non-ONAP based testing](#Creating-Environment-for-Non-ONAP-based-testing) should be completed only if deployment is
-to be tested in Non ONAP based environment. This is not required for ONAP OOM based deployment.
+[Creating Environment for NON ONAP based testing](#Creating-Environment-for-NON-ONAP-based-testing) should be completed only if deployment is to be tested in NON ONAP based environment. This is not required for NON ONAP based deployment.
 
-So, for example, to deploy SDWAN in ONAP OOM, ignore first and only perform steps given
-in second.
+So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
 - **ORAN and Tickclamp Servers**
-    ------------
+    --------------------------
 	These servers are required for deploying ORAN models and tickclamp model.
 	
 	**IMPORTANT NOTE : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
 	
-
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
-	    ```sh
-         VM1 Name: ric Server
-		 VM2 Name: nonrtric Server
-         VM3 Name: tickclamp Server
+	   ```sh
+       VM1 Name: ric Server
+	   VM2 Name: nonrtric Server
+       VM3 Name: tickclamp Server
 
-         Image: ubuntu-18.04
-         Instance Type: t2.xlarge
-         KeyPair : cciPublicKey
-         Disk: 80GB
-	     Security group: launch-wizard-19
-		 vpcId: vpc-9be007f3
-	    ```
-		  
+       Image: ubuntu-18.04
+       Instance Type: t2.xlarge
+       KeyPair : cciPublicKey
+       Disk: 80GB
+	   Security group: launch-wizard-19
+	   vpcId: vpc-9be007f3
+	   ```
 
      - Login into ric, nonrtric, tickclamp Servers and run following commands:
 	
-	     ```sh
-	     $ sudo apt update
-         $ sudo apt install jq
-         $ sudo apt install socat
-		 $ sudo mkdir -p /etc/rancher/k3s
-         $ sudo chmod -R 777 /etc/rancher/k3s
+	   ```sh
+	   $ sudo apt update
+       $ sudo apt install -y jq socat
+	   $ sudo mkdir -p /etc/rancher/k3s
+       $ sudo chmod -R 777 /etc/rancher/k3s
     
-	     $ git clone https://github.com/customercaresolutions/gin-utils
-		 $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml	 
-	    ```
+	   $ git clone https://github.com/customercaresolutions/gin-utils
+	   $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml	 
+	   ```
 		 
-		  
-- **Creating Environment for Non-ONAP based testing**
-    -------------------------------------------------------
+- **Creating Environment for NON ONAP based testing**
+    -----------------------------------------------
 
-  - **Non-ONAP Server**
-      ------------
+  - **NON ONAP Server**
+      ---------------
       
     - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
     
       ```sh
-	  Name: Non-ONAP Server
+	  Name: NON ONAP Server
       Image: ubuntu-18.04
       Instance Type: t2.2xlarge
       Storage: 100GB
@@ -87,13 +80,11 @@ in second.
 	  
 	  Note : cciPrivateKey is the authentication key to login/ssh into AWS (which should be available with you locally).
 	  
-	  
     - Clone gin-utils:
 	
 	  ```sh
 	  $ git clone https://github.com/customercaresolutions/gin-utils
 	  ```
-	
 	
 	- Setup k3s:
 	
@@ -112,20 +103,15 @@ in second.
 	
       $ sudo systemctl daemon-reload && sudo systemctl restart k3s
       $ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
-	  
       ```
 	  
-  
-    - Made changes in ~/.kube/config file:
+    - Make changes in ~/.kube/config file as follows:
 	
       ```sh
-      Before:
-        server: https://127.0.0.1:6443
-
-      After:
-        server: https://{PRIVATE_IP_OF_Non_ONAP-VM}:6443
+	  $ vi ~/.kube/confi 
+	  
+      server: https://{PRIVATE_IP_OF_NON_ONAP_VM}:6443
       ```
-	
 	
     - Setup helm:
 	
@@ -135,9 +121,7 @@ in second.
       $ sudo mv linux-amd64/helm /usr/local/bin/helm
       ```
 	
-	
 	- Verify that CCI_REPO VM on Ohio region is in running state. If it is not running then go to AWS and start it.
-	
 	
 	- Setup DMAAP:
 	
@@ -151,30 +135,28 @@ in second.
       $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace onap --generate-name
       ```
 	
-	
 	- Setup GIN:
 	
       ```sh
       $ git clone https://github.com/customercaresolutions/puccini
       ```
 	  
+	  - Setup config parameters in puccini/dvol/config/application.cfg
 	  
-	  Setup config params in puccini/dvol/config/application.cfg
-	  
-      ```sh
+        ```sh
         [dgraph]
         host=tosca-dgraph
         schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 
         [remote]
-        remoteHost={IP_ADDR_OF_Non_ORAN_SERVER}
+        remoteHost={IP_ADDR_OF_NON_ONAP_SERVER}
         remotePubKey=/opt/app/config/cciPrivateKey
 
         [messageBus]
         msgBusURL=dmaap:3904
 
         [reposure]
-        reposureHost={IP_ADDR_OF_Non_ORAN_SERVER} 
+        reposureHost={IP_ADDR_OF_NON_ONAP_SERVER} 
         pushCsarToReposure=true
 
         [argoWorkflow]
@@ -182,24 +164,23 @@ in second.
         nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
         tickServerIP={PRIVATE_IP_OF_TICK_VM}
 
-		argoTemplateType=containerSet | DAG
-      ```
+        argoTemplateType=containerSet | DAG
+        ```
+		
+	    Note : If ORAN servers have not been created, then keep ricServerIP, nonrtricServerIP and tickServerIP values as is. Otherwise add private IP of ricServer, nonrtricServer and tickServer(created in Pre Deployment Steps').
 	  
+	  - Copy following files:
 	  
-	  Copy following files:
+        ```sh
+        $ cp cciPrivateKey puccini/dvol/config
+        $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
+        ```
 	  
-      ```sh
-      $ cp cciPrivateKey puccini/dvol/config
-      $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
-      ```
+      - Deploy gin through helm chart:
 	  
-	  
-      Deploy gin through helm chart:
-	  
-	  ```sh
-	  $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
-	  ```
-	 
+	    ```sh
+	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
+	    ```
 	 
     - Setup reposure:
 	
@@ -211,60 +192,48 @@ in second.
 	  $ reposure registry create default --provider=simple --wait -v
 	  ```
 	  
-	  
 	- Setup Argo:
 	
 	  ```sh
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
 	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
 	  $ kubectl get svc argo-server -n onap
+	  
+	  ubuntu@ip-172-31-18-127:~$ kubectl get svc argo-server -n onap
+	  NAME          TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE
+	  argo-server   LoadBalancer   10.43.45.202   172.31.18.127   2746:31960/TCP   11s
 	  ```
 	  
+	  Note : 31960 is the external port of argo-server.
 	  
-    - Following pods should in Running state:
+    - To verify that NON ONAP is deployed successfully, use the following command and check that all pods are in running state:
 	
       ```sh
-      $ kubectl get pods -n onap
-        NAME                                          READY   STATUS             RESTARTS   AGE
-        zookeeper-85fbfbb49f-ndbdx             1/1     Running     0          95m
-        kafka111-7746747c8d-588zp              1/1     Running     0          95m
-        dmaap-5bddfd7f4b-nx28g                 1/1     Running     0          95m
-        gin-tosca-dgraph-6cc598bcd7-zt4lt      2/2     Running     0          64m
-        gin-tosca-compiler-56f7cc696b-czh4b    2/2     Running     0          64m
-        gin-tosca-86f74c9646-f2hsk             2/2     Running     0          64m
-        gin-tosca-workflow-644cc88d44-p4t4d    2/2     Running     0          64m
-        gin-tosca-policy-856bcf876f-txq4p      2/2     Running     0          64m
-        minio-74d9d98bbb-g62rd                 1/1     Running     0          81m
-        argo-server-67dc857958-g8c87           1/1     Running     0          81m
-        workflow-controller-847654dd4d-qpg7r   1/1     Running     0          81m
-        postgres-77dc5db9d4-ghwrb              1/1     Running     0          81m
-        gin-tosca-gawp-65f587df75-2h9gb        2/2     Running     0          64m
-        svclb-argo-server-ttvzj                1/1     Running     0          63m
+      $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n onap
+		NAME                                   READY   STATUS    RESTARTS   AGE
+		zookeeper-85fbfbb49f-mr9kb             1/1     Running   0          8m53s
+		kafka111-7746747c8d-4pbxg              1/1     Running   0          8m46s
+		dmaap-5bddfd7f4b-g8skk                 1/1     Running   0          8m41s
+		gin-tosca-dgraph-85f8f7c7c6-hg2td      2/2     Running   0          5m4s
+		gin-tosca-gawp-56b7df545-mjf7m         2/2     Running   0          5m4s
+		gin-tosca-policy-5c794c48cd-wgzcf      2/2     Running   0          5m4s
+		gin-tosca-5d8c8f84ff-76nk7             2/2     Running   0          5m4s
+		gin-tosca-workflow-65f6786c8c-fwv7k    2/2     Running   0          5m4s
+		gin-tosca-compiler-596675bb84-g7d6j    2/2     Running   0          5m4s
+		svclb-argo-server-ghdn6                1/1     Running   0          3m55s
+		minio-74d9d98bbb-nnzdg                 1/1     Running   0          4m
+		postgres-77dc5db9d4-l4g24              1/1     Running   0          3m59s
+		workflow-controller-847654dd4d-m5xhn   1/1     Running   1          3m59s
+		argo-server-67dc857958-nsxxt           1/1     Running   1          4m
 	  ```
-	
-	- To deploy only sdwan and firewall model do some additional installation on Non-ONAP-Server as follows:
-	
-      ```sh
-	  $ sudo apt-get update
-	  $ sudo apt-get install -y python
-	  $ sudo apt-get install -y python3-dev python3-pip
-	  $ sudo pip3 install --upgrade pip
-	  $ sudo pip3 install simplejson
-	  $ sudo apt-get install jq
-	  $ sudo apt install awscli
-	  $ sudo apt install python-pip
-	  $ pip2 install simplejson
-	  $ sudo mkdir -p ~/onap-oom-integ/cci
-	  $ sudo chmod -R 777 ~/onap-oom-integ
-	  $ cp cciPrivateKey ~/onap-oom-integ/cci
-	  ```
+	  
+	  Note : This step requires around 2-3 min to deploy NON ONAP components.
 			  
 ## Building Tosca Model Csars
 
   **IMPORTANT NOTE : By default GIN uses 'argo-workflow' engine to deploy models.**
 
-
-  Login into Non-ONAP-Server and run the following commands:
+  Login into NON ONAP Server and run the following commands:
   
   ```sh
   $ cd /home/ubuntu
@@ -314,17 +283,15 @@ in second.
 	$ cd /home/ubuntu/tosca-models/cci/tickclamp
     $ ./build.sh  
     ```
-   
+
     Check whether all csar are created in /home/ubuntu/tosca-models/cci directory.
-	
-	To test through OOM Environment keep a copy of all csar on the local machine.
     
 ## Deployment Steps
  
-- **Non-ONAP based testing**
-    ------------------------------ 
+- **NON ONAP based testing**
+    ---------------------- 
    
-  Login into Non-ONAP-Server and run the following commands to copy csars:
+  Login into NON ONAP Server and run the following commands to copy csars:
   
   ```sh
   $ cd ~/
@@ -334,10 +301,10 @@ in second.
 
   - Use the following request to store the models in Dgraph:
 	  
-	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use the following:
+	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use following:
     
     ```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/{MODEL_NAME}.csar",
 	  "resolve": true,
@@ -354,7 +321,7 @@ in second.
     For ric model use following:
 	  
     ```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/ric.csar",
 	  "resolve": true,
@@ -373,7 +340,7 @@ in second.
 	For tickclamp model use following:
 	
 	```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
 	{
 	  "url": "/opt/app/config/tickclamp.csar",
 	  "resolve": true,
@@ -389,14 +356,13 @@ in second.
 	  "inputsUrl": ""
 	}
 	```
-	  
 
   - Create service instance with deployment:
 	
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts:
 	
 	```sh			
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/createInstance
+	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/createInstance
 	{
 		"name" : "{INSTANCE_NAME}",
 		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
@@ -463,22 +429,12 @@ in second.
 	    "inputs":"",
 	    "inputsUrl":"",
 	    "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
-	  ```
-
-  - To only list workflow steps of a model without executing/deploying them use the following:
-	  
-	```sh
-    POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
-	{
-	   "list-steps-only": true,
-	   "execute-policy": false
-	}
-	```		 
+	  ```		 
 
   - To Execute Workflow steps of a model which has already been saved in the database:
 	   
 	```sh	
-    POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+    POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -488,22 +444,21 @@ in second.
   - Execute Policy(This is valid only for the firewall model): 
 	  
 	```sh
-	POST http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is valid only for the firewall model):
          
 	```sh
-	DELETE http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	DELETE http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is valid only for the firewall model):
          
 	```sh
-	GET http://{IP_ADDR_OF_DEMO_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policies
+	GET http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policies
 	```
 
-  
 ## Post Deployment Verification Steps
 
 - When using 'argo-workflow', argo GUI can be used to verify and monitor deployment as follows:
@@ -511,12 +466,12 @@ in second.
   - Use following URL to open Argo GUI in local machine browser:
        
     ```sh
-	https://{IP_ADDR_OF_ONAP_OOM_DEMO}:{EXTERNAL_PORT_OF_ARGO_SERVER}
+	https://{IP_ADDR_OF_NON_ONAP_VM}:{EXTERNAL_PORT_OF_ARGO_SERVER}
 
     # e.g: https://3.142.145.230:31325
 	```
 
-    After opening argo GUI, Click on the 'workflow' with name starting with the 'service instance' name provided in 'Create service instance and VNF from VID' section of 'ONAP OOM testing'.
+    After opening argo GUI, Click on the 'workflow' with name starting with the 'instance' name provided in 'Create service instance with deployment' section.
 	
     This will display workflow steps in Tree Format. If the model is deployed successfully, then it will show a 'right tick' symbol with green background.
 
@@ -532,7 +487,7 @@ in second.
 	
 	  - Click on 'Get Start'.
 	  - Replace Connection URL "http://localhost:8086" with "http://tick-influx-influxdb:8086" and also give connection name to Influxdb.
-	  - Select the pre-created Dashboard e.g System, Docker.
+	  - Select the pre-created Dashboard e.g System, Docker, etc.
 	  - Replace Kapaciter URL "http://tick-influx-influxdb:9092/" with "http://tick-kap-kapacitor:9092/" and give name to Kapaciter.
 	  - Then, click on 'Continue' and In the next step click on 'View all connection'.
 		
@@ -675,13 +630,12 @@ in second.
 	
   - Verify ric model:
 
-		   
 	  To verify that ric is deployed successfully, use the following command and check that all pods are in running state on Ric Server:
 	  
 	  ```sh		
 	  $ sudo kubectl get pods -n ricplt
-	  $ sudo kubectl get pods -n ricinfra
-	  $ sudo kubectl get pods -n ricxapp 
+	  $ sudo kubectl get pods -n ricinfra 
+	  $ sudo kubectl get pods -n ricxapp
 
 	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricplt
 	  NAME                                                        READY   STATUS    RESTARTS   AGE
@@ -704,8 +658,7 @@ in second.
 	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n ricinfra
 	  NAME                                         READY   STATUS      RESTARTS   AGE
 	  tiller-secret-generator-4r45b                0/1     Completed   0          4m36s
-	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s
-				
+	  deployment-tiller-ricxapp-797659c9bb-b4kdz   1/1     Running     0          4m36s		
 	  ```		
 
   - Verify qp model:
@@ -717,8 +670,7 @@ in second.
 	    NAME                                   READY   STATUS    RESTARTS   AGE
         ricxapp-qp-dd9965f84-k2hkk             1/1     Running   0          10m
       ```
-	
-		  
+	 
   - Verify qp-driver model:
 
 	  To verify that qp-driver is deployed successfully, use the following command and check that pod for qp-driver is in running state on Ric Server:
