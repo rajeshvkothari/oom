@@ -108,7 +108,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     - Make changes in ~/.kube/config file as follows:
 	
       ```sh
-	  $ vi ~/.kube/confi 
+	  $ vi ~/.kube/config 
 	  
       server: https://{PRIVATE_IP_OF_NON_ONAP_VM}:6443
       ```
@@ -126,13 +126,13 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup DMAAP:
 	
 	  ```sh
-      $ kubectl create ns onap
+      $ kubectl create ns gin
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace onap --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace gin --generate-name
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/kafka-1.0.4.tar.gz -f /home/ubuntu/gin-utils/helm-charts/kafka-values.yaml --namespace onap --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/kafka-1.0.4.tar.gz -f /home/ubuntu/gin-utils/helm-charts/kafka-values.yaml --namespace gin --generate-name
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace onap --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace gin --generate-name
       ```
 	
 	- Setup GIN:
@@ -165,6 +165,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
         tickServerIP={PRIVATE_IP_OF_TICK_VM}
 
         argoTemplateType=containerSet | DAG
+		argoServerNamespace=gin | onap
         ```
 		
 	    Note : If ORAN servers have not been created, then keep ricServerIP, nonrtricServerIP and tickServerIP values as is. Otherwise add private IP of ricServer, nonrtricServer and tickServer(created in Pre Deployment Steps').
@@ -179,7 +180,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
       - Deploy gin through helm chart:
 	  
 	    ```sh
-	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
+	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace gin --generate-name
 	    ```
 	 
     - Setup reposure:
@@ -195,11 +196,11 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup Argo:
 	
 	  ```sh
-	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
-	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
-	  $ kubectl get svc argo-server -n onap
+	  $ sudo kubectl apply -n gin -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
+	  $ kubectl patch svc argo-server -n gin -p '{"spec": {"type": "LoadBalancer"}}'
+	  $ kubectl get svc argo-server -n gin
 	  
-	  ubuntu@ip-172-31-18-127:~$ kubectl get svc argo-server -n onap
+	  ubuntu@ip-172-31-18-127:~$ kubectl get svc argo-server -n gin
 	  NAME          TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE
 	  argo-server   LoadBalancer   10.43.45.202   172.31.18.127   2746:31960/TCP   11s
 	  ```
@@ -209,7 +210,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     - To verify that NON ONAP is deployed successfully, use the following command and check that all pods are in running state:
 	
       ```sh
-      $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n onap
+      $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n gin
 		NAME                                   READY   STATUS    RESTARTS   AGE
 		zookeeper-85fbfbb49f-mr9kb             1/1     Running   0          8m53s
 		kafka111-7746747c8d-4pbxg              1/1     Running   0          8m46s
