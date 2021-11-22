@@ -158,7 +158,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 
         [argoWorkflow]
         ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
-        ginServerIP={Private_IP_OF_GIN_SERVER}
+        ginServerIP={PRIVATE_IP_OF_GIN_SERVER}
 
         argoTemplateType=containerSet | DAG
 		argoServerNamespace=gin
