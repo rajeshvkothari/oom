@@ -21,7 +21,7 @@ Table of contents
 
 There are two sub-sections within this section and they are not mandatory. Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
+[Ric Servers](#Ric-Servers) should be completed only if ric models are to be deployed.
 
 [Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment. This is not required for GIN based deployment.
 
