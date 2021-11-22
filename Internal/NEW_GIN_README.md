@@ -4,7 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
+     * [RIC Servers](#RIC-Servers)
      * [Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing)
        * [GIN Server](#GIN-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -27,11 +27,11 @@ There are two sub-sections within this section and they are not mandatory. Follo
 
 So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
-- **ORAN and Tickclamp Servers**
+- **RIC Servers**
     --------------------------
-	These servers are required for deploying ORAN models and tickclamp model.
+	These servers are required for deploying RIC model.
 	
-	**IMPORTANT NOTE : tickclamp server is required ONLY if tickclamp model is to be deployed. ric and nonrtric server is required ONLY if oran models are to be deployed.**
+	**IMPORTANT NOTE : ric server is required ONLY if ric model are to be deployed.**
 	
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
