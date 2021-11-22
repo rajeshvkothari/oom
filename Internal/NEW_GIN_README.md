@@ -110,7 +110,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
       ```sh
 	  $ vi ~/.kube/config 
 	  
-      server: https://{PRIVATE_IP_OF_GIn_VM}:6443
+      server: https://{PRIVATE_IP_OF_GIN_VM}:6443
       ```
 	
     - Setup helm:
