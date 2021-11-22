@@ -37,9 +37,6 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     
 	   ```sh
        VM1 Name: ric Server
-	   VM2 Name: nonrtric Server
-       VM3 Name: tickclamp Server
-
        Image: ubuntu-18.04
        Instance Type: t2.xlarge
        KeyPair : cciPublicKey
@@ -48,7 +45,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	   vpcId: vpc-9be007f3
 	   ```
 
-     - Login into ric, nonrtric, tickclamp Servers and run following commands:
+     - Login into ric and run following commands:
 	
 	   ```sh
 	   $ sudo apt update
@@ -161,11 +158,10 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 
         [argoWorkflow]
         ricServerIP={PRIVATE_IP_ADDR_OF_RIC_VM}
-        nonrtricServerIP={PRIVATE_IP_ADDR_OF_NONRTRIC_VM}
-        tickServerIP={PRIVATE_IP_OF_TICK_VM}
+        ginServerIP={Private_IP_OF_GIN_SERVER}
 
         argoTemplateType=containerSet | DAG
-		argoServerNamespace=gin | onap
+		argoServerNamespace=gin
         ```
 		
 	    Note : If ORAN servers have not been created, then keep ricServerIP, nonrtricServerIP and tickServerIP values as is. Otherwise add private IP of ricServer, nonrtricServer and tickServer(created in Pre Deployment Steps').
