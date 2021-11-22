@@ -110,7 +110,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
       ```sh
 	  $ vi ~/.kube/config 
 	  
-      server: https://{PRIVATE_IP_OF_NON_ONAP_VM}:6443
+      server: https://{PRIVATE_IP_OF_GIn_VM}:6443
       ```
 	
     - Setup helm:
@@ -149,14 +149,14 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
         schemaFilePath=/opt/app/config/TOSCA-Dgraph-schema.txt
 
         [remote]
-        remoteHost={IP_ADDR_OF_NON_ONAP_SERVER}
+        remoteHost={IP_ADDR_OF_GIN_SERVER}
         remotePubKey=/opt/app/config/cciPrivateKey
 
         [messageBus]
         msgBusURL=dmaap:3904
 
         [reposure]
-        reposureHost={IP_ADDR_OF_NON_ONAP_SERVER} 
+        reposureHost={IP_ADDR_OF_GIN_SERVER} 
         pushCsarToReposure=true
 
         [argoWorkflow]
@@ -305,7 +305,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use following:
     
     ```sh
-	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_GIN_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/{MODEL_NAME}.csar",
 	  "resolve": true,
@@ -322,7 +322,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     For ric model use following:
 	  
     ```sh
-	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_GIN_SERVER}:30294/compiler/model/db/save
     {
 	  "url": "/opt/app/config/ric.csar",
 	  "resolve": true,
@@ -341,7 +341,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	For tickclamp model use following:
 	
 	```sh
-	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30294/compiler/model/db/save
+	POST http://{IP_ADDR_OF_GIN_SERVER}:30294/compiler/model/db/save
 	{
 	  "url": "/opt/app/config/tickclamp.csar",
 	  "resolve": true,
@@ -363,7 +363,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts:
 	
 	```sh			
-	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/createInstance
+	POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/createInstance
 	{
 		"name" : "{INSTANCE_NAME}",
 		"output": "../../workdir/{MODEL_NAME}-dgraph-clout.yaml",
@@ -435,7 +435,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
   - To Execute Workflow steps of a model which has already been saved in the database:
 	   
 	```sh	
-    POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
+    POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
 	{
        "list-steps-only": false,
 	   "execute-policy": true
@@ -445,19 +445,19 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
   - Execute Policy(This is valid only for the firewall model): 
 	  
 	```sh
-	POST http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
 	```
 	  
   - Stop Policy(This is valid only for the firewall model):
          
 	```sh
-	DELETE http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
+	DELETE http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policy/packet_volume_limiter
    	```
 	  
   - Get Policies(This is valid only for the firewall model):
          
 	```sh
-	GET http://{IP_ADDR_OF_NON_ONAP_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policies
+	GET http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/policies
 	```
 
 ## Post Deployment Verification Steps
@@ -467,7 +467,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
   - Use following URL to open Argo GUI in local machine browser:
        
     ```sh
-	https://{IP_ADDR_OF_NON_ONAP_VM}:{EXTERNAL_PORT_OF_ARGO_SERVER}
+	https://{IP_ADDR_OF_GIN_VM}:{EXTERNAL_PORT_OF_ARGO_SERVER}
 
     # e.g: https://3.142.145.230:31325
 	```
