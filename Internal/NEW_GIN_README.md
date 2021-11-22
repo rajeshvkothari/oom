@@ -6,10 +6,10 @@ Table of contents
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
      * [Creating Environment for NON ONAP based testing](#Creating-Environment-for-NON-ONAP-based-testing)
-       * [NON ONAP Server](#NON-ONAP-Server)
+       * [GIN Server](#GIN-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
-     * [NON ONAP based testing](#NON-ONAP-based-testing)
+     * [GIN based testing](#GIN-based-testing)
    * [Post Deployment Verification Steps](#Post-Deployment-Verification-Steps)
 <!--te-->
 
@@ -23,7 +23,7 @@ There are two sub-sections within this section and they are not mandatory. Follo
 
 [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers) should be completed only if ORAN and Tickclamp models are to be deployed.
 
-[Creating Environment for NON ONAP based testing](#Creating-Environment-for-NON-ONAP-based-testing) should be completed only if deployment is to be tested in NON ONAP based environment. This is not required for NON ONAP based deployment.
+[Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment. This is not required for GIN based deployment.
 
 So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
@@ -60,16 +60,16 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	   $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml	 
 	   ```
 		 
-- **Creating Environment for NON ONAP based testing**
+- **Creating Environment for GIN based testing**
     -----------------------------------------------
 
-  - **NON ONAP Server**
+  - **GIN Server**
       ---------------
       
     - Create AWS VM in Ohio region with following specifications and SSH it using putty by using cciPrivateKey:
     
       ```sh
-	  Name: NON ONAP Server
+	  Name: GIN Server
       Image: ubuntu-18.04
       Instance Type: t2.2xlarge
       Storage: 100GB
@@ -207,7 +207,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	  
 	  Note : 31960 is the external port of argo-server.
 	  
-    - To verify that NON ONAP is deployed successfully, use the following command and check that all pods are in running state:
+    - To verify that GIN is deployed successfully, use the following command and check that all pods are in running state:
 	
       ```sh
       $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n gin
@@ -228,13 +228,13 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 		argo-server-67dc857958-nsxxt           1/1     Running   1          4m
 	  ```
 	  
-	  Note : This step requires around 2-3 min to deploy NON ONAP components.
+	  Note : This step requires around 2-3 min to deploy GIN components.
 			  
 ## Building Tosca Model Csars
 
   **IMPORTANT NOTE : By default GIN uses 'argo-workflow' engine to deploy models.**
 
-  Login into NON ONAP Server and run the following commands:
+  Login into GIN Server and run the following commands:
   
   ```sh
   $ cd /home/ubuntu
@@ -289,10 +289,10 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     
 ## Deployment Steps
  
-- **NON ONAP based testing**
+- **GIN based testing**
     ---------------------- 
    
-  Login into NON ONAP Server and run the following commands to copy csars:
+  Login into GIN Server and run the following commands to copy csars:
   
   ```sh
   $ cd ~/
