@@ -476,7 +476,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 - After, deploying tickclamp model use following URL to open Chronograf GUI in local machine browser:
        
     ```sh
-	http://{IP_ADDR_OF_TICKBONAP_VM}:30080
+	http://{IP_ADDR_OF_GIN_SERVER_VM}:30080
 
     # e.g: http://23.124.125.320:30080
 	```
@@ -591,7 +591,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	  
   - Verify tickclamp model:
 	
-      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on Tickclamp Server:
+      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on GIN Server:
   
 	  ```sh
 	  $ kubectl get pods -n tick
@@ -607,7 +607,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 
   - Verify nonrtric model:
 
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the Nonrtric Server:
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the GIN Server:
 	  
 	  ```sh
 	  $ sudo kubectl get pods -n nonrtric
