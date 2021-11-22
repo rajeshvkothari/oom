@@ -100,6 +100,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	
       $ sudo systemctl daemon-reload && sudo systemctl restart k3s
       $ sudo chmod 777 /etc/rancher/k3s/k3s.yaml
+	  $ sudo apt install -y jq socat
       ```
 	  
     - Make changes in ~/.kube/config file as follows:
