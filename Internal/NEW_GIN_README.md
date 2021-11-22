@@ -5,7 +5,7 @@ Table of contents
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
      * [ORAN and Tickclamp Servers](#ORAN-and-Tickclamp-Servers)
-     * [Creating Environment for NON ONAP based testing](#Creating-Environment-for-NON-ONAP-based-testing)
+     * [Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing)
        * [GIN Server](#GIN-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
    * [Deployment Steps](#Deployment-Steps)
