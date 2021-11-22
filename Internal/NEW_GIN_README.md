@@ -4,7 +4,7 @@ Table of contents
 <!--ts-->
    * [Introduction](#Introduction)
    * [Pre Deployment Steps](#Pre-Deployment-Steps)
-     * [RIC Servers](#RIC-Servers)
+     * [RIC Server](#RIC-Server)
      * [Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing)
        * [GIN Server](#GIN-Server)
    * [Building Tosca Model Csars](#Building-Tosca-Model-Csars)
@@ -21,22 +21,22 @@ Table of contents
 
 There are two sub-sections within this section and they are not mandatory. Follow/complete only those sections which are relevant to the type of models/deployment.
 
-[Ric Servers](#Ric-Servers) should be completed only if ric models are to be deployed.
+[Ric Server](#Ric-Server) should be completed only if ric models is to be deployed.
 
 [Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment. This is not required for GIN based deployment.
 
 So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
-- **RIC Servers**
+- **RIC Server**
     --------------------------
-	These servers are required for deploying RIC model.
+	These server is required for deploying RIC model.
 	
-	**IMPORTANT NOTE : ric server is required ONLY if ric model are to be deployed.**
+	**IMPORTANT NOTE : ric server is required ONLY if ric model is to be deployed.**
 	
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	   ```sh
-       VM1 Name: ric Server
+       VM Name: ric Server
        Image: ubuntu-18.04
        Instance Type: t2.xlarge
        KeyPair : cciPublicKey
