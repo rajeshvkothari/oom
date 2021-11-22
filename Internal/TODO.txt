@@ -18,4 +18,4 @@ Dhananjay Gahiwade:
 Anil Amte:
 1)issue about Application.cfg file 
 2) We also need to add test cases for the APIs which use golang testing frameworks
-3)replace the name non-onap-server with gin-server
+3)replace the name non-onap-server with gin-server in new_gin_readme
