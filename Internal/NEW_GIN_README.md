@@ -164,7 +164,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 		argoServerNamespace=gin
         ```
 		
-	    Note : If ORAN servers have not been created, then keep ricServerIP, nonrtricServerIP and tickServerIP values as is. Otherwise add private IP of ricServer, nonrtricServer and tickServer(created in Pre Deployment Steps').
+	    Note : If ORAN servers have not been created, then keep ricServerIP, ginServerIP values as is. Otherwise add private IP of ricServer, ginServerIP(created in Pre Deployment Steps').
 	  
 	  - Copy following files:
 	  
