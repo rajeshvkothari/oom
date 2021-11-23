@@ -124,13 +124,13 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup DMAAP:
 	
 	  ```sh
-      $ kubectl create ns gin
+      $ kubectl create ns onap
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace gin --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace onap --generate-name
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/kafka-1.0.4.tar.gz -f /home/ubuntu/gin-utils/helm-charts/kafka-values.yaml --namespace gin --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/kafka-1.0.4.tar.gz -f /home/ubuntu/gin-utils/helm-charts/kafka-values.yaml --namespace onap --generate-name
 	  
-      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace gin --generate-name
+      $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/dmaap-18.0.1.tar.gz -f /home/ubuntu/gin-utils/helm-charts/dmaap-values.yaml --namespace onap --generate-name
       ```
 	
 	- Setup GIN:
@@ -162,7 +162,6 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
         ginServerIP={PRIVATE_IP_OF_GIN_SERVER}
 
         argoTemplateType=containerSet | DAG
-		argoServerNamespace=gin
         ```
 		
 	    Note : If ORAN servers have not been created, then keep ricServerIP, ginServerIP values as is. Otherwise add private IP of ricServer, ginServerIP(created in Pre Deployment Steps').
@@ -177,7 +176,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
       - Deploy gin through helm chart:
 	  
 	    ```sh
-	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace gin --generate-name
+	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
 	    ```
 	 
     - Setup reposure:
@@ -197,7 +196,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	  $ kubectl patch svc argo-server -n gin -p '{"spec": {"type": "LoadBalancer"}}'
 	  $ kubectl get svc argo-server -n gin
 	  
-	  ubuntu@ip-172-31-18-127:~$ kubectl get svc argo-server -n gin
+	  ubuntu@ip-172-31-18-127:~$ kubectl get svc argo-server -n onap
 	  NAME          TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)          AGE
 	  argo-server   LoadBalancer   10.43.45.202   172.31.18.127   2746:31960/TCP   11s
 	  ```
@@ -207,17 +206,17 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     - To verify that GIN is deployed successfully, use the following command and check that all pods are in running state:
 	
       ```sh
-      $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n gin
+      $ ubuntu@ip-172-31-18-127:~$ kubectl get pods -n onap
 		NAME                                   READY   STATUS    RESTARTS   AGE
 		zookeeper-85fbfbb49f-mr9kb             1/1     Running   0          8m53s
 		kafka111-7746747c8d-4pbxg              1/1     Running   0          8m46s
 		dmaap-5bddfd7f4b-g8skk                 1/1     Running   0          8m41s
-		gin-tosca-dgraph-85f8f7c7c6-hg2td      2/2     Running   0          5m4s
-		gin-tosca-gawp-56b7df545-mjf7m         2/2     Running   0          5m4s
-		gin-tosca-policy-5c794c48cd-wgzcf      2/2     Running   0          5m4s
-		gin-tosca-5d8c8f84ff-76nk7             2/2     Running   0          5m4s
-		gin-tosca-workflow-65f6786c8c-fwv7k    2/2     Running   0          5m4s
-		gin-tosca-compiler-596675bb84-g7d6j    2/2     Running   0          5m4s
+		onap-tosca-dgraph-85f8f7c7c6-hg2td      2/2     Running   0          5m4s
+		onap-tosca-gawp-56b7df545-mjf7m         2/2     Running   0          5m4s
+		onap-tosca-policy-5c794c48cd-wgzcf      2/2     Running   0          5m4s
+		onap-tosca-5d8c8f84ff-76nk7             2/2     Running   0          5m4s
+		onap-tosca-workflow-65f6786c8c-fwv7k    2/2     Running   0          5m4s
+		onap-tosca-compiler-596675bb84-g7d6j    2/2     Running   0          5m4s
 		svclb-argo-server-ghdn6                1/1     Running   0          3m55s
 		minio-74d9d98bbb-nnzdg                 1/1     Running   0          4m
 		postgres-77dc5db9d4-l4g24              1/1     Running   0          3m59s
