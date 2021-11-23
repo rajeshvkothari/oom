@@ -23,8 +23,7 @@ There are two sub-sections within this section and they are not mandatory. Follo
 
 [Ric Server](#Ric-Server) should be completed only if ric models is to be deployed.
 
-[Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment. This is not required for GIN based deployment.
-
+[Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment.
 So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
 - **RIC Server**
@@ -45,7 +44,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	   vpcId: vpc-9be007f3
 	   ```
 
-     - Login into ric and run following commands:
+     - Login into ric server and run following commands:
 	
 	   ```sh
 	   $ sudo apt update
@@ -211,12 +210,12 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 		zookeeper-85fbfbb49f-mr9kb             1/1     Running   0          8m53s
 		kafka111-7746747c8d-4pbxg              1/1     Running   0          8m46s
 		dmaap-5bddfd7f4b-g8skk                 1/1     Running   0          8m41s
-		onap-tosca-dgraph-85f8f7c7c6-hg2td     2/2     Running   0          5m4s
-		onap-tosca-gawp-56b7df545-mjf7m        2/2     Running   0          5m4s
-		onap-tosca-policy-5c794c48cd-wgzcf     2/2     Running   0          5m4s
-		onap-tosca-5d8c8f84ff-76nk7            2/2     Running   0          5m4s
-		onap-tosca-workflow-65f6786c8c-fwv7k   2/2     Running   0          5m4s
-		onap-tosca-compiler-596675bb84-g7d6j   2/2     Running   0          5m4s
+		gin-tosca-dgraph-85f8f7c7c6-hg2td     2/2     Running   0          5m4s
+		gin-tosca-gawp-56b7df545-mjf7m        2/2     Running   0          5m4s
+		gin-tosca-policy-5c794c48cd-wgzcf     2/2     Running   0          5m4s
+		gin-tosca-5d8c8f84ff-76nk7            2/2     Running   0          5m4s
+		gin-tosca-workflow-65f6786c8c-fwv7k   2/2     Running   0          5m4s
+		gin-tosca-compiler-596675bb84-g7d6j   2/2     Running   0          5m4s
 		svclb-argo-server-ghdn6                1/1     Running   0          3m55s
 		minio-74d9d98bbb-nnzdg                 1/1     Running   0          4m
 		postgres-77dc5db9d4-l4g24              1/1     Running   0          3m59s
