@@ -163,7 +163,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
         argoTemplateType=containerSet | DAG
         ```
 		
-	    Note : for oran and tick model deployement add private IPs of ricServer and ginServer.Otherwise keep ricServerip and ginServerIP values as is.
+	    Note : for oran and tickclamp model deployement add private IPS of ric server and gin server.Otherwise keep ric server ip and gin server ip values as is.
 	  
 	  - Copy following files:
 	  
