@@ -355,7 +355,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 
   - Create service instance with deployment:
 	
-	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts:
+	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts tickclamp:
 	
 	```sh			
 	POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/createInstance
