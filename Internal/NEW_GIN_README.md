@@ -23,22 +23,22 @@ There are two sub-sections within this section and they are not mandatory. Follo
 
 [Ric Server](#Ric-Server) should be completed only if ric models is to be deployed.
 
-[Creating Environment for GIN based testing](#Creating-Environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment.
+[Creating environment for GIN based testing](#Creating-environment-for-GIN-based-testing) should be completed only if deployment is to be tested in GIN based environment.
 So, for example, to deploy SDWAN, ignore first and only perform steps given in second.
 
 - **RIC Server**
     --------------------------
 	These server is required for deploying RIC model.
 	
-	**IMPORTANT NOTE : ric server is required ONLY if ric model is to be deployed.**
+	**IMPORTANT NOTE : ric server is required only if ric model is to be deployed.**
 	
 	 - Create AWS VMs in the Ohio region with names as follows use the following specifications and SSH it using putty by using cciPrivateKey:
     
 	   ```sh
-       VM Name: ric Server
+       VM name: ric Server
        Image: ubuntu-18.04
-       Instance Type: t2.xlarge
-       KeyPair : cciPublicKey
+       Instance type: t2.xlarge
+       Keypair : cciPublicKey
        Disk: 80GB
 	   Security group: launch-wizard-19
 	   vpcId: vpc-9be007f3
@@ -56,7 +56,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	   $ sudo cp gin-utils/config/registries.yaml /etc/rancher/k3s/registries.yaml	 
 	   ```
 		 
-- **Creating Environment for GIN based testing**
+- **Creating environment for GIN based testing**
     -----------------------------------------------
 
   - **GIN Server**
@@ -79,12 +79,14 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
     - Clone gin-utils:
 	
 	  ```sh
+	  $ cd home/ubuntu/
 	  $ git clone https://github.com/customercaresolutions/gin-utils
 	  ```
 	
 	- Setup k3s:
 	
       ```sh
+	  $ cd home/ubuntu/
       $ sudo apt update
       $ curl -sfL https://get.k3s.io | sh -
       $ mkdir -p $HOME/.kube
@@ -123,6 +125,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup DMAAP:
 	
 	  ```sh
+	  $ cd home/ubuntu/
       $ kubectl create ns onap
 	  
       $ helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/zk-6.0.3.tar.gz -f /home/ubuntu/gin-utils/helm-charts/zk-values.yaml --namespace onap --generate-name
@@ -135,6 +138,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup GIN:
 	
       ```sh
+	  $ cd home/ubuntu/
       $ git clone https://github.com/customercaresolutions/puccini
       ```
 	  
@@ -168,6 +172,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	  - Copy following files:
 	  
         ```sh
+		$ cd home/ubuntu/
         $ cp cciPrivateKey puccini/dvol/config
         $ cp /home/ubuntu/puccini/config/TOSCA-Dgraph-schema.txt /home/ubuntu/puccini/dvol/config/ 
         ```
@@ -175,12 +180,14 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
       - Deploy gin through helm chart:
 	  
 	    ```sh
+		$ cd home/ubuntu/
 	    $  helm install --kubeconfig=$HOME/.kube/config /home/ubuntu/gin-utils/helm-charts/gin-0.3.tgz --namespace onap --generate-name
 	    ```
 	 
     - Setup reposure:
 	
 	  ```sh
+	  $ cd home/ubuntu/
 	  $ chmod +x gin-utils/reposure/reposure
 	  $ sudo cp gin-utils/reposure/reposure /usr/local/bin/reposure
 	  $ reposure operator install --wait
@@ -191,6 +198,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	- Setup Argo:
 	
 	  ```sh
+	  $ cd home/ubuntu/
 	  $ sudo kubectl apply -n onap -f /home/ubuntu/puccini/gawp/config/workflow-controller-configmap.yaml
 	  $ kubectl patch svc argo-server -n onap -p '{"spec": {"type": "LoadBalancer"}}'
 	  $ kubectl get svc argo-server -n onap
@@ -210,12 +218,12 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 		zookeeper-85fbfbb49f-mr9kb             1/1     Running   0          8m53s
 		kafka111-7746747c8d-4pbxg              1/1     Running   0          8m46s
 		dmaap-5bddfd7f4b-g8skk                 1/1     Running   0          8m41s
-		gin-tosca-dgraph-85f8f7c7c6-hg2td     2/2     Running   0          5m4s
-		gin-tosca-gawp-56b7df545-mjf7m        2/2     Running   0          5m4s
-		gin-tosca-policy-5c794c48cd-wgzcf     2/2     Running   0          5m4s
-		gin-tosca-5d8c8f84ff-76nk7            2/2     Running   0          5m4s
-		gin-tosca-workflow-65f6786c8c-fwv7k   2/2     Running   0          5m4s
-		gin-tosca-compiler-596675bb84-g7d6j   2/2     Running   0          5m4s
+		gin-tosca-dgraph-85f8f7c7c6-hg2td      2/2     Running   0          5m4s
+		gin-tosca-gawp-56b7df545-mjf7m         2/2     Running   0          5m4s
+		gin-tosca-policy-5c794c48cd-wgzcf      2/2     Running   0          5m4s
+		gin-tosca-5d8c8f84ff-76nk7             2/2     Running   0          5m4s
+		gin-tosca-workflow-65f6786c8c-fwv7k    2/2     Running   0          5m4s
+		gin-tosca-compiler-596675bb84-g7d6j    2/2     Running   0          5m4s
 		svclb-argo-server-ghdn6                1/1     Running   0          3m55s
 		minio-74d9d98bbb-nnzdg                 1/1     Running   0          4m
 		postgres-77dc5db9d4-l4g24              1/1     Running   0          3m59s
@@ -249,11 +257,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	$ cd /home/ubuntu/tosca-models/cci/firewall
     $ ./build.sh
     ```	
-  - NONRTRIC:
-    ```sh
-	$ cd /home/ubuntu/tosca-models/cci/nonrtric
-    $ ./build.sh
-    ```	
+	
   - RIC: 
     ```sh
 	$ cd /home/ubuntu/tosca-models/cci/ric
@@ -279,6 +283,11 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	$ cd /home/ubuntu/tosca-models/cci/tickclamp
     $ ./build.sh  
     ```
+  - NONRTRIC:
+    ```sh
+	$ cd /home/ubuntu/tosca-models/cci/nonrtric
+    $ ./build.sh
+    ```
 
     Check whether all csar are created in /home/ubuntu/tosca-models/cci directory.
     
@@ -295,8 +304,10 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
   $ cp sdwan.csar firewall.csar qp.csar qp-driver.csar ts.csar nonrtric.csar ric.csar tickclamp.csar /home/ubuntu/puccini/dvol/config
   ```
 
+	**IMPORTANT NOTE :follow the following sequeance sdwan, firewall, ric, qp, qp-driver, ts ,tickclamp, nonrtric**
+
   - Use the following request to store the models in Dgraph:
-	  
+	
 	For sdwan, firewall, nonrtric, qp, qp-driver, ts models use following:
     
     ```sh
@@ -355,7 +366,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 
   - Create service instance with deployment:
 	
-	For sdwan, firewall, nonrtric, ric, qp, qp-driver and ts tickclamp:
+	For sdwan, firewall, ric, qp, qp-driver, ts, tickclamp, nonrtric,:
 	
 	```sh			
 	POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/createInstance
@@ -427,7 +438,7 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	    "service":"zip:/opt/app/config/ts.csar!/ts.yaml"
 	  ```		 
 
-  - To Execute Workflow steps of a model which has already been saved in the database:
+  - To execute workflow steps of a model which has already been saved in the database:
 	   
 	```sh	
     POST http://{IP_ADDR_OF_GIN_SERVER}:30280/bonap/templates/{INSTANCE_NAME}/workflows/deploy
@@ -586,43 +597,6 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
   - Verify firewall model:
 
 	  Verify {SERVICE_INSTANCE_NAME}_firewall, {SERVICE_INSTANCE_NAME}_packet_genrator and {SERVICE_INSTANCE_NAME}_packet_sink VMs should be created on AWS N.Virginia region.
-	  
-  - Verify tickclamp model:
-	
-      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on GIN Server:
-  
-	  ```sh
-	  $ kubectl get pods -n tick
-	
-	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
-	  NAME                                        READY   STATUS    RESTARTS   AGE
-	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
-	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
-	  tick-influx-influxdb-0                      1/1     Running   0          15s
-	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
-	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
-	  ```
-
-  - Verify nonrtric model:
-
-	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the GIN Server:
-	  
-	  ```sh
-	  $ sudo kubectl get pods -n nonrtric
-			
-	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n nonrtric
-	  NAME                                       READY   STATUS    RESTARTS   AGE
-	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
-	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
-	  policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
-	  rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
-	  a1-sim-std-0                               1/1     Running   0          4m25s
-	  controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
-	  a1-sim-osc-0                               1/1     Running   0          4m25s
-	  a1-sim-std-1                               1/1     Running   0          2m54s
-	  a1-sim-osc-1                               1/1     Running   0          2m50s
-	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
-	  ```     
 	
   - Verify ric model:
 
@@ -686,3 +660,38 @@ So, for example, to deploy SDWAN, ignore first and only perform steps given in s
 	    NAME                                   READY   STATUS    RESTARTS   AGE
         ricxapp-trafficxapp-77449f7dbc-gknb8   1/1     Running   0          14m
       ```
+  - Verify tickclamp model:
+	
+      To verify that tickclamp is deployed successfully, use the following command and check that all pods are in running state on GIN Server:
+  
+	  ```sh
+	  $ kubectl get pods -n tick
+	
+	  ubuntu@ip-172-31-18-15:~$ kubectl get pods -n tick
+	  NAME                                        READY   STATUS    RESTARTS   AGE
+	  tick-tel-telegraf-5b6c78f7c6-sj8dn          1/1     Running   0          14s
+	  tick-chron-chronograf-8f5966dbd-6fsgm       1/1     Running   0          13s
+	  tick-influx-influxdb-0                      1/1     Running   0          15s
+	  tick-kap-kapacitor-5cd49b877b-kz5j9         1/1     Running   0          14s
+	  tick-client-gintelclient-84c98c4478-dnsw2   1/1     Running   0          12s
+	  ```
+  - Verify nonrtric model:
+
+	  To verify that nonrtric is deployed successfully, use the following command and check that all pods are in running state on the GIN Server:
+	  
+	  ```sh
+	  $ sudo kubectl get pods -n nonrtric
+			
+	  ubuntu@ip-172-31-47-62:~$ sudo kubectl get pods -n nonrtric
+	  NAME                                       READY   STATUS    RESTARTS   AGE
+	  db-5d6d996454-2r6js                        1/1     Running   0          4m25s
+	  enrichmentservice-5fd94b6d95-sx9gx         1/1     Running   0          4m25s
+	  policymanagementservice-78f6b4549f-8skq2   1/1     Running   0          4m25s
+	  rappcatalogueservice-64495fcc8f-d77m7      1/1     Running   0          4m25s
+	  a1-sim-std-0                               1/1     Running   0          4m25s
+	  controlpanel-fbf9d64b6-npcxp               1/1     Running   0          4m25s
+	  a1-sim-osc-0                               1/1     Running   0          4m25s
+	  a1-sim-std-1                               1/1     Running   0          2m54s
+	  a1-sim-osc-1                               1/1     Running   0          2m50s
+	  a1controller-cb6d7f6b8-m4qcn               1/1     Running   0          4m25s
+	  ```     
